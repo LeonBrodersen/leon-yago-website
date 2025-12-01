@@ -130,6 +130,77 @@
             background: var(--primary-dark);
             transform: translateY(-2px);
         }
+        /* Checkbox Styles */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    background: var(--bg-gray);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    color: var(--text-medium);
+}
+
+.checkbox-label:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkbox-label .checkmark {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.checkbox-label .checkmark::after {
+    content: '✓';
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.2s ease;
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.checkbox-label input[type="checkbox"]:checked ~ * {
+    color: var(--text-dark);
+}
+
+@media (max-width: 768px) {
+    .checkbox-group {
+        grid-template-columns: 1fr;
+    }
+}
 
         .nav-cta::after {
             display: none !important;
@@ -1389,16 +1460,41 @@
                             <input type="tel" id="phone" name="phone" placeholder="+49 123 456 7890">
                         </div>
                         <div class="form-group">
-                            <label for="service">Gewünschte Leistung</label>
-                            <select id="service" name="service">
-                                <option value="">Bitte wählen...</option>
-                                <option value="basic">Basic Webseite (350€)</option>
-                                <option value="business">Business Webseite (600€)</option>
-                                <option value="fotografie">Fotografie (80€)</option>
-                                <option value="beratung">Erstberatung</option>
-                                <option value="sonstiges">Sonstiges</option>
-                            </select>
-                        </div>
+    <label>Gewünschte Leistungen</label>
+    <div class="checkbox-group">
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Basic Webseite (350€)">
+            <span class="checkmark"></span>
+            Basic Webseite (350€)
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Business Webseite (600€)">
+            <span class="checkmark"></span>
+            Business Webseite (600€)
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Fotografie (80€)">
+            <span class="checkmark"></span>
+            Fotografie (80€)
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Wartungsvertrag">
+            <span class="checkmark"></span>
+            Wartungsvertrag
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Erstberatung">
+            <span class="checkmark"></span>
+            Erstberatung
+        </label>
+        <label class="checkbox-label">
+            <input type="checkbox" name="services" value="Sonstiges">
+            <span class="checkmark"></span>
+            Sonstiges
+        </label>
+    </div>
+</div>
+
                     </div>
                     <div class="form-group">
                         <label for="message">Ihre Nachricht *</label>
@@ -1573,14 +1669,21 @@
         submitBtn.disabled = true;
         submitBtn.innerHTML = 'Wird gesendet... ⏳';
 
-        // Formulardaten sammeln
-        const templateParams = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value || 'Nicht angegeben',
-            service: document.getElementById('service').value || 'Nicht ausgewählt',
-            message: document.getElementById('message').value
-        };
+
+       // Ausgewählte Services sammeln
+const selectedServices = [];
+document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+    selectedServices.push(checkbox.value);
+});
+
+const templateParams = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    phone: document.getElementById('phone').value || 'Nicht angegeben',
+    service: selectedServices.length > 0 ? selectedServices.join(', ') : 'Keine Auswahl',
+    message: document.getElementById('message').value
+};
+
 
         // E-Mail senden
         emailjs.send('service_b6nweer', 'template_wojbfmi', templateParams)
