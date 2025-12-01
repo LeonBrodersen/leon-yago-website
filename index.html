@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leon & Yago | Webdesign & Fotografie für kleine Unternehmen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --primary-light: #eff6ff;
+            --accent: #f97316;
+            --text-dark: #111827;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --bg-white: #ffffff;
+            --bg-gray: #f9fafb;
+            --bg-dark: #111827;
+            --border: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+            --radius-lg: 24px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background: var(--bg-white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--primary);
+            color: white !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease !important;
+        }
+
+        .nav-cta:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .nav-cta::after {
+            display: none !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--text-dark);
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 32px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-lg {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .btn-accent:hover {
+            background: #ea580c;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 120px;
+            background: linear-gradient(180deg, var(--primary-light) 0%, var(--bg-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .hero-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .hero-badge span {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: var(--text-dark);
+        }
+
+        .hero-text h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.25rem;
+            color: var(--text-medium);
+            margin-bottom: 36px;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-images {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-image-wrapper {
+            position: relative;
+        }
+
+        .hero-image-wrapper:first-child {
+            margin-top: 40px;
+        }
+
+        .hero-image-wrapper:last-child {
+            margin-top: -40px;
+        }
+
+        .hero-image {
+            width: 220px;
+            height: 280px;
+            border-radius: var(--radius-lg);
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: var(--shadow-xl);
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 20px;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hero-image-icon {
+            font-size: 3rem;
+            margin-bottom: 8px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-label {
+            display: inline-block;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: 2.75rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .section-header p {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about {
+            background: var(--bg-gray);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .about-card {
+            text-align: center;
+            background: white;
+            padding: 32px 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .about-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .about-card h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .about-card .role {
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .about-text p {
+            color: var(--text-medium);
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 20px;
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .about-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-medium);
+        }
+
+        .about-feature-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .service-card {
+            background: white;
+            padding: 40px 32px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-light);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .service-card p {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--bg-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .pricing-card {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-8px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            z-index: 1;
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.08);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 6px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .subtitle {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+        }
+
+        .pricing-card .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-dark);
+            margin: 24px 0;
+            line-height: 1;
+        }
+
+        .pricing-card .price span {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin: 32px 0;
+            text-align: left;
+        }
+
+        .pricing-features li {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            margin-top: 16px;
+        }
+
+        .additional-costs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .cost-card {
+            background: white;
+            padding: 32px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+
+        .cost-card h4 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .cost-card ul {
+            list-style: none;
+        }
+
+        .cost-card li {
+            padding: 12px 0;
+            color: var(--text-medium);
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .cost-card li:last-child {
+            border-bottom: none;
+        }
+
+        .cost-card li strong {
+            color: var(--text-dark);
+        }
+
+        .cost-card .note {
+            margin-top: 16px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Contact Section */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 60px 48px;
+            color: white;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .contact-info > p {
+            opacity: 0.9;
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .contact-icon {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .contact-item-text strong {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .contact-item-text span {
+            opacity: 0.9;
+        }
+
+        .contact-form-wrapper {
+            padding: 60px 48px;
+        }
+
+        .contact-form-wrapper h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 32px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-gray);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 4px var(--primary-light);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 140px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-dark);
+            color: white;
+            padding: 80px 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand p {
+            color: #9ca3af;
+            line-height: 1.8;
+            margin-top: 16px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column a {
+            color: #9ca3af;
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+            padding-left: 8px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-legal a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 60px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 450px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+            }
+
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                padding: 120px 0 80px;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                width: 220px;
+                height: 280px;
+                border-radius: var(--radius-lg);
+                object-fit: cover;
+                border: 4px solid white;
+                box-shadow: var(--shadow-xl);
+            }
+
+            .hero-image {
+                width: 160px;
+                height: 200px;
+            }
+
+            .hero-image-wrapper:first-child,
+            .hero-image-wrapper:last-child {
+                margin-top: 0;
+            }
+
+            section {
+                padding: 70px 0;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .additional-costs {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info,
+            .contact-form-wrapper {
+                padding: 40px 24px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-image {
+                width: 140px;
+                height: 180px;
+            }
+
+            .btn {
+                padding: 14px 24px;
+            }
+
+            .btn-lg {
+                padding: 16px 28px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav>
+    <div class="nav-container">
+        <a href="#" class="logo">Leon & Yago</a>
+        <ul class="nav-links">
+            <li><a href="#home">Start</a></li>
+            <li><a href="#about">Über uns</a></li>
+            <li><a href="#services">Leistungen</a></li>
+            <li><a href="#pricing">Preise</a></li>
+            <li><a href="#contact" class="nav-cta">Kontakt</a></li>
+        </ul>
+        <button class="mobile-menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">
+                    👋 <span>Willkommen</span> – Schön, dass Sie hier sind!
+                </div>
+                <h1>Moderne Webseiten für <span class="highlight">kleine Unternehmen</span></h1>
+                <p>Wir sind Leon & Yago – zwei Informatikstudenten, die professionelle Webseiten zu fairen Preisen anbieten. Persönlich, zuverlässig und mit Leidenschaft für gutes Design.</p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-lg">
+                        Kostenloses Erstgespräch buchen
+                        <span>→</span>
+                    </a>
+                    <a href="#services" class="btn btn-lg btn-outline">
+                        Unsere Leistungen
+                    </a>
+                </div>
+            </div>
+            <div class="hero-images">
+                <div class="hero-image-wrapper">
+                    <img src="IMG_1176.JPG" alt="Jako Herling" class="hero-image">
+                </div>
+                <div class="hero-image-wrapper">
+                    <img src="IMG_1178.JPG" alt="Leon Brodersen" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about" id="about">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Über uns</span>
+            <h2>Das Team hinter Ihrem Projekt</h2>
+            <p>Lernen Sie uns kennen – zwei Studenten mit einer gemeinsamen Vision</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-images">
+                <div class="about-card">
+                    <img src="IMG_1176.JPG" alt="Jako Herling" class="about-image">
+                    <h4>Jako Herling</h4>
+                    <span class="role">Entwicklung & Fotografie</span>
+                </div>
+                <div class="about-card">
+                    <img src="IMG_1178.JPG" alt="Leon Brodersen" class="about-image">
+                    <h4>Leon Brodersen</h4>
+                    <span class="role">Webentwicklung & Design</span>
+                </div>
+            </div>
+            <div class="about-text">
+                <h3>Zwei Studenten, eine Mission: Ihr digitaler Erfolg</h3>
+                <p>Wir studieren Informatik und unterstützen kleine Unternehmen dabei, online professionell aufzutreten. Mit technischem Know-how und kreativem Gespür entwickeln wir Webseiten, die nicht nur gut aussehen, sondern auch funktionieren.</p>
+                <p>Leon kümmert sich vor allem um Webentwicklung und Design, während Yago zusätzlich professionelle Fotos anbietet. So bekommen Sie alles aus einer Hand – persönlich, zuverlässig und fair.</p>
+                <div class="about-features">
+                    <div class="about-feature">
+                        <span class="about-feature-icon">✓</span>
+                        Persönliche Betreuung
+                    </div>
+                    <div class="about-feature">
+                        <span class="about-feature-icon">✓</span>
+                        Faire Preise
+                    </div>
+                    <div class="about-feature">
+                        <span class="about-feature-icon">✓</span>
+                        Moderne Technologien
+                    </div>
+                    <div class="about-feature">
+                        <span class="about-feature-icon">✓</span>
+                        Schnelle Umsetzung
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services" id="services">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Leistungen</span>
+            <h2>Was wir für Sie tun können</h2>
+            <p>Alles aus einer Hand für Ihren professionellen Online-Auftritt</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>Webseitenerstellung</h3>
+                <p>Moderne, responsive Webseiten mit SEO-Grundoptimierung. Perfekt optimiert für alle Geräte und Suchmaschinen.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎨</div>
+                <h3>Webdesign & Layouts</h3>
+                <p>Individuelle Designs, die Ihre Marke perfekt repräsentieren und Besucher begeistern. Einzigartig und professionell.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🌐</div>
+                <h3>Domain & Hosting</h3>
+                <p>Komplette Einrichtung Ihrer Domain und des Hostings. Wir kümmern uns um alle technischen Details für Sie.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✍️</div>
+                <h3>Content-Erstellung</h3>
+                <p>Professionelle Texte und Inhalte, die Ihre Zielgruppe ansprechen und von Ihrer Expertise überzeugen.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Pflege & Wartung</h3>
+                <p>Regelmäßige Updates, Backups und Support. Damit Ihre Webseite immer optimal läuft und sicher bleibt.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📍</div>
+                <h3>Google Business Profil</h3>
+                <p>Einrichtung und Optimierung Ihres Google Business Profils für maximale lokale Sichtbarkeit.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📸</div>
+                <h3>Professionelle Fotografie</h3>
+                <p>Hochwertige Portraits, Teamfotos und Produktbilder durch Yago – perfekt für Ihre neue Webseite.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pricing Section -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Preise</span>
+            <h2>Transparente & faire Preise</h2>
+            <p>Wählen Sie das Paket, das zu Ihrem Unternehmen passt</p>
+        </div>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Basic Webseite</h3>
+                <p class="subtitle">Perfekt für den Start</p>
+                <div class="price">350€</div>
+                <ul class="pricing-features">
+                    <li>1–3 Seiten</li>
+                    <li>Responsive Design</li>
+                    <li>Domain-Einrichtung</li>
+                    <li>Einfache SEO</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Jetzt anfragen</a>
+            </div>
+            <div class="pricing-card featured">
+                <span class="pricing-badge">⭐ Beliebt</span>
+                <h3>Business Webseite</h3>
+                <p class="subtitle">Für wachsende Unternehmen</p>
+                <div class="price">600€</div>
+                <ul class="pricing-features">
+                    <li>4–7 Seiten</li>
+                    <li>Individuelles Design</li>
+                    <li>Professionelle Texte</li>
+                    <li>SEO-Optimierung</li>
+                    <li>Google Business Eintrag</li>
+                </ul>
+                <a href="#contact" class="btn">Jetzt anfragen</a>
+            </div>
+            <div class="pricing-card">
+                <h3>Fotografie</h3>
+                <p class="subtitle">Professionelle Bilder</p>
+                <div class="price">80€</div>
+                <ul class="pricing-features">
+                    <li>10–20 bearbeitete Bilder</li>
+                    <li>Portraits</li>
+                    <li>Teamfotos</li>
+                    <li>Produktbilder</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Jetzt anfragen</a>
+            </div>
+        </div>
+
+        <!-- Zusätzliche Kosten -->
+        <div class="additional-costs">
+            <div class="cost-card">
+                <h4>📋 Laufende Kosten</h4>
+                <ul>
+                    <li>
+                        <span>Domain</span>
+                        <strong>ca. 8–14 € / Jahr</strong>
+                    </li>
+                    <li>
+                        <span>Hosting</span>
+                        <strong>ca. 5–10 € / Monat</strong>
+                    </li>
+                </ul>
+                <p class="note">Diese Kosten zahlt der Kunde direkt beim Anbieter.</p>
+            </div>
+            <div class="cost-card">
+                <h4>🛠️ Optionale Wartungsverträge</h4>
+                <ul>
+                    <li>
+                        <span>Mini-Wartung</span>
+                        <strong>10 € / Monat</strong>
+                    </li>
+                    <li>
+                        <span>Standard-Wartung</span>
+                        <strong>20 € / Monat</strong>
+                    </li>
+                </ul>
+                <p class="note">Inkl. Updates, Backups, kleine Änderungen & Support.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-label">Kontakt</span>
+            <h2>Lassen Sie uns sprechen</h2>
+            <p>Wir freuen uns auf Ihre Nachricht und Ihr Projekt</p>
+        </div>
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h3>Kontaktieren Sie uns</h3>
+                <p>Haben Sie Fragen oder möchten Sie ein unverbindliches Erstgespräch vereinbaren? Wir melden uns schnellstmöglich bei Ihnen!</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-item-text">
+                            <strong>E-Mail</strong>
+                            <span>kontakt@leon-jako.de</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-item-text">
+                            <strong>Telefon</strong>
+                            <span>+49 123 456 7890</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-item-text">
+                            <strong>Standort</strong>
+                            <span>Deutschland</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">⏰</div>
+                        <div class="contact-item-text">
+                            <strong>Antwortzeit</strong>
+                            <span>Innerhalb von 24 Stunden</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-wrapper">
+                <h3>Schreiben Sie uns</h3>
+                <form action="#" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Ihr vollständiger Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail *</label>
+                            <input type="email" id="email" name="email" placeholder="ihre@email.de" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Telefon (optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+49 123 456 7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Gewünschte Leistung</label>
+                            <select id="service" name="service">
+                                <option value="">Bitte wählen...</option>
+                                <option value="basic">Basic Webseite (350€)</option>
+                                <option value="business">Business Webseite (600€)</option>
+                                <option value="fotografie">Fotografie (80€)</option>
+                                <option value="beratung">Erstberatung</option>
+                                <option value="sonstiges">Sonstiges</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Ihre Nachricht *</label>
+                        <textarea id="message" name="message" placeholder="Erzählen Sie uns von Ihrem Projekt. Was sind Ihre Wünsche und Ziele?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-accent">
+                        Jetzt anfragen
+                        <span>→</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">Leon & Jako</a>
+                <p>Professionelle Webseiten und Fotografie für kleine Unternehmen. Persönlich, zuverlässig und zu fairen Preisen. Wir freuen uns auf Ihr Projekt!</p>
+                <div class="footer-social">
+                    <a href="#" title="Instagram">📷</a>
+                    <a href="#" title="LinkedIn">💼</a>
+                    <a href="#" title="GitHub">💻</a>
+                    <a href="#" title="Twitter">🐦</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Navigation</h4>
+                <ul>
+                    <li><a href="#home">Start</a></li>
+                    <li><a href="#about">Über uns</a></li>
+                    <li><a href="#services">Leistungen</a></li>
+                    <li><a href="#pricing">Preise</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Leistungen</h4>
+                <ul>
+                    <li><a href="#services">Webseitenerstellung</a></li>
+                    <li><a href="#services">Webdesign</a></li>
+                    <li><a href="#services">SEO-Optimierung</a></li>
+                    <li><a href="#services">Fotografie</a></li>
+                    <li><a href="#services">Wartung</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Kontakt</h4>
+                <ul>
+                    <li><a href="mailto:kontakt@leon-jako.de">kontakt@leon-jako.de</a></li>
+                    <li><a href="tel:+491234567890">+49 123 456 7890</a></li>
+                    <li><a href="#contact">Anfrage senden</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Leon Brodersen & Jako Herling. Alle Rechte vorbehalten.</p>
+            <div class="footer-legal">
+                <a href="#impressum">Impressum</a>
+                <a href="#datenschutz">Datenschutz</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Impressum Modal (versteckt) -->
+<div id="impressum" style="display: none;">
+    <h2>Impressum</h2>
+    <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+    <p>
+        Leon Brodersen & Jako Herling<br>
+        [Straße und Hausnummer]<br>
+        [PLZ] [Ort]<br>
+        Deutschland
+    </p>
+    <p><strong>Kontakt:</strong></p>
+    <p>
+        E-Mail: kontakt@leon-jako.de<br>
+        Telefon: +49 123 456 7890
+    </p>
+    <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong></p>
+    <p>
+        Leon Brodersen & Jako Herling<br>
+        [Adresse wie oben]
+    </p>
+</div>
+
+<!-- Datenschutz Modal (versteckt) -->
+<div id="datenschutz" style="display: none;">
+    <h2>Datenschutzerklärung</h2>
+    <h3>1. Datenschutz auf einen Blick</h3>
+    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+
+    <h3>2. Datenerfassung auf dieser Website</h3>
+    <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong></p>
+    <p>Die Datenverarbeitung auf dieser Website erfolgt durch die Websitebetreiber Leon Brodersen & Jako Herling.</p>
+
+    <h3>3. Kontaktformular</h3>
+    <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</p>
+</div>
+
+<!-- Smooth Scroll Script -->
+<script>
+    // Smooth scroll für Anker-Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    mobileMenuBtn.addEventListener('click', () => {
+        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    // Navbar Scroll Effect
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('nav');
+        if (window.scrollY > 50) {
+            nav.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+        } else {
+            nav.style.boxShadow = 'none';
+        }
+    });
+
+    // Form Submit Handler
+    const contactForm = document.querySelector('form');
+    contactForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Vielen Dank für Ihre Nachricht! Wir melden uns schnellstmöglich bei Ihnen.');
+        contactForm.reset();
+    });
+
+    // Animation on Scroll
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.service-card, .pricing-card, .about-card').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(30px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
+    });
+</script>
+</body>
+</html>
+›
