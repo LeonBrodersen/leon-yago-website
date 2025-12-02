@@ -134,60 +134,55 @@
         .nav-cta::after {
             display: none !important;
         }
-/* Checkbox Styles - Clean Modern Design */
-.checkbox-group {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
+        /* Checkbox Styles - Modern Pill Design */
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 8px;
+        }
 
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 16px 12px;
-    background: var(--bg-gray);
-    border: 2px solid transparent;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: var(--text-medium);
-    user-select: none;
-}
+        .checkbox-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-medium);
+            user-select: none;
+        }
 
-.checkbox-label:hover {
-    border-color: var(--primary);
-    background: white;
-}
+        .checkbox-label:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
 
-.checkbox-label input[type="checkbox"] {
-    display: none;
-}
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
 
-.checkbox-label .checkmark {
-    display: none;
-}
+        .checkbox-label.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
 
-.checkbox-label.selected {
-    background: var(--primary);
-    border-color: var(--primary);
-    color: white;
-}
+        @media (max-width: 768px) {
+            .checkbox-group {
+                gap: 8px;
+            }
 
-@media (max-width: 768px) {
-    .checkbox-group {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
+            .checkbox-label {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+        }
 
-@media (max-width: 400px) {
-    .checkbox-group {
-        grid-template-columns: 1fr;
-    }
-}
 
         .mobile-menu-btn {
             display: none;
@@ -199,62 +194,62 @@
             gap: 5px;
         }
         /* Mobile Menu Styles */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: white;
-        flex-direction: column;
-        padding: 20px;
-        gap: 0;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-top: 1px solid var(--border);
-    }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                border-top: 1px solid var(--border);
+            }
 
-    .nav-links.active {
-        display: flex;
-    }
+            .nav-links.active {
+                display: flex;
+            }
 
-    .nav-links li {
-        width: 100%;
-    }
+            .nav-links li {
+                width: 100%;
+            }
 
-    .nav-links a {
-        display: block;
-        padding: 16px 20px;
-        border-radius: 8px;
-        transition: background 0.3s ease;
-    }
+            .nav-links a {
+                display: block;
+                padding: 16px 20px;
+                border-radius: 8px;
+                transition: background 0.3s ease;
+            }
 
-    .nav-links a:hover {
-        background: var(--bg-gray);
-    }
+            .nav-links a:hover {
+                background: var(--bg-gray);
+            }
 
-    .nav-links a::after {
-        display: none;
-    }
+            .nav-links a::after {
+                display: none;
+            }
 
-    .nav-cta {
-        margin-top: 10px;
-        text-align: center;
-    }
+            .nav-cta {
+                margin-top: 10px;
+                text-align: center;
+            }
 
-    /* Hamburger Animation */
-    .mobile-menu-btn.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 5px);
-    }
+            /* Hamburger Animation */
+            .mobile-menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
 
-    .mobile-menu-btn.active span:nth-child(2) {
-        opacity: 0;
-    }
+            .mobile-menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
 
-    .mobile-menu-btn.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -5px);
-    }
-}
+            .mobile-menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
 
         .mobile-menu-btn span {
             display: block;
@@ -1395,7 +1390,7 @@
                 <p>Haben Sie Fragen oder möchten Sie ein unverbindliches Erstgespräch vereinbaren? Wir melden uns schnellstmöglich bei Ihnen!</p>
                 <div class="contact-details">
                     <div class="contact-item">
-                    <div class="contact-icon">✉️</div>
+                        <div class="contact-icon">✉️</div>
                         <div class="contact-item-text">
                             <strong>E-Mail</strong>
                             <span>kontaktleonyago@gmail.com</span>
@@ -1437,43 +1432,39 @@
                             <input type="email" id="email" name="email" placeholder="ihre@email.de" required>
                         </div>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phone">Telefon (optional)</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+49 123 456 7890">
+                    <div class="form-group">
+                        <label for="phone">Telefon (optional)</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+49 123 456 7890">
+                    </div>
+                    <div class="form-group">
+                        <label>Gewünschte Leistungen</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Basic Webseite (350€)">
+                                Basic Webseite
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Business Webseite (600€)">
+                                Business Webseite
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Fotografie (80€)">
+                                Fotografie
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Wartungsvertrag">
+                                Wartung
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Erstberatung">
+                                Beratung
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="services" value="Sonstiges">
+                                Sonstiges
+                            </label>
                         </div>
-                        <div class="form-group">
-    <label>Gewünschte Leistungen</label>
-   <div class="form-group">
-    <label>Gewünschte Leistungen</label>
-    <div class="checkbox-group">
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Basic Webseite (350€)">
-            Basic Webseite
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Business Webseite (600€)">
-            Business Webseite
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Fotografie (80€)">
-            Fotografie
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Wartungsvertrag">
-            Wartung
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Erstberatung">
-            Beratung
-        </label>
-        <label class="checkbox-label">
-            <input type="checkbox" name="services" value="Sonstiges">
-            Sonstiges
-        </label>
-    </div>
-</div>
-
+                    </div>
                     <div class="form-group">
                         <label for="message">Ihre Nachricht *</label>
                         <textarea id="message" name="message" placeholder="Erzählen Sie uns von Ihrem Projekt. Was sind Ihre Wünsche und Ziele?" required></textarea>
@@ -1487,6 +1478,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Footer -->
 <footer>
@@ -1583,6 +1575,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
+    // Checkbox Toggle
+    document.querySelectorAll('.checkbox-label').forEach(label => {
+        label.addEventListener('click', function(e) {
+            e.preventDefault();
+            const checkbox = this.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            this.classList.toggle('selected', checkbox.checked);
+        });
+    });
+
     // EmailJS initialisieren
     emailjs.init("Z57gOiO7JF_9Z8kpq");
 
@@ -1624,7 +1626,7 @@
             navLinks.classList.remove('active');
         }
     });
-    
+
 
     // Navbar Scroll Effect
     window.addEventListener('scroll', () => {
@@ -1648,36 +1650,36 @@
         submitBtn.innerHTML = 'Wird gesendet... ⏳';
 
 
-       // Ausgewählte Services sammeln
-const selectedServices = [];
-document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
-    selectedServices.push(checkbox.value);
-});
+        // Ausgewählte Services sammeln
+        const selectedServices = [];
+        document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+            selectedServices.push(checkbox.value);
+        });
 
-const templateParams = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value || 'Nicht angegeben',
-    service: selectedServices.length > 0 ? selectedServices.join(', ') : 'Keine Auswahl',
-    message: document.getElementById('message').value
-};
+        const templateParams = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value || 'Nicht angegeben',
+            service: selectedServices.length > 0 ? selectedServices.join(', ') : 'Keine Auswahl',
+            message: document.getElementById('message').value
+        };
 
 
         // E-Mail senden
         emailjs.send('service_b6nweer', 'template_wojbfmi', templateParams)
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-            alert('✅ Vielen Dank für Ihre Nachricht!\n\nWir melden uns schnellstmöglich bei Ihnen.');
-            contactForm.reset();
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Jetzt anfragen <span>→</span>';
-        })
-        .catch(function(error) {
-            console.log('FAILED...', error);
-            alert('❌ Leider ist ein Fehler aufgetreten.\n\nBitte kontaktieren Sie uns direkt unter:\nkontaktleonyago@gmail.com');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Jetzt anfragen <span>→</span>';
-        });
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                alert('✅ Vielen Dank für Ihre Nachricht!\n\nWir melden uns schnellstmöglich bei Ihnen.');
+                contactForm.reset();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Jetzt anfragen <span>→</span>';
+            })
+            .catch(function(error) {
+                console.log('FAILED...', error);
+                alert('❌ Leider ist ein Fehler aufgetreten.\n\nBitte kontaktieren Sie uns direkt unter:\nkontaktleonyago@gmail.com');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Jetzt anfragen <span>→</span>';
+            });
     });
 
     // Animation on Scroll
