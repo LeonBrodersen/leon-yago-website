@@ -73,6 +73,140 @@
             max-width: 1200px;
             margin: 0 auto;
         }
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 24px 32px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 32px;
+        }
+
+        .modal-body h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin: 24px 0 12px 0;
+        }
+
+        .modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .modal-body ul {
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+
+        .modal-body li {
+            margin-bottom: 8px;
+        }
+
+        .modal-body a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .modal-body a:hover {
+            text-decoration: underline;
+        }
+
+        .contact-box {
+            background: var(--bg-gray);
+            padding: 20px 24px;
+            border-radius: var(--radius);
+            margin: 16px 0;
+        }
+
+        .contact-box p {
+            margin: 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .modal {
+                max-height: 90vh;
+            }
+
+            .modal-header {
+                padding: 20px 24px;
+            }
+
+            .modal-body {
+                padding: 24px;
+            }
+        }
 
         .logo {
             font-size: 1.6rem;
@@ -1187,7 +1321,7 @@
             </div>
             <div class="hero-images">
                 <div class="hero-image-wrapper">
-                    <img src="IMG_1176.JPG" alt="Yago Herling" class="hero-image">
+                    <img src="IMG_1176.JPG" alt="Yago Herrling" class="hero-image">
                 </div>
                 <div class="hero-image-wrapper">
                     <img src="IMG_1178.JPG" alt="Leon Brodersen" class="hero-image">
@@ -1208,8 +1342,8 @@
         <div class="about-grid">
             <div class="about-images">
                 <div class="about-card">
-                    <img src="IMG_1176.JPG" alt="Yago Herling" class="about-image">
-                    <h4>Yago Herling</h4>
+                    <img src="IMG_1176.JPG" alt="Yago Herrling" class="about-image">
+                    <h4>Yago Herrling</h4>
                     <span class="role">Entwicklung & Fotografie</span>
                 </div>
                 <div class="about-card">
@@ -1359,18 +1493,22 @@
                 <p class="note">Diese Kosten zahlt der Kunde direkt beim Anbieter.</p>
             </div>
             <div class="cost-card">
-                <h4>🛠️ Optionale Wartungsverträge</h4>
+                <h4>🛠️ Wartung & Support</h4>
                 <ul>
                     <li>
-                        <span>Mini-Wartung</span>
-                        <strong>10 € / Monat</strong>
+                        <span>Kleine Änderungen</span>
+                        <strong>ab 20 €</strong>
                     </li>
                     <li>
-                        <span>Standard-Wartung</span>
-                        <strong>20 € / Monat</strong>
+                        <span>Updates & Backups</span>
+                        <strong>ab 30 €</strong>
+                    </li>
+                    <li>
+                        <span>Größere Anpassungen</span>
+                        <strong>nach Aufwand</strong>
                     </li>
                 </ul>
-                <p class="note">Inkl. Updates, Backups, kleine Änderungen & Support.</p>
+                <p class="note">Rufen Sie uns einfach an, wenn Sie Hilfe brauchen – wir kümmern uns darum!</p>
             </div>
         </div>
     </div>
@@ -1524,57 +1662,312 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Leon Brodersen & Yago Herling. Alle Rechte vorbehalten.</p>
+            <p>© 2025 Leon Brodersen & Yago Herrling. Alle Rechte vorbehalten.</p>
             <div class="footer-legal">
-                <a href="#impressum">Impressum</a>
-                <a href="#datenschutz">Datenschutz</a>
+                <a href="#" onclick="openModal('impressum-modal'); return false;">Impressum</a>
+                <a href="#" onclick="openModal('datenschutz-modal'); return false;">Datenschutz</a>
+                <a href="#" onclick="openModal('agb-modal'); return false;">AGB</a>
             </div>
+
         </div>
     </div>
 </footer>
 
-<!-- Impressum Modal (versteckt) -->
-<div id="impressum" style="display: none;">
-    <h2>Impressum</h2>
-    <p><strong>Angaben gemäß § 5 TMG:</strong></p>
-    <p>
-        Leon Brodersen & Yago Herling<br>
-        [Straße und Hausnummer]<br>
-        [PLZ] [Ort]<br>
-        Deutschland
-    </p>
-    <p><strong>Kontakt:</strong></p>
-    <p>
-        E-Mail: kontaktleonyago@gmail.com<br>
-        Telefon: 0179 4904546
-    </p>
-    <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</strong></p>
-    <p>
-        Leon Brodersen & Yago Herling<br>
-        [Adresse wie oben]
-    </p>
+<!-- Impressum Modal -->
+<div class="modal-overlay" id="impressum-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>📋 Impressum</h2>
+            <button class="modal-close" onclick="closeModal('impressum-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <h3>Angaben gemäß § 5 TMG</h3>
+            <div class="contact-box">
+                <p><strong>Leon Brodersen & Yago Herrling</strong></p>
+                <p>Teichweg 2</p>
+                <p>16515 Oranienburg</p>
+                <p>Deutschland</p>
+            </div>
+
+            <h3>Kontakt</h3>
+            <p>
+                📧 E-Mail: <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a><br>
+                📞 Telefon: <a href="tel:+4917949045463">0179 4904546</a>
+            </p>
+
+            <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+            <p>
+                Leon Brodersen & Yago Herrling GbR<br>
+                Teichweg 2<br>
+                16515 Oranienburg
+            </p>
+
+            <h3>EU-Streitschlichtung</h3>
+            <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a></p>
+            <p>Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+            <h3>Haftung für Inhalte</h3>
+            <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+
+            <h3>Haftung für Links</h3>
+            <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich.</p>
+
+            <h3>Urheberrecht</h3>
+            <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet.</p>
+
+            <p style="margin-top: 24px; color: var(--text-light); font-size: 0.9rem;">
+                <em>Stand: Dezember 2025</em>
+            </p>
+        </div>
+    </div>
 </div>
 
+<!-- Datenschutz Modal -->
+<div class="modal-overlay" id="datenschutz-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>🔒 Datenschutzerklärung</h2>
+            <button class="modal-close" onclick="closeModal('datenschutz-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <h3>1. Datenschutz auf einen Blick</h3>
+            <p><strong>Allgemeine Hinweise:</strong> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.</p>
 
-<!-- Datenschutz Modal (versteckt) -->
-<div id="datenschutz" style="display: none;">
-    <h2>Datenschutzerklärung</h2>
-    <h3>1. Datenschutz auf einen Blick</h3>
-    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+            <h3>2. Verantwortliche Stelle</h3>
+            <div class="contact-box">
+                <p><strong>Leon Brodersen & Yago Herrling GbR</strong></p>
+                <p>Teichweg 2</p>
+                <p>16515 Oranienburg</p>
+                <p>Deutschland</p>
+                <p>📧 E-Mail: <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a></p>
+                <p>📞 Telefon: 0179 4904546</p>
+            </div>
+            <p>Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder gemeinsam mit anderen über die Zwecke und Mittel der Verarbeitung von personenbezogenen Daten entscheidet.</p>
 
-    <h3>2. Datenerfassung auf dieser Website</h3>
-    <p><strong>Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong></p>
-    <p>Die Datenverarbeitung auf dieser Website erfolgt durch die Websitebetreiber Leon Brodersen & Yago Herling.</p>
+            <h3>3. Datenerfassung auf dieser Website</h3>
+            <p><strong>Wie erfassen wir Ihre Daten?</strong></p>
+            <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in unser Kontaktformular eingeben. Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem oder Uhrzeit des Seitenaufrufs).</p>
 
-    <h3>3. Kontaktformular</h3>
-    <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert.</p>
+            <p><strong>Wofür nutzen wir Ihre Daten?</strong></p>
+            <p>Ein Teil der Daten wird erhoben, um eine fehlerfreie Bereitstellung der Website zu gewährleisten. Andere Daten können zur Analyse Ihres Nutzerverhaltens verwendet werden. Wenn Sie uns über das Kontaktformular kontaktieren, werden Ihre Daten zur Bearbeitung Ihrer Anfrage genutzt.</p>
+
+            <h3>4. Kontaktformular</h3>
+            <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
+
+            <p><strong>Verarbeitung der Daten:</strong></p>
+            <ul>
+                <li>Name</li>
+                <li>E-Mail-Adresse</li>
+                <li>Telefonnummer (falls angegeben)</li>
+                <li>Gewünschte Leistungen</li>
+                <li>Ihre Nachricht</li>
+            </ul>
+
+            <p><strong>E-Mail-Versand über EmailJS:</strong> Für die Übermittlung Ihrer Kontaktanfrage nutzen wir den Dienst EmailJS. Dabei werden Ihre Daten an die Server von EmailJS übertragen. Anbieter ist EmailJS, 16192 Coastal Highway, Lewes, Delaware 19958, USA. Weitere Informationen finden Sie in der Datenschutzerklärung von EmailJS: <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">https://www.emailjs.com/legal/privacy-policy/</a></p>
+
+            <p><strong>Rechtsgrundlage:</strong> Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen).</p>
+
+            <p><strong>Speicherdauer:</strong> Ihre Daten werden nach abschließender Bearbeitung Ihrer Anfrage gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+            <h3>5. Hosting</h3>
+            <p>Diese Website wird gehostet bei:</p>
+            <div class="contact-box">
+                <p><strong>checkdomain GmbH</strong></p>
+                <p>Große Burgstraße 27/29</p>
+                <p>23552 Lübeck</p>
+                <p>Deutschland</p>
+            </div>
+            <p>Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v.a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Websitezugriffe und sonstige Daten handeln.</p>
+            <p>Das Hosting erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer sicheren und effizienten Bereitstellung unseres Onlineangebots).</p>
+            <p>Mit dem Hoster wurde ein Auftragsverarbeitungsvertrag (AV-Vertrag) gemäß Art. 28 DSGVO geschlossen.</p>
+
+
+            <h3>6. SSL-/TLS-Verschlüsselung</h3>
+            <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von "http://" auf "https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
+
+            <h3>7. Ihre Rechte</h3>
+            <p>Sie haben jederzeit das Recht auf:</p>
+            <ul>
+                <li><strong>Auskunft</strong> (Art. 15 DSGVO) über Ihre gespeicherten Daten</li>
+                <li><strong>Berichtigung</strong> (Art. 16 DSGVO) unrichtiger Daten</li>
+                <li><strong>Löschung</strong> (Art. 17 DSGVO) Ihrer Daten</li>
+                <li><strong>Einschränkung</strong> (Art. 18 DSGVO) der Verarbeitung</li>
+                <li><strong>Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+                <li><strong>Widerspruch</strong> (Art. 21 DSGVO) gegen die Verarbeitung</li>
+                <li><strong>Beschwerde</strong> bei einer Aufsichtsbehörde (Art. 77 DSGVO)</li>
+            </ul>
+
+            <h3>8. Widerspruch gegen Werbe-E-Mails</h3>
+            <p>Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen vor.</p>
+
+            <p style="margin-top: 24px; color: var(--text-light); font-size: 0.9rem;">
+                <em>Stand: Dezember 2025</em>
+            </p>
+        </div>
+    </div>
 </div>
 
-<!-- Smooth Scroll Script -->
+<!-- AGB Modal -->
+<div class="modal-overlay" id="agb-modal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>📜 Allgemeine Geschäftsbedingungen</h2>
+            <button class="modal-close" onclick="closeModal('agb-modal')">✕</button>
+        </div>
+        <div class="modal-body">
+            <h3>§ 1 Geltungsbereich</h3>
+            <p>(1) Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen Leon Brodersen & Yago Herrling (nachfolgend "Auftragnehmer") und dem Kunden (nachfolgend "Auftraggeber") über Webdesign-, Webentwicklungs- und Fotografie-Dienstleistungen.</p>
+            <p>(2) Abweichende Bedingungen des Auftraggebers werden nicht anerkannt, es sei denn, der Auftragnehmer stimmt ihrer Geltung ausdrücklich schriftlich zu.</p>
+            <p>(3) Diese AGB gelten sowohl gegenüber Verbrauchern als auch gegenüber Unternehmern.</p>
+
+            <h3>§ 2 Vertragsschluss</h3>
+            <p>(1) Die Darstellung der Dienstleistungen auf unserer Website stellt kein rechtlich bindendes Angebot dar, sondern eine unverbindliche Aufforderung zur Auftragserteilung.</p>
+            <p>(2) Durch das Absenden einer Anfrage über das Kontaktformular oder per E-Mail gibt der Auftraggeber ein verbindliches Angebot ab.</p>
+            <p>(3) Der Vertrag kommt zustande, wenn der Auftragnehmer das Angebot durch eine Auftragsbestätigung per E-Mail annimmt oder mit der Leistungserbringung beginnt.</p>
+
+            <h3>§ 3 Leistungsumfang</h3>
+            <p>(1) Der genaue Leistungsumfang ergibt sich aus der schriftlichen Auftragsbestätigung bzw. dem individuellen Angebot.</p>
+            <p>(2) Die aktuellen Preise für unsere Leistungen ergeben sich aus der Preisliste auf unserer Website oder dem individuellen Angebot. Die auf der Website genannten Preise sind unverbindlich und können jederzeit angepasst werden.</p>
+            <p>(3) Nicht im Preis enthalten sind, sofern nicht anders vereinbart: laufende Kosten für Domain und Hosting, Lizenzgebühren für Drittanbieter-Software, sowie nachträgliche Änderungswünsche außerhalb des vereinbarten Projektumfangs.</p>
+            <ul>
+                <li>Basic Webseite (350€): 1-3 Seiten, Responsive Design, Domain-Einrichtung, einfache SEO</li>
+                <li>Business Webseite (600€): 4-7 Seiten, individuelles Design, professionelle Texte, SEO-Optimierung, Google Business Eintrag</li>
+            </ul>
+            <p>(3) <strong>Fotografie (80€):</strong> 10-20 bearbeitete Bilder inkl. Portraits, Teamfotos oder Produktbilder.</p>
+            <p>(4) Nicht im Preis enthalten sind, sofern nicht anders vereinbart: laufende Kosten für Domain und Hosting, Lizenzgebühren für Drittanbieter-Software, sowie nachträgliche Änderungswünsche.</p>
+
+            <h3>§ 4 Mitwirkungspflichten des Auftraggebers</h3>
+            <p>(1) Der Auftraggeber stellt dem Auftragnehmer alle für die Durchführung des Projekts erforderlichen Unterlagen, Informationen und Materialien (Texte, Bilder, Logos) rechtzeitig und unentgeltlich zur Verfügung.</p>
+            <p>(2) Der Auftraggeber benennt einen Ansprechpartner, der für Rückfragen und Entscheidungen zur Verfügung steht.</p>
+            <p>(3) Der Auftraggeber prüft und gibt Zwischenergebnisse und Entwürfe innerhalb von 7 Werktagen frei oder teilt Änderungswünsche mit.</p>
+            <p>(4) Verzögert sich das Projekt durch fehlende Mitwirkung des Auftraggebers, verschiebt sich der Fertigstellungstermin entsprechend.</p>
+
+            <h3>§ 5 Preise und Zahlungsbedingungen</h3>
+            <p>(1) Es gelten die zum Zeitpunkt des Vertragsschlusses vereinbarten Preise. Alle Preise verstehen sich als Endpreise (Kleinunternehmerregelung gem. § 19 UStG – keine Mehrwertsteuer ausgewiesen).</p>
+            <p>(2) <strong>Zahlungsmodalitäten:</strong></p>
+            <ul>
+                <li>50% des Gesamtbetrags bei Auftragserteilung (Anzahlung)</li>
+                <li>50% des Gesamtbetrags nach Fertigstellung und vor Übergabe</li>
+            </ul>
+            <p>(3) Bei Wartungsverträgen erfolgt die Zahlung monatlich im Voraus.</p>
+            <p>(4) Rechnungen sind innerhalb von 14 Tagen nach Rechnungsdatum ohne Abzug zahlbar.</p>
+            <p>(5) Kommt der Auftraggeber in Zahlungsverzug, ist der Auftragnehmer berechtigt, Verzugszinsen in gesetzlicher Höhe zu berechnen.</p>
+
+            <h3>§ 6 Lieferzeit und Fertigstellung</h3>
+            <p>(1) Liefertermine sind nur verbindlich, wenn sie ausdrücklich als verbindlich bezeichnet wurden.</p>
+            <p>(2) Die übliche Bearbeitungszeit beträgt:</p>
+            <ul>
+                <li>Basic Webseite: ca. 1-2 Wochen</li>
+                <li>Business Webseite: ca. 2-4 Wochen</li>
+                <li>Fotografie: Lieferung bearbeiteter Bilder innerhalb von 7 Tagen nach dem Shooting</li>
+            </ul>
+            <p>(3) Die Lieferzeit beginnt nach Eingang der Anzahlung und aller erforderlichen Materialien des Auftraggebers.</p>
+
+            <h3>§ 7 Abnahme</h3>
+            <p>(1) Der Auftraggeber ist verpflichtet, die fertiggestellte Leistung innerhalb von 14 Tagen nach Fertigstellungsmitteilung abzunehmen.</p>
+            <p>(2) Erfolgt keine ausdrückliche Abnahme, gilt die Leistung als abgenommen, wenn der Auftraggeber nicht innerhalb von 14 Tagen nach Fertigstellungsmitteilung schriftlich Mängel rügt.</p>
+            <p>(3) Geringfügige Mängel berechtigen nicht zur Verweigerung der Abnahme.</p>
+
+            <h3>§ 8 Änderungswünsche</h3>
+            <p>(1) Im Projektpreis sind zwei Korrekturschleifen enthalten.</p>
+            <p>(2) Darüber hinausgehende Änderungswünsche oder nachträgliche Erweiterungen werden nach Aufwand berechnet (Stundensatz: 40€/Stunde).</p>
+            <p>(3) Änderungswünsche, die den ursprünglichen Projektumfang wesentlich erweitern, bedürfen einer gesonderten Vereinbarung.</p>
+
+            <h3>§ 9 Nutzungsrechte und Urheberrecht</h3>
+            <p>(1) Der Auftragnehmer räumt dem Auftraggeber nach vollständiger Bezahlung das einfache, zeitlich und räumlich unbeschränkte Nutzungsrecht an den erstellten Werken für den vereinbarten Zweck ein.</p>
+            <p>(2) Der Auftragnehmer behält sich das Recht vor, die erstellten Arbeiten für eigene Werbezwecke (z.B. Portfolio, Referenzen) zu verwenden, sofern keine Vertraulichkeitsvereinbarung besteht.</p>
+            <p>(3) <strong>Fotografie:</strong> Der Auftraggeber erhält das Nutzungsrecht an den bearbeiteten Bildern. Die Rohdaten verbleiben beim Auftragnehmer.</p>
+            <p>(4) Quelltexte und Programmierarbeiten werden ohne gesonderte Vereinbarung nicht herausgegeben.</p>
+
+            <h3>§ 10 Gewährleistung</h3>
+            <p>(1) Der Auftragnehmer gewährleistet, dass die Leistungen zum Zeitpunkt der Abnahme die vereinbarte Beschaffenheit aufweisen.</p>
+            <p>(2) Mängel müssen unverzüglich, spätestens innerhalb von 14 Tagen nach Entdeckung, schriftlich gerügt werden.</p>
+            <p>(3) Bei berechtigten Mängelrügen hat der Auftragnehmer das Recht zur Nachbesserung innerhalb einer angemessenen Frist.</p>
+            <p>(4) Die Gewährleistungsfrist beträgt 12 Monate ab Abnahme.</p>
+            <p>(5) Die Gewährleistung erstreckt sich nicht auf Fehler, die durch Eingriffe Dritter oder des Auftraggebers, unsachgemäße Nutzung oder externe Faktoren (z.B. Serverausfälle des Hosters) entstehen.</p>
+
+            <h3>§ 11 Haftung</h3>
+            <p>(1) Der Auftragnehmer haftet unbeschränkt für Schäden aus der Verletzung des Lebens, des Körpers oder der Gesundheit sowie für Vorsatz und grobe Fahrlässigkeit.</p>
+            <p>(2) Bei leichter Fahrlässigkeit haftet der Auftragnehmer nur bei Verletzung wesentlicher Vertragspflichten und begrenzt auf den vorhersehbaren, typischerweise eintretenden Schaden.</p>
+            <p>(3) Die Haftung ist der Höhe nach auf den Auftragswert begrenzt, maximal jedoch auf 5.000€.</p>
+            <p>(4) Der Auftragnehmer haftet nicht für Schäden, die durch falsche oder verspätet gelieferte Inhalte des Auftraggebers entstehen.</p>
+            <p>(5) Der Auftragnehmer haftet nicht für die Verfügbarkeit von Drittanbieter-Diensten (z.B. Hosting, Domain-Registrar).</p>
+
+            <h3>§ 12 Vertraulichkeit</h3>
+            <p>(1) Beide Parteien verpflichten sich, alle im Rahmen der Zusammenarbeit erlangten vertraulichen Informationen geheim zu halten.</p>
+            <p>(2) Diese Verpflichtung besteht auch nach Beendigung des Vertragsverhältnisses fort.</p>
+
+            <h3>§ 13 Wartung & Support</h3>
+            <p>(1) Wartungsarbeiten und Support werden auf Anfrage durchgeführt und nach Aufwand abgerechnet.</p>
+            <p>(2) <strong>Preise für Wartungsarbeiten:</strong></p>
+            <ul>
+                <li>Kleine Änderungen: ab 20€</li>
+                <li>Updates & Backups: ab 30€</li>
+                <li>Größere Anpassungen: nach Aufwand (Stundensatz 40€)</li>
+            </ul>
+            <p>(3) Für Wartungsanfragen kontaktieren Sie uns telefonisch oder per E-Mail. Wir erstellen Ihnen ein individuelles Angebot.</p>
+
+
+            <h3>§ 14 Kündigung und Stornierung</h3>
+            <p>(1) Vor Beginn der Arbeiten kann der Auftraggeber den Vertrag stornieren. In diesem Fall wird eine Stornogebühr von 20% des Auftragswertes fällig.</p>
+            <p>(2) Nach Beginn der Arbeiten ist eine Kündigung nur aus wichtigem Grund möglich. Bereits erbrachte Leistungen sind zu vergüten.</p>
+            <p>(3) Der Auftragnehmer kann den Vertrag aus wichtigem Grund kündigen, insbesondere wenn der Auftraggeber trotz Mahnung mit der Zahlung in Verzug ist oder seinen Mitwirkungspflichten nicht nachkommt.</p>
+
+            <h3>§ 15 Schlussbestimmungen</h3>
+            <p>(1) Es gilt das Recht der Bundesrepublik Deutschland.</p>
+            <p>(2) Erfüllungsort und Gerichtsstand ist, soweit gesetzlich zulässig, Oranienburg.</p>
+            <p>(3) Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
+            <p>(4) Änderungen und Ergänzungen dieser AGB bedürfen der Schriftform.</p>
+
+            <div class="contact-box" style="margin-top: 24px;">
+                <p><strong>Leon Brodersen & Yago Herrling GbR</strong></p>
+                <p>Teichweg 2, 16515 Oranienburg</p>
+                <p>📧 kontaktleonyago@gmail.com</p>
+                <p>📞 0179 4904546</p>
+            </div>
+
+            <p style="margin-top: 24px; color: var(--text-light); font-size: 0.9rem;">
+                <em>Stand: Dezember 2025</em>
+            </p>
+        </div>
+    </div>
+</div>
+
 <!-- EmailJS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 
 <script>
+    // Modal Funktionen
+    function openModal(modalId) {
+        document.getElementById(modalId).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Modal schließen bei Klick auf Overlay
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+
+    // Modal schließen mit Escape-Taste
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.modal-overlay.active').forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = '';
+        }
+    });
+
     // Checkbox Toggle
     document.querySelectorAll('.checkbox-label').forEach(label => {
         label.addEventListener('click', function(e) {
@@ -1611,7 +2004,6 @@
         navLinks.classList.toggle('active');
     });
 
-    // Menü schließen wenn ein Link geklickt wird
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenuBtn.classList.remove('active');
@@ -1619,14 +2011,12 @@
         });
     });
 
-    // Menü schließen wenn außerhalb geklickt wird
     document.addEventListener('click', (e) => {
         if (!e.target.closest('nav')) {
             mobileMenuBtn.classList.remove('active');
             navLinks.classList.remove('active');
         }
     });
-
 
     // Navbar Scroll Effect
     window.addEventListener('scroll', () => {
@@ -1645,14 +2035,12 @@
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Button deaktivieren während des Sendens
         submitBtn.disabled = true;
         submitBtn.innerHTML = 'Wird gesendet... ⏳';
 
-
-        // Ausgewählte Services sammeln
         const selectedServices = [];
-        document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
+        document.querySelectorAll('.checkbox-label.selected').forEach(label => {
+            const checkbox = label.querySelector('input[type="checkbox"]');
             selectedServices.push(checkbox.value);
         });
 
@@ -1664,13 +2052,15 @@
             message: document.getElementById('message').value
         };
 
-
-        // E-Mail senden
         emailjs.send('service_b6nweer', 'template_wojbfmi', templateParams)
             .then(function(response) {
                 console.log('SUCCESS!', response.status, response.text);
                 alert('✅ Vielen Dank für Ihre Nachricht!\n\nWir melden uns schnellstmöglich bei Ihnen.');
                 contactForm.reset();
+                document.querySelectorAll('.checkbox-label').forEach(label => {
+                    label.classList.remove('selected');
+                    label.querySelector('input[type="checkbox"]').checked = false;
+                });
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'Jetzt anfragen <span>→</span>';
             })
@@ -1704,6 +2094,7 @@
         observer.observe(el);
     });
 </script>
+
 </body>
 </html>
 ›
