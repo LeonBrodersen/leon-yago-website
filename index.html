@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Primary Meta Tags -->
+    <title>LY-Webstudio | Webdesigner in Oranienburg & Brandenburg</title>
+    <meta name="title" content="LY-Webstudio | Webdesigner in Oranienburg & Brandenburg – Website erstellen">
+    <meta name="description" content="Professionelle Webseiten für kleine Unternehmen in Oranienburg & Brandenburg. Modernes Webdesign, SEO-optimiert und zu fairen Preisen von LY-Webstudio.">
+    <meta name="keywords" content="Webdesigner Oranienburg, Website erstellen Brandenburg, Webdesign Berlin-Nord, Webentwicklung Oberhavel">
+    <meta name="author" content="LY-Webstudio">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    <meta name="theme-color" content="#10b981">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="canonical" href="https://www.ly-webstudio.de/">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.ly-webstudio.de/">
+    <meta property="og:title" content="LY-Webstudio | Webdesigner Oranienburg & Brandenburg">
+    <meta property="og:description" content="Professionelle Webseiten für kleine Unternehmen. Modernes Webdesign, SEO-optimiert und zu fairen Preisen.">
+    <meta property="og:image" content="https://www.ly-webstudio.de/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="de_DE">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.ly-webstudio.de/">
+    <meta name="twitter:title" content="LY-Webstudio | Webdesigner Oranienburg">
+    <meta name="twitter:description" content="Professionelle Webseiten für kleine Unternehmen in Brandenburg.">
+    <meta name="twitter:image" content="https://www.ly-webstudio.de/og-image.png">
+
+    <!-- Geo Tags -->
+    <meta name="geo.region" content="DE-BB">
+    <meta name="geo.placename" content="Oranienburg">
+
+    <!-- Font Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "LY-Webstudio",
+            "image": "https://www.ly-webstudio.de/og-image.png",
+            "description": "Webdesigner in Oranienburg & Brandenburg – Professionelle Webseiten für kleine Unternehmen",
+            "url": "https://www.ly-webstudio.de",
+            "telephone": "+49 179 4904546",
+            "email": "kontakt@ly-webstudio.de",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Teichweg 2",
+                "addressLocality": "Oranienburg",
+                "postalCode": "16515",
+                "addressRegion": "Brandenburg",
+                "addressCountry": "DE"
+            },
+            "areaServed": [
+                {
+                    "@type": "City",
+                    "name": "Oranienburg"
+                },
+                {
+                    "@type": "State",
+                    "name": "Brandenburg"
+                },
+                {
+                    "@type": "City",
+                    "name": "Berlin"
+                }
+            ],
+            "priceRange": "€€",
+            "founder": [
+                {
+                    "@type": "Person",
+                    "name": "Leon Brodersen"
+                },
+                {
+                    "@type": "Person",
+                    "name": "Yago Herrling"
+                }
+            ],
+            "serviceType": ["Webdesign", "Webentwicklung", "SEO"],
+            "sameAs": [
+                "https://www.facebook.com/...",
+                "https://www.instagram.com/..."
+            ]
+        }
+    </script>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="toast" id="toast">
+        <div class="toast-icon">✓</div>
+        <div class="toast-message"></div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookie-banner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <p>Wir verwenden keine Tracking-Cookies. Diese Website nutzt ausschließlich technisch notwendige
+                    Funktionen. Weitere Informationen finden Sie in unserer <a href="#"
+                        onclick="openModal('datenschutz-modal'); return false;">Datenschutzerklärung</a>.</p>
+            </div>
+            <div class="cookie-buttons">
+                <button class="cookie-btn cookie-btn-accept" onclick="acceptCookies()">Verstanden</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">LY-Webstudio</a>
+            <ul class="nav-links">
+                <li><a href="#home">Start</a></li>
+                <li><a href="#about">Über uns</a></li>
+                <li><a href="#why-us">Vorteile</a></li>
+                <li><a href="#styles">Design-Stile</a></li>
+                <li><a href="#pricing">Preise</a></li>
+                <li><a href="#contact" class="nav-cta">Kontakt</a></li>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Menü öffnen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Ihre <span class="highlight">neue Website</span> modern & bezahlbar</h1>
+                    <p>Wir sind Leon und Yago – zwei junge Webentwickler aus Oranienburg mit
+                        einer Leidenschaft für gutes Design. Sie bekommen von uns professionelle
+                        Websites zu fairen Preisen, ohne Kompromisse bei der Qualität.</p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-lg">
+                            Kostenloses Erstgespräch
+                            <span>→</span>
+                        </a>
+                        <a href="#services" class="btn btn-lg btn-outline">
+                            Unsere Leistungen
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-images">
+                    <div class="hero-image-wrapper">
+                        <img src="IMG_1176.JPG" alt="Yago Herrling - Webdesigner Oranienburg" class="hero-image">
+                    </div>
+                    <div class="hero-image-wrapper">
+                        <img src="IMG_1178.JPG" alt="Leon Brodersen - Webdesigner Brandenburg" class="hero-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Über uns</span>
+                <h2>Ihr Webdesigner in Oranienburg</h2>
+                <p>Lernen Sie uns kennen – Ihr Partner für professionelle Webseiten in Brandenburg</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-images">
+                    <div class="about-card">
+                        <img src="IMG_1176.JPG" alt="Yago Herrling - Webentwicklung" class="about-image">
+                        <h4>Yago Herrling</h4>
+                        <span class="role">Webentwicklung</span>
+                    </div>
+                    <div class="about-card">
+                        <img src="IMG_1178.JPG" alt="Leon Brodersen - Webdesign" class="about-image">
+                        <h4>Leon Brodersen</h4>
+                        <span class="role">Webdesign & Entwicklung</span>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <h3>LY-Webstudio – Webdesign aus Oranienburg</h3>
+                    <p>Wir sind Leon und Yago – zwei motivierte Webentwickler aus Oranienburg.
+                    Leon studiert Informatik und bringt das technische Fundament mit,
+                    Yago sorgt für modernes Design. Zusammen bieten wir Ihnen professionelle
+                    Websites zu besonders fairen Konditionen.</p>
+
+
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <span class="about-feature-icon">✓</span>
+                            Persönliche Betreuung
+                        </div>
+                        <div class="about-feature">
+                            <span class="about-feature-icon">✓</span>
+                            Faire Preise
+                        </div>
+                        <div class="about-feature">
+                            <span class="about-feature-icon">✓</span>
+                            Moderne Technologien
+                        </div>
+                        <div class="about-feature">
+                            <span class="about-feature-icon">✓</span>
+                            Schnelle Umsetzung
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Nach oben scrollen">↑</button>
+
+    <!-- Why Us Section -->
+    <section class="why-us" id="why-us">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Warum wir?</span>
+                <h2>Ihre Vorteile mit LY-Webstudio</h2>
+                <p>Was uns von anderen Webdesignern unterscheidet</p>
+            </div>
+
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-number">01</div>
+                    <div class="why-content">
+                        <h3>Faire Preise</h3>
+                        <p>Professionelle Qualität ohne Agentur-Preise.
+                            Bei uns bekommen Sie modernes Webdesign
+                            zu fairen Konditionen.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-number">02</div>
+                    <div class="why-content">
+                        <h3>Modernes Know-how</h3>
+                        <p>Wir arbeiten mit aktuellen Technologien
+                            und setzen Ihre Website nach den
+                            neuesten Webstandards um.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-number">03</div>
+                    <div class="why-content">
+                        <h3>Persönlicher Kontakt</h3>
+                        <p>Bei uns gibt es keine anonymen Tickets – Sie sprechen direkt mit uns und bekommen schnelle
+                            Antworten.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-number">04</div>
+                    <div class="why-content">
+                        <h3>Echter Kontakt</h3>
+                        <p>Egal ob persönliches Treffen oder
+                            Videocall – wir sind flexibel und
+                            passen uns Ihren Wünschen an.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-number">05</div>
+                    <div class="why-content">
+                        <h3>Keine versteckten Kosten</h3>
+                        <p>Transparente Preise ohne Überraschungen. Sie wissen vorher genau, was Sie bezahlen.</p>
+                    </div>
+                </div>
+
+                <div class="why-card">
+                    <div class="why-number">06</div>
+                    <div class="why-content">
+                        <h3>Schnelle Umsetzung</h3>
+                        <p>Ihre Website ist in 1-2 Wochen fertig – ohne monatelange Wartezeiten.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Design Styles Section -->
+    <section id="styles" class="design-styles">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Design-Stile</span>
+                <h2>Welcher Stil passt zu Ihnen?</h2>
+                <p>Klicken Sie auf einen Stil, um eine vollständige Demo-Webseite zu sehen</p>
+                <div class="style-notice">
+                    <p><strong>⚠️ Demo-Hinweis:</strong> Alle hier gezeigten Unternehmen, Namen,
+                        Adressen und Kontaktdaten sind <strong>frei erfunden</strong> und dienen
+                        ausschließlich zur Demonstration unserer Design-Stile. Ähnlichkeiten mit
+                        tatsächlich existierenden Unternehmen sind rein zufällig und nicht beabsichtigt.</p>
+                </div>
+
+            </div>
+
+
+            <div class="styles-showcase">
+                <!-- Minimalist -->
+                <div class="style-card" data-style="minimalist">
+                    <div class="style-preview minimalist">
+                        <div class="preview-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content">
+                            <div class="preview-nav"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title"></div>
+                                <div class="preview-text"></div>
+                                <div class="preview-btn" style="background: #111827;"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                                <div class="preview-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Minimalistisch</h3>
+                        <p>Klare Linien, viel Weißraum und fokussierte Inhalte. Perfekt für moderne Unternehmen.</p>
+                        <div class="style-features">
+                            <span>✓ Zeitlos</span>
+                            <span>✓ Schnell</span>
+                            <span>✓ Elegant</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: #111827;"></div>
+                            <div class="color-dot" style="background: #6b7280;"></div>
+                            <div class="color-dot" style="background: #f9fafb;"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colorful -->
+                <div class="style-card" data-style="colorful">
+                    <div class="style-preview">
+                        <div class="preview-header gradient-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content gradient-bg">
+                            <div class="preview-nav colored"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title gradient-title"></div>
+                                <div class="preview-text"></div>
+                                <div class="preview-btn gradient-btn"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box colored-box-1"></div>
+                                <div class="preview-box colored-box-2"></div>
+                                <div class="preview-box colored-box-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Modern & Bunt</h3>
+                        <p>Lebendige Farben und dynamische Elemente. Ideal für kreative Branchen.</p>
+                        <div class="style-features">
+                            <span>✓ Auffällig</span>
+                            <span>✓ Kreativ</span>
+                            <span>✓ Jung</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+                            <div class="color-dot" style="background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+                            <div class="color-dot" style="background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Corporate -->
+                <div class="style-card" data-style="corporate">
+                    <div class="style-preview">
+                        <div class="preview-header corp-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content corp-bg">
+                            <div class="preview-nav corp-nav"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title corp-title"></div>
+                                <div class="preview-text"></div>
+                                <div class="preview-btn corp-btn"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box corp-box"></div>
+                                <div class="preview-box corp-box"></div>
+                                <div class="preview-box corp-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Professionell</h3>
+                        <p>Seriös und vertrauenswürdig. Die beste Wahl für Anwälte, Ärzte und Berater.</p>
+                        <div class="style-features">
+                            <span>✓ Seriös</span>
+                            <span>✓ Vertrauen</span>
+                            <span>✓ Klassisch</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: #1e3a5f;"></div>
+                            <div class="color-dot" style="background: #c9a227;"></div>
+                            <div class="color-dot" style="background: #f8fafc;"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warm -->
+                <div class="style-card" data-style="warm">
+                    <div class="style-preview">
+                        <div class="preview-header warm-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content warm-bg">
+                            <div class="preview-nav warm-nav"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title warm-title"></div>
+                                <div class="preview-text"></div>
+                                <div class="preview-btn warm-btn"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box warm-box"></div>
+                                <div class="preview-box warm-box"></div>
+                                <div class="preview-box warm-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Warm & Einladend</h3>
+                        <p>Gemütliche Atmosphäre mit warmen Tönen. Perfekt für Gastronomie und Hotels.</p>
+                        <div class="style-features">
+                            <span>✓ Gemütlich</span>
+                            <span>✓ Einladend</span>
+                            <span>✓ Persönlich</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: #8b4513;"></div>
+                            <div class="color-dot" style="background: #d4a574;"></div>
+                            <div class="color-dot" style="background: #fef7ed;"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nature -->
+                <div class="style-card" data-style="nature">
+                    <div class="style-preview">
+                        <div class="preview-header nature-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content nature-bg">
+                            <div class="preview-nav nature-nav"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title nature-title"></div>
+                                <div class="preview-text"></div>
+                                <div class="preview-btn nature-btn"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box nature-box"></div>
+                                <div class="preview-box nature-box"></div>
+                                <div class="preview-box nature-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Natur & Öko</h3>
+                        <p>Natürliche Farben und organische Formen. Ideal für Bio und Nachhaltigkeit.</p>
+                        <div class="style-features">
+                            <span>✓ Natürlich</span>
+                            <span>✓ Frisch</span>
+                            <span>✓ Authentisch</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: #166534;"></div>
+                            <div class="color-dot" style="background: #22c55e;"></div>
+                            <div class="color-dot" style="background: #f0fdf4;"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dark Tech -->
+                <div class="style-card" data-style="darkTech">
+                    <div class="style-preview">
+                        <div class="preview-header dark-header">
+                            <div class="preview-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="preview-content dark-bg">
+                            <div class="preview-nav dark-nav"></div>
+                            <div class="preview-hero-mini">
+                                <div class="preview-title dark-title"></div>
+                                <div class="preview-text dark-text"></div>
+                                <div class="preview-btn dark-btn"></div>
+                            </div>
+                            <div class="preview-boxes">
+                                <div class="preview-box dark-box"></div>
+                                <div class="preview-box dark-box"></div>
+                                <div class="preview-box dark-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="style-info">
+                        <h3>Dark Mode / Tech</h3>
+                        <p>Dunkles Design mit Neon-Akzenten. Perfekt für Tech-Startups und SaaS.</p>
+                        <div class="style-features">
+                            <span>✓ Modern</span>
+                            <span>✓ Tech</span>
+                            <span>✓ Premium</span>
+                        </div>
+                        <div class="style-colors">
+                            <div class="color-dot" style="background: #0f172a;"></div>
+                            <div class="color-dot" style="background: #8b5cf6;"></div>
+                            <div class="color-dot" style="background: #06b6d4;"></div>
+                        </div>
+                        <div class="style-cta">
+                            Demo ansehen <span class="arrow">→</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="style-demo-overlay" id="styleDemoOverlay">
+        <div class="style-demo-header">
+            <div class="style-demo-info"></div>
+            <button class="style-demo-close" onclick="closeStyleDemo()">
+                <span class="close-icon">✕</span>
+            </button>
+        </div>
+        <iframe id="styleDemoFrame" class="style-demo-frame"></iframe>
+    </div>
+
+    <!-- Pricing Section -->
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Preise</span>
+                <h2>Transparente Preise für Ihre Website</h2>
+                <p>Website erstellen lassen – zu fairen Konditionen</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <p class="subtitle">Ideal für den Start</p>
+                    <div class="price">150€<span> - 300€</span></div>
+                    <ul class="pricing-features">
+                        <li>1-3 Seiten Webseite</li>
+                        <li>Responsives Webdesign</li>
+                        <li>Kontaktformular</li>
+                        <li>SEO-Grundlagen</li>
+                        <li>Fertig in 1 Woche</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">Anfragen</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Beliebt</div>
+                    <h3>Business</h3>
+                    <p class="subtitle">Für wachsende Unternehmen</p>
+                    <div class="price">300€<span> - 600€</span></div>
+                    <ul class="pricing-features">
+                        <li>4-7 Seiten Webseite</li>
+                        <li>Individuelles Design</li>
+                        <li>SEO-Optimierung</li>
+                        <li>Social Media Integration</li>
+                        <li>Fertig in 1-2 Wochen</li>
+                    </ul>
+                    <a href="#contact" class="btn">Anfragen</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Wartung</h3>
+                    <p class="subtitle">Laufende Betreuung</p>
+                    <div class="price">20€<span>/Std.</span></div>
+                    <ul class="pricing-features">
+                        <li>Content-Aktualisierungen</li>
+                        <li>Technische Updates</li>
+                        <li>Kleine Änderungen</li>
+                        <li>Support per Mail/Telefon</li>
+                        <li>Schnelle Reaktionszeit</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-outline">Anfragen</a>
+                </div>
+            </div>
+
+            <div class="additional-costs">
+                <div class="cost-card">
+                    <h4>📦 Zusätzliche Leistungen</h4>
+                    <ul>
+                        <li><span>Zusätzliche Unterseite</span> <strong>30-50€</strong></li>
+                        <li><span>Logo-Design (einfach)</span> <strong>50-100€</strong></li>
+                        <li><span>Blog-Integration</span> <strong>50-100€</strong></li>
+                        <li><span>Mehrsprachigkeit</span> <strong>ab 100€</strong></li>
+                    </ul>
+                </div>
+                <div class="cost-card">
+                    <h4>🔄 Laufende Kosten (extern)</h4>
+                    <ul>
+                        <li><span>Domain (.de)</span> <strong>ca. 10-15€/Jahr</strong></li>
+                        <li><span>Webhosting</span> <strong>ca. 3-10€/Monat</strong></li>
+                        <li><span>SSL-Zertifikat</span> <strong>oft kostenlos</strong></li>
+                    </ul>
+                    <p class="note">* Diese Kosten fallen bei externen Anbietern an, nicht bei uns.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Kontakt</span>
+                <h2>Lassen Sie uns über Ihr Projekt sprechen</h2>
+                <p>Kostenloses Erstgespräch – unverbindlich und persönlich</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>Kontaktieren Sie uns</h3>
+                    <p>Haben Sie Fragen oder möchten Sie ein Projekt besprechen? Wir freuen uns auf Ihre Nachricht!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-item-text">
+                                <strong>E-Mail</strong>
+                                <span>kontakleonyago@gmail.com</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📱</div>
+                            <div class="contact-item-text">
+                                <strong>Telefon</strong>
+                                <span>+49 179 4904546</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-item-text">
+                                <strong>Standort</strong>
+                                <span>Oranienburg, Brandenburg</span>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">⏰</div>
+                            <div class="contact-item-text">
+                                <strong>Erreichbarkeit</strong>
+                                <span>Mo-Fr: 9:00 - 18:00 Uhr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <h3>Schreiben Sie uns</h3>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" id="name" name="name" required placeholder="Ihr Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">E-Mail *</label>
+                                <input type="email" id="email" name="email" required placeholder="ihre@email.de">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Telefon (optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+49 123 456789">
+                        </div>
+                <div class="form-group">
+                            <label>Gewünschte Leistung(en) *</label>
+                            <div class="service-buttons">
+                                <label class="service-btn">
+                                    <input type="checkbox" name="service[]" value="💻 Basic Website – 150-300€">
+                                    <span>💻 Basic Website</span>
+                                    <small>150-300€</small>
+                                </label>
+
+                                <label class="service-btn">
+                                    <input type="checkbox" name="service[]" value="🚀 Business Website – 300-600€">
+                                    <span>🚀 Business Website</span>
+                                    <small>300-600€</small>
+                                </label>
+
+                                <label class="service-btn">
+                                    <input type="checkbox" name="service[]" value="🔧 Wartung & Support – 20€/Std.">
+                                    <span>🔧 Wartung & Support</span>
+                                    <small>20€/Std.</small>
+                                </label>
+
+                                <label class="service-btn">
+                                    <input type="checkbox" name="service[]" value="💬 Erstberatung – Kostenlos">
+                                    <span>💬 Erstberatung</span>
+                                    <small>Kostenlos</small>
+                                </label>
+
+                                <label class="service-btn">
+                                    <input type="checkbox" name="service[]" value="📋 Sonstiges – Auf Anfrage">
+                                    <span>📋 Sonstiges</span>
+                                    <small>Auf Anfrage</small>
+                                </label>
+
+                                <input
+                                        type="text"
+                                        id="services_combined"
+                                        name="services_combined"
+                                        style="display:none; visibility:hidden; opacity:0; height:0; border:none; padding:0; margin:0;"
+                                >
+
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Ihre Nachricht *</label>
+                            <textarea id="message" name="message" required
+                                placeholder="Erzählen Sie uns von Ihrem Projekt..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-lg">
+                            Nachricht senden
+                            <span>→</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">LY-Webstudio</a>
+                    <p>Professionelle Webseiten für kleine Unternehmen in Oranienburg, Brandenburg und Berlin. Von
+                        Studenten für Ihr Unternehmen.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="#home">Start</a></li>
+                        <li><a href="#about">Über uns</a></li>
+                        <li><a href="#styles">Design-Stile</a></li>
+                        <li><a href="#pricing">Preise</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Leistungen</h4>
+                    <ul>
+                        <li><a href="#pricing">Basic Website</a></li>
+                        <li><a href="#pricing">Business Website</a></li>
+                        <li><a href="#pricing">Wartung & Support</a></li>
+                        <li><a href="#contact">Beratung</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Kontakt</h4>
+                    <ul>
+                        <li><a href="mailto:kontakleonyago@gmail.com">kontakleonyago@gmail.com</a></li>
+                        <li><a href="tel:+491794904546">+49 179 4904546</a></li>
+                        <li><a href="#contact">Kontaktformular</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 LY-Webstudio – Webdesigner Oranienburg. Alle Rechte vorbehalten.</p>
+                <div class="footer-legal">
+                    <a href="#" onclick="openModal('impressum-modal'); return false;">Impressum</a>
+                    <a href="#" onclick="openModal('datenschutz-modal'); return false;">Datenschutz</a>
+                    <a href="#" onclick="openModal('agb-modal'); return false;">AGB</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Impressum Modal -->
+    <div class="modal-overlay" id="impressum-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Impressum</h2>
+                <button class="modal-close" onclick="closeModal('impressum-modal')" aria-label="Schließen">✕</button>
+            </div>
+            <div class="modal-body">
+                <h3>Angaben gemäß § 5 TMG</h3>
+                <div class="contact-box">
+                    <p><strong>LY-Webstudio</strong></p>
+                    <p>Leon Brodersen & Yago Herrling</p>
+                    <p>Teichweg 2</p>
+                    <p>16515 Oranienburg</p>
+                    <p>Deutschland</p>
+                </div>
+
+                <h3>Kontakt</h3>
+                <p>E-Mail: kontakleonyago@gmail.com</p>
+                <p>Telefon: 0179 4904546</p>
+
+                <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+                <p>Leon Brodersen & Yago Herrling</p>
+                <p>Teichweg 2</p>
+                <p>16515 Oranienburg</p>
+
+                <h3>EU-Streitschlichtung</h3>
+                <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a></p>
+                <p>Unsere E-Mail-Adresse finden Sie oben im Impressum. Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+                <h3>Haftung für Inhalte</h3>
+                <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.</p>
+
+                <h3>Haftung für Links</h3>
+                <p>Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter verantwortlich.</p>
+
+                <h3>Urheberrecht</h3>
+                <p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht.</p>
+
+                <h3>Bildnachweise</h3>
+                <p>Die Portraitbilder auf dieser Website wurden mit KI-Unterstützung erstellt.</p>
+
+
+                <p class="modal-date"><em>Stand: Dezember 2025</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Datenschutz Modal -->
+    <div class="modal-overlay" id="datenschutz-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Datenschutzerklärung</h2>
+                <button class="modal-close" onclick="closeModal('datenschutz-modal')" aria-label="Schließen">✕</button>
+            </div>
+            <div class="modal-body">
+                <h3>1. Datenschutz auf einen Blick</h3>
+                <p><strong>Allgemeine Hinweise:</strong> Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.</p>
+
+                <h3>2. Verantwortliche Stelle</h3>
+                <div class="contact-box">
+                    <p><strong>LY-Webstudio</strong></p>
+                    <p>Leon Brodersen & Yago Herrling</p>
+                    <p>Teichweg 2</p>
+                    <p>16515 Oranienburg</p>
+                    <p>Deutschland</p>
+                    <p>E-Mail: kontakleonyago@gmail.com</p>
+                    <p>Telefon: 0179 4904546</p>
+                </div>
+
+                <h3>3. Datenerfassung auf dieser Website</h3>
+                <p><strong>Wie erfassen wir Ihre Daten?</strong></p>
+                <p>Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen (z.B. über das Kontaktformular). Andere Daten werden automatisch beim Besuch der Website erfasst (z.B. technische Daten wie Browser und Betriebssystem).</p>
+
+                <h3>4. Lokale Schriftarten</h3>
+                <p>Diese Website verwendet lokal gehostete Schriftarten. Es werden keine Verbindungen zu externen Servern (wie Google Fonts) hergestellt. Dadurch werden keine Daten an Dritte übertragen.</p>
+
+                <h3>5. Kontaktformular</h3>
+                <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben zwecks Bearbeitung der Anfrage gespeichert.</p>
+                <p><strong>Verarbeitung der Daten:</strong></p>
+                <ul>
+                    <li>Name</li>
+                    <li>E-Mail-Adresse</li>
+                    <li>Telefonnummer (falls angegeben)</li>
+                    <li>Gewünschte Leistungen</li>
+                    <li>Ihre Nachricht</li>
+                </ul>
+
+                <h3>6. Hosting</h3>
+                <p>Diese Website wird gehostet bei:</p>
+                <div class="contact-box">
+                    <p><strong>GitHub Pages</strong></p>
+                    <p>GitHub, Inc.</p>
+                    <p>88 Colin P Kelly Jr St</p>
+                    <p>San Francisco, CA 94107, USA</p>
+                </div>
+
+                <h3>7. SSL-/TLS-Verschlüsselung</h3>
+                <p>Diese Seite nutzt aus Sicherheitsgründen eine SSL- bzw. TLS-Verschlüsselung.</p>
+
+                <h3>8. Ihre Rechte</h3>
+                <p>Sie haben jederzeit das Recht auf:</p>
+                <ul>
+                    <li>Auskunft über Ihre gespeicherten Daten</li>
+                    <li>Berichtigung unrichtiger Daten</li>
+                    <li>Löschung Ihrer Daten</li>
+                    <li>Einschränkung der Verarbeitung</li>
+                    <li>Widerspruch gegen die Verarbeitung</li>
+                </ul>
+
+                <h3>9. EmailJS (Kontaktformular)</h3>
+                <p>Für die Verarbeitung des Kontaktformulars nutzen wir den Dienst EmailJS.</p>
+                <div class="contact-box">
+                    <p><strong>EmailJS</strong></p>
+                    <p>EmailJS LTD</p>
+                    <p>London, United Kingdom</p>
+                    <p>Datenschutzerklärung: <a href="https://www.emailjs.com/legal/privacy-policy/" target="_blank" rel="noopener">emailjs.com/legal/privacy-policy</a></p>
+                </div>
+                <p>Die Datenübertragung erfolgt verschlüsselt. Es werden nur die von Ihnen eingegebenen Daten übermittelt.</p>
+
+                <h3>10. Rechtsgrundlage</h3>
+                <p>Die Verarbeitung Ihrer Daten erfolgt auf Grundlage von:</p>
+                <ul>
+                    <li>Art. 6 Abs. 1 lit. b DSGVO – Vertragsanbahnung</li>
+                    <li>Art. 6 Abs. 1 lit. f DSGVO – Berechtigtes Interesse</li>
+                </ul>
+
+                <h3>11. Speicherdauer</h3>
+                <p>Ihre Kontaktanfragen werden für 6 Monate gespeichert, sofern kein Vertrag zustande kommt. Bei Vertragsschluss gelten die gesetzlichen Aufbewahrungsfristen.</p>
+
+                <p class="modal-date"><em>Stand: Dezember 2025</em></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AGB Modal -->
+    <div class="modal-overlay" id="agb-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Allgemeine Geschäftsbedingungen</h2>
+                <button class="modal-close" onclick="closeModal('agb-modal')" aria-label="Schließen">✕</button>
+            </div>
+            <div class="modal-body">
+                <h3>§ 1 Geltungsbereich</h3>
+                <p>Diese AGB gelten für alle Verträge zwischen LY-Webstudio (Leon Brodersen & Yago Herrling) und dem Kunden über Webdesign- und Webentwicklungs-Dienstleistungen.</p>
+
+                <h3>§ 2 Vertragsschluss</h3>
+                <p>Der Vertrag kommt zustande, wenn wir Ihr Angebot durch eine Auftragsbestätigung per E-Mail annehmen oder mit der Leistungserbringung beginnen.</p>
+
+                <h3>§ 3 Leistungsumfang</h3>
+                <p><strong>Unsere Pakete:</strong></p>
+                <ul>
+                    <li><strong>Basic Website (250€):</strong> 1-3 Seiten, Responsive Design, Domain-Einrichtung</li>
+                    <li><strong>Business Website (400€):</strong> 4-7 Seiten, individuelles Design, SEO-Optimierung inklusive</li>
+                    <li><strong>Wartung & Support:</strong> 20-25€ pro Stunde</li>
+                    <li><strong>SEO-Optimierung (als Extra):</strong> ca. 80€</li>
+                </ul>
+                <p>Nicht enthalten sind laufende Kosten für Domain und Hosting.</p>
+
+                <h3>§ 4 Mitwirkungspflichten</h3>
+                <p>Der Kunde stellt alle erforderlichen Materialien (Texte, Bilder, Logos) rechtzeitig zur Verfügung.</p>
+
+                <h3>§ 5 Preise und Zahlung</h3>
+                <p>Alle Preise sind Endpreise (Kleinunternehmerregelung gem. § 19 UStG).</p>
+                <p><strong>Zahlungsmodalitäten:</strong></p>
+                <ul>
+                    <li>50% bei Auftragserteilung</li>
+                    <li>50% nach Fertigstellung</li>
+                </ul>
+
+                <h3>§ 6 Lieferzeit</h3>
+                <ul>
+                    <li><strong>Basic Website:</strong> ca. 1 Woche</li>
+                    <li><strong>Business Website:</strong> ca. 1-2 Wochen</li>
+                </ul>
+
+                <h3>§ 7 Abnahme</h3>
+                <p>Die Leistung gilt als abgenommen, wenn der Kunde nicht innerhalb von 14 Tagen Mängel rügt.</p>
+
+                <h3>§ 8 Änderungswünsche</h3>
+                <p>Im Projektpreis sind zwei Korrekturschleifen enthalten. Darüber hinausgehende Änderungen werden nach Aufwand berechnet.</p>
+
+                <h3>§ 9 Nutzungsrechte</h3>
+                <p>Nach vollständiger Bezahlung erhält der Kunde das Nutzungsrecht an den erstellten Werken.</p>
+
+                <h3>§ 10 Gewährleistung</h3>
+                <p>Die Gewährleistungsfrist beträgt 12 Monate ab Abnahme.</p>
+
+                <h3>§ 11 Wartung & Support</h3>
+                <p>Wartungsarbeiten werden nach Aufwand abgerechnet (20-25€ pro Stunde).</p>
+
+                <h3>§ 12 Schlussbestimmungen</h3>
+                <p>Es gilt das Recht der Bundesrepublik Deutschland. Erfüllungsort ist Oranienburg.</p>
+
+                <div class="contact-box" style="margin-top: 2rem;">
+                    <p><strong>LY-Webstudio</strong></p>
+                    <p>Leon Brodersen & Yago Herrling</p>
+                    <p>Teichweg 2, 16515 Oranienburg</p>
+                    <p>kontakleonyago@gmail.com | 0179 4904546</p>
+                </div>
+
+                <p class="modal-date"><em>Stand: Dezember 2025</em></p>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("Z57gOiO7JF_9Z8kpq")
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
