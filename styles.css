@@ -2282,6 +2282,8 @@ footer {
     color: #9ca3af;
     text-decoration: none;
     transition: color 0.3s ease;
+    padding: 10px 16px;
+    border-radius: 6px;
 }
 
 .footer-legal a:hover {
