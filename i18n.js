@@ -722,13 +722,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.addEventListener('click', toggleLanguage);
     }
 
-    // Apply saved language (or default 'de')
-    if (currentLang === 'en') {
-        applyLanguage('en');
-    } else {
-        // Ensure slider starts in correct position for 'de'
-        if (toggle) toggle.classList.remove('lang-en');
-    }
+    // Always apply language to ensure correct toggle state on load
+    applyLanguage(currentLang);
 });
 
 // Export functions for use in other scripts
