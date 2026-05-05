@@ -601,10 +601,15 @@ function applyLanguage(lang) {
         }
     });
 
-    // Update toggle button title/tooltip
+    // Update toggle button title/tooltip + slide class
     const toggle = document.getElementById('langToggle');
     if (toggle) {
         toggle.title = lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln';
+        if (lang === 'en') {
+            toggle.classList.add('lang-en');
+        } else {
+            toggle.classList.remove('lang-en');
+        }
     }
 
     // Re-translate open demo if one exists
@@ -720,8 +725,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Apply saved language (or default 'de')
     if (currentLang === 'en') {
         applyLanguage('en');
+    } else {
+        // Ensure slider starts in correct position for 'de'
+        if (toggle) toggle.classList.remove('lang-en');
     }
-    // German is default, no need to apply if currentLang === 'de'
 });
 
 // Export functions for use in other scripts
