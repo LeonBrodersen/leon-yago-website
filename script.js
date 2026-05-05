@@ -1926,6 +1926,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Aktuell geöffneter Demo-Style (für Sprachswitch)
+let currentDemoKey = null;
+
 // Demo öffnen
 function showStyleDemo(styleKey) {
     const style = styleDemos[styleKey];
@@ -1933,6 +1936,8 @@ function showStyleDemo(styleKey) {
         console.error('Style nicht gefunden:', styleKey);
         return;
     }
+
+    currentDemoKey = styleKey;
 
     const overlay = document.getElementById('styleDemoOverlay');
     const iframe = document.getElementById('styleDemoFrame');
@@ -1946,6 +1951,13 @@ function showStyleDemo(styleKey) {
     // HTML in iframe laden
     iframe.srcdoc = style.html;
 
+    // Nach Laden des iframes die aktuelle Sprache anwenden
+    iframe.onload = function() {
+        if (typeof currentLang !== 'undefined' && currentLang === 'en' && typeof translateDemoIframe === 'function') {
+            translateDemoIframe(iframe, styleKey, 'en');
+        }
+    };
+
     // Overlay anzeigen
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -1958,6 +1970,7 @@ function closeStyleDemo() {
         overlay.classList.remove('active');
         document.body.style.overflow = '';
     }
+    currentDemoKey = null;
 }
 
 
