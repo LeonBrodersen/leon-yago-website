@@ -1,4 +1,7 @@
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
+
+const MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=Fichtestra%C3%9Fe+1%2C+10967+Berlin";
 
 export function Contact() {
   return (
@@ -70,20 +73,27 @@ export function Contact() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 md:gap-8 lg:gap-12">
-          <div
-            aria-label="Karte: Wirtshaus zum Mitterhofer in Berlin-Kreuzberg"
-            className="flex aspect-[4/3] items-center justify-center border border-border bg-bg"
+          <a
+            href={MAP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Adresse in Google Maps öffnen — externer Link"
+            className="group relative flex aspect-[4/3] items-center justify-center border border-border bg-bg transition-colors duration-200 hover:bg-bg-alt"
           >
             <div className="text-center">
               <MapPin
                 aria-hidden="true"
                 className="mx-auto h-12 w-12 text-accent"
               />
-              <p className="mt-4 text-sm uppercase tracking-[0.2em] text-ink-muted">
+              <p className="mt-4 text-sm uppercase tracking-[0.2em] text-ink-muted transition-colors group-hover:text-ink">
                 Berlin-Kreuzberg
               </p>
             </div>
-          </div>
+            <ExternalLink
+              aria-hidden="true"
+              className="absolute right-4 top-4 h-4 w-4 text-ink-muted transition-colors group-hover:text-accent"
+            />
+          </a>
 
           <div className="space-y-10">
             <div>
