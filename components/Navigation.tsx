@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { Menu, X, UtensilsCrossed, CalendarDays } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
 
 const NAV_LINKS = [
   { label: "Über uns", href: "#chef", anchor: true },
@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { label: "News", href: "/news", anchor: false },
 ] as const;
 
+const PHONE_HREF = "tel:+493012345678";
 const SCROLL_THRESHOLD = 64;
 
 export function Navigation() {
@@ -57,31 +58,8 @@ export function Navigation() {
         overHero ? "bg-transparent" : "border-b border-border bg-bg"
       }`}
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 sm:px-8 lg:px-12">
-        <div className="hidden items-center gap-5 md:flex">
-          <Link
-            href={`${linkPrefix}#menu`}
-            aria-label="Zur Speisekarte"
-            className={`transition-colors duration-200 ${
-              overHero
-                ? "text-ink-on-dark hover:text-bg-cream"
-                : "text-ink hover:text-accent"
-            }`}
-          >
-            <UtensilsCrossed className="h-5 w-5" aria-hidden="true" />
-          </Link>
-          <Link
-            href={`${linkPrefix}#reservation`}
-            aria-label="Reservierung"
-            className={`transition-colors duration-200 ${
-              overHero
-                ? "text-ink-on-dark hover:text-bg-cream"
-                : "text-ink hover:text-accent"
-            }`}
-          >
-            <CalendarDays className="h-5 w-5" aria-hidden="true" />
-          </Link>
-        </div>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4 sm:px-8 lg:px-12">
+        <div aria-hidden="true" className="hidden flex-1 md:block" />
 
         <Link
           href="/"
@@ -92,16 +70,29 @@ export function Navigation() {
           <span aria-hidden="true">✦ </span>Sao
         </Link>
 
-        <Link
-          href={`${linkPrefix}#reservation`}
-          className={`hidden px-6 py-2.5 text-xs font-medium uppercase tracking-wide transition-colors duration-200 md:inline-block ${
-            overHero
-              ? "bg-bg-cream text-ink hover:bg-bg"
-              : "bg-ink text-bg-cream hover:bg-ink-muted"
-          }`}
-        >
-          Reservieren
-        </Link>
+        <div className="hidden flex-1 items-center justify-end gap-2 md:flex lg:gap-3">
+          <a
+            href={PHONE_HREF}
+            className={`inline-flex items-center gap-2 border px-5 py-2.5 text-xs font-medium uppercase tracking-wide transition-colors duration-200 ${
+              overHero
+                ? "border-ink-on-dark/40 text-ink-on-dark hover:bg-bg-cream hover:text-ink"
+                : "border-ink text-ink hover:bg-ink hover:text-bg-cream"
+            }`}
+          >
+            <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+            Anrufen
+          </a>
+          <Link
+            href={`${linkPrefix}#reservation`}
+            className={`inline-block px-5 py-2.5 text-xs font-medium uppercase tracking-wide transition-colors duration-200 ${
+              overHero
+                ? "bg-bg-cream text-ink hover:bg-bg"
+                : "bg-ink text-bg-cream hover:bg-ink-muted"
+            }`}
+          >
+            Reservieren
+          </Link>
+        </div>
 
         <button
           type="button"
@@ -178,11 +169,19 @@ export function Navigation() {
                 </Link>
               </li>
             ))}
-            <li className="pt-4">
+            <li className="flex flex-col gap-3 pt-4 sm:flex-row">
+              <a
+                href={PHONE_HREF}
+                onClick={() => setMobileOpen(false)}
+                className="inline-flex items-center justify-center gap-2 border border-ink px-8 py-4 text-xs font-medium uppercase tracking-wide text-ink transition-colors duration-200 hover:bg-ink hover:text-bg-cream"
+              >
+                <Phone className="h-3.5 w-3.5" aria-hidden="true" />
+                Anrufen
+              </a>
               <Link
                 href={`${linkPrefix}#reservation`}
                 onClick={() => setMobileOpen(false)}
-                className="inline-block bg-ink px-10 py-4 text-xs font-medium uppercase tracking-wide text-bg-cream transition-colors duration-200 hover:bg-ink-muted"
+                className="inline-block bg-ink px-10 py-4 text-center text-xs font-medium uppercase tracking-wide text-bg-cream transition-colors duration-200 hover:bg-ink-muted"
               >
                 Reservieren
               </Link>
