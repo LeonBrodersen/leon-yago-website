@@ -22,7 +22,7 @@ export function Reveal({
       className={`transition-[opacity,transform] duration-700 ease-out ${
         inView
           ? "translate-y-0 opacity-100"
-          : "translate-y-4 opacity-0"
+          : "translate-y-12 opacity-0"
       } ${className}`}
     >
       {children}
