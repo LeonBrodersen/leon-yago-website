@@ -13,7 +13,10 @@ export default function Home() {
       <Navigation />
 
       <main>
-        <Hero />
+        <Hero
+          imageSrc="/images/hero.jpg"
+          imageAlt="Großzügig angerichteter Mix vietnamesischer Gerichte von oben — Phở, gegrillte Spezialitäten, Frühlingsrollen, Dim Sum, frische Kräuter."
+        />
         <SignatureDishes />
         <Menu />
         <Chef />
