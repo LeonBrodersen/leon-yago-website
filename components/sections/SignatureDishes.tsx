@@ -2,9 +2,27 @@ import { DishCard, type DishCardProps } from "@/components/DishCard";
 import { Reveal } from "@/components/Reveal";
 
 const SIGNATURE_DISHES: ReadonlyArray<DishCardProps> = [
-  { name: "Phở Bò Tái", price: "18", href: "#menu" },
-  { name: "Bún Chả Hà Nội", price: "22", href: "#menu" },
-  { name: "Chè Sao", price: "12", href: "#menu" },
+  {
+    name: "Phở Bò Tái",
+    price: "18",
+    href: "#menu",
+    imageSrc: "/images/dishes/pho-bo-tai.jpg",
+    imageAlt: "Schüssel Phở Bò Tái mit klarer Rinderbrühe, dünnen Rindfleisch-Scheiben, Frühlingszwiebeln und Zwiebelringen.",
+  },
+  {
+    name: "Bún Chả Hà Nội",
+    price: "22",
+    href: "#menu",
+    imageSrc: "/images/dishes/bun-cha.jpg",
+    imageAlt: "Bún Chả Hà Nội — Dipping-Brühe mit eingelegter Papaya und gegrilltem Schweinefleisch, dazu Reisnudeln und frische Kräuter.",
+  },
+  {
+    name: "Chè Sao",
+    price: "12",
+    href: "#menu",
+    imageSrc: "/images/dishes/che-sao.jpg",
+    imageAlt: "Chè Sao — geschichtetes Dessert mit Crème, Beerenkompott und Kokosflocken in einem Glas.",
+  },
 ];
 
 export function SignatureDishes() {

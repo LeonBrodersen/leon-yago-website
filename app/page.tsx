@@ -19,7 +19,10 @@ export default function Home() {
         />
         <SignatureDishes />
         <Menu />
-        <Chef />
+        <Chef
+          imageSrc="/images/chef/linh-tran.jpg"
+          imageAlt="Linh Tran am Küchenwerk — Hände beim Zubereiten asiatischer Eier-Crêpes mit hölzernen Werkzeugen."
+        />
         <Awards />
         <Reservation />
       </main>

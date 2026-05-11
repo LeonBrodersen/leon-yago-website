@@ -8,6 +8,7 @@ import { Reveal } from "@/components/Reveal";
 interface Category {
   id: string;
   label: string;
+  defaultImage: { src: string; alt: string };
   items: MenuItemProps[];
 }
 
@@ -15,6 +16,10 @@ const CATEGORIES: ReadonlyArray<Category> = [
   {
     id: "vorspeisen",
     label: "Vorspeisen",
+    defaultImage: {
+      src: "/images/menu/vorspeisen.jpg",
+      alt: "Vietnamesische Sommerrollen mit Dipping-Sauce.",
+    },
     items: [
       {
         name: "Gỏi Cuốn (Frische Sommerrollen)",
@@ -51,6 +56,10 @@ const CATEGORIES: ReadonlyArray<Category> = [
   {
     id: "pho",
     label: "Phở & Nudeln",
+    defaultImage: {
+      src: "/images/menu/pho.jpg",
+      alt: "Schüssel mit Phở-Brühe, Reisnudeln, Fleisch und Kräutern.",
+    },
     items: [
       {
         name: "Phở Bò Tái",
@@ -93,6 +102,10 @@ const CATEGORIES: ReadonlyArray<Category> = [
   {
     id: "hauptgerichte",
     label: "Hauptgerichte",
+    defaultImage: {
+      src: "/images/menu/hauptgerichte.jpg",
+      alt: "Teller mit gegrilltem Fleisch und Gemüse, vietnamesischer Stil.",
+    },
     items: [
       {
         name: "Cá Kho Tộ (Karamellisierter Fisch im Tontopf)",
@@ -125,6 +138,10 @@ const CATEGORIES: ReadonlyArray<Category> = [
   {
     id: "desserts",
     label: "Desserts",
+    defaultImage: {
+      src: "/images/menu/desserts.jpg",
+      alt: "Cremeweißes Dessert mit Toppings in einer Schale.",
+    },
     items: [
       {
         name: "Chè Sao",
@@ -151,6 +168,10 @@ const CATEGORIES: ReadonlyArray<Category> = [
   {
     id: "getraenke",
     label: "Getränke",
+    defaultImage: {
+      src: "/images/menu/getraenke.jpg",
+      alt: "Vietnamesischer Phin-Tropfkaffee neben einem Glas Eiswasser.",
+    },
     items: [
       {
         name: "Cà Phê Sữa Đá (Eiskaffee mit Kondensmilch)",
@@ -189,6 +210,12 @@ export function Menu() {
     CATEGORIES.find((c) => c.id === activeId) ?? CATEGORIES[0];
   const displayedItem =
     activeCategory.items[hoveredIndex ?? 0] ?? activeCategory.items[0];
+  const displayedImage = displayedItem.imageSrc
+    ? {
+        src: displayedItem.imageSrc,
+        alt: displayedItem.imageAlt ?? displayedItem.name,
+      }
+    : activeCategory.defaultImage;
 
   return (
     <section
@@ -247,22 +274,14 @@ export function Menu() {
           </ul>
 
           <div className="relative hidden aspect-[4/5] overflow-hidden border border-border bg-bg md:sticky md:top-32 md:block md:self-start">
-            {displayedItem.imageSrc ? (
-              <Image
-                key={displayedItem.name}
-                src={displayedItem.imageSrc}
-                alt={displayedItem.imageAlt ?? displayedItem.name}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover transition-opacity duration-300"
-              />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
-                <p className="text-sm uppercase tracking-[0.2em] text-ink-muted/70">
-                  {displayedItem.name}
-                </p>
-              </div>
-            )}
+            <Image
+              key={`${activeCategory.id}-${displayedImage.src}`}
+              src={displayedImage.src}
+              alt={displayedImage.alt}
+              fill
+              sizes="(min-width: 768px) 50vw, 100vw"
+              className="object-cover transition-opacity duration-300"
+            />
           </div>
         </div>
       </div>
