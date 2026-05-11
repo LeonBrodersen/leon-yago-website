@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { MenuItem, type MenuItemProps } from "@/components/MenuItem";
+import { Reveal } from "@/components/Reveal";
 
 interface Category {
   id: string;
@@ -195,16 +196,18 @@ export function Menu() {
       className="scroll-mt-20 bg-bg-cream px-6 py-16 sm:px-8 md:py-24 lg:px-12 lg:py-32"
     >
       <div className="mx-auto max-w-6xl">
-        <div className="mb-10 space-y-3 text-center md:mb-14">
-          <p className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-muted">
-            <span aria-hidden="true">✦</span>
-            Speisekarte
-            <span aria-hidden="true">✦</span>
-          </p>
-          <h2 className="text-h1 text-ink">
-            Unsere Karte ist eine Reise durch Vietnam.
-          </h2>
-        </div>
+        <Reveal className="mb-10 md:mb-14">
+          <div className="space-y-3 text-center">
+            <p className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-muted">
+              <span aria-hidden="true">✦</span>
+              Speisekarte
+              <span aria-hidden="true">✦</span>
+            </p>
+            <h2 className="text-h1 text-ink">
+              Unsere Karte ist eine Reise durch Vietnam.
+            </h2>
+          </div>
+        </Reveal>
 
         <ul
           aria-label="Speisekarten-Kategorien"

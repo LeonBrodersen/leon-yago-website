@@ -4,6 +4,7 @@ import { Fragment, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { Reveal } from "@/components/Reveal";
 
 const reservationSchema = z.object({
   name: z.string().min(2, "Bitte geben Sie Ihren Namen ein."),
@@ -67,7 +68,7 @@ export function Reservation() {
     >
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-          <div className="flex flex-col gap-8 text-ink-on-dark">
+          <Reveal className="flex flex-col gap-8 text-ink-on-dark">
             <p className="text-xs uppercase tracking-[0.3em] text-ink-muted-on-dark">
               Reservierung
             </p>
@@ -88,9 +89,9 @@ export function Reservation() {
                 ))}
               </dl>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="bg-bg p-6 sm:p-8 lg:p-10">
+          <Reveal delay={150} className="bg-bg p-6 sm:p-8 lg:p-10">
             {submitted && (
               <div
                 role="status"
@@ -221,7 +222,7 @@ export function Reservation() {
                 {isSubmitting ? "Wird gesendet…" : "Jetzt reservieren"}
               </button>
             </form>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

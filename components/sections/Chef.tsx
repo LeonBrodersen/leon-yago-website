@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Quote } from "lucide-react";
+import { Reveal } from "@/components/Reveal";
 
 interface ChefProps {
   imageSrc?: string;
@@ -25,7 +26,7 @@ export function Chef({
     >
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-8 md:grid-cols-2 lg:gap-12">
-          <div className="relative aspect-[3/4] overflow-hidden bg-bg-dark md:aspect-auto">
+          <Reveal className="relative aspect-[3/4] overflow-hidden bg-bg-dark md:aspect-auto">
             {imageSrc ? (
               <Image
                 src={imageSrc}
@@ -54,9 +55,9 @@ export function Chef({
                 — Linh Tran
               </footer>
             </blockquote>
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col gap-6">
+          <Reveal delay={150} className="flex flex-col gap-6">
             <p className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-muted">
               <span aria-hidden="true">✦</span>
               Gekocht von der besten Köchin
@@ -90,7 +91,7 @@ export function Chef({
                 </p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>
