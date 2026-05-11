@@ -4,50 +4,45 @@ export interface MenuItemProps {
   name: string;
   description?: string;
   price: string;
-  highlight?: boolean;
   starred?: boolean;
-  quote?: { text: string; source: string };
+  imageSrc?: string;
+  imageAlt?: string;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 }
 
 export function MenuItem({
   name,
   description,
   price,
-  highlight,
   starred,
-  quote,
+  onMouseEnter,
+  onMouseLeave,
 }: MenuItemProps) {
-  const containerClass = highlight
-    ? "my-2 border border-border bg-bg p-6"
-    : "border-b border-border py-4";
-
   return (
-    <article className={containerClass}>
-      <div className="flex items-baseline gap-4">
-        <div className="flex-1">
-          <h4 className="flex items-center gap-2 text-xl text-ink">
-            {name}
-            {starred && (
+    <li
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="group flex items-baseline justify-between gap-4 border-b border-border py-4"
+    >
+      <div className="flex-1">
+        <h3 className="flex items-center gap-2 text-base text-ink underline-offset-4 group-hover:underline">
+          {name}
+          {starred && (
+            <>
               <Star
-                className="h-4 w-4 fill-accent text-accent"
-                aria-label="Hausspezialität"
+                aria-hidden="true"
+                className="h-3.5 w-3.5 fill-accent text-accent"
               />
-            )}
-          </h4>
-          {description && (
-            <p className="mt-1 text-sm text-ink-muted">{description}</p>
+              <span className="sr-only">Signatur-Gericht</span>
+            </>
           )}
-        </div>
-        <div className="whitespace-nowrap font-serif text-lg text-ink">
-          {price} €
-        </div>
+        </h3>
+        {description && (
+          <p className="mt-1 text-sm text-ink-muted">{description}</p>
+        )}
       </div>
-      {quote && (
-        <blockquote className="mt-3 border-l-2 border-accent pl-3 text-sm italic text-ink-muted">
-          „{quote.text}"
-          <span className="not-italic"> — {quote.source}</span>
-        </blockquote>
-      )}
-    </article>
+      <span className="whitespace-nowrap text-sm text-ink-muted">€{price}</span>
+    </li>
   );
 }

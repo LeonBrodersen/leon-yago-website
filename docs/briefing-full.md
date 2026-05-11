@@ -1,39 +1,44 @@
-# Wirtshaus zum Mitterhofer – Konzept-Redesign
+# Sao – Vietnamesisches Restaurant Landing Page
 
-> Demo-Projekt für Studio-Portfolio. Konzeptionelle Neugestaltung der bestehenden
-> Website wirtshaus-zum-mitterhofer.com – nicht für den produktiven Einsatz.
+> Demo-Projekt für Studio-Portfolio. Konzeptionelle Landing Page für ein
+> fiktives vietnamesisches Restaurant "Sao" (vietnamesisch für "Stern").
+> Layout-Basis: Dribbble-Design von Rijal (Shot #24593293). Nicht für den
+> produktiven Einsatz.
 
 ---
 
 ## 1. Projekt-Kontext
 
 ### Was wir bauen
-Eine Single-Page-Restaurant-Website für das **Wirtshaus zum Mitterhofer** in
-Berlin-Kreuzberg. Es handelt sich um ein konzeptionelles Redesign der bestehenden
-Website (von 2020), die strukturelle, visuelle und UX-Probleme hat. Die Demo
-dient als Verkaufsbeispiel ("Vorher/Nachher") für unser Studio.
+Eine Single-Page-Landing für **Sao**, ein modernes vietnamesisches Restaurant
+mit Anspruch auf gehobene, authentische Küche. Inhaber-Chef ist **Linh Tran**,
+geboren in Hanoi, ausgebildet zwischen Hanoi, Hue und Saigon. Die Seite soll
+Eleganz, vietnamesische Tradition und kulinarisches Handwerk vermitteln –
+modern interpretiert, ohne in Pho-Bowl-Imbiss-Klischees zu verfallen.
 
 ### Was die Site ausstrahlen muss
-- **Gemütlich**, aber nicht klischeehaft. Keine Lederhose, kein Edelweiß, kein
-  Bavaria-Folklore-Kitsch.
-- **Persönlich.** Hannes Mitterhofer – der südtiroler Inhaber, der selbst bedient
-  – ist die Hauptfigur, nicht das Logo.
-- **Stolz auf Handwerk.** Eigenes Bier, Rezepte aus der Heimat, Riesen-Schnitzel.
-- **Berlin-Kreuzberger Lässigkeit.** "Urständig, aber nicht plump." (Original-Zitat
-  einer Yelp-Rezension.)
+- **Elegant, aber warm.** Kein steriler Fine-Dining-Look. Erdige Töne, warmes
+  Licht, atmosphärische Foodfotografie.
+- **Persönlich.** Chef Linh Tran ist die Hauptfigur – Hanoi, Familienküche der
+  Großmutter, Reise durch alle drei vietnamesischen Küchenregionen.
+- **Stolz auf Handwerk.** Eigene Brühen (24h gezogen), frische Kräuter,
+  hausgemachte Nudeln.
+- **Moderne Vietnamesität.** Nicht Take-away-Pho, sondern Phở Bò Tái, Bún Chả
+  Hà Nội, Chè Sao als Signature-Dessert.
 
 ### Wer kommt auf die Site
-- Stammgäste, die nach Tageskarte oder Reservierung suchen
-- Neukunden aus Kreuzberg/Mitte, die "Schnitzel" gegoogelt haben
-- Touristen aus dem deutschsprachigen Raum, die Südtiroler Küche suchen
-- Eltern, die ihre Kinder in Kreuzberg besuchen (echtes Zitat aus den
-  Testimonials)
+- Gäste, die online reservieren wollen
+- Foodies, die die Karte und Chef-Story lesen
+- Geschäftspartner, die einen repräsentativen Ort suchen
+- Touristen mit Anspruch (englische Sprachversion vorbereitet)
 
 ### Was die Site KANN
-- Vertrauen aufbauen (echte Story, echte Menschen, echte Yelp-Zitate)
-- Speisen vollständig zeigen (kein PDF-Verweis)
-- Reservierung ermöglichen (CTA, Telefon, Anfrage)
-- Bier-USP rausspielen (Mitterhofer Helles + Keller Bier, Bier der Woche)
+- Direkt reservieren (Formular mit Name, Email, Telefon, Datum, Uhrzeit, Personen)
+- Speisekarte nach Kategorien anzeigen (Starters, Pho & Noodles, Mains, Desserts, Drinks)
+- Signature Dishes prominent zeigen (mit Preis und Bild)
+- Chef-Story vermitteln (Linh Tran)
+- Auszeichnungen / Pressestimmen zeigen (Michelin, Time Out, BBC, CNN etc.)
+- Vertrauen aufbauen über Awards-Sektion
 
 ---
 
@@ -43,10 +48,11 @@ dient als Verkaufsbeispiel ("Vorher/Nachher") für unser Studio.
 - **Next.js 14** (App Router)
 - **TypeScript**
 - **Tailwind CSS v4** (modernste Version)
-- **shadcn/ui** für Basis-Komponenten (Button, Card, Dialog) – sparsam einsetzen
+- **shadcn/ui** für Basis-Komponenten (Button, Card, Dialog, Tabs) – sparsam
 - **Lucide Icons** für Icon-Set
 - **next/font** für Typografie (Self-Hosting der Google Fonts)
 - **next/image** für alle Bilder (Performance!)
+- **react-hook-form + zod** für das Reservierungsformular
 
 ### Projektstruktur
 ```
@@ -56,18 +62,17 @@ app/
   globals.css          # Tailwind + Custom Properties
 components/
   sections/
-    Hero.tsx
-    Story.tsx
-    Menu.tsx
-    Beer.tsx
-    Gallery.tsx
-    Testimonials.tsx
-    Reservation.tsx
-    Location.tsx
+    Hero.tsx           # "Welcome to Sao" + Hero-Pho-Bild
+    SignatureDishes.tsx # 3-Card-Grid (Phở Bò, Bún Chả, Chè Sao)
+    Menu.tsx           # Tabs (Starters, Pho & Noodles, ...) + Liste
+    Chef.tsx           # Linh Tran Portrait + Story
+    Awards.tsx         # Michelin, Time Out, BBC, ... Logo-Grid
+    Reservation.tsx    # Formular + Open Hours
     Footer.tsx
   ui/                  # shadcn-Komponenten
-  Navigation.tsx       # Sticky Header
+  Navigation.tsx       # Header mit Logo "Sao" mittig
   MenuItem.tsx         # Wiederverwendbares Speisekarten-Item
+  DishCard.tsx         # Signature-Dish-Card
 public/
   images/              # Stock-Fotos hier
 ```
@@ -83,75 +88,96 @@ public/
 
 ### 3.1 Farbpalette
 
-Wir vermeiden bewusst das Standard-Wirtshaus-Klischee (warmes Braun + Beige +
-Goldgelb). Stattdessen: **dunkles, ruhiges Anthrazit als Grundton**, mit einem
-warmen Cremeweiß und einem signifikanten Akzent in **gedecktem Burgunderrot**
-(Anlehnung an südtiroler Wein, gedeckter als Bayernrot).
+Basis ist eine **erdige, warme Palette** mit Anklängen an vietnamesische
+Lacktraditionen: tiefes Schwarzbraun (Sơn-Mài-Lack) als Akzent-Hintergrund,
+dazu sauberes Cremeweiß, weiches Off-White. Statt eines knalligen Rot-Akzents
+ein gedeckter terracotta-Ton (Anlehnung an vietnamesische Pagoden-Dächer).
 
 ```
 /* Hauptfarben */
---color-bg:           #FAF6F1   /* Warmes Cremeweiß – Hauptbackground         */
---color-bg-alt:       #F0E9DF   /* Etwas dunkler für alternierende Sektionen */
---color-ink:          #1F1A17   /* Tiefes Anthrazit – Text, Headlines        */
---color-ink-muted:    #5C534D   /* Gedämpft – Body-Text, Labels              */
+--color-bg:           #FFFFFF   /* Reinweiß – primärer Background            */
+--color-bg-cream:     #FAF6F0   /* Cremeweiß – Soft-Sections, Menu-BG        */
+--color-bg-dark:      #2A1F18   /* Tief-Schwarzbraun – Signature, Reservation*/
+--color-bg-darker:    #1C140F   /* Noch tiefer – Footer, dunkle Akzente      */
+
+/* Textfarben */
+--color-ink:          #1A1410   /* Tiefes Braun-Schwarz – Headlines, Text    */
+--color-ink-muted:    #6B5D4F   /* Gedämpft – Body-Text, Captions            */
+--color-ink-on-dark:  #F3EBDF   /* Cremiges Weiß für Text auf dunklem BG     */
+--color-ink-muted-on-dark: #B0A28A /* Gedämpft auf dunklem Hintergrund      */
 
 /* Akzentfarben */
---color-accent:       #7A1F2B   /* Tiefes Burgunderrot – Logo, CTAs, Links   */
---color-accent-hover: #5C1620   /* Dunklere Variante für Hover-States        */
---color-accent-soft:  #F4E4E1   /* Sehr helle Akzent-Variante für Badges     */
+--color-accent:       #B8553A   /* Gedeckte Terracotta – Tab-Active, kleine CTAs */
+--color-accent-soft:  #F0D9CC   /* Helle Terracotta-Variante für Badges     */
 
 /* Funktional */
---color-border:       #E5DCD0   /* Subtle Trennlinien                        */
---color-success:      #4A6741   /* Grün für "Verfügbar", "Reserviert"        */
+--color-border:       #E8E0D2   /* Subtle Trennlinien auf hellem BG          */
+--color-border-dark:  #3F2F23   /* Trennlinien auf dunklem BG                */
 ```
 
-**Anti-Pattern:** KEIN Goldgelb, KEIN Hellbraun mit Kupfer-Akzent, KEIN
-Bayern-Blau-Weiß-Schema. Wir machen ein gepflegtes, modernes Wirtshaus, kein
-Hofbräuhaus-Klon.
+**Anti-Pattern:** KEIN knalliges Vietnam-Flaggen-Rot mit Gelb-Stern, KEIN
+Bambus-Grün, KEIN Drachen-Gold. Wir machen ein modernes Restaurant, keine
+Themen-Kulisse.
 
 ### 3.2 Typografie
 
-Zwei Fonts. Beide kostenlos via Google Fonts.
+Zwei Fonts. Beide kostenlos via Google Fonts. Beide unterstützen die
+vietnamesischen Diakritika (â, ă, ơ, ư, đ, Tonzeichen).
 
 ```
-Display / Headlines:   Fraunces (Variable, Serif)
-                       weights: 400, 600
-                       optical sizing für große Headlines
+Display / Headlines:   Cormorant Garamond (Serif)
+                       weights: 300, 400, 500
+                       leichte, elegante Serif mit weiten Buchstaben
+                       → vietnamesisches Latin-Set vollständig
 
 Body / UI:             Inter (Variable, Sans)
                        weights: 400, 500, 600
+                       → vietnamesisches Latin-Set vollständig
 ```
 
-**Warum Fraunces?** Moderne Serif mit warmem Charakter. Bringt die "Tradition" des
-Wirtshauses, ohne altbacken zu wirken. Auf Wirtshaus-Sites wird oft "Playfair
-Display" genutzt – das ist ausgelutscht und zu elegant für ein bodenständiges
-Lokal. Fraunces hat genau die richtige rustikale Note.
+**Wichtig:** Beim Laden der Fonts den `latin-ext` und `vietnamese` Subset mit
+einbinden, sonst werden Diakritika in Phở, Bún Chả, Bánh Mì hässlich gefallback.
 
-**Warum Inter?** Geometrischer, neutraler Sans für Body-Text und UI. Bewährt,
-liest sich auf jeder Bildschirmgröße perfekt.
+```ts
+// in layout.tsx
+import { Cormorant_Garamond, Inter } from "next/font/google"
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+  weight: ["300", "400", "500"],
+})
+const inter = Inter({
+  subsets: ["latin", "latin-ext", "vietnamese"],
+})
+```
+
+**Warum Cormorant Garamond?** Elegante Serif mit hohen Strichkontrasten, passt
+zur gehobenen Atmosphäre und rendert vietnamesische Diakritika sauber.
+
+**Warum Inter?** Geometrischer, neutraler Sans für Body-Text, UI und Formular-
+Labels. Hervorragender Vietnamese-Support.
 
 #### Type-Scale
 
 ```
-text-display    → clamp(3rem, 6vw, 5rem)     /* Hero-Headline */
-text-h1         → clamp(2rem, 4vw, 3rem)     /* Sektion-Titel */
-text-h2         → clamp(1.5rem, 3vw, 2rem)   /* Sub-Headlines */
-text-h3         → text-xl                     /* Card-Titel */
-text-body       → text-base                   /* Body-Text */
-text-small      → text-sm                     /* Labels, Captions */
+text-display    → clamp(3.5rem, 8vw, 6.5rem)  /* Hero "Welcome to Sao"       */
+text-h1         → clamp(2rem, 4vw, 3rem)      /* "Our Signature Dishes"      */
+text-h2         → clamp(1.5rem, 3vw, 2rem)    /* Sub-Headlines               */
+text-h3         → text-xl                      /* Card-Titel, Gerichtnamen   */
+text-body       → text-base                    /* Body-Text                  */
+text-small      → text-sm                      /* Labels, Captions, Preise   */
 ```
 
 #### Hierarchie-Regeln
-- **Headlines** (h1, h2): Fraunces, font-weight 400 (NICHT bold)
-- **Hero-Display:** Fraunces, font-weight 400, mit feinem letter-spacing
-- **Sub-Labels** ("ÜBER UNS"): Inter, uppercase, tracking-wider, kleines Format
-- **Body:** Inter regular, line-height 1.7 für gute Lesbarkeit
-- **CTAs / Buttons:** Inter, font-weight 500 (medium), nicht bold
+- **Display-Hero:** Cormorant Garamond, weight 400, cremiges Weiß
+- **Sektion-Headlines** (h1, h2): Cormorant, weight 400 (NICHT bold), zentriert
+- **Sub-Labels** ("Cooked by the best chefs"): Inter, klein, mit Sternchen-
+  Ornament daneben (✦ ───── ✦ Stil)
+- **Body:** Inter regular, line-height 1.7
+- **Preise:** Inter, regular, kleinere Größe, gedämpfte Farbe
+- **CTAs / Buttons:** Inter, font-weight 500
 
 ### 3.3 Spacing-System
-
-Wir nutzen Tailwinds Default-Spacing (4px-Basis), aber halten uns an feste
-Sektion-Padding-Regeln für Konsistenz:
 
 ```
 Sektion-Padding vertikal:
@@ -164,250 +190,338 @@ Sektion-Padding horizontal:
 
 Container max-width:
   Default:    max-w-6xl  (1152px)
-  Schmal:     max-w-4xl  (Story-Text, Testimonials)
-  Hero/Wide:  max-w-7xl  (Galerie, Hero)
+  Schmal:     max-w-4xl  (Chef-Story, Menu)
+  Hero/Wide:  max-w-7xl  (Hero, Galerie)
 ```
 
 ### 3.4 Komponenten-Patterns
 
 #### Button
 ```tsx
-// Primary CTA
+// Primary CTA (Reserve Now)
 <button className="
-  bg-accent hover:bg-accent-hover
-  text-white
-  px-8 py-4
-  font-medium tracking-wide
+  bg-ink hover:bg-ink-muted
+  text-bg-cream
+  px-10 py-4
+  font-medium tracking-wide text-sm uppercase
   transition-colors duration-200
-  inline-flex items-center gap-2
 ">
-  Tisch reservieren
-  <ArrowRight className="w-4 h-4" />
+  Reserve Now
 </button>
 
-// Secondary (Outline)
+// Tab Button (Menu)
 <button className="
-  border border-ink
-  text-ink hover:bg-ink hover:text-bg
-  px-8 py-4
-  font-medium
-  transition-colors duration-200
+  bg-bg-dark text-bg-cream  // active
+  // OR border border-border text-ink  // inactive
+  px-6 py-2 text-sm
+  transition-colors
 ">
-  Speisekarte ansehen
+  Starters
 </button>
 ```
 
-KEIN abgerundeter Button (kein `rounded-xl`). Wir nutzen scharfe Ecken oder
-allerhöchstens minimal `rounded-sm`. Das passt zur seriösen Wirtshaus-Ästhetik.
+KEIN abgerundeter Button (kein `rounded-xl`). Im Vorbild-Design sind die
+Buttons rechteckig mit minimal `rounded-sm`. Eckig = elegant.
 
-#### Sektion-Header
-Jede Sektion startet mit einem zweizeiligen Header:
+#### Sektion-Header (zentriert, mit Ornament)
 ```tsx
-<div className="space-y-4 mb-16">
-  <p className="text-sm uppercase tracking-[0.2em] text-accent">
-    Speisekarte
+<div className="text-center space-y-3 mb-16">
+  <p className="text-xs uppercase tracking-[0.3em] text-ink-muted
+                inline-flex items-center gap-3">
+    <span>✦</span>
+    Cooked by the best chefs
+    <span>✦</span>
   </p>
   <h2 className="font-serif text-h1 text-ink">
-    Was bei uns auf den Tisch kommt
+    Meet Linh Tran
   </h2>
 </div>
 ```
 
-#### MenuItem (Speisekarte-Eintrag)
-Klassisches Restaurant-Layout: Gericht links, Punkte-Linie, Preis rechts.
+#### MenuItem (Speisekarte)
+Links Gericht/Beschreibung, rechts Preis. Mit Underline-Hover:
 ```tsx
-<div className="flex items-baseline gap-4 py-4 border-b border-border">
+<div className="flex items-baseline justify-between gap-4 py-4
+                border-b border-border group cursor-pointer">
   <div className="flex-1">
-    <h3 className="font-serif text-h3 text-ink">{name}</h3>
-    <p className="text-ink-muted text-sm mt-1">{description}</p>
+    <h3 className="font-sans text-base text-ink
+                   group-hover:underline underline-offset-4">
+      {name}
+    </h3>
   </div>
-  <div className="font-serif text-lg text-ink whitespace-nowrap">
-    {price} €
+  <div className="text-ink-muted text-sm whitespace-nowrap">
+    ${price}
   </div>
 </div>
 ```
 
-KEIN Bild bei jedem Gericht. Das wirkt wie eine Lieferdienst-App. Stattdessen:
-typografisch sauber, mit gelegentlichen Highlight-Bildern dazwischen.
+#### DishCard (Signature Dishes)
+Bild groß, darunter Name + Preis. Auf dunklem BG.
+```tsx
+<div className="bg-bg-darker p-4 flex flex-col gap-4">
+  <div className="aspect-[4/5] relative overflow-hidden">
+    <Image src={dish.image} alt={dish.name} fill className="object-cover" />
+  </div>
+  <div className="flex items-center justify-between text-ink-on-dark">
+    <h3 className="font-sans text-base">{dish.name}</h3>
+    <span className="text-sm flex items-center gap-1">
+      ${dish.price}
+      <ArrowUpRight className="w-3 h-3" />
+    </span>
+  </div>
+</div>
+```
 
-#### Card (für Bier-Sektion, Galerie)
+#### Card (für Awards)
 - Sehr subtle Border (`border border-border`)
-- Padding generös (`p-8`)
-- Kein Schatten (`shadow-none`)
-- Transition bei Hover: leichte BG-Veränderung, kein Lift-Effekt
+- Großes Padding, Logo zentriert
+- Quadratisches Format
+- Kein Schatten
 
 ---
 
 ## 4. Anti-Patterns – was wir NICHT machen
 
-Diese Liste ist genauso wichtig wie der Rest. Wenn der Code in eine dieser
-Richtungen kippt, ist es falsch.
+❌ **Keine Glassmorphism / Frosted Glass.** Nicht der Look.
 
-❌ **Keine Glassmorphism / Frosted Glass.** Das passt nicht zu einem Wirtshaus.
-
-❌ **Keine Gradient-Backgrounds.** Schon gar keine Purple-to-Pink Gradients
-   (Standard-AI-Look). Solid Colors only.
+❌ **Keine Gradient-Backgrounds.** Solid Colors only.
 
 ❌ **Keine animierten Hintergrund-Effekte** (keine bewegten Blobs, keine
-   Particle-Effekte, kein Aurora). Ruhe ausstrahlen.
+   Particle-Effekte, kein Aurora). Ruhe und Eleganz.
 
-❌ **Keine Emoji-Icons.** Wir nutzen Lucide-SVGs. 🍺 als Bier-Icon = sofort billig.
+❌ **Keine Emoji-Icons.** Wir nutzen Lucide-SVGs oder dezente Unicode-Ornamente
+   (✦, ★). 🍜 als Pho-Icon = sofort billig.
 
-❌ **Keine "Modern Tech-Startup"-Optik.** Keine bunten Badges mit "NEW", keine
-   Gradient-Buttons, keine 3D-Illustrations.
+❌ **Keine "Modern Tech-Startup"-Optik.** Keine bunten Badges, keine Gradient-
+   Buttons, keine 3D-Illustrations.
 
-❌ **Keine Auto-Play-Slideshows im Hero.** Statisches großes Foto oder ein
-   einziges, ruhiges Hintergrundvideo. Nichts, was zwingt mitzulesen.
+❌ **Keine Auto-Play-Slideshows mit Punkten unten.** Statisches Bild reicht
+   für die Demo.
 
-❌ **Keine Speisekarte als PDF-Link.** Volle interaktive Karte. Punkt.
+❌ **Keine Speisekarte als PDF-Link.** Volle interaktive Karte mit Tabs.
 
-❌ **Kein "Wir kochen mit Liebe"-Geschwurbel.** Klare, ehrliche Sprache. So wie
-   Hannes selbst spricht.
+❌ **Kein "Authentic Vietnamese Flavors"-Geschwurbel.** Konkrete Beschreibungen,
+   echte Gerichte, Chef-Persönlichkeit.
 
-❌ **Keine Stockfotos von lachenden Hipster-Models** mit Burger in der Hand. Wenn
-   Stockfotos, dann von Atmosphäre, Essen, Bier, Räumlichkeiten – keine
-   Personen-Posen.
+❌ **Keine Vietnam-Klischee-Bilder** (Reisbauern mit Hut, Halong-Bucht-Postkarte,
+   Schwarz-Weiß-Foto vom Mekong, neonbeleuchtetes Drachen-Logo, Bambusvorhang
+   als Deko). Fokus auf Essen, Atmosphäre, Chef.
 
 ❌ **Keine zu vielen Schriftgrößen.** Maximal die definierten 5 Stufen.
+
+❌ **Keine knalligen Akzente.** Kein knalliges Rot, kein Gold-Glitzer, kein
+   Vietnam-Flaggen-Schema.
+
+❌ **Keine fehlenden Diakritika.** Vietnamesische Gerichtnamen werden mit
+   korrekten Tonzeichen geschrieben (Phở, nicht Pho; Bún Chả, nicht Bun Cha).
 
 ---
 
 ## 5. Sektions-Briefing
 
 Pro Sektion: was rein muss, wie's aufgebaut ist, woran wir merken, dass es passt.
+Referenz-Screenshots: siehe `design-refs/` Ordner.
 
 ### 5.1 Navigation (Sticky)
 
-- Logo links: "Wirtshaus zum Mitterhofer" in Fraunces, kleine Größe
-- Rechts: Menüpunkte (Speisen · Bier · Über uns · Kontakt) + CTA "Reservieren"
-- Transparenter Hintergrund auf Hero, wechselt zu Cremeweiß beim Scrollen
+- **Logo zentriert:** "✦ Sao" in Cormorant, kleine Größe
+- **Links neben Logo:** kleine Icons (Besteck, Telefon-Icon) für sekundäre Aktionen
+- **Rechts neben Logo:** Sprachwahl (🇺🇸 Eng ▼ / 🇻🇳 Tiếng Việt)
+- **Darunter zentriert:** Menüpunkte (About Us · Menu · Contacts · Reservations · Shop · News)
+- **Transparenter Hintergrund** auf Hero, wechselt zu Weiß beim Scrollen
 - Mobile: Hamburger → Fullscreen-Overlay-Menü
 
-### 5.2 Hero
+### 5.2 Hero – "Welcome to Sao"
 
-**Layout:** Vollflächig, Höhe ~85vh. Großes Hintergrundbild mit dunklem Overlay
-(rgba(31, 26, 23, 0.4)). Inhalt linksbündig, vertikal zentriert.
+**Layout:** Vollflächig, Höhe ~90vh. Großes Hintergrundbild einer hochwertig
+angerichteten Schale Phở (klare Brühe, frische Kräuter, Limettenviertel,
+Stäbchen). Headline groß über dem Bild.
 
 **Inhalt:**
 ```
-Klein, oben:   "BERLIN-KREUZBERG"           (uppercase, tracking-wider, accent)
-Display-Text:  "Südtirol mitten              (Fraunces, 3-5rem, weiß)
-                in Kreuzberg."
-Sub:           "Schnitzel, Knödel, eigenes   (Inter, weiß-90%, max 60ch)
-                Bier vom Fass. Seit Jahren
-                Stammlokal für die, die
-                wissen, was gut ist."
-CTAs:          [Tisch reservieren] [Speisekarte]
+Display-Text:  "Welcome to Sao"               (Cormorant, riesig, weiß)
+
+Unten zentriert:
+  Award-Logos:  Michelin · ✦ · Time Out         (klein, in Weiß-Linie)
+  Punkte:       ●○○○ (Slider-Indikator)         (dekorativ)
+
+Optional rechts:
+  Pfeil-Button für "next slide"                 (>)
 ```
 
 **Bildwahl** (Unsplash):
-Innenraum eines warmen, gemütlichen Wirtshauses bei Abendlicht. Holz, Kerzenlicht.
-Suchterm-Tipp: "german restaurant interior", "rustic dining wood candle"
+Top-Down oder Side-Shot einer eleganten Phở-Schale auf dunklem Holztisch oder
+heller Stoffunterlage. Suchterm: "pho vietnamese soup elegant", "pho bo top
+view bowl", "vietnamese noodle soup dark".
 
-### 5.3 Story / Über uns
+### 5.3 Signature Dishes
 
-**Layout:** Zweispaltig. Links: Bild (Hannes hinter der Theke, oder
-Wirtshaus-Außenansicht). Rechts: Text mit Sektion-Header.
+**Layout:** Dunkler Schwarzbraun-Hintergrund. Sektion-Header oben links,
+darunter drei Karten nebeneinander (Desktop) / gestapelt (Mobile).
 
-**Text** (genau so verwenden):
-> Hannes Mitterhofer hat sein Wirtshaus dort eröffnet, wo niemand ein Wirtshaus
-> erwarten würde: in Berlin-Kreuzberg.
->
-> Was als kleines Lokal begann, ist heute Stammlokal für die Nachbarschaft – und
-> Pflichtstation für alle, die wissen wollen, wie alpenländische Küche
-> schmeckt, wenn sie wirklich ernst genommen wird. Knödel in allen Variationen.
-> Schmorgerichte mit Zeit. Ein Wiener Schnitzel, das die Konkurrenz alt
-> aussehen lässt.
->
-> Hannes steht selbst hinter der Theke. Wer ihn fragt, bekommt die Geschichte
-> zu jedem Bier, jedem Wein, jedem Gericht.
->
-> Südtirol mitten in Berlin. So einfach ist das.
-
-### 5.4 Speisekarte
-
-**Layout:** Schmaler Container (max-w-4xl). Kategorien als horizontale Tabs oder
-als sticky Sidebar (Desktop).
-
-**Struktur:**
-- Suppen & Kleinigkeiten
-- Knödel & Schmankerln
-- Vom Tiroler Grill (mit dem Schnitzel-Highlight, evtl. eingerahmt)
-- Süßes
-- Hinweis auf wechselnde Tageskarte (CTA: "Aktuelle Tageskarte erfragen")
-
-Inhalt: siehe Speisekarte-Block weiter unten in Abschnitt "Content".
-
-### 5.5 Bier
-
-**Layout:** Drei Cards nebeneinander (Desktop) / gestapelt (Mobile). Mittelpunkt
-der Sektion.
-
-**Inhalte:**
-1. **Mitterhofer Helles** – Badge "NEU", kurze Beschreibung
-2. **Mitterhofer Keller Bier** – Hauptprodukt, Naturtrüb, ungefiltert
-3. **Bier der Woche** – Wechselnde Spezialität
-
-Dahinter ein größerer Hintergrund mit Bier-Foto (Pexels: "german beer", "wheat
-beer pour").
-
-### 5.6 Galerie
-
-**Layout:** Asymmetrisches Grid mit 6-8 Bildern. Kein gleichförmiges 3x3-Grid –
-das wirkt langweilig. Stattdessen verschiedene Bildgrößen wie ein
-Zeitschriften-Layout.
-
-**Bildmotive** (Unsplash-Suche):
-- "schnitzel german food"
-- "knödel dumpling"
-- "kaiserschmarrn"
-- "wirtshaus interior"
-- "beer fass tap"
-- "pretzel dark beer"
-- "berlin kreuzberg restaurant"
-
-### 5.7 Testimonials
-
-**Layout:** Drei Zitate in großer Typo, sehr ruhig. KEIN
-Karussell-mit-Punkten-Klischee. Einfach drei Zitate untereinander oder
-nebeneinander, je nach Größe.
-
-**Inhalte:** Die echten Yelp-Zitate (siehe Content-Block).
-
-### 5.8 Reservierung
-
-**Layout:** Klare CTA-Sektion. Kein langes Formular. Drei Optionen:
-1. Telefonisch: Große, klickbare Telefonnummer
-2. Anfragen per Email: einfache Maillink
-3. Vorbeischauen: Adresse + "Wir freuen uns"
-
-KEIN externes Reservierungs-Tool für die Demo – aber der Platz ist vorgesehen,
-falls man später z.B. Resmio einbindet.
-
-### 5.9 Anfahrt + Öffnungszeiten
-
-**Layout:** Zweispaltig. Links: OpenStreetMap oder Mapbox-Karte mit Marker.
-Rechts: Adresse, Öffnungszeiten, U-Bahn-Anfahrt.
-
-**Inhalte:**
+**Inhalt:**
 ```
-Adresse:  Fichtestraße 1, 10967 Berlin (Kreuzberg)
-Tel:      030/69566909
+Headline:      "Our Signature Dishes"
+Sublabel:      "Discover the soul of Vietnamese cuisine
+                through our signature dishes."
 
-Öffnungszeiten:
-Mo – Fr:        16:00 – 24:00 Uhr
-Sa, So, Feiert.: 17:00 – 24:00 Uhr
-
-Nächste U-Bahn: U7 Südstern (4 Min Fußweg)
+Karten:
+1. Phở Bò Tái                   $18.00
+   (Bild: Phở-Schale mit rosa Rinderfilet, Kräuter)
+2. Bún Chả Hà Nội              $22.00
+   (Bild: Gegrilltes Schweinefleisch mit Reisnudeln, Kräutern)
+3. Chè Sao                      $12.00
+   (Bild: Geschichtetes Süßdessert mit Kokosmilch)
 ```
 
-### 5.10 Footer
+**Layout-Detail:** Jede Karte hat eine Pfeil-Icon (↗) neben dem Preis als
+Hinweis auf Klickbarkeit.
 
-Minimalistisch. Cremeweiß auf Anthrazit-Hintergrund.
-- Logo + kurzer Tagline
-- Kontakt-Infos
-- Impressum, Datenschutz
-- "Konzept-Redesign – nicht produktiv im Einsatz" (Hinweis fürs Demo-Setting)
+### 5.4 Menu – "Our menu is a careful journey through Vietnam"
+
+**Layout:** Cremeweißer Hintergrund. Sektion-Header zentriert. Darunter
+horizontale Tabs. Zweispaltig: Links die Menüliste, rechts ein großes Bild der
+aktuellen Kategorie.
+
+**Tabs:**
+- Starters (default active)
+- Phở & Noodles
+- Mains
+- Desserts
+- Drinks
+
+**Beispiel-Inhalt (Starters):**
+```
+Gỏi Cuốn (Fresh Spring Rolls)               $12.00
+Chả Giò (Crispy Spring Rolls)                $13.00
+Bánh Xèo (Sizzling Crepe)                    $15.00
+Bánh Cuốn (Steamed Rice Rolls)               $14.00
+Nộm Hoa Chuối (Banana Blossom Salad)         $13.00
+```
+
+Beim Hover auf einen Eintrag: Bild rechts wechselt zum jeweiligen Gericht.
+Default-Bild für Starters: Fresh Spring Rolls auf Holzbrett mit Dip.
+
+**Bildwahl pro Kategorie:**
+- Starters: Frühlingsrollen mit Erdnusssauce
+- Phở & Noodles: Dampfende Phở-Schale
+- Mains: Gegrilltes Schweinefleisch oder Caramel-Fisch im Tonkrug
+- Desserts: Chè in Glas geschichtet
+- Drinks: Vietnamese Iced Coffee (cà phê sữa đá)
+
+### 5.5 Chef – "Meet Linh Tran"
+
+**Layout:** Zweispaltig. Links: Großes Portrait des Chefs in der Küche
+(Kochmütze, weiße Jacke). Darunter ein Zitat-Block in Weiß auf dunklem Overlay.
+Rechts: Sektion-Header + Story + Stats.
+
+**Linker Bereich (über Bild gelegt, unten):**
+```
+"  ↗
+Vietnamese cooking is balance — sweet, salty,
+sour, bitter, spicy, umami. At Sao, we honor
+those five tastes with every bowl, every plate."
+```
+
+**Rechter Bereich:**
+```
+Sublabel:      ✦ Cooked by the best chefs ✦
+Headline:      "Meet Linh Tran"
+
+Body:
+Chef Linh Tran, the culinary mind behind Sao, brings two decades
+of obsession with Vietnamese cuisine to every dish on the menu.
+Born in Hanoi, Linh grew up in her grandmother's kitchen, where
+the long-simmered broths of Phở and the herb-bright salads of
+the North shaped her palate. Her journey took her south through
+Huế, where she studied imperial cuisine, and on to Saigon, where
+she trained under some of the country's most respected chefs.
+At Sao, she draws on all three regional traditions, sourcing
+herbs and aromatics weekly and pulling broths for 24 hours
+before they ever reach a bowl.
+
+[View More]   (Outline-Button)
+
+Stats (zwei Boxen nebeneinander):
+  20+              15+
+  Years of         Awards
+  Experience       & Features
+```
+
+**Bildwahl:** Chef-Portrait, Frau mit Kochmütze in professioneller Küche,
+ruhige Haltung. Unsplash: "chef portrait kitchen woman", "asian chef portrait".
+
+### 5.6 Awards & Recognitions
+
+**Layout:** Cremeweißer Hintergrund. Zentrierter Sektion-Header. Darunter ein
+4×2-Grid (8 Logos) der Auszeichnungen / Pressestimmen.
+
+**Inhalt:**
+```
+Headline:      "Our Awards and Recognitions"
+Body:          "Sao is proud to be recognized among the world's most
+                celebrated Vietnamese restaurants. From our Michelin
+                star to features in international press, each accolade
+                reflects our team's dedication to honoring tradition
+                while pushing Vietnamese cuisine forward."
+
+Logo-Grid (4x2):
+  Reihe 1: Michelin (★) · Asia's 50 Best · Time Out · World Class
+  Reihe 2: BBC · The Guardian · CNN · Condé Nast Traveler
+```
+
+**Hinweis:** Logos in SVG, in `public/images/awards/`. Für die Demo dürfen
+generische "Award-Style"-Logos gebaut werden, falls echte Logos rechtlich
+heikel sind.
+
+### 5.7 Reservation – "Reserve now your table"
+
+**Layout:** Dunkler Schwarzbraun-Hintergrund. Zweispaltig.
+Links: Große Headline + Open Hours.
+Rechts: Weißes Formular-Panel.
+
+**Linker Bereich (auf dunklem BG):**
+```
+Headline:    "Reserve now your table and enjoy an
+              unforgettable dining experience."
+              (Cormorant, weiß, groß)
+
+Open Hours:
+  Tue – Fri    10:00 AM – 09:00 PM
+  Sat – Sun    11:00 AM – 10:00 PM
+  Mon          Closed
+```
+
+**Rechter Bereich (weißes Formular):**
+```
+Your Name           [Input: e.g. John]
+Email Address       [Input: e.g. john@example.com]
+Phone Number        [Input: e.g. +(123) 456-7890]
+
+Date         Time           Number of Person
+[dd/mm/yyyy] [Select time]  [1 Person ▼]
+
+[ Reserve Now ]   (schwarzer Button, volle Breite)
+```
+
+**Wichtig:** Form-Validierung mit react-hook-form + zod. Für die Demo simulieren
+wir den Submit (Toast: "Reservation request sent").
+
+### 5.8 Footer
+
+**Layout:** Weißer Hintergrund. Logo links, darunter Adresse und Copyright.
+Sozial-Icons. Rechts: Footer-Navigation in Reihe.
+
+**Inhalt:**
+```
+Logo:        ✦ Sao
+Adresse:     797 Renner Land, Lake Kylesburg 27395
+Copyright:   © 2026 Sao Restaurant. All Rights Reserved.
+
+Social Icons: Standort · Instagram · LinkedIn · WhatsApp · TikTok
+
+Footer-Nav: About Us · Reservations · Chefs · Open Hours · Contacts · Careers
+```
 
 ---
 
@@ -416,72 +530,144 @@ Minimalistisch. Cremeweiß auf Anthrazit-Hintergrund.
 ### Speisekarte (vollständig)
 
 ```
-SUPPEN & KLEINIGKEITEN
+STARTERS
 
-Frittatensuppe                                     6,50 €
-Klare Rinderbrühe mit hauchdünnen Pfannkuchenstreifen.
+Gỏi Cuốn (Fresh Spring Rolls)                     $12.00
+Rice paper rolls with shrimp, pork, herbs, vermicelli, peanut sauce.
 
-Brotzeitplatte                                    12,50 €
-Speck, Kaminwurzn, Bergkäse, Butter, Senf, Brot.
+Chả Giò (Crispy Spring Rolls)                     $13.00
+Crispy rolls with pork, shrimp, wood-ear mushroom, taro.
 
+Bánh Xèo (Sizzling Crepe)                         $15.00
+Turmeric crepe filled with shrimp, pork belly, bean sprouts.
 
-KNÖDEL & SCHMANKERLN
+Bánh Cuốn (Steamed Rice Rolls)                    $14.00
+Silky rice sheets with minced pork, wood-ear mushroom, fried shallots.
 
-Dreierlei Knödel                                  16,80 €
-Speck-, Käse- und Spinatknödel auf brauner Butter mit Parmesan.
-
-Käsespätzle                                       14,50 €
-Hausgemacht, mit Bergkäse und Röstzwiebeln.
-
-Herrengröstl                                      15,80 €
-Mit Krautsalat (mit Currynote, ja wirklich).
+Nộm Hoa Chuối (Banana Blossom Salad)              $13.00
+Shredded banana blossom, chicken, herbs, lime-fish-sauce dressing.
 
 
-VOM TIROLER GRILL
+PHỞ & NOODLES
 
-Wiener Schnitzel vom Kalb              ★          24,80 €
-Riesenportion. Mit Petersilienkartoffeln und Preiselbeeren.
-"Schnitzel, das selbst Berlins Schnitzel-Lokalen den Schneid abkauft." – Yelp
+Phở Bò Tái                              ★         $18.00
+24-hour beef broth, rare beef, banh pho noodles, herbs, lime.
 
-Schnitzel "Tris"                                  22,50 €
-Drei kleine Schnitzel: Kalb, Schwein, Hähnchen.
+Phở Bò Chín Nạm                                   $19.00
+Beef broth with brisket and flank, banh pho noodles.
 
-Kalbsgulasch                                      19,80 €
-Mit Speckknödel.
+Phở Gà                                            $17.00
+Aromatic chicken broth, poached chicken, rice noodles.
 
-Geschmorte Ochsenbäckchen                         23,50 €
-Mit Selleriepüree und Rotweinjus.
+Bún Chả Hà Nội                          ★         $22.00
+Grilled pork belly and patties, vermicelli, herbs, dipping broth.
 
+Bún Bò Huế                                        $20.00
+Spicy lemongrass-beef noodle soup from the imperial city.
 
-SÜßES
-
-Kaiserschmarren                                    9,80 €
-Mit Pflaumenkompott, Puderzucker.
-
-Apfelstrudel                                       7,50 €
-Hausgemacht. Mit Vanillesauce.
+Cao Lầu Hội An                                    $19.00
+Thick noodles, char siu pork, herbs, crispy cracker — Hội An specialty.
 
 
-WECHSELNDE TAGESKARTE
-Bitte fragen Sie unsere Tageskarte – jeden Tag neu.
+MAINS
+
+Cá Kho Tộ (Caramelized Clay Pot Fish)             $28.00
+Catfish slow-braised in fish sauce caramel, ginger, chili.
+
+Thịt Kho Tàu                                      $24.00
+Braised pork belly and egg in coconut water caramel.
+
+Gà Nướng Sả                                       $26.00
+Lemongrass-marinated grilled half chicken, nuoc cham.
+
+Sườn Nướng                                        $27.00
+Char-grilled pork ribs, broken rice, pickled vegetables.
+
+Tôm Rim                                           $32.00
+Caramelized prawns with garlic, fish sauce, black pepper.
+
+
+DESSERTS
+
+Chè Sao                                           $12.00
+Our signature: layered mung bean, taro, jelly, coconut cream.
+
+Chè Ba Màu                                        $10.00
+Classic three-color sweet bean dessert with crushed ice.
+
+Bánh Flan Cà Phê                                   $9.00
+Vietnamese coffee-infused caramel flan.
+
+Kem Xôi                                           $11.00
+Sticky rice ice cream with mango, peanuts, coconut.
+
+
+DRINKS
+
+Cà Phê Sữa Đá (Iced Coffee with Condensed Milk)    $7.00
+Vietnamese drip coffee, slow-poured.
+
+Cà Phê Trứng (Egg Coffee)                          $8.00
+Hanoi-style: rich coffee under whipped egg cream.
+
+Trà Sen (Lotus Tea)                                $6.00
+Lotus-scented green tea, traditional ceramic pot.
+
+Nước Mía (Sugarcane Juice)                         $7.00
+Cold-pressed, kumquat, ice.
+
+Bia Saigon                                         $8.00
+Vietnamese lager, ice-cold.
 ```
 
-### Testimonials (echt, Yelp)
+### Signature Dishes (für Hero-Cards)
 
 ```
-"Mittlerweile unser Stammlokal um die Ecke. Der Klassiker ist das riesige
-Wiener Schnitzel, das selbst den bekannten Schnitzel-Lokalen in Berlin den
-Schneid abkaufen kann."
-— Katharina S.
+1. Phở Bò Tái                    $18.00
+   24-hour broth, rare beef, fresh herbs.
 
-"Überraschend anders für Kreuzberg. Urständiges Lokal mit Wirtshausambiente
-ohne plumpe Blasmusik. Lustiges Publikum: Eltern aus (Rest-)Deutschland, die
-ihre Kinder in Kreuzberg besuchen dürfen und ordentlich essen gehen wollen."
-— Mellow_Dramatic
+2. Bún Chả Hà Nội                $22.00
+   Grilled pork, vermicelli, dipping broth.
 
-"Ein uriges kleines Lokal mit netter Bedienung. Das Schnitzel war
-ausgezeichnet und von der Portion her auch sehr gut."
-— Milooman
+3. Chè Sao                       $12.00
+   Layered sweet beans, taro, coconut cream.
+```
+
+### Chef-Bio (vollständig)
+
+```
+Chef Linh Tran, the culinary mind behind Sao, brings two decades of obsession
+with Vietnamese cuisine to every dish on the menu. Born in Hanoi, Linh grew
+up in her grandmother's kitchen, where the long-simmered broths of Phở and
+the herb-bright salads of the North shaped her palate. Her journey took her
+south through Huế, where she studied imperial cuisine, and on to Saigon, where
+she trained under some of the country's most respected chefs. At Sao, she
+draws on all three regional traditions, sourcing herbs and aromatics weekly
+and pulling broths for 24 hours before they ever reach a bowl.
+
+"Vietnamese cooking is balance — sweet, salty, sour, bitter, spicy, umami.
+At Sao, we honor those five tastes with every bowl, every plate."
+— Linh Tran
+
+Stats:
+- 20+ Years of Experience
+- 15+ Awards & Features
+```
+
+### Awards (für Logo-Grid)
+
+```
+Reihe 1:
+- Michelin ★ (One Star)
+- Asia's 50 Best Restaurants
+- Time Out
+- World Class 2024
+
+Reihe 2 (Press):
+- BBC
+- The Guardian
+- CNN
+- Condé Nast Traveler
 ```
 
 ---
@@ -490,31 +676,36 @@ ausgezeichnet und von der Portion her auch sehr gut."
 
 Wir bauen Sektion für Sektion. Pro Sektion: erst Struktur, dann Polish.
 
-1. **Setup** – Next.js 14 + Tailwind v4 + Fonts, Layout, globals
-2. **Navigation** – Sticky Header
-3. **Hero** – das wichtigste Stück, hier wird der Ton gesetzt
-4. **Story** – kurz, klare Hierarchie
-5. **Speisekarte** – sauberes Listing
-6. **Bier-Sektion** – Cards mit USP
-7. **Galerie** – asymmetrisches Grid
-8. **Testimonials** – ruhige Zitate
-9. **Reservierung + Anfahrt** – kombinierbar
-10. **Footer** – minimal
-11. **Polish-Pass** – Hover-States, Mobile-Tweaks, Performance
+1. **Setup** – Next.js 14 + Tailwind v4 + Fonts (Cormorant + Inter, mit
+   vietnamesischem Subset), Layout, globals
+2. **Navigation** – Sticky Header mit zentriertem Logo
+3. **Hero** – "Welcome to Sao" mit Phở-BG. Hier wird der Ton gesetzt.
+4. **Signature Dishes** – Dunkler BG, 3 Cards
+5. **Menu** – Tabs + zweispaltiges Layout mit Bild
+6. **Chef** – Portrait + Story + Stats
+7. **Awards** – Logo-Grid 4×2
+8. **Reservation** – Formular auf dunklem BG
+9. **Footer** – minimal
+10. **Polish-Pass** – Hover-States, Mobile-Tweaks, Performance, Form-Validierung,
+    vietnamesische Diakritika in allen Browsern testen
 
 ---
 
 ## 8. Prompt-Template für Claude Code (pro Sektion)
 
 ```
-Hey, ich baue die Sektion {SECTION_NAME} für mein Demo-Restaurant.
+Hey, ich baue die Sektion {SECTION_NAME} für meine Sao-Restaurant-Demo.
 
 Kontext: Siehe @CLAUDE.md (Design-System, Anti-Patterns, Content).
+Referenz: Siehe Screenshot in design-refs/{SECTION_NAME}.png – das ist das
+Ziel-Layout (Original ist ein italienisches Restaurant, ich adaptiere es für
+ein vietnamesisches).
 
 Bau eine {SECTION_NAME}-Komponente nach folgenden Vorgaben:
 - Layout: {AUS DEM SEKTIONS-BRIEFING OBEN KOPIEREN}
 - Inhalte: {AUS DEM CONTENT-BLOCK KOPIEREN}
 - Wichtig: Halte dich strikt an die Anti-Patterns in CLAUDE.md.
+- Vietnamesische Diakritika korrekt setzen (Phở, Bún Chả, Chè, etc.).
 
 Nutze unsere Farb- und Typografie-Tokens via Tailwind. Keine Inline-Styles.
 Komponente als TypeScript, mit Props falls sinnvoll.
@@ -526,17 +717,17 @@ Erst implementieren, dann zeigen wir uns das Ergebnis an und iterieren.
 
 ## 9. Quality-Check pro Sektion
 
-Bevor eine Sektion als "fertig" gilt, prüfen:
-
 - [ ] Sieht's auf Mobile (375px) sauber aus?
 - [ ] Sieht's auf Tablet (768px) sauber aus?
 - [ ] Sieht's auf Desktop (1440px) sauber aus?
 - [ ] Hover-States auf allen klickbaren Elementen?
 - [ ] Focus-States für Tastatur-Nav sichtbar?
-- [ ] Kontrast-Ratio Text/Background mind. 4.5:1?
+- [ ] Kontrast-Ratio Text/Background mind. 4.5:1 (auch auf dunklem BG!)?
 - [ ] Bilder via `next/image`, mit Alt-Text?
 - [ ] Keine Console-Warnings im Browser?
 - [ ] Animations respect `prefers-reduced-motion`?
+- [ ] Form-Validierung funktioniert (Reservation)?
+- [ ] Vietnamesische Diakritika werden korrekt gerendert (Phở, Bún Chả, ...)?
 
 ---
 

@@ -2,22 +2,27 @@
 
 @theme {
   /* Hauptfarben */
-  --color-bg: #faf6f1;
-  --color-bg-alt: #f0e9df;
-  --color-ink: #1f1a17;
-  --color-ink-muted: #5c534d;
+  --color-bg: #ffffff;
+  --color-bg-cream: #faf6f0;
+  --color-bg-dark: #2a1f18;
+  --color-bg-darker: #1c140f;
+
+  /* Textfarben */
+  --color-ink: #1a1410;
+  --color-ink-muted: #6b5d4f;
+  --color-ink-on-dark: #f3ebdf;
+  --color-ink-muted-on-dark: #b0a28a;
 
   /* Akzentfarben */
-  --color-accent: #7a1f2b;
-  --color-accent-hover: #5c1620;
-  --color-accent-soft: #f4e4e1;
+  --color-accent: #b8553a;
+  --color-accent-soft: #f0d9cc;
 
   /* Funktional */
-  --color-border: #e5dcd0;
-  --color-success: #4a6741;
+  --color-border: #e8e0d2;
+  --color-border-dark: #3f2f23;
 
   /* Type-Scale (clamp = fluid responsive) */
-  --text-display: clamp(3rem, 6vw, 5rem);
+  --text-display: clamp(3.5rem, 8vw, 6.5rem);
   --text-display--line-height: 1.05;
   --text-h1: clamp(2rem, 4vw, 3rem);
   --text-h1--line-height: 1.15;
@@ -26,7 +31,7 @@
 }
 
 @theme inline {
-  --font-serif: var(--font-fraunces);
+  --font-serif: var(--font-cormorant);
   --font-sans: var(--font-inter);
 }
 

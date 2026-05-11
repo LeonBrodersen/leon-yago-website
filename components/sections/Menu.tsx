@@ -1,168 +1,266 @@
-import { Phone } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
 import { MenuItem, type MenuItemProps } from "@/components/MenuItem";
 
 interface Category {
   id: string;
-  shortLabel: string;
-  title: string;
+  label: string;
   items: MenuItemProps[];
 }
 
-const CATEGORIES: Category[] = [
+const CATEGORIES: ReadonlyArray<Category> = [
   {
-    id: "suppen",
-    shortLabel: "Suppen",
-    title: "Suppen & Kleinigkeiten",
+    id: "vorspeisen",
+    label: "Vorspeisen",
     items: [
       {
-        name: "Frittatensuppe",
-        description: "Klare Rinderbrühe mit hauchdünnen Pfannkuchenstreifen.",
-        price: "6,50",
+        name: "Gỏi Cuốn (Frische Sommerrollen)",
+        description:
+          "Reispapier-Rollen mit Garnelen, Schweinefleisch, Kräutern, Glasnudeln und Erdnusssoße.",
+        price: "12",
       },
       {
-        name: "Brotzeitplatte",
-        description: "Speck, Kaminwurzn, Bergkäse, Butter, Senf, Brot.",
-        price: "12,50",
+        name: "Chả Giò (Knusprige Sommerrollen)",
+        description:
+          "Knusprige Rollen mit Schweinefleisch, Garnelen, Mu-Err-Pilzen und Taro.",
+        price: "13",
+      },
+      {
+        name: "Bánh Xèo (Knuspriger Kurkuma-Pfannkuchen)",
+        description:
+          "Kurkuma-Pfannkuchen gefüllt mit Garnelen, Schweinebauch und Sojasprossen.",
+        price: "15",
+      },
+      {
+        name: "Bánh Cuốn (Gedämpfte Reisrollen)",
+        description:
+          "Seidige Reisteig-Rollen mit Hackfleisch, Mu-Err-Pilzen und gerösteten Schalotten.",
+        price: "14",
+      },
+      {
+        name: "Nộm Hoa Chuối (Bananenblüten-Salat)",
+        description:
+          "Geraspelte Bananenblüte, Hähnchen, Kräuter, Limetten-Fischsoßen-Dressing.",
+        price: "13",
       },
     ],
   },
   {
-    id: "knoedel",
-    shortLabel: "Knödel",
-    title: "Knödel & Schmankerln",
+    id: "pho",
+    label: "Phở & Nudeln",
     items: [
       {
-        name: "Dreierlei Knödel",
+        name: "Phở Bò Tái",
         description:
-          "Speck-, Käse- und Spinatknödel auf brauner Butter mit Parmesan.",
-        price: "16,80",
-      },
-      {
-        name: "Käsespätzle",
-        description: "Hausgemacht, mit Bergkäse und Röstzwiebeln.",
-        price: "14,50",
-      },
-      {
-        name: "Herrengröstl",
-        description: "Mit Krautsalat (mit Currynote, ja wirklich).",
-        price: "15,80",
-      },
-    ],
-  },
-  {
-    id: "grill",
-    shortLabel: "Grill",
-    title: "Vom Tiroler Grill",
-    items: [
-      {
-        name: "Wiener Schnitzel vom Kalb",
-        description:
-          "Riesenportion. Mit Petersilienkartoffeln und Preiselbeeren.",
-        price: "24,80",
-        highlight: true,
+          "24-Stunden-Rinderbrühe, blutiges Rindfleisch, Bánh-Phở-Nudeln, Kräuter, Limette.",
+        price: "18",
         starred: true,
-        quote: {
-          text: "Schnitzel, das selbst Berlins Schnitzel-Lokalen den Schneid abkauft.",
-          source: "Yelp",
-        },
       },
       {
-        name: "Schnitzel „Tris“",
-        description: "Drei kleine Schnitzel: Kalb, Schwein, Hähnchen.",
-        price: "22,50",
+        name: "Phở Bò Chín Nạm",
+        description: "Rinderbrühe mit Brust und Bauch, Bánh-Phở-Nudeln.",
+        price: "19",
       },
       {
-        name: "Kalbsgulasch",
-        description: "Mit Speckknödel.",
-        price: "19,80",
+        name: "Phở Gà",
+        description: "Aromatische Hühnerbrühe, pochiertes Hähnchen, Reisnudeln.",
+        price: "17",
       },
       {
-        name: "Geschmorte Ochsenbäckchen",
-        description: "Mit Selleriepüree und Rotweinjus.",
-        price: "23,50",
+        name: "Bún Chả Hà Nội",
+        description:
+          "Gegrillter Schweinebauch und Frikadellen, Reisnudeln, Kräuter, Dipping-Brühe.",
+        price: "22",
+        starred: true,
+      },
+      {
+        name: "Bún Bò Huế",
+        description:
+          "Scharfe Zitronengras-Rindersuppe aus der Kaiserstadt Huế.",
+        price: "20",
+      },
+      {
+        name: "Cao Lầu Hội An",
+        description:
+          "Dicke Nudeln, Char-Siu-Schwein, Kräuter, knusprige Cracker — Spezialität aus Hội An.",
+        price: "19",
       },
     ],
   },
   {
-    id: "suesses",
-    shortLabel: "Süßes",
-    title: "Süßes",
+    id: "hauptgerichte",
+    label: "Hauptgerichte",
     items: [
       {
-        name: "Kaiserschmarren",
-        description: "Mit Pflaumenkompott, Puderzucker.",
-        price: "9,80",
+        name: "Cá Kho Tộ (Karamellisierter Fisch im Tontopf)",
+        description: "Wels langsam geschmort in Fischsoßen-Karamell, Ingwer, Chili.",
+        price: "28",
       },
       {
-        name: "Apfelstrudel",
-        description: "Hausgemacht. Mit Vanillesauce.",
-        price: "7,50",
+        name: "Thịt Kho Tàu",
+        description: "Geschmorter Schweinebauch und Ei in Kokoswasser-Karamell.",
+        price: "24",
+      },
+      {
+        name: "Gà Nướng Sả",
+        description:
+          "Zitronengras-mariniertes gegrilltes halbes Hähnchen, Nước-Chấm-Soße.",
+        price: "26",
+      },
+      {
+        name: "Sườn Nướng",
+        description: "Holzkohle-Grill-Spareribs, Bruchreis, eingelegtes Gemüse.",
+        price: "27",
+      },
+      {
+        name: "Tôm Rim",
+        description: "Karamellisierte Garnelen mit Knoblauch, Fischsoße, schwarzem Pfeffer.",
+        price: "32",
+      },
+    ],
+  },
+  {
+    id: "desserts",
+    label: "Desserts",
+    items: [
+      {
+        name: "Chè Sao",
+        description: "Unsere Signatur: geschichtete Mungbohnen, Taro, Gelee, Kokoscreme.",
+        price: "12",
+      },
+      {
+        name: "Chè Ba Màu",
+        description: "Klassisches dreifarbiges Bohnen-Dessert mit Crushed Ice.",
+        price: "10",
+      },
+      {
+        name: "Bánh Flan Cà Phê",
+        description: "Karamell-Flan mit vietnamesischem Kaffee.",
+        price: "9",
+      },
+      {
+        name: "Kem Xôi",
+        description: "Klebreis-Eis mit Mango, Erdnüssen, Kokos.",
+        price: "11",
+      },
+    ],
+  },
+  {
+    id: "getraenke",
+    label: "Getränke",
+    items: [
+      {
+        name: "Cà Phê Sữa Đá (Eiskaffee mit Kondensmilch)",
+        description: "Vietnamesischer Tropfkaffee, langsam aufgegossen.",
+        price: "7",
+      },
+      {
+        name: "Cà Phê Trứng (Ei-Kaffee)",
+        description: "Hanoi-Stil: kräftiger Kaffee unter geschlagener Eiercreme.",
+        price: "8",
+      },
+      {
+        name: "Trà Sen (Lotusblüten-Tee)",
+        description: "Mit Lotus aromatisierter Grüntee, traditioneller Keramikkrug.",
+        price: "6",
+      },
+      {
+        name: "Nước Mía (Zuckerrohrsaft)",
+        description: "Kaltgepresst, mit Kumquat, Eis.",
+        price: "7",
+      },
+      {
+        name: "Bia Saigon",
+        description: "Vietnamesisches Lagerbier, eiskalt.",
+        price: "8",
       },
     ],
   },
 ];
 
 export function Menu() {
+  const [activeId, setActiveId] = useState<string>(CATEGORIES[0].id);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const activeCategory =
+    CATEGORIES.find((c) => c.id === activeId) ?? CATEGORIES[0];
+  const displayedItem =
+    activeCategory.items[hoveredIndex ?? 0] ?? activeCategory.items[0];
+
   return (
     <section
-      id="speisen"
-      className="scroll-mt-20 bg-bg-alt px-6 py-16 sm:px-8 md:py-24 lg:px-12 lg:py-32"
+      id="menu"
+      className="scroll-mt-20 bg-bg-cream px-6 py-16 sm:px-8 md:py-24 lg:px-12 lg:py-32"
     >
-      <div className="mx-auto max-w-4xl">
-        <div className="mb-12 space-y-4 md:mb-16">
-          <p className="text-sm uppercase tracking-[0.2em] text-accent">
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-10 space-y-3 text-center md:mb-14">
+          <p className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-ink-muted">
+            <span aria-hidden="true">✦</span>
             Speisekarte
+            <span aria-hidden="true">✦</span>
           </p>
           <h2 className="text-h1 text-ink">
-            Was bei uns auf den Tisch kommt
+            Unsere Karte ist eine Reise durch Vietnam.
           </h2>
         </div>
 
-        <nav
+        <ul
           aria-label="Speisekarten-Kategorien"
-          className="sticky top-16 z-40 mb-12 border-y border-border bg-bg-alt"
+          className="mb-10 flex flex-wrap items-center justify-center gap-2 md:mb-14"
         >
-          <ul className="flex gap-6 overflow-x-auto py-3 text-sm">
-            {CATEGORIES.map((cat) => (
-              <li key={cat.id} className="whitespace-nowrap">
-                <a
-                  href={`#${cat.id}`}
-                  className="text-ink-muted transition-colors duration-200 hover:text-accent"
-                >
-                  {cat.shortLabel}
-                </a>
-              </li>
+          {CATEGORIES.map((cat) => (
+            <li key={cat.id}>
+              <button
+                type="button"
+                aria-pressed={cat.id === activeId}
+                onClick={() => {
+                  setActiveId(cat.id);
+                  setHoveredIndex(null);
+                }}
+                className={`whitespace-nowrap px-5 py-2.5 text-xs font-medium uppercase tracking-wider transition-colors duration-200 ${
+                  cat.id === activeId
+                    ? "bg-bg-dark text-bg-cream"
+                    : "border border-border text-ink hover:bg-bg"
+                }`}
+              >
+                {cat.label}
+              </button>
+            </li>
+          ))}
+        </ul>
+
+        <div className="grid gap-8 md:grid-cols-2 lg:gap-12">
+          <ul aria-label="Gerichte der ausgewählten Kategorie">
+            {activeCategory.items.map((item, i) => (
+              <MenuItem
+                key={item.name}
+                {...item}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+              />
             ))}
           </ul>
-        </nav>
 
-        <div className="space-y-12">
-          {CATEGORIES.map((cat) => (
-            <div key={cat.id} id={cat.id} className="scroll-mt-32">
-              <h3 className="mb-4 text-h2 text-ink">{cat.title}</h3>
-              <div>
-                {cat.items.map((item) => (
-                  <MenuItem key={item.name} {...item} />
-                ))}
+          <div className="relative hidden aspect-[4/5] overflow-hidden border border-border bg-bg md:sticky md:top-32 md:block md:self-start">
+            {displayedItem.imageSrc ? (
+              <Image
+                key={displayedItem.name}
+                src={displayedItem.imageSrc}
+                alt={displayedItem.imageAlt ?? displayedItem.name}
+                fill
+                sizes="(min-width: 768px) 50vw, 100vw"
+                className="object-cover transition-opacity duration-300"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
+                <p className="text-sm uppercase tracking-[0.2em] text-ink-muted/70">
+                  {displayedItem.name}
+                </p>
               </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-16 border border-border bg-bg p-8">
-          <p className="mb-3 text-sm uppercase tracking-[0.2em] text-accent">
-            Wechselnde Tageskarte
-          </p>
-          <p className="mb-6 text-ink-muted">
-            Jeden Tag neu. Bitte fragen Sie nach unserer aktuellen Tageskarte.
-          </p>
-          <a
-            href="tel:+493069566909"
-            className="inline-flex items-center gap-2 border border-ink px-6 py-3 text-sm font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-bg"
-          >
-            <Phone className="h-4 w-4" aria-hidden="true" />
-            Aktuelle Tageskarte erfragen
-          </a>
+            )}
+          </div>
         </div>
       </div>
     </section>

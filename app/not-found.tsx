@@ -13,17 +13,17 @@ export default function NotFound() {
             <p className="text-sm uppercase tracking-[0.2em] text-accent">
               404
             </p>
-            <h1 className="text-h1 text-ink">Die Seite gibt's hier nicht.</h1>
+            <h1 className="text-h1 text-ink">Diese Seite gibt's hier nicht.</h1>
             <p className="mx-auto max-w-prose text-ink-muted">
-              Tippfehler, oder die Seite ist noch nicht da. Geh zurück zur
-              Startseite — da gibt's Schnitzel und Bier vom Fass.
+              Tippfehler, oder die Seite ist noch nicht da. Zurück zur
+              Startseite — dort wartet eine 24-Stunden-Brühe und die Speisekarte.
             </p>
             <div className="pt-4">
               <Link
                 href="/"
-                className="inline-flex items-center gap-2 bg-accent px-8 py-4 font-medium tracking-wide text-bg transition-colors duration-200 hover:bg-accent-hover"
+                className="inline-flex items-center gap-2 bg-ink px-10 py-4 text-sm font-medium uppercase tracking-wide text-bg-cream transition-colors duration-200 hover:bg-ink-muted"
               >
-                Zurück zur Startseite
+                Zurück zu Sao
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </div>

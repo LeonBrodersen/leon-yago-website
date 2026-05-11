@@ -1,11 +1,10 @@
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/sections/Hero";
-import { Story } from "@/components/sections/Story";
+import { SignatureDishes } from "@/components/sections/SignatureDishes";
 import { Menu } from "@/components/sections/Menu";
-import { Beer } from "@/components/sections/Beer";
-import { Gallery } from "@/components/sections/Gallery";
-import { Testimonials } from "@/components/sections/Testimonials";
-import { Contact } from "@/components/sections/Contact";
+import { Chef } from "@/components/sections/Chef";
+import { Awards } from "@/components/sections/Awards";
+import { Reservation } from "@/components/sections/Reservation";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Home() {
@@ -15,12 +14,11 @@ export default function Home() {
 
       <main>
         <Hero />
-        <Story />
+        <SignatureDishes />
         <Menu />
-        <Beer />
-        <Gallery />
-        <Testimonials />
-        <Contact />
+        <Chef />
+        <Awards />
+        <Reservation />
       </main>
 
       <Footer />
