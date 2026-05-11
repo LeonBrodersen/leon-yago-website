@@ -15,7 +15,7 @@ export default function Home() {
       <main>
         <Hero
           imageSrc="/images/hero.jpg"
-          imageAlt="Großzügig angerichteter Mix vietnamesischer Gerichte von oben — Phở, gegrillte Spezialitäten, Frühlingsrollen, Dim Sum, frische Kräuter."
+          imageAlt="Vietnamesisches Mahl mit Reis, geschmortem Fleisch, Kräutern und Dip-Saucen, von oben auf einem schwarzen Gittertisch."
         />
         <SignatureDishes />
         <Menu />
