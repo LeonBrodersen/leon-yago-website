@@ -1,0 +1,310 @@
+/* Rechtstexte: impressum.html, datenschutz.html, agb.html
+   Eigenständig, ohne styles.css und ohne JavaScript. Schriften aus fonts/ (dieselben Dateien wie die Startseite). */
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('fonts/inter-v20-latin-regular.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('fonts/inter-v20-latin-600.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('fonts/inter-v20-latin-700.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('fonts/inter-v20-latin-800.woff2') format('woff2');
+}
+
+:root {
+    --primary: #10b981;
+    --accent: #0d9488;
+    --link: #047857;
+    --text-dark: #111827;
+    --text-medium: #4b5563;
+    --text-light: #6b7280;
+    --border: #e5e7eb;
+    --bg: #ffffff;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-medium);
+    background: var(--bg);
+}
+
+.legal-bar {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+}
+
+/* Kopfzeile */
+.legal-header {
+    border-bottom: 1px solid var(--border);
+}
+
+.legal-header .legal-bar {
+    min-height: 4.5rem;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-decoration: none;
+    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.legal-back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.legal-back:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+/* Text */
+.legal {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+}
+
+.legal h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(1.75rem, 1.25rem + 2vw, 2.5rem);
+    line-height: 1.2;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text-dark);
+}
+
+.legal h2 {
+    margin: 2.75rem 0 0.75rem;
+    font-size: 1.2rem;
+    line-height: 1.35;
+    font-weight: 700;
+    color: var(--text-dark);
+    scroll-margin-top: 1rem;
+}
+
+.legal p,
+.legal ul,
+.legal ol,
+.legal address,
+.legal dl {
+    margin: 0 0 1rem;
+}
+
+.legal ul,
+.legal ol {
+    padding-left: 1.25rem;
+}
+
+.legal li {
+    margin-bottom: 0.4rem;
+}
+
+.legal address {
+    font-style: normal;
+    line-height: 1.5;
+}
+
+.legal strong {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.legal a {
+    color: var(--link);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    overflow-wrap: anywhere;
+}
+
+.legal a:hover {
+    text-decoration-thickness: 2px;
+}
+
+.legal-lead {
+    font-size: 1.05rem;
+}
+
+/* Inhaltsverzeichnis */
+.legal-toc {
+    margin: 2rem 0 0;
+    padding: 1rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.legal .legal-toc ol {
+    margin: 0;
+    padding-left: 1.5rem;
+    columns: 2 17rem;
+    column-gap: 2.5rem;
+}
+
+.legal .legal-toc li {
+    margin: 0;
+    padding: 0.2rem 0;
+    break-inside: avoid;
+}
+
+/* Angaben je Verarbeitung: Bezeichnung links, Inhalt rechts */
+.legal-facts {
+    display: grid;
+    grid-template-columns: 10.5rem 1fr;
+    gap: 0.6rem 1.25rem;
+}
+
+.legal-facts dt {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.legal-facts dd {
+    margin: 0;
+}
+
+/* Widerspruchsrecht, von den übrigen Angaben getrennt (Art. 21 Abs. 4 DSGVO) */
+.legal-notice {
+    margin: 2.75rem 0 1rem;
+    padding: 1.25rem 1.5rem;
+    border: 2px solid var(--text-dark);
+    border-radius: 8px;
+}
+
+.legal-notice h2 {
+    margin-top: 0;
+}
+
+.legal-notice p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-date {
+    margin-top: 3rem !important;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+/* Fußzeile */
+.legal-footer {
+    border-top: 1px solid var(--border);
+    padding: 1rem 0 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.legal-footer p {
+    margin: 0;
+}
+
+.legal-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.25rem;
+}
+
+.legal-footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--text-medium);
+    text-decoration: none;
+}
+
+.legal-footer a:hover {
+    color: var(--text-dark);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+}
+
+.legal-footer a[aria-current="page"] {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+a:focus-visible {
+    outline: 3px solid var(--link);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+@media (max-width: 40rem) {
+    .legal {
+        padding-top: 2rem;
+    }
+
+    .legal-facts {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .legal-facts dd {
+        margin-bottom: 0.9rem;
+    }
+}
+
+@media print {
+    .legal-back,
+    .legal-toc,
+    .legal-footer nav {
+        display: none;
+    }
+
+    .legal a {
+        color: inherit;
+    }
+}
