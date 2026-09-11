@@ -1,22 +1,6 @@
-// ========================================
-// COOKIE BANNER
-// ========================================
-
-const cookieBanner = document.getElementById("cookie-banner");
-const acceptCookieBtn = document.querySelector('.cookie-btn-accept');
-
-function acceptCookies() {
-    localStorage.setItem("cookiesAccepted", "true");
-    if (cookieBanner) cookieBanner.classList.remove("show");
-}
-
-if (!localStorage.getItem('cookiesAccepted')) {
-    if (cookieBanner) cookieBanner.classList.add('show');
-}
-
-if (acceptCookieBtn && cookieBanner) {
-    acceptCookieBtn.addEventListener('click', acceptCookies);
-}
+// Früherer Cookie-Hinweis: dessen Eintrag bei wiederkehrenden Besuchern
+// löschen. Diese Zeile kann nach einigen Monaten entfallen.
+try { localStorage.removeItem('cookiesAccepted'); } catch (e) {}
 
 // ========================================
 // SCROLL TO TOP BUTTON
