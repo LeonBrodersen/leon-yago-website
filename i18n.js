@@ -154,6 +154,7 @@ const translations = {
         'contact.form.s5': { text: '📋 Sonstiges', html: false },
         'contact.form.s5.price': { text: 'Auf Anfrage', html: false },
         'contact.form.message': { text: 'Ihre Nachricht *', html: false },
+        'contact.form.privacy': { text: 'Ihre Angaben werden über EmailJS (Server in den USA) an mich übermittelt und nur für Ihre Anfrage genutzt. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.', html: true },
         'contact.form.submit': { text: 'Nachricht senden <span>→</span>', html: true },
 
         // Footer
@@ -325,6 +326,7 @@ const translations = {
         'contact.form.s5': { text: '📋 Other', html: false },
         'contact.form.s5.price': { text: 'On request', html: false },
         'contact.form.message': { text: 'Your message *', html: false },
+        'contact.form.privacy': { text: 'Your details are sent to me via EmailJS (servers in the USA) and used only to handle your request. More in the <a href="datenschutz.html" hreflang="de">privacy policy</a> (in German).', html: true },
         'contact.form.submit': { text: 'Send message <span>→</span>', html: true },
 
         // Footer
