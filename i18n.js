@@ -6,10 +6,6 @@ let currentLang = localStorage.getItem('lang') || 'de';
 
 const translations = {
     de: {
-        // Cookie Banner
-        'cookie.text': { text: 'Wir verwenden keine Tracking-Cookies. Diese Website nutzt ausschließlich technisch notwendige Funktionen. Weitere Informationen finden Sie in unserer <a href="#" onclick="openModal(\'datenschutz-modal\'); return false;">Datenschutzerklärung</a>.', html: true },
-        'cookie.btn': { text: 'Verstanden', html: false },
-
         // Navigation
         'nav.start': { text: 'Start', html: false },
         'nav.about': { text: 'Über mich', html: false },
@@ -181,10 +177,6 @@ const translations = {
         'footer.agb': { text: 'AGB', html: false },
     },
     en: {
-        // Cookie Banner
-        'cookie.text': { text: 'We do not use tracking cookies. This website only uses technically necessary functions. For more information, see our <a href="#" onclick="openModal(\'datenschutz-modal\'); return false;">Privacy Policy</a>.', html: true },
-        'cookie.btn': { text: 'Got it', html: false },
-
         // Navigation
         'nav.start': { text: 'Home', html: false },
         'nav.about': { text: 'About me', html: false },
