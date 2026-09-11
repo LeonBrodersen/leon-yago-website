@@ -2046,6 +2046,19 @@ section {
     color: var(--text-light);
 }
 
+.form-privacy {
+    margin: -8px 0 20px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-medium);
+}
+
+.form-privacy a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 /* Checkbox Styles */
 .checkbox-group {
     display: flex;
