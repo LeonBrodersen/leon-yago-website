@@ -1,0 +1,401 @@
+/* Die Simulation: ein Telefon, das sich beim Scrollen in den Raum dreht, und
+   darin eine nachgebaute Satzeingabe, die durchläuft.
+
+   Zwei Regeln, an denen der Eindruck hängt:
+   1. Bewegt wird ausschließlich über transform und opacity. Alles andere löst
+      Layout aus und ruckelt auf dem Handy.
+   2. Den Fortschritt schreibt das Skript als eine einzige Zahl --p (0 bis 1) an
+      die Bühne. Alles andere rechnet CSS daraus. Dadurch gibt es keinen Zustand,
+      der auseinanderlaufen kann, und Zurückscrollen spult wirklich zurück.
+
+   Gemessene Kontraste (WCAG, auf Karte #14161A gerechnet):
+     Text    #F2F4F3 = 15,6:1
+     gedämpft #9AA3AA =  7,1:1
+     Akzent  #F08A24 =  8,6:1   (nur große Schrift und Flächen)
+     Rand    #5F666E =  3,1:1   (Bedienelemente, ≥ 3:1)
+   Auf dem Grund #0B0C0D liegen alle Werte höher. */
+
+.sim {
+  --ink: #0B0C0D;
+  --karte: #14161A;
+  --karte-2: #1B1F24;
+  --linie: #272C33;
+  --rand: #5F666E;
+  --text: #F2F4F3;
+  --gedaempft: #9AA3AA;
+  --akzent: #F08A24;
+
+  /* Fortschritt 0 bis 1. Ohne Skript bleibt 1 stehen, also der Endzustand. */
+  --p: 1;
+
+  position: relative;
+  background: var(--ink);
+  color: var(--text);
+  padding: 0 clamp(20px, 5vw, 64px);
+}
+
+/* Die Strecke, über die gescrollt wird. Sie ist absichtlich in vh angegeben:
+   der Weg soll sich am Bildschirm bemessen, nicht am Text. */
+.sim-strecke { height: 230vh; position: relative; }
+@media (max-width: 760px) { .sim-strecke { height: 260vh; } }
+
+.sim-buehne {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(270px, 27vw, 340px);
+  align-items: center;
+  gap: clamp(28px, 5vw, 80px);
+  max-width: 1180px;
+  margin-inline: auto;
+}
+@media (max-width: 860px) {
+  .sim-buehne {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: center;
+    gap: 18px;
+    padding-block: 16px;
+  }
+}
+
+/* ---------------------------------------------------------------- Beschriftung */
+.sim-text { align-self: center; }
+.sim-augenbraue {
+  margin: 0 0 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--akzent);
+}
+.sim-text h2 {
+  margin: 0 0 12px;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  text-wrap: balance;
+}
+.sim-text > p {
+  margin: 0;
+  max-width: 30em;
+  color: var(--gedaempft);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+}
+@media (max-width: 860px) {
+  .sim-text h2 { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+  .sim-text > p { font-size: 0.9375rem; }
+}
+
+/* Die Takte liegen übereinander; sichtbar ist der, der gerade dran ist. So
+   springt die Höhe nicht, wenn ein längerer Takt kommt. */
+.sim-takte {
+  position: relative;
+  margin: clamp(18px, 3vh, 32px) 0 0;
+  padding: 0;
+  list-style: none;
+  min-height: 4.5em;
+}
+.sim-takte li {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition: opacity 260ms ease, transform 260ms ease;
+  font-size: clamp(1.0625rem, 1.8vw, 1.375rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.sim-takte li.ist-da { opacity: 1; transform: none; }
+.sim-takte .nr {
+  flex: none;
+  width: 1.75rem;
+  color: var(--akzent);
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  padding-top: 0.45em;
+}
+.sim-takte small {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--gedaempft);
+}
+@media (max-width: 860px) { .sim-takte { min-height: 5.5em; } }
+
+/* Ein Balken statt Punkten: er zeigt, wie viel Strecke noch kommt, und ist
+   ehrlicher als fünf Kreise, von denen einer leuchtet. */
+.sim-balken {
+  margin-top: clamp(16px, 3vh, 28px);
+  height: 2px;
+  background: var(--linie);
+  position: relative;
+  overflow: hidden;
+}
+.sim-balken::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--akzent);
+  transform: scaleX(var(--p));
+  transform-origin: left center;
+}
+
+/* ---------------------------------------------------------------- Das Gerät */
+.sim-geraet {
+  justify-self: stretch;
+  /* Perspektive am Elternteil, damit die Drehung Tiefe hat und nicht flach
+     kippt. Der Wert ist bewusst groß: kleine Perspektive verzerrt das Gerät
+     zur Karikatur. */
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+  width: 100%;
+}
+@media (max-width: 860px) { .sim-geraet { width: min(232px, 58vw); justify-self: center; } }
+
+.sim-telefon {
+  position: relative;
+  aspect-ratio: 390 / 800;
+  border-radius: 34px;
+  background: #000;
+  border: 1px solid #2E343B;
+  padding: 6px;
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.95);
+
+  /* Die Drehung: von schräg liegend (wie in der Hand) zum Leser hin.
+     rotateY geht von -24deg auf +6deg, rotateX von 10deg auf 0deg, dazu ein
+     wenig Weg nach vorn. Alles aus derselben Zahl --p. */
+  transform:
+    rotateY(calc(-24deg + var(--p) * 30deg))
+    rotateX(calc(10deg - var(--p) * 10deg))
+    translate3d(0, 0, calc(var(--p) * 40px));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.sim-schirm {
+  position: absolute;
+  inset: 6px;
+  border-radius: 28px;
+  background: var(--ink);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-size: clamp(9px, 1.05vw, 11.5px);
+}
+@media (max-width: 860px) { .sim-schirm { font-size: 9px; } }
+
+/* Kopfzeile der App */
+.app-kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em 1.2em 0.9em;
+  border-bottom: 1px solid var(--linie);
+}
+.app-kopf b { font-size: 1.15em; letter-spacing: -0.01em; }
+.app-kopf span { color: var(--akzent); font-weight: 600; }
+
+.app-inhalt { padding: 1.1em 1.2em; display: grid; gap: 1em; }
+
+.app-uebung { display: grid; gap: 0.35em; }
+.app-uebung b { font-size: 1.15em; }
+.app-uebung .stange { color: var(--gedaempft); }
+
+/* Die Satzzeile: Nummer, Gewicht, Wiederholungen, Häkchen. Das Raster ist fest,
+   damit beim Füllen nichts wandert. */
+.app-satz {
+  display: grid;
+  grid-template-columns: 2.6em 1fr 1fr 2.4em;
+  gap: 0.5em;
+  align-items: center;
+}
+.app-satz .kopfzeile { color: var(--gedaempft); font-size: 0.85em; }
+.app-feld {
+  border: 1px solid var(--rand);
+  border-radius: 0.5em;
+  padding: 0.55em 0.4em;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  min-height: 2.4em;
+  display: grid;
+  place-items: center;
+  transition: border-color 200ms ease, background-color 200ms ease;
+}
+.app-feld.ist-gefuellt { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
+.app-nr { color: var(--gedaempft); text-align: center; font-variant-numeric: tabular-nums; }
+
+/* Das Häkchen wächst aus der Mitte, statt einzublenden — das liest sich wie ein
+   Druck auf den Knopf. */
+.app-haken {
+  width: 2.2em;
+  height: 2.2em;
+  border: 1px solid var(--rand);
+  border-radius: 0.5em;
+  display: grid;
+  place-items: center;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.app-haken svg { width: 1.1em; height: 1.1em; display: block; }
+.app-haken path {
+  stroke: var(--gedaempft);
+  stroke-width: 2.4;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Länge des Pfades, per Skript nicht nötig: 18 ist großzügig gerundet. */
+  stroke-dasharray: 18;
+  stroke-dashoffset: 18;
+  transition: stroke-dashoffset 320ms ease 60ms, stroke 200ms ease;
+}
+.app-haken.ist-gesetzt { background: var(--akzent); border-color: var(--akzent); }
+.app-haken.ist-gesetzt path { stroke: var(--ink); stroke-dashoffset: 0; }
+
+/* Der Scheiben-Hinweis: die Zeile, die in der App unter dem Zahlenfeld steht. */
+.app-scheiben {
+  border-left: 2px solid var(--akzent);
+  padding-left: 0.7em;
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.app-scheiben.ist-da { opacity: 1; transform: none; }
+.app-scheiben b { display: block; font-variant-numeric: tabular-nums; }
+.app-scheiben span { color: var(--gedaempft); }
+
+/* Der Pausentimer. Der Ring läuft am Fortschritt, nicht an einer Uhr: dadurch
+   zeigt Zurückscrollen wirklich den Zustand von vorher. */
+.app-pause {
+  display: flex;
+  align-items: center;
+  gap: 0.8em;
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  transition: opacity 260ms ease, transform 260ms ease;
+}
+.app-pause.ist-da { opacity: 1; transform: none; }
+.app-ring { width: 3.4em; height: 3.4em; flex: none; }
+.app-ring circle { fill: none; stroke-width: 3.2; }
+.app-ring .spur { stroke: var(--linie); }
+.app-ring .lauf {
+  stroke: var(--akzent);
+  stroke-linecap: round;
+  /* Umfang bei r = 15: 2 * pi * 15 = 94,25 */
+  stroke-dasharray: 94.25;
+  stroke-dashoffset: calc(94.25 * (1 - var(--ring, 0.35)));
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+.app-pause .zeit { font-size: 1.4em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.app-pause .wort { color: var(--gedaempft); display: block; font-size: 0.85em; font-weight: 400; }
+
+/* Der Knopf, den die App unter jedem Satzblock hat. Er ist hier Bild, kein
+   Bedienelement — deshalb kein button, damit ihn die Tastatur nicht anfährt. */
+.app-knopf {
+  border: 1px solid var(--akzent);
+  border-radius: 0.5em;
+  padding: 0.6em;
+  text-align: center;
+  color: var(--akzent);
+  font-weight: 600;
+}
+
+/* Die zweite Übung liegt gedimmt darunter: sie zeigt, dass ein Training mehr
+   als eine Zeile hat, ohne die Aufmerksamkeit zu stehlen. */
+.app-spaeter { opacity: 0.45; }
+.app-leer { border-style: dashed; }
+.app-leer-haken { border: 1px dashed var(--rand); border-radius: 0.5em; }
+
+.app-leiste {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.2em;
+  padding: 0.9em 0.6em 1.4em;
+  border-top: 1px solid var(--linie);
+  text-align: center;
+  font-size: 0.82em;
+  color: var(--gedaempft);
+}
+.app-leiste .ist-auf { color: var(--akzent); font-weight: 600; }
+
+.sim-fussnote {
+  margin: clamp(20px, 3.5vh, 32px) 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gedaempft);
+  max-width: 34em;
+}
+.sim-fussnote b { color: var(--text); font-weight: 600; }
+@media (max-width: 860px) { /* Der Knopf, den die App unter jedem Satzblock hat. Er ist hier Bild, kein
+   Bedienelement — deshalb kein button, damit ihn die Tastatur nicht anfährt. */
+.app-knopf {
+  border: 1px solid var(--akzent);
+  border-radius: 0.5em;
+  padding: 0.6em;
+  text-align: center;
+  color: var(--akzent);
+  font-weight: 600;
+}
+
+/* Die zweite Übung liegt gedimmt darunter: sie zeigt, dass ein Training mehr
+   als eine Zeile hat, ohne die Aufmerksamkeit zu stehlen. */
+.app-spaeter { opacity: 0.45; }
+.app-leer { border-style: dashed; }
+.app-leer-haken { border: 1px dashed var(--rand); border-radius: 0.5em; }
+
+.app-leiste {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.2em;
+  padding: 0.9em 0.6em 1.4em;
+  border-top: 1px solid var(--linie);
+  text-align: center;
+  font-size: 0.82em;
+  color: var(--gedaempft);
+}
+.app-leiste .ist-auf { color: var(--akzent); font-weight: 600; }
+
+.sim-fussnote { display: none; } }
+
+/* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
+/* Ohne Skript steht --p auf 1: das Gerät ist zum Leser gedreht, der Satz ist
+   eingetragen, alle Takte sind sichtbar. Dann liegen die Takte nebeneinander,
+   weil ohne Bewegung kein Takt „dran" ist. */
+.no-js .sim-strecke { height: auto; }
+.no-js .sim-buehne { position: static; height: auto; padding-block: clamp(40px, 8vh, 90px); }
+.no-js .sim-takte { min-height: 0; display: grid; gap: 12px; }
+.no-js .sim-takte li { position: static; opacity: 1; transform: none; }
+.no-js .sim-balken { display: none; }
+.no-js .sim-vorsatz { display: none; }
+.no-js .app-feld { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
+.no-js .app-haken { background: var(--akzent); border-color: var(--akzent); }
+.no-js .app-haken path { stroke: var(--ink); stroke-dashoffset: 0; }
+.no-js .app-scheiben, .no-js .app-pause { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kein Drehen, kein Ein- und Ausblenden. Die Strecke bleibt kurz, und der
+     Endzustand steht sofort da. */
+  .sim-strecke { height: auto; }
+  .sim-buehne { position: static; height: auto; padding-block: clamp(40px, 8vh, 90px); }
+  .sim-telefon { transform: none; }
+  .sim-takte { min-height: 0; display: grid; gap: 12px; }
+  .sim-takte li { position: static; opacity: 1; transform: none; transition: none; }
+  .sim-balken { display: none; }
+  .sim-vorsatz { display: none; }
+  .app-feld, .app-haken, .app-scheiben, .app-pause, .app-haken path { transition: none; }
+  .app-feld { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
+  .app-haken { background: var(--akzent); border-color: var(--akzent); }
+  .app-haken path { stroke: var(--ink); stroke-dashoffset: 0; }
+  .app-scheiben, .app-pause { opacity: 1; transform: none; }
+}
