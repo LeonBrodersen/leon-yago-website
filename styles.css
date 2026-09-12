@@ -1188,66 +1188,25 @@ section {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-
-    .style-demo-header {
-        padding: 12px 16px;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .style-demo-close {
-        width: 100%;
-        justify-content: center;
-    }
 }
-.style-demo-close {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10001;
-    background: #ef4444;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 50px;
+
+/* „Demo ansehen“ ist ein echter Button in der Karte */
+button.style-cta {
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    line-height: inherit;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
+}
+
+.style-card:has(.style-cta:focus-visible) {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-xl);
+}
+
+.style-card:has(.style-cta:focus-visible) .style-cta {
+    background: var(--primary);
     color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.style-demo-close:hover {
-    background: #dc2626;
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
-}
-
-.close-icon {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.close-text {
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    .style-demo-close {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
-    .close-text {
-        display: none;
-    }
-
-    .close-icon {
-        font-size: 1rem;
-    }
 }
 
 
@@ -1720,38 +1679,113 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    background: #111827;
     z-index: 10000;
     display: none;
     flex-direction: column;
+    overscroll-behavior: contain;
 }
 
 .style-demo-overlay.active {
     display: flex;
 }
 
+html.demo-open,
+html.demo-open body {
+    overflow: hidden;
+}
+
+/* Schmale Leiste über der Demo, sie verdeckt nichts von der Demo selbst */
+.style-demo-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 60px;
+    padding: 8px 12px 8px 24px;
+    background: #111827;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.style-demo-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 12px;
+    row-gap: 2px;
+    min-width: 0;
+}
+
+.style-demo-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: white;
+}
+
+.style-demo-hint {
+    font-size: 0.875rem;
+    line-height: 1.3;
+    color: #d1d5db;
+}
+
+.style-demo-close {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 16px;
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.style-demo-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.style-demo-close .close-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
 /* iframe für isolierte Demo-Darstellung */
 .style-demo-frame {
     flex: 1;
+    display: block;
     width: 100%;
-    height: calc(100% - 60px); /* Abzüglich Header-Höhe */
+    min-height: 0;
     border: none;
     background: white;
 }
 
-.style-demo-info {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 10001;
-    background: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 600;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+@media (max-width: 640px) {
+    .style-demo-header {
+        min-height: 56px;
+        padding: 6px 8px 6px 16px;
+    }
+
+    .style-demo-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .style-demo-close {
+        padding: 0 12px;
+    }
 }
 
 .demo-badge {
@@ -2373,22 +2407,6 @@ textarea:focus-visible {
         flex-direction: column;
         text-align: center;
         padding: 32px 24px;
-    }
-
-    .style-demo-close .close-text {
-        display: none;
-    }
-
-    .style-demo-close {
-        padding: 12px 16px;
-        border-radius: 50%;
-    }
-
-    .style-demo-info {
-        left: 50%;
-        transform: translateX(-50%);
-        top: auto;
-        bottom: 20px;
     }
 }
 

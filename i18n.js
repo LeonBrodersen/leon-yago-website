@@ -83,9 +83,11 @@ const translations = {
         'styles.s3.f1': { text: '✓ Einladend', html: false },
         'styles.s3.f2': { text: '✓ Appetitlich', html: false },
         'styles.s3.f3': { text: '✓ Gemütlich', html: false },
-        'styles.s1.cta': { text: 'Demo ansehen <span class="arrow">→</span>', html: true },
-        'styles.s2.cta': { text: 'Demo ansehen <span class="arrow">→</span>', html: true },
-        'styles.s3.cta': { text: 'Demo ansehen <span class="arrow">→</span>', html: true },
+        'styles.s1.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.s2.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.s3.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.demo.hint': { text: 'Frei erfundenes Beispiel', html: false },
+        'styles.demo.close': { text: 'Schließen', html: false },
 
         // Pricing
         'pricing.label': { text: 'Preise', html: false },
@@ -255,9 +257,11 @@ const translations = {
         'styles.s3.f1': { text: '✓ Inviting', html: false },
         'styles.s3.f2': { text: '✓ Appetizing', html: false },
         'styles.s3.f3': { text: '✓ Cozy', html: false },
-        'styles.s1.cta': { text: 'View demo <span class="arrow">→</span>', html: true },
-        'styles.s2.cta': { text: 'View demo <span class="arrow">→</span>', html: true },
-        'styles.s3.cta': { text: 'View demo <span class="arrow">→</span>', html: true },
+        'styles.s1.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.s2.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.s3.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
+        'styles.demo.hint': { text: 'Fictional example in German', html: false },
+        'styles.demo.close': { text: 'Close', html: false },
 
         // Pricing
         'pricing.label': { text: 'Pricing', html: false },
@@ -365,185 +369,6 @@ const placeholderTranslations = {
     }
 };
 
-// Demo translations: German text → English text for each demo style
-const demoTextMap = {
-    minimalist: [
-        // Nav
-        ['Leistungen', 'Services'],
-        ['Über uns', 'About Us'],
-        ['Bewertungen', 'Reviews'],
-        ['Kontakt', 'Contact'],
-        ['Termin buchen', 'Book Appointment'],
-        // Hero
-        ['Jetzt Termine verfügbar', 'Appointments available now'],
-        ['Moderne Zahnmedizin für Ihre Gesundheit', 'Modern Dentistry for Your Health'],
-        ['Willkommen in unserer Praxis in Oranienburg. Mit modernster Technologie und einfühlsamer Betreuung sorgen wir für Ihr strahlendes Lächeln.', 'Welcome to our practice in Oranienburg. With cutting-edge technology and compassionate care, we ensure your radiant smile.'],
-        ['Termin vereinbaren', 'Book Appointment'],
-        ['Unsere Leistungen', 'Our Services'],
-        ['Bewertungen', 'Reviews'],
-        ['Erfahrung', 'Experience'],
-        ['Jahre Erfahrung', 'Years Experience'],
-        ['Behandlungen', 'Treatments'],
-        ['Zufriedenheit', 'Satisfaction'],
-        // Services
-        ['Zahnmedizin auf höchstem Niveau', 'Dentistry at the Highest Level'],
-        ['Von der Prophylaxe bis zur Implantologie – wir bieten das volle Spektrum moderner Zahnmedizin.', 'From prophylaxis to implantology – we offer the full spectrum of modern dentistry.'],
-        ['Prophylaxe & Vorsorge', 'Prophylaxis & Prevention'],
-        ['Regelmäßige Kontrollen und professionelle Zahnreinigung für langfristige Zahngesundheit.', 'Regular check-ups and professional teeth cleaning for long-term dental health.'],
-        ['Ästhetische Zahnmedizin', 'Cosmetic Dentistry'],
-        ['Bleaching, Veneers und unsichtbare Zahnkorrekturen für Ihr perfektes Lächeln.', 'Bleaching, veneers and invisible dental corrections for your perfect smile.'],
-        ['Implantologie', 'Implantology'],
-        ['Hochwertige Zahnimplantate für natürliche Ästhetik und volle Funktionalität.', 'High-quality dental implants for natural aesthetics and full functionality.'],
-        ['Kinderzahnheilkunde', 'Pediatric Dentistry'],
-        ['Einfühlsame Behandlung der kleinen Patienten in entspannter Atmosphäre.', 'Compassionate treatment of young patients in a relaxed atmosphere.'],
-        ['Parodontologie', 'Periodontics'],
-        ['Behandlung von Zahnfleischerkrankungen für den Erhalt Ihrer natürlichen Zähne.', 'Treatment of gum diseases to preserve your natural teeth.'],
-        ['Behandlung im Schlaf', 'Treatment Under Sedation'],
-        ['Angstfreie Behandlung unter Sedierung für entspannte Zahnarztbesuche.', 'Anxiety-free treatment under sedation for relaxed dental visits.'],
-        ['Mehr erfahren', 'Learn more'],
-        // About
-        ['Ihre Zahngesundheit liegt uns am Herzen', 'Your Dental Health is Our Priority'],
-        ['Flexible Termine', 'Flexible Appointments'],
-        ['Modernste Technik', 'Latest Technology'],
-        ['Alle Kassen', 'All Insurances'],
-        // Team
-        ['Unser Team', 'Our Team'],
-        ['Zahnarzt & Praxisinhaber', 'Dentist & Practice Owner'],
-        ['Zahnärztin', 'Dentist'],
-        ['Kieferorthopädie', 'Orthodontics'],
-        ['Dentalhygienikerin', 'Dental Hygienist'],
-        // Contact
-        ['Telefon', 'Phone'],
-        ['E-Mail', 'Email'],
-        ['Adresse', 'Address'],
-        ['Schreiben Sie uns', 'Write to Us'],
-        ['Ihr Name', 'Your Name'],
-        ['Ihre E-Mail', 'Your Email'],
-        ['Ihre Nachricht', 'Your Message'],
-        ['Nachricht senden', 'Send Message'],
-        ['Dies ist nur eine Demo. In der echten Website würde das Formular funktionieren.', 'This is just a demo. In the real website, the form would work.'],
-    ],
-    corporate: [
-        // Nav
-        ['Leistungen', 'Services'],
-        ['Kanzlei', 'Firm'],
-        ['Referenzen', 'References'],
-        ['Kontakt', 'Contact'],
-        ['Beratungstermin', 'Consultation'],
-        ['Mo-Fr: 08:00 - 18:00 Uhr', 'Mon-Fri: 8:00 AM - 6:00 PM'],
-        // Hero
-        ['Erstberatung kostenlos', 'Free initial consultation'],
-        ['Steuerberatung mit', 'Tax advisory with'],
-        ['Weitblick', 'Foresight'],
-        ['für Ihren Erfolg', 'for your success'],
-        ['Seit über 30 Jahren sind wir Ihr zuverlässiger Partner in allen steuerlichen Angelegenheiten. Kompetent, persönlich und zukunftsorientiert.', 'For over 30 years, we have been your reliable partner in all tax matters. Competent, personal, and future-oriented.'],
-        ['Kostenlose Erstberatung', 'Free Initial Consultation'],
-        ['Leistungen ansehen', 'View Services'],
-        ['Jahre Erfahrung', 'Years Experience'],
-        ['Zufriedene Mandanten', 'Satisfied Clients'],
-        ['Experten im Team', 'Team Experts'],
-        ['Zertifizierte Kanzlei', 'Certified Firm'],
-        // Services
-        ['Umfassende Steuerberatung', 'Comprehensive Tax Advisory'],
-        ['Von der Buchhaltung bis zur strategischen Steuerplanung – wir bieten alle Leistungen aus einer Hand.', 'From accounting to strategic tax planning – we offer all services from one source.'],
-        ['Finanzbuchhaltung', 'Financial Accounting'],
-        ['Laufende Buchführung, Kontierung und Auswertungen für den optimalen Überblick.', 'Ongoing bookkeeping, account coding and reports for optimal overview.'],
-        ['Jahresabschlüsse', 'Annual Financial Statements'],
-        ['Erstellung von Bilanzen, GuV und Jahresabschlüssen nach HGB.', 'Preparation of balance sheets, P&L and annual financial statements according to HGB.'],
-        ['Steuererklärungen', 'Tax Returns'],
-        ['Private und betriebliche Steuererklärungen für optimale Steuergestaltung.', 'Private and business tax returns for optimal tax planning.'],
-        ['Lohnbuchhaltung', 'Payroll Accounting'],
-        ['Unternehmensberatung', 'Business Consulting'],
-        ['Rechtsformwahl', 'Legal Form Advisory'],
-        ['Steueroptimierung', 'Tax Optimization'],
-        ['Mehr erfahren', 'Learn more'],
-        // About / Team / Contact
-        ['Über uns', 'About Us'],
-        ['Ihr Name', 'Your Name'],
-        ['Ihre E-Mail', 'Your Email'],
-        ['Ihre Nachricht', 'Your Message'],
-        ['Nachricht senden', 'Send Message'],
-        ['Schreiben Sie uns', 'Write to Us'],
-        ['Telefon', 'Phone'],
-        ['E-Mail', 'Email'],
-        ['Adresse', 'Address'],
-        ['Dies ist nur eine Demo. In der echten Website würde das Formular funktionieren.', 'This is just a demo. In the real website, the form would work.'],
-    ],
-    warm: [
-        // Nav
-        ['Café Sonnenschein', 'Café Sunshine'],
-        ['Spezialitäten', 'Specialties'],
-        ['Speisekarte', 'Menu'],
-        ['Über uns', 'About Us'],
-        ['Galerie', 'Gallery'],
-        ['Kontakt', 'Contact'],
-        ['Tisch reservieren', 'Reserve a Table'],
-        // Hero
-        ['Frisch geröstet & hausgemacht', 'Freshly roasted & homemade'],
-        ['Wo jeder Tag mit', 'Where every day starts with'],
-        ['Genuss', 'Pleasure'],
-        ['beginnt', 'begins'],
-        ['Willkommen im Café Sonnenschein – Ihrem gemütlichen Treffpunkt in Oranienburg. Genießen Sie handgebrühten Kaffee, hausgemachte Kuchen und herzliche Gastfreundschaft.', 'Welcome to Café Sunshine – your cozy meeting place in Oranienburg. Enjoy hand-brewed coffee, homemade cakes, and warm hospitality.'],
-        ['Speisekarte ansehen', 'View Menu'],
-        ['Bio-Kaffee', 'Organic Coffee'],
-        ['Hausgemacht', 'Homemade'],
-        ['Vegane Optionen', 'Vegan Options'],
-        ['Sterne', 'Stars'],
-        ['Bewertungen', 'Reviews'],
-        ['in Oranienburg', 'in Oranienburg'],
-        // Specials
-        ['Unsere Spezialitäten', 'Our Specialties'],
-        ['Das schmeckt nach mehr', 'Taste the difference'],
-        ['Entdecken Sie unsere beliebten Highlights – mit Liebe zubereitet, täglich frisch.', 'Discover our popular highlights – prepared with love, fresh daily.'],
-        ['Bestseller', 'Bestseller'],
-        ['Sonnenschein-Frühstück', 'Sunshine Breakfast'],
-        ['Croissant, Brötchen, Butter, Marmelade, Käse, Schinken, Ei, frischer O-Saft und Kaffee.', 'Croissant, rolls, butter, jam, cheese, ham, egg, fresh orange juice and coffee.'],
-        ['Omas Käsekuchen', 'Grandma\'s Cheesecake'],
-        ['Nach traditionellem Familienrezept gebacken – cremig, saftig und einfach unwiderstehlich.', 'Baked from a traditional family recipe – creamy, moist, and simply irresistible.'],
-        ['Sonnenschein Latte', 'Sunshine Latte'],
-        ['Unser Signature-Kaffee mit Karamell, Vanille und einem Hauch Zimt – pures Glück in der Tasse.', 'Our signature coffee with caramel, vanilla and a hint of cinnamon – pure happiness in a cup.'],
-        // Menu
-        ['Für jeden Geschmack', 'For Every Taste'],
-        ['Von Kaffee-Klassikern bis zu herzhaften Snacks – bei uns finden Sie Ihr Lieblingsgetränk.', 'From coffee classics to savory snacks – find your favorite drink with us.'],
-        ['Kaffee', 'Coffee'],
-        ['Tee', 'Tea'],
-        ['Frühstück', 'Breakfast'],
-        ['Kuchen', 'Cake'],
-        ['Snacks', 'Snacks'],
-        ['Kräftig & aromatisch', 'Strong & aromatic'],
-        ['Mit cremigem Milchschaum', 'With creamy milk foam'],
-        ['Sanft & mild', 'Smooth & mild'],
-        ['Australischer Klassiker', 'Australian classic'],
-        ['Erfrischend kalt', 'Refreshingly cold'],
-        ['Heiße Schokolade', 'Hot Chocolate'],
-        ['Mit Sahnehaube', 'With whipped cream'],
-        // About
-        ['Mit Herz & Leidenschaft', 'With Heart & Passion'],
-        ['Jahre Leidenschaft', 'Years of Passion'],
-        ['Fair gehandelt', 'Fair trade'],
-        ['Täglich frisch', 'Fresh daily'],
-        ['Alles hausgemacht', 'All homemade'],
-        ['Jeden Tag frisch gebacken', 'Freshly baked every day'],
-        ['Regionale Zutaten', 'Local Ingredients'],
-        ['Von Bauern aus der Region', 'From local farmers'],
-        // Contact
-        ['Besuchen Sie uns', 'Visit Us'],
-        ['Öffnungszeiten', 'Opening Hours'],
-        ['Montag – Freitag', 'Monday – Friday'],
-        ['Samstag', 'Saturday'],
-        ['Sonntag', 'Sunday'],
-        ['Schreiben Sie uns', 'Write to Us'],
-        ['Ihr Name', 'Your Name'],
-        ['Ihre E-Mail', 'Your Email'],
-        ['Ihre Nachricht', 'Your Message'],
-        ['Nachricht senden', 'Send Message'],
-        ['Telefon', 'Phone'],
-        ['E-Mail', 'Email'],
-        ['Adresse', 'Address'],
-        ['Dies ist nur eine Demo. In der echten Website würde das Formular funktionieren.', 'This is just a demo. In the real website, the form would work.'],
-    ]
-};
-
 /**
  * Apply translations to the DOM based on current language
  * @param {string} lang - Language code: 'de' or 'en'
@@ -605,9 +430,6 @@ function applyLanguage(lang) {
             toggle.classList.remove('lang-en');
         }
     }
-
-    // Re-translate open demo if one exists
-    translateOpenDemo(lang);
 }
 
 /**
@@ -615,95 +437,6 @@ function applyLanguage(lang) {
  */
 function toggleLanguage() {
     applyLanguage(currentLang === 'de' ? 'en' : 'de');
-}
-
-/**
- * Translate text in an open demo iframe
- * @param {string} lang - Language code: 'de' or 'en'
- */
-function translateOpenDemo(lang) {
-    const overlay = document.getElementById('styleDemoOverlay');
-    if (!overlay || !overlay.classList.contains('active')) return;
-
-    const iframe = document.getElementById('styleDemoFrame');
-    if (!iframe || !iframe.contentDocument || !iframe.contentDocument.body) return;
-
-    // Use currentDemoKey from script.js if available
-    const demoKey = (typeof currentDemoKey !== 'undefined' && currentDemoKey) ? currentDemoKey : detectDemoKey(iframe);
-    if (!demoKey) return;
-
-    translateDemoIframe(iframe, demoKey, lang);
-}
-
-/**
- * Detect which demo is open by content
- */
-function detectDemoKey(iframe) {
-    try {
-        const html = iframe.contentDocument.body.innerHTML.toLowerCase();
-        if (html.includes('zahnarzt') || html.includes('dental')) return 'minimalist';
-        if (html.includes('steuer') || html.includes('tax')) return 'corporate';
-        if (html.includes('café') || html.includes('cafe') || html.includes('sunshine')) return 'warm';
-    } catch(e) {}
-    return null;
-}
-
-/**
- * Translate a specific demo iframe
- * @param {HTMLIFrameElement} iframe
- * @param {string} demoKey - 'minimalist', 'corporate', or 'warm'
- * @param {string} lang - 'de' or 'en'
- */
-function translateDemoIframe(iframe, demoKey, lang) {
-    if (!demoTextMap[demoKey]) return;
-    try {
-        const iframeBody = iframe.contentDocument.body;
-        if (!iframeBody) return;
-
-        const textMap = demoTextMap[demoKey];
-
-        if (lang === 'en') {
-            textMap.forEach(([de, en]) => replaceTextInNode(iframeBody, de, en));
-        } else {
-            textMap.forEach(([de, en]) => replaceTextInNode(iframeBody, en, de));
-        }
-
-        // Also translate the demo alert message
-        const scripts = iframe.contentDocument.querySelectorAll('script');
-        // Update form submit alert text isn't easily done after load,
-        // but the visible text content is what matters most
-    } catch(e) {
-        console.log('Demo translation error:', e);
-    }
-}
-
-/**
- * Helper function to replace text in DOM nodes
- * @param {HTMLElement} node - Root node to search
- * @param {string} searchText - Text to find
- * @param {string} replaceText - Text to replace with
- */
-function replaceTextInNode(node, searchText, replaceText) {
-    const ownerDoc = node.ownerDocument || document;
-    const walker = ownerDoc.createTreeWalker(
-        node,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-    );
-
-    const nodesToUpdate = [];
-    let currentNode;
-
-    while (currentNode = walker.nextNode()) {
-        if (currentNode.nodeValue.includes(searchText)) {
-            nodesToUpdate.push(currentNode);
-        }
-    }
-
-    nodesToUpdate.forEach(textNode => {
-        textNode.nodeValue = textNode.nodeValue.replace(searchText, replaceText);
-    });
 }
 
 /**
@@ -725,10 +458,8 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         applyLanguage,
         toggleLanguage,
-        translateOpenDemo,
         currentLang: () => currentLang,
         translations,
-        placeholderTranslations,
-        demoTextMap
+        placeholderTranslations
     };
 }

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Weber & Partner Steuerberatung – frei erfundenes Beispiel</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon/favicon.svg">
+    <script>if (window.self !== window.top) document.documentElement.classList.add('is-framed');</script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        [hidden] { display: none !important; }
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: #ffffff; color: #1e293b; line-height: 1.7; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        [tabindex="-1"]:focus { outline: none; }
+
+        /* Hinweis, nur sichtbar wenn die Seite direkt aufgerufen wird */
+        .demo-notice { background: #1e293b; color: #cbd5e1; font-size: 0.8rem; line-height: 1.4; text-align: center; padding: 7px 16px; }
+        .demo-notice a { color: #ffffff; }
+        .is-framed .demo-notice { display: none; }
+
+        /* Navigation */
+        nav { background: #0f172a; padding: 0; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; }
+        .nav-top { background: #1e40af; padding: 10px 0; font-size: 0.85rem; color: rgba(255,255,255,0.9); }
+        .nav-top-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-top-left { display: flex; gap: 30px; }
+        .nav-top-item { display: flex; align-items: center; gap: 8px; }
+        .nav-main { padding: 18px 0; }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+        .logo-icon { width: 45px; height: 45px; background: #1e40af; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+        .nav-links { display: flex; gap: 40px; list-style: none; }
+        .nav-links a { text-decoration: none; color: rgba(255,255,255,0.8); font-weight: 600; font-size: 0.95rem; transition: all 0.3s; }
+        .nav-links a:hover { color: white; }
+        .nav-cta { background: #1e40af; color: white; padding: 14px 32px; border-radius: 8px; font-weight: 700; text-decoration: none; transition: all 0.3s; white-space: nowrap; }
+        .nav-cta:hover { background: #1d4ed8; transform: translateY(-2px); }
+        .nav-toggle { display: none; align-items: center; gap: 10px; min-height: 44px; padding: 0 14px; background: transparent; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font: inherit; font-weight: 600; color: #ffffff; cursor: pointer; }
+        .nav-toggle-bars, .nav-toggle-bars::before, .nav-toggle-bars::after { display: block; width: 18px; height: 2px; background: currentColor; border-radius: 1px; }
+        .nav-toggle-bars { position: relative; }
+        .nav-toggle-bars::before, .nav-toggle-bars::after { content: ''; position: absolute; left: 0; }
+        .nav-toggle-bars::before { top: -6px; }
+        .nav-toggle-bars::after { top: 6px; }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 36px; background: #1e40af; color: white; border-radius: 8px; text-decoration: none; font-weight: 700; transition: all 0.3s; border: none; cursor: pointer; font-size: 1rem; font-family: inherit; }
+        .btn:hover { background: #1d4ed8; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(30, 64, 175, 0.3); }
+        .btn-outline { background: transparent; border: 2px solid #1e40af; color: #1e40af; }
+        .btn-outline:hover { background: #1e40af; color: white; }
+        .btn-white { background: white; color: #1e40af; }
+        .btn-white:hover { background: #f8fafc; }
+
+        /* Hero */
+        .hero { padding: 200px 0 120px; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(30, 64, 175, 0.3) 0%, transparent 70%); top: -200px; right: -100px; }
+        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 80px; align-items: center; }
+        .hero-content { position: relative; z-index: 1; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 10px; background: rgba(30, 64, 175, 0.3); border: 1px solid rgba(30, 64, 175, 0.5); color: #60a5fa; padding: 10px 20px; border-radius: 50px; font-size: 0.9rem; font-weight: 600; margin-bottom: 28px; }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.15; margin-bottom: 24px; color: white; }
+        .hero h1 span { color: #60a5fa; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 40px; line-height: 1.9; }
+        .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        .hero-stat { text-align: center; }
+        .hero-stat-number { font-size: 2.5rem; font-weight: 800; color: #60a5fa; }
+        .hero-stat-label { color: #94a3b8; font-size: 0.95rem; margin-top: 5px; }
+        .hero-image { position: relative; }
+        .hero-image-main { width: 100%; height: 450px; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 8rem; box-shadow: 0 40px 80px rgba(0,0,0,0.3); }
+        .hero-card { position: absolute; background: white; padding: 24px; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+        .hero-card-1 { bottom: -30px; left: -30px; display: flex; align-items: center; gap: 16px; }
+        .hero-card-icon { width: 55px; height: 55px; background: #1e40af; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; }
+        .hero-card-text strong { display: block; font-weight: 700; color: #0f172a; font-size: 1.1rem; }
+        .hero-card-text span { color: #64748b; font-size: 0.9rem; }
+
+        /* Section Styles */
+        section { padding: 120px 0; }
+        .section-header { text-align: center; margin-bottom: 80px; }
+        .section-label { display: inline-block; background: #eff6ff; color: #1e40af; padding: 10px 24px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        .section-title { font-size: 2.8rem; font-weight: 800; color: #0f172a; margin-bottom: 20px; }
+        .section-desc { font-size: 1.15rem; color: #64748b; max-width: 650px; margin: 0 auto; }
+
+        /* Services */
+        .services { background: #f8fafc; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .service-card { background: white; padding: 45px 35px; border-radius: 16px; transition: all 0.4s; border: 1px solid #e2e8f0; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 25px 60px rgba(0,0,0,0.08); border-color: #1e40af; }
+        .service-icon { width: 70px; height: 70px; background: #eff6ff; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 28px; transition: all 0.3s; }
+        .service-card:hover .service-icon { background: #1e40af; transform: scale(1.1); }
+        .service-card h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 16px; color: #0f172a; }
+        .service-card p { color: #64748b; line-height: 1.8; margin-bottom: 24px; }
+        .service-link { color: #1e40af; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: gap 0.3s; }
+        .service-link:hover { gap: 14px; }
+
+        /* About */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center; }
+        .about-image { position: relative; }
+        .about-image-main { width: 100%; height: 550px; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 6rem; }
+        .about-experience { position: absolute; bottom: -30px; right: -30px; background: #0f172a; color: white; padding: 35px 45px; border-radius: 16px; text-align: center; }
+        .about-experience-number { font-size: 3.5rem; font-weight: 800; color: #60a5fa; }
+        .about-experience-text { font-size: 1rem; opacity: 0.9; }
+        .about-content h2 { font-size: 2.5rem; font-weight: 800; color: #0f172a; margin-bottom: 24px; line-height: 1.25; }
+        .about-content > p { font-size: 1.1rem; color: #64748b; line-height: 1.9; margin-bottom: 20px; }
+        .about-list { margin-top: 35px; display: flex; flex-direction: column; gap: 18px; }
+        .about-list-item { display: flex; align-items: center; gap: 16px; }
+        .about-list-icon { width: 28px; height: 28px; background: #1e40af; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; flex-shrink: 0; }
+        .about-list-item span { color: #334155; font-weight: 500; }
+
+        /* Team */
+        .team { background: #f8fafc; }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .team-card { background: white; border-radius: 16px; overflow: hidden; transition: all 0.4s; border: 1px solid #e2e8f0; }
+        .team-card:hover { transform: translateY(-10px); box-shadow: 0 25px 60px rgba(0,0,0,0.08); }
+        .team-image { width: 100%; height: 280px; background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .team-info { padding: 28px; text-align: center; }
+        .team-info h4 { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
+        .team-role { color: #1e40af; font-size: 0.9rem; font-weight: 600; }
+
+        /* Testimonials */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .testimonial-card { background: #f8fafc; padding: 40px; border-radius: 16px; position: relative; border: 1px solid #e2e8f0; }
+        .testimonial-rating { color: #f59e0b; margin-bottom: 20px; font-size: 1.1rem; letter-spacing: 3px; }
+        .testimonial-text { color: #334155; font-size: 1.05rem; line-height: 1.85; margin-bottom: 28px; }
+        .testimonial-author { display: flex; align-items: center; gap: 16px; padding-top: 20px; border-top: 1px solid #e2e8f0; }
+        .testimonial-avatar { width: 55px; height: 55px; background: #1e40af; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: 700; flex-shrink: 0; }
+        .testimonial-info strong { display: block; color: #0f172a; font-weight: 700; }
+        .testimonial-info span { color: #64748b; font-size: 0.9rem; }
+
+        /* CTA */
+        .cta { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 100px 0; }
+        .cta-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: center; }
+        .cta-content h2 { font-size: 2.8rem; font-weight: 800; color: white; margin-bottom: 20px; }
+        .cta-content p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 35px; line-height: 1.8; }
+        .cta-features { display: flex; gap: 40px; margin-top: 40px; }
+        .cta-feature { display: flex; align-items: center; gap: 12px; color: white; }
+        .cta-feature-icon { width: 24px; height: 24px; background: #1e40af; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; flex-shrink: 0; }
+        .cta-form { background: white; padding: 45px; border-radius: 20px; }
+        .cta-form h3 { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin-bottom: 8px; }
+        .cta-form > p { color: #64748b; margin-bottom: 30px; }
+        .cta-form .form-group { margin-bottom: 20px; }
+        .cta-form label { display: block; font-weight: 600; color: #0f172a; margin-bottom: 8px; font-size: 0.95rem; }
+        .cta-form input, .cta-form select, .cta-form textarea { width: 100%; padding: 14px 18px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; transition: all 0.3s; font-family: inherit; }
+        .cta-form input:focus, .cta-form select:focus, .cta-form textarea:focus { outline: none; border-color: #1e40af; }
+        .cta-form textarea { min-height: 100px; resize: vertical; }
+        .demo-form-note { margin-top: 16px; color: #0f172a; font-weight: 600; }
+        .demo-form-note:empty { display: none; }
+
+        /* Contact */
+        .contact { background: #f8fafc; }
+        .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+        .contact-card { background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid #e2e8f0; transition: all 0.3s; }
+        .contact-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0,0,0,0.06); border-color: #1e40af; }
+        .contact-card-icon { width: 70px; height: 70px; background: #eff6ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 20px; }
+        .contact-card h4 { font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 10px; }
+        .contact-card p { color: #64748b; font-size: 0.95rem; line-height: 1.7; overflow-wrap: anywhere; }
+        .contact-card .contact-value { color: #1e40af; font-weight: 600; }
+
+        /* Footer */
+        footer { background: #0f172a; color: white; padding: 80px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 60px; margin-bottom: 60px; }
+        .footer-brand .logo { margin-bottom: 20px; }
+        .footer-brand p { color: #94a3b8; line-height: 1.8; }
+        .footer-column h4 { font-weight: 700; margin-bottom: 24px; font-size: 1.05rem; }
+        .footer-column a, .footer-column span { display: block; color: #94a3b8; text-decoration: none; padding: 8px 0; transition: all 0.3s; overflow-wrap: anywhere; }
+        .footer-column a:hover { color: white; padding-left: 5px; }
+        .footer-bottom { border-top: 1px solid #1e293b; padding-top: 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: #94a3b8; font-size: 0.9rem; }
+        .footer-bottom a { color: #ffffff; }
+        .footer-legal { display: flex; gap: 30px; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid, .about-grid, .cta-grid { grid-template-columns: 1fr; gap: 60px; }
+            .hero-grid > *, .about-grid > *, .cta-grid > * { min-width: 0; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-top { display: none; }
+            .about-experience { right: 0; }
+        }
+        @media (max-width: 768px) {
+            .nav-toggle { display: inline-flex; }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; gap: 0; padding: 8px 24px 16px; background: #0f172a; border-top: 1px solid #1e293b; box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+            .nav-links.open { display: flex; }
+            .nav-links a { display: block; padding: 12px 0; font-size: 1rem; color: #ffffff; }
+            .hero h1 { font-size: 2.3rem; }
+            .hero { padding: 140px 0 80px; }
+            section { padding: 80px 0; }
+            .section-title { font-size: 2rem; }
+            .services-grid, .team-grid, .testimonials-grid, .contact-grid { grid-template-columns: 1fr; }
+            .hero-stats { grid-template-columns: 1fr; gap: 20px; }
+            .hero-card { display: none; }
+            .about-experience { position: relative; bottom: 0; right: 0; margin-top: 20px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .cta-features { flex-direction: column; gap: 16px; }
+        }
+        @media (max-width: 640px) {
+            .nav-cta { display: none; }
+            .logo { font-size: 1.2rem; }
+            .logo-icon { width: 38px; height: 38px; font-size: 1.1rem; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1.05rem; }
+            .hero-image-main { height: 300px; font-size: 6rem; }
+            .about-image-main { height: 340px; font-size: 5rem; }
+            .about-content h2, .cta-content h2 { font-size: 2rem; }
+            .service-card { padding: 36px 28px; }
+            .testimonial-card { padding: 32px 24px; }
+            .cta-form { padding: 28px 20px; }
+            .btn { padding: 14px 24px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <p class="demo-notice">Frei erfundenes Beispiel von <a href="../">ly-webstudio</a>: Diese Kanzlei gibt es nicht.</p>
+        <div class="nav-top">
+            <div class="container nav-top-content">
+                <div class="nav-top-left">
+                    <span class="nav-top-item">📞 030 23125 520</span>
+                    <span class="nav-top-item">✉️ info@weber-partner.example</span>
+                </div>
+                <div>Mo-Fr: 08:00 - 18:00 Uhr</div>
+            </div>
+        </div>
+        <div class="nav-main">
+            <div class="container nav-container">
+                <div class="logo"><div class="logo-icon">⚖️</div> Weber & Partner</div>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#leistungen">Leistungen</a></li>
+                    <li><a href="#kanzlei">Kanzlei</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#referenzen">Referenzen</a></li>
+                    <li><a href="#kontakt">Kontakt</a></li>
+                </ul>
+                <a href="#kontakt" class="nav-cta">Beratungstermin</a>
+                <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="nav-links"><span class="nav-toggle-bars" aria-hidden="true"></span>Menü</button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="hero-badge">✓ Erstberatung kostenlos</div>
+                    <h1>Steuerberatung mit <span>Weitblick</span> für Ihren Erfolg</h1>
+                    <p>Seit über 30 Jahren sind wir Ihr zuverlässiger Partner in allen steuerlichen Angelegenheiten. Kompetent, persönlich und zukunftsorientiert.</p>
+                    <div class="hero-buttons">
+                        <a href="#kontakt" class="btn">Kostenlose Erstberatung →</a>
+                        <a href="#leistungen" class="btn btn-outline" style="border-color: rgba(255,255,255,0.3); color: white;">Leistungen ansehen</a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="hero-stat"><div class="hero-stat-number">30+</div><div class="hero-stat-label">Jahre Erfahrung</div></div>
+                        <div class="hero-stat"><div class="hero-stat-number">500+</div><div class="hero-stat-label">Zufriedene Mandanten</div></div>
+                        <div class="hero-stat"><div class="hero-stat-number">15</div><div class="hero-stat-label">Experten im Team</div></div>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="hero-image-main">📊</div>
+                    <div class="hero-card hero-card-1">
+                        <div class="hero-card-icon">✓</div>
+                        <div class="hero-card-text"><strong>DATEV-Partner</strong><span>Zertifizierte Kanzlei</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services" id="leistungen">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Leistungen</span>
+                <h2 class="section-title">Umfassende Steuerberatung</h2>
+                <p class="section-desc">Von der Buchhaltung bis zur strategischen Steuerplanung – wir bieten alle Leistungen aus einer Hand.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Finanzbuchhaltung</h3>
+                    <p>Laufende Buchführung, Kontierung und Auswertungen für den optimalen Überblick.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📄</div>
+                    <h3>Jahresabschlüsse</h3>
+                    <p>Erstellung von Bilanzen, GuV und Jahresabschlüssen nach HGB.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💼</div>
+                    <h3>Steuererklärungen</h3>
+                    <p>Private und betriebliche Steuererklärungen für optimale Steuergestaltung.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">👥</div>
+                    <h3>Lohnbuchhaltung</h3>
+                    <p>Komplette Lohn- und Gehaltsabrechnung mit allen Meldungen.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Existenzgründung</h3>
+                    <p>Beratung und Begleitung von der Geschäftsidee bis zum erfolgreichen Start.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>Betriebsprüfungen</h3>
+                    <p>Professionelle Begleitung und Vertretung bei Finanzamtsprüfungen.</p>
+                    <a href="#kontakt" class="service-link">Beratung anfragen →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="kanzlei">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <div class="about-image-main">🏛️</div>
+                    <div class="about-experience"><div class="about-experience-number">30+</div><div class="about-experience-text">Jahre Erfahrung</div></div>
+                </div>
+                <div class="about-content">
+                    <span class="section-label">Über uns</span>
+                    <h2>Ihre Kanzlei vor Ort</h2>
+                    <p>Die Steuerkanzlei Weber & Partner wurde 1994 gegründet und hat sich zu einer der führenden Kanzleien in der Region entwickelt. Unser Team aus erfahrenen Steuerberatern und Fachkräften betreut Mandanten aller Größenordnungen.</p>
+                    <p>Wir verbinden traditionelle Werte wie Zuverlässigkeit und persönliche Betreuung mit modernsten digitalen Lösungen für eine effiziente Zusammenarbeit.</p>
+                    <div class="about-list">
+                        <div class="about-list-item"><div class="about-list-icon">✓</div><span>Zertifizierter DATEV-Partner</span></div>
+                        <div class="about-list-item"><div class="about-list-icon">✓</div><span>Digitale Belegerfassung & Cloud-Lösungen</span></div>
+                        <div class="about-list-item"><div class="about-list-icon">✓</div><span>Persönlicher Ansprechpartner für jeden Mandanten</span></div>
+                        <div class="about-list-item"><div class="about-list-icon">✓</div><span>Regelmäßige Fortbildungen & Spezialisierungen</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Unser Team</span>
+                <h2 class="section-title">Kompetenz & Erfahrung</h2>
+                <p class="section-desc">Lernen Sie die Menschen kennen, die sich um Ihre Finanzen kümmern.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-image">👨‍💼</div>
+                    <div class="team-info">
+                        <h4>StB Thomas Weber</h4>
+                        <div class="team-role">Geschäftsführender Partner</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👩‍💼</div>
+                    <div class="team-info">
+                        <h4>StB Dr. Anna Fischer</h4>
+                        <div class="team-role">Partnerin, Int. Steuerrecht</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👨‍💼</div>
+                    <div class="team-info">
+                        <h4>StB Michael Braun</h4>
+                        <div class="team-role">Partner, Unternehmensberatung</div>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-image">👩‍💼</div>
+                    <div class="team-info">
+                        <h4>Dipl.-Kffr. Lisa Schulz</h4>
+                        <div class="team-role">Teamleiterin Buchhaltung</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="referenzen">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Referenzen</span>
+                <h2 class="section-title">Das sagen unsere Mandanten</h2>
+                <p class="section-desc">Vertrauen entsteht durch Leistung. Erfahren Sie, was unsere Mandanten über uns sagen.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">Seit 15 Jahren betreut Weber & Partner unser Unternehmen. Die Beratung ist immer kompetent und proaktiv. Absolute Empfehlung!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">MK</div>
+                        <div class="testimonial-info"><strong>Martin K.</strong><span>Geschäftsführer eines Handwerksbetriebs</span></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">Die digitale Zusammenarbeit funktioniert perfekt. Belege hochladen und fertig. So stelle ich mir moderne Steuerberatung vor.</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SH</div>
+                        <div class="testimonial-info"><strong>Sandra H.</strong><span>Freiberuflerin</span></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">Bei meiner Existenzgründung war die Unterstützung Gold wert. Von der Rechtsformwahl bis zur ersten Steuererklärung – top beraten!</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">JL</div>
+                        <div class="testimonial-info"><strong>Jan L.</strong><span>Gründer eines Start-ups</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta" id="kontakt">
+        <div class="container">
+            <div class="cta-grid">
+                <div class="cta-content">
+                    <h2>Lassen Sie uns über Ihre Steuern sprechen</h2>
+                    <p>Vereinbaren Sie jetzt Ihre kostenlose Erstberatung und erfahren Sie, wie wir Sie optimal unterstützen können.</p>
+                    <div class="cta-features">
+                        <div class="cta-feature"><div class="cta-feature-icon">✓</div> Kostenlose Erstberatung</div>
+                        <div class="cta-feature"><div class="cta-feature-icon">✓</div> Unverbindliches Angebot</div>
+                        <div class="cta-feature"><div class="cta-feature-icon">✓</div> Termin innerhalb 48h</div>
+                    </div>
+                </div>
+                <div class="cta-form">
+                    <h3>Termin anfragen</h3>
+                    <p>Füllen Sie das Formular aus – wir melden uns umgehend.</p>
+                    <form>
+                        <div class="form-group"><label for="name">Name</label><input type="text" id="name" placeholder="Ihr vollständiger Name"></div>
+                        <div class="form-group"><label for="email">E-Mail</label><input type="email" id="email" placeholder="name@example.com"></div>
+                        <div class="form-group"><label for="telefon">Telefon</label><input type="tel" id="telefon" placeholder="Ihre Telefonnummer"></div>
+                        <div class="form-group"><label for="anliegen">Anliegen</label>
+                            <select id="anliegen"><option>Bitte wählen...</option><option>Steuererklärung Privat</option><option>Steuererklärung Gewerbe</option><option>Buchhaltung</option><option>Existenzgründung</option><option>Sonstiges</option></select>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%; justify-content: center;">Termin anfragen →</button>
+                        <p class="demo-form-note" role="status"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-card-icon">📍</div>
+                    <h4>Adresse</h4>
+                    <p>Marktplatz 5<br>12345 Musterstadt</p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">📞</div>
+                    <h4>Telefon</h4>
+                    <p><span class="contact-value">030 23125 520</span></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">✉️</div>
+                    <h4>E-Mail</h4>
+                    <p><span class="contact-value">info@weber-partner.example</span></p>
+                </div>
+                <div class="contact-card">
+                    <div class="contact-card-icon">🕐</div>
+                    <h4>Öffnungszeiten</h4>
+                    <p>Mo-Fr: 08:00 - 18:00<br>und nach Vereinbarung</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><div class="logo-icon">⚖️</div> Weber & Partner</div>
+                    <p>Kompetente Steuerberatung seit über 30 Jahren.</p>
+                </div>
+                <div class="footer-column"><h4>Leistungen</h4><a href="#leistungen">Buchhaltung</a><a href="#leistungen">Steuererklärung</a><a href="#leistungen">Jahresabschluss</a><a href="#leistungen">Lohnbuchhaltung</a></div>
+                <div class="footer-column"><h4>Kanzlei</h4><a href="#kanzlei">Über uns</a><a href="#team">Team</a><a href="#referenzen">Referenzen</a></div>
+                <div class="footer-column"><h4>Kontakt</h4><span>Marktplatz 5</span><span>12345 Musterstadt</span><span>030 23125 520</span><span>info@weber-partner.example</span></div>
+            </div>
+            <div class="footer-bottom">
+                <p>Die Kanzlei Weber & Partner ist frei erfunden. Eine Beispielseite von <a href="../">ly-webstudio</a>.</p>
+                <div class="footer-legal"><span>Impressum</span><span>Datenschutz</span></div>
+            </div>
+        </div>
+    </footer>
+    <script src="demo.js"></script>
+</body>
+</html>
