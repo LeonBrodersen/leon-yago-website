@@ -442,7 +442,7 @@
                         </div>
                     </div>
                     <div class="style-info">
-                        <h3 data-i18n="styles.s1.title">Zahnarztpraxis</h3>
+                        <h3 id="style-title-minimalist" data-i18n="styles.s1.title">Zahnarztpraxis</h3>
                         <p data-i18n="styles.s1.desc">Klar, sauber und vertrauenswürdig. So könnte die Website einer Praxis oder eines Arztes aussehen.</p>
                         <div class="style-features">
                             <span data-i18n="styles.s1.f1">✓ Seriös</span>
@@ -454,9 +454,9 @@
                             <div class="color-dot" style="background: #6b7280;"></div>
                             <div class="color-dot" style="background: #f9fafb;"></div>
                         </div>
-                        <div class="style-cta" data-i18n="styles.s1.cta">
-                            Demo ansehen <span class="arrow">→</span>
-                        </div>
+                        <button type="button" class="style-cta" data-i18n="styles.s1.cta" aria-describedby="style-title-minimalist">
+                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </div>
 
@@ -483,7 +483,7 @@
                         </div>
                     </div>
                     <div class="style-info">
-                        <h3 data-i18n="styles.s2.title">Steuerberatung</h3>
+                        <h3 id="style-title-corporate" data-i18n="styles.s2.title">Steuerberatung</h3>
                         <p data-i18n="styles.s2.desc">Professionell und seriös. Ideal für Berater, Anwälte oder Finanzdienstleister.</p>
                         <div class="style-features">
                             <span data-i18n="styles.s2.f1">✓ Professionell</span>
@@ -495,9 +495,9 @@
                             <div class="color-dot" style="background: #c9a227;"></div>
                             <div class="color-dot" style="background: #f8fafc;"></div>
                         </div>
-                        <div class="style-cta" data-i18n="styles.s2.cta">
-                            Demo ansehen <span class="arrow">→</span>
-                        </div>
+                        <button type="button" class="style-cta" data-i18n="styles.s2.cta" aria-describedby="style-title-corporate">
+                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </div>
 
@@ -524,7 +524,7 @@
                         </div>
                     </div>
                     <div class="style-info">
-                        <h3 data-i18n="styles.s3.title">Café & Restaurant</h3>
+                        <h3 id="style-title-warm" data-i18n="styles.s3.title">Café & Restaurant</h3>
                         <p data-i18n="styles.s3.desc">Warm und einladend. So könnte die Website eines Cafés, Restaurants oder Hotels aussehen.</p>
                         <div class="style-features">
                             <span data-i18n="styles.s3.f1">✓ Einladend</span>
@@ -536,9 +536,9 @@
                             <div class="color-dot" style="background: #d4a574;"></div>
                             <div class="color-dot" style="background: #fef7ed;"></div>
                         </div>
-                        <div class="style-cta" data-i18n="styles.s3.cta">
-                            Demo ansehen <span class="arrow">→</span>
-                        </div>
+                        <button type="button" class="style-cta" data-i18n="styles.s3.cta" aria-describedby="style-title-warm">
+                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
+                        </button>
                     </div>
                 </div>
 
@@ -546,14 +546,18 @@
         </div>
     </section>
 
-    <div class="style-demo-overlay" id="styleDemoOverlay">
+    <div class="style-demo-overlay" id="styleDemoOverlay" role="dialog" aria-modal="true" aria-labelledby="styleDemoTitle">
         <div class="style-demo-header">
-            <div class="style-demo-info"></div>
-            <button class="style-demo-close" onclick="closeStyleDemo()">
-                <span class="close-icon">✕</span>
+            <div class="style-demo-info">
+                <h2 class="style-demo-title" id="styleDemoTitle"></h2>
+                <span class="style-demo-hint" id="styleDemoHint" data-i18n="styles.demo.hint">Frei erfundenes Beispiel</span>
+            </div>
+            <button type="button" class="style-demo-close" id="styleDemoClose">
+                <span class="close-icon" aria-hidden="true">✕</span>
+                <span data-i18n="styles.demo.close">Schließen</span>
             </button>
         </div>
-        <iframe id="styleDemoFrame" class="style-demo-frame"></iframe>
+        <iframe id="styleDemoFrame" class="style-demo-frame" title="Beispielseite"></iframe>
     </div>
 
     <!-- Pricing Section -->
