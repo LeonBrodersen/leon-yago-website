@@ -1,778 +1,588 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Primary Meta Tags -->
-    <title>Website erstellen lassen ab 150 € | ly-webstudio</title>
-    <meta name="description" content="Ich baue Websites für kleine Unternehmen und Selbstständige: Festpreis ab 150 €, fertig in 1–2 Wochen, Abstimmung per Videocall. Das Erstgespräch ist kostenlos.">
-    <meta name="author" content="ly-webstudio">
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="theme-color" content="#047857">
+    <title>Websites und Informatik-Projekte | ly-webstudio, Leon Brodersen</title>
+    <meta name="description" content="Leon Brodersen baut Websites, Apps, kleine Werkzeuge und Automatisierung – alles selbst. Arbeitsproben, Preise und Ablauf auf einer Seite. Erstgespräch kostenlos.">
+    <meta name="author" content="ly-webstudio UG (haftungsbeschränkt)">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="theme-color" content="#FAF6F0">
     <meta name="format-detection" content="telephone=no">
     <link rel="canonical" href="https://www.ly-webstudio.de/">
+    <link rel="alternate" hreflang="de" href="https://www.ly-webstudio.de/">
+    <link rel="alternate" hreflang="en" href="https://www.ly-webstudio.de/en/">
+    <link rel="alternate" hreflang="x-default" href="https://www.ly-webstudio.de/">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.ly-webstudio.de/">
-    <meta property="og:title" content="Website erstellen lassen ab 150 € | ly-webstudio">
-    <meta property="og:description" content="Websites für kleine Unternehmen und Selbstständige: Festpreis ab 150 €, fertig in 1–2 Wochen, Abstimmung per Videocall.">
-    <meta property="og:image" content="https://www.ly-webstudio.de/og-image.png">
+    <meta property="og:title" content="Websites und Informatik-Projekte | ly-webstudio">
+    <meta property="og:description" content="Websites, Apps, kleine Werkzeuge und Automatisierung – gebaut von einer Person. Arbeitsproben, Preise und Ablauf auf einer Seite.">
+    <meta property="og:image" content="https://www.ly-webstudio.de/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="ly-webstudio: Websites und Informatik-Projekte, gebaut von Leon Brodersen">
     <meta property="og:locale" content="de_DE">
-
-    <!-- Twitter Card -->
+    <meta property="og:locale:alternate" content="en_US">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.ly-webstudio.de/">
-    <meta name="twitter:title" content="Website erstellen lassen ab 150 € | ly-webstudio">
-    <meta name="twitter:description" content="Websites für kleine Unternehmen und Selbstständige: Festpreis ab 150 €, fertig in 1–2 Wochen.">
-    <meta name="twitter:image" content="https://www.ly-webstudio.de/og-image.png">
+    <meta name="twitter:image" content="https://www.ly-webstudio.de/og-image.jpg">
 
-    <!-- Fonts are loaded locally via @font-face in styles.css -->
-
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
 
-    <!-- Schema.org Structured Data -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@graph": [
-                {
-                    "@type": "Organization",
-                    "@id": "https://www.ly-webstudio.de/#organisation",
-                    "name": "ly-webstudio",
-                    "legalName": "ly-webstudio UG (haftungsbeschränkt)",
-                    "url": "https://www.ly-webstudio.de/",
-                    "image": "https://www.ly-webstudio.de/og-image.png",
-                    "email": "kontaktleonyago@gmail.com",
-                    "telephone": "+49 179 4904546",
-                    "founder": {
-                        "@type": "Person",
-                        "name": "Leon Brodersen"
-                    },
-                    "address": {
-                        "@type": "PostalAddress",
-                        "streetAddress": "Buchfinkweg 50",
-                        "postalCode": "12351",
-                        "addressLocality": "Berlin",
-                        "addressCountry": "DE"
-                    },
-                    "knowsLanguage": ["de", "en"]
-                },
-                {
-                    "@type": "WebSite",
-                    "@id": "https://www.ly-webstudio.de/#website",
-                    "url": "https://www.ly-webstudio.de/",
-                    "name": "ly-webstudio",
-                    "inLanguage": "de",
-                    "publisher": { "@id": "https://www.ly-webstudio.de/#organisation" }
-                },
-                {
-                    "@type": "Service",
-                    "name": "Website erstellen lassen",
-                    "serviceType": "Webdesign und Webentwicklung",
-                    "provider": { "@id": "https://www.ly-webstudio.de/#organisation" },
-                    "availableChannel": {
-                        "@type": "ServiceChannel",
-                        "serviceUrl": "https://www.ly-webstudio.de/#contact",
-                        "servicePhone": "+49 179 4904546"
-                    },
-                    "hasOfferCatalog": {
-                        "@type": "OfferCatalog",
-                        "name": "Webdesign-Pakete",
-                        "itemListElement": [
-                            {
-                                "@type": "Offer",
-                                "name": "Starter-Paket",
-                                "description": "1–3 Seiten mit Kontaktformular und SEO-Grundlagen",
-                                "priceSpecification": {
-                                    "@type": "PriceSpecification",
-                                    "minPrice": "150",
-                                    "maxPrice": "300",
-                                    "priceCurrency": "EUR"
-                                }
-                            },
-                            {
-                                "@type": "Offer",
-                                "name": "Komplett-Paket",
-                                "description": "4–7 Seiten mit individuellem Design und SEO-Optimierung",
-                                "priceSpecification": {
-                                    "@type": "PriceSpecification",
-                                    "minPrice": "300",
-                                    "maxPrice": "600",
-                                    "priceCurrency": "EUR"
-                                }
-                            }
-                        ]
-                    }
-                }
-            ]
-        }
-    </script>
-
+    <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v20-latin-800.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="styles.css">
-
-    <script>
-        // Läuft vor dem ersten Bild der Seite. Setzt die gespeicherte Sprache am html-Element
-        // und verbirgt bei Englisch den Inhalt für den Moment, den i18n.js zum Übersetzen
-        // braucht. Sonst lesen englische Besucher zuerst die deutsche Fassung.
-        // Die Klasse "js" zeigt an, dass JavaScript läuft; script.js ergänzt später "js-ready".
-        (function () {
-            var root = document.documentElement;
-            root.classList.add('js');
-            var lang = null;
-            try { lang = localStorage.getItem('lang'); } catch (e) { /* Speicher gesperrt */ }
-            if (lang === 'en') {
-                root.lang = 'en';
-                root.classList.add('lang-pending');
-                // Notbremse: Wenn i18n.js nicht lädt, wird der Inhalt trotzdem sichtbar.
-                setTimeout(function () { root.classList.remove('lang-pending'); }, 1500);
-            }
-        })();
-    </script>
-    <script src="i18n.js" defer></script>
-    <script src="script.js" defer></script>
 </head>
 
 <body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
-    <a class="skip-link" href="#inhalt" data-i18n="a11y.skip">Zum Inhalt springen</a>
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#top">ly&#8209;webstudio</a>
+    <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu">Inhalt</button>
+    <nav class="menu" id="menu" aria-label="Abschnitte dieser Seite">
+      <ul>
+        <li><a href="#arbeiten">Arbeiten</a></li>
+        <li><a href="#leistungen">Leistungen&nbsp;und&nbsp;Preise</a></li>
+        <li><a href="#ablauf">Ablauf</a></li>
+        <li><a href="#ueber-mich">Über&nbsp;mich</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li class="menu-lang"><a href="/en/" hreflang="en" lang="en">English</a></li>
+      </ul>
+    </nav>
+    <a class="bar-lang" href="/en/" hreflang="en" lang="en">English</a>
+    <a class="bar-tel" href="tel:+491794904546"><span class="bar-tel-word">Anrufen: </span>0179&nbsp;4904546</a>
+  </div>
+</header>
 
-    <!-- Navigation -->
-    <header>
-        <nav>
-            <div class="nav-container">
-                <a href="#" class="logo">ly-webstudio</a>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home" data-i18n="nav.start">Start</a></li>
-                    <li><a href="#about" data-i18n="nav.about">Über mich</a></li>
-                    <li><a href="#why-us" data-i18n="nav.benefits">Vorteile</a></li>
-                    <li><a href="#how-it-works" data-i18n="nav.process">Ablauf</a></li>
-                    <li><a href="#styles" data-i18n="nav.examples">Beispiele</a></li>
-                    <li><a href="#pricing" data-i18n="nav.pricing">Preise</a></li>
-                    <li><a href="#contact" class="nav-cta" data-i18n="nav.contact">Kontakt</a></li>
-                </ul>
-                <div class="lang-toggle" id="langToggle" role="group" aria-label="Sprache / Language">
-                    <span class="lang-slider" aria-hidden="true"></span>
-                    <button type="button" class="lang-option active" data-lang="de" lang="de" aria-pressed="true">DE</button>
-                    <button type="button" class="lang-option" data-lang="en" lang="en" aria-pressed="false">EN</button>
-                </div>
-                <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-controls="navLinks"
-                    aria-expanded="false" aria-label="Menü öffnen" data-i18n-aria="a11y.menu.open">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </button>
-            </div>
-        </nav>
-    </header>
+<main id="inhalt">
 
-    <main id="inhalt">
+  <!-- ============================ Kopf ============================ -->
+  <section class="hero" id="top">
+    <div class="wrap hero-in">
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 data-i18n="hero.title">Website erstellen lassen – <span class="highlight">zum Festpreis</span>, fertig in 1–2 Wochen</h1>
-                    <p data-i18n="hero.text">Sie brauchen eine Website, wollen sich aber nicht mit Technik beschäftigen? Ich baue sie: Entwurf, Umsetzung, Veröffentlichung. Abgestimmt wird per Videocall oder Telefon, egal wo Sie sitzen. Texte, Fotos und Logo kommen von Ihnen, alles Technische von mir.</p>
-                    <div class="hero-buttons">
-                        <a href="#contact" class="btn btn-lg" data-i18n="hero.cta">
-                            Jetzt kostenlos beraten lassen
-                            <span>→</span>
-                        </a>
-                        <a href="#how-it-works" class="btn btn-lg btn-outline" data-i18n="hero.cta2">
-                            So funktioniert's
-                        </a>
-                    </div>
-                </div>
-                <div class="hero-images">
-                    <div class="hero-image-wrapper">
-                        <img src="portrait-leon-480.webp"
-                             srcset="portrait-leon-480.webp 480w, portrait-leon-800.webp 800w"
-                             sizes="220px" width="220" height="280"
-                             alt="Leon Brodersen, Geschäftsführer von ly-webstudio" class="hero-image">
-                    </div>
-                </div>
-            </div>
+      <div class="lede">
+        <h1>
+          <span class="h1-big">Websites und Informatik-Projekte</span>
+          <span class="h1-sub">Für kleine Betriebe und Selbstständige, gebaut von einer Person.</span>
+        </h1>
+        <p class="lead">Ich bin Leon Brodersen und baue Websites, Apps, kleine Werkzeuge und Automatisierung – selbst, vom ersten Gespräch bis zur letzten Zeile. Ortsunabhängig per Video&#8209;Call, Telefon und E&#8209;Mail. Den Festpreis nenne ich nach dem ersten Gespräch, bevor die Arbeit beginnt.</p>
+        <div class="actions">
+          <a class="btn" href="#kontakt">Kostenloses Erstgespräch</a>
+          <a class="tel-link" href="tel:+491794904546">oder anrufen: 0179&nbsp;4904546</a>
         </div>
-    </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="about.label">Über mich</span>
-                <h2 data-i18n="about.title">Wer Ihre Website baut</h2>
-                <p data-i18n="about.subtitle">Sie sprechen mit der Person, die den Code schreibt. Kein Callcenter, keine Weitergabe an Dritte.</p>
-            </div>
-            <div class="about-grid">
-                <div class="about-images">
-                    <div class="about-card">
-                        <img src="portrait-leon-300q.webp" width="120" height="120"
-                             alt="Leon Brodersen" class="about-image" loading="lazy">
-                        <h3>Leon Brodersen</h3>
-                        <span class="role" data-i18n="about.role">Webdesign & Entwicklung</span>
-                    </div>
-                </div>
-                <div class="about-text">
-                    <h3 data-i18n="about.why">Warum ich das mache</h3>
-                    <p data-i18n="about.text">Viele kleine Unternehmen haben keine Website – oder eine, die nicht mehr zeitgemäß ist. Ich finde: Das muss nicht teuer sein. Ich studiere Informatik und mache alles selbst, von der Technik bis zum Design. Texte, Fotos und Logo kommen von Ihnen, um den Rest kümmere ich mich.</p>
+        <table class="kv kv-hero">
+          <caption>Kenndaten</caption>
+          <tbody>
+            <tr><th scope="row">Leistung</th><td>Website mit 1–7 Seiten · Apps, Werkzeuge, Automatisierung · Pflege nach Stunden</td></tr>
+            <tr><th scope="row">Website ab</th><td><b>150&#8239;€</b> Einführungspreis für die ersten 5 Projekte, danach ab 300&#8239;€</td></tr>
+            <tr><th scope="row">Andere Projekte</th><td>Preis nach Aufwand, wir klären ihn im Erstgespräch</td></tr>
+            <tr><th scope="row">Fertig</th><td>Website in ca. 1–2 Wochen, gezählt ab Eingang Ihrer Inhalte</td></tr>
+            <tr><th scope="row">Erstgespräch</th><td>kostenlos, per Telefon oder Video&#8209;Call</td></tr>
+            <tr><th scope="row">Ansprechpartner</th><td>Leon Brodersen, Geschäftsführer – von Anfang bis Ende derselbe</td></tr>
+          </tbody>
+        </table>
+      </div>
 
-                    <div class="about-features">
-                        <div class="about-feature">
-                            <span class="about-feature-icon" aria-hidden="true">✓</span>
-                            <span data-i18n="about.f1">Sie sprechen direkt mit mir</span>
-                        </div>
-                        <div class="about-feature">
-                            <span class="about-feature-icon" aria-hidden="true">✓</span>
-                            <span data-i18n="about.f2">Faire Preise, keine Überraschungen</span>
-                        </div>
-                        <div class="about-feature">
-                            <span class="about-feature-icon" aria-hidden="true">✓</span>
-                            <span data-i18n="about.f3">Ihre Website in 1–2 Wochen fertig</span>
-                        </div>
-                        <div class="about-feature">
-                            <span class="about-feature-icon" aria-hidden="true">✓</span>
-                            <span data-i18n="about.f4">Ich erkläre alles ohne Fachchinesisch</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="me-col">
+        <figure class="me">
+          <img src="assets/img/leon-640.webp"
+               srcset="assets/img/leon-320.webp 256w, assets/img/leon-640.webp 512w"
+               sizes="(max-width: 760px) 106px, 274px"
+               width="512" height="640" fetchpriority="high"
+               alt="Leon Brodersen, Kopf und Schultern, hellblaues Hemd">
+          <figcaption>Leon Brodersen, ly&#8209;webstudio UG</figcaption>
+        </figure>
+        <p class="proof">Diese Seite ist statisches HTML: <strong>12 Dateien, 233 KB</strong> beim ersten Aufruf – davon 96 KB Bildschirmfotos und 71 KB Schrift. <strong>Keine Anfragen an Dritte</strong>, keine Cookies, keine Schriften von fremden Servern. Bei 1440 × 900 px im Browser gemessen, nicht behauptet.</p>
+      </div>
 
-    <!-- Why Us Section -->
-    <section class="why-us" id="why-us">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="why.label">Warum ich</span>
-                <h2 data-i18n="why.title">Was Sie bei mir erwartet</h2>
-                <p data-i18n="why.subtitle">Kein Fachchinesisch, keine Überraschungen – einfach eine gute Website</p>
-            </div>
+    </div>
+  </section>
 
-            <div class="why-grid">
-                <div class="why-card">
-                    <div class="why-number">01</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t1">Festpreis, bevor es losgeht</h3>
-                        <p data-i18n="why.p1">Nach dem Erstgespräch nenne ich Ihnen einen Festpreis. Der gilt, auch wenn ich mich verschätzt habe.</p>
-                    </div>
-                </div>
-
-                <div class="why-card">
-                    <div class="why-number">02</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t2">Ohne Fachchinesisch</h3>
-                        <p data-i18n="why.p2">Sie müssen nichts über Hosting, Domains oder SEO wissen. Ich erkläre jeden Schritt in normalem Deutsch.</p>
-                    </div>
-                </div>
-
-                <div class="why-card">
-                    <div class="why-number">03</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t3">Persönlich erreichbar</h3>
-                        <p data-i18n="why.p3">Sie rufen an oder schreiben, und ich antworte selbst – werktags innerhalb von 24 Stunden.</p>
-                    </div>
-                </div>
-
-                <div class="why-card">
-                    <div class="why-number">04</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t4">Videocall statt Anfahrt</h3>
-                        <p data-i18n="why.p4">Wir besprechen alles per Videocall oder Telefon. Das ist schneller als ein Termin vor Ort und funktioniert, egal wo Sie sind.</p>
-                    </div>
-                </div>
-
-                <div class="why-card">
-                    <div class="why-number">05</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t5">Funktioniert auf jedem Gerät</h3>
-                        <p data-i18n="why.p5">Egal ob Handy, Tablet oder Computer – Ihre Website sieht überall gut aus und lädt schnell.</p>
-                    </div>
-                </div>
-
-                <div class="why-card">
-                    <div class="why-number">06</div>
-                    <div class="why-content">
-                        <h3 data-i18n="why.t6">In 1–2 Wochen online</h3>
-                        <p data-i18n="why.p6">Keine monatelange Wartezeit. Ab dem Tag, an dem Ihre Inhalte da sind, dauert es ein bis zwei Wochen.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it Works Section -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="how.label">So funktioniert's</span>
-                <h2 data-i18n="how.title">In 4 einfachen Schritten zu Ihrer Website</h2>
-                <p data-i18n="how.subtitle">Ihr Anteil: ein Gespräch, Ihre Inhalte und zwei Rückmeldungen</p>
-            </div>
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3 data-i18n="how.t1">Kostenloses Erstgespräch</h3>
-                        <p data-i18n="how.p1">Wir lernen uns per Telefon oder Videocall kennen und klären, was Ihre Website können soll. Danach bekommen Sie den Festpreis.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3 data-i18n="how.t2">Entwurf & Design</h3>
-                        <p data-i18n="how.p2">Ich baue einen ersten Entwurf. Dafür brauche ich Ihre Texte, Fotos und Ihr Logo. Sie schauen alles in Ruhe an und sagen mir, was anders soll.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3 data-i18n="how.t3">Ihre Feedback-Runde</h3>
-                        <p data-i18n="how.p3">Sie geben Rückmeldung, ich passe es an. Zwei Korrekturrunden sind im Preis enthalten.</p>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3 data-i18n="how.t4">Ihre Website geht online</h3>
-                        <p data-i18n="how.p4">Ich veröffentliche die Website und zeige Ihnen, wo alles liegt. Spätere Änderungen übernehme ich auf Wunsch, siehe Pflege & Support.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Design Styles Section -->
-    <section id="styles" class="design-styles">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="styles.label">Beispiele</span>
-                <h2 data-i18n="styles.title">So könnte Ihre Website aussehen</h2>
-                <p data-i18n="styles.subtitle">Klicken Sie auf einen Stil, um eine vollständige Demo-Seite zu sehen</p>
-                <div class="style-notice">
-                    <p data-i18n="styles.notice"><strong>Hinweis:</strong> Die gezeigten Unternehmen sind <strong>frei erfunden</strong>.
-                        Alle Namen, Adressen und Kontaktdaten dienen ausschließlich zur Demonstration
-                        und haben keinen Bezug zu realen Unternehmen.</p>
-                </div>
-
-            </div>
-
-
-            <div class="styles-showcase">
-                <!-- Minimalist -->
-                <div class="style-card" data-style="minimalist">
-                    <div class="style-preview minimalist">
-                        <div class="preview-header">
-                            <div class="preview-dots">
-                                <span></span><span></span><span></span>
-                            </div>
-                        </div>
-                        <div class="preview-content">
-                            <div class="preview-nav"></div>
-                            <div class="preview-hero-mini">
-                                <div class="preview-title"></div>
-                                <div class="preview-text"></div>
-                                <div class="preview-btn" style="background: #111827;"></div>
-                            </div>
-                            <div class="preview-boxes">
-                                <div class="preview-box"></div>
-                                <div class="preview-box"></div>
-                                <div class="preview-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="style-info">
-                        <h3 id="style-title-minimalist" data-i18n="styles.s1.title">Zahnarztpraxis</h3>
-                        <p data-i18n="styles.s1.desc">Klar, sauber und vertrauenswürdig. So könnte die Website einer Praxis oder eines Arztes aussehen.</p>
-                        <div class="style-features">
-                            <span data-i18n="styles.s1.f1"><span aria-hidden="true">✓</span> Seriös</span>
-                            <span data-i18n="styles.s1.f2"><span aria-hidden="true">✓</span> Übersichtlich</span>
-                            <span data-i18n="styles.s1.f3"><span aria-hidden="true">✓</span> Vertrauensvoll</span>
-                        </div>
-                        <div class="style-colors">
-                            <div class="color-dot" style="background: #111827;"></div>
-                            <div class="color-dot" style="background: #6b7280;"></div>
-                            <div class="color-dot" style="background: #f9fafb;"></div>
-                        </div>
-                        <button type="button" class="style-cta" data-i18n="styles.s1.cta" aria-describedby="style-title-minimalist">
-                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Corporate -->
-                <div class="style-card" data-style="corporate">
-                    <div class="style-preview">
-                        <div class="preview-header corp-header">
-                            <div class="preview-dots">
-                                <span></span><span></span><span></span>
-                            </div>
-                        </div>
-                        <div class="preview-content corp-bg">
-                            <div class="preview-nav corp-nav"></div>
-                            <div class="preview-hero-mini">
-                                <div class="preview-title corp-title"></div>
-                                <div class="preview-text"></div>
-                                <div class="preview-btn corp-btn"></div>
-                            </div>
-                            <div class="preview-boxes">
-                                <div class="preview-box corp-box"></div>
-                                <div class="preview-box corp-box"></div>
-                                <div class="preview-box corp-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="style-info">
-                        <h3 id="style-title-corporate" data-i18n="styles.s2.title">Steuerberatung</h3>
-                        <p data-i18n="styles.s2.desc">Professionell und seriös. Ideal für Berater, Anwälte oder Finanzdienstleister.</p>
-                        <div class="style-features">
-                            <span data-i18n="styles.s2.f1"><span aria-hidden="true">✓</span> Professionell</span>
-                            <span data-i18n="styles.s2.f2"><span aria-hidden="true">✓</span> Vertrauensvoll</span>
-                            <span data-i18n="styles.s2.f3"><span aria-hidden="true">✓</span> Klassisch</span>
-                        </div>
-                        <div class="style-colors">
-                            <div class="color-dot" style="background: #1e3a5f;"></div>
-                            <div class="color-dot" style="background: #c9a227;"></div>
-                            <div class="color-dot" style="background: #f8fafc;"></div>
-                        </div>
-                        <button type="button" class="style-cta" data-i18n="styles.s2.cta" aria-describedby="style-title-corporate">
-                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Warm -->
-                <div class="style-card" data-style="warm">
-                    <div class="style-preview">
-                        <div class="preview-header warm-header">
-                            <div class="preview-dots">
-                                <span></span><span></span><span></span>
-                            </div>
-                        </div>
-                        <div class="preview-content warm-bg">
-                            <div class="preview-nav warm-nav"></div>
-                            <div class="preview-hero-mini">
-                                <div class="preview-title warm-title"></div>
-                                <div class="preview-text"></div>
-                                <div class="preview-btn warm-btn"></div>
-                            </div>
-                            <div class="preview-boxes">
-                                <div class="preview-box warm-box"></div>
-                                <div class="preview-box warm-box"></div>
-                                <div class="preview-box warm-box"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="style-info">
-                        <h3 id="style-title-warm" data-i18n="styles.s3.title">Café & Restaurant</h3>
-                        <p data-i18n="styles.s3.desc">Warm und einladend. So könnte die Website eines Cafés, Restaurants oder Hotels aussehen.</p>
-                        <div class="style-features">
-                            <span data-i18n="styles.s3.f1"><span aria-hidden="true">✓</span> Einladend</span>
-                            <span data-i18n="styles.s3.f2"><span aria-hidden="true">✓</span> Appetitlich</span>
-                            <span data-i18n="styles.s3.f3"><span aria-hidden="true">✓</span> Gemütlich</span>
-                        </div>
-                        <div class="style-colors">
-                            <div class="color-dot" style="background: #8b4513;"></div>
-                            <div class="color-dot" style="background: #d4a574;"></div>
-                            <div class="color-dot" style="background: #fef7ed;"></div>
-                        </div>
-                        <button type="button" class="style-cta" data-i18n="styles.s3.cta" aria-describedby="style-title-warm">
-                            Demo ansehen <span class="arrow" aria-hidden="true">→</span>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <div class="style-demo-overlay" id="styleDemoOverlay" role="dialog" aria-modal="true" aria-labelledby="styleDemoTitle">
-        <div class="style-demo-header">
-            <div class="style-demo-info">
-                <h2 class="style-demo-title" id="styleDemoTitle"></h2>
-                <span class="style-demo-hint" id="styleDemoHint" data-i18n="styles.demo.hint">Frei erfundenes Beispiel</span>
-            </div>
-            <button type="button" class="style-demo-close" id="styleDemoClose">
-                <span class="close-icon" aria-hidden="true">✕</span>
-                <span data-i18n="styles.demo.close">Schließen</span>
-            </button>
-        </div>
-        <iframe id="styleDemoFrame" class="style-demo-frame" title="Beispielseite"></iframe>
+  <!-- ============================ Arbeiten ============================ -->
+  <section class="wall" id="arbeiten" aria-labelledby="h-arbeiten">
+    <div class="wrap work-head">
+      <h2 id="h-arbeiten">Arbeiten</h2>
+      <div class="work-intro">
+        <p>Zwei fertige Sachen, eine App und eine Website. Unter jedem Bild steht keine Aufzählung von Funktionen, sondern die Entscheidung dahinter – das ist der Teil, den man nur kennt, wenn man es selbst gebaut hat.</p>
+        <p class="work-color">Das Orange dieser Seite ist übrigens das Akzentorange aus GingR, <span class="hex">#F0942E</span>. Dieselbe Hand, dieselbe Farbe.</p>
+      </div>
     </div>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="pricing.label">Preise</span>
-                <h2 data-i18n="pricing.title">Website erstellen lassen – was kostet das?</h2>
-                <p data-i18n="pricing.subtitle">Den genauen Festpreis nenne ich nach dem Erstgespräch, bevor die Arbeit beginnt</p>
-            </div>
-            <p class="pricing-intro" data-i18n="pricing.intro">Die Preise unten sind <strong>Einführungspreise für meine ersten fünf Projekte</strong>. Dafür darf ich die fertige Website als Referenz zeigen. Danach gilt der Normalpreis, der bei jedem Paket mit dabeisteht.</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3 data-i18n="pricing.starter.title">Starter-Paket</h3>
-                    <p class="subtitle" data-i18n="pricing.starter.sub">Ihr professioneller Online-Auftritt</p>
-                    <div class="price">150 €<span> – 300 €</span></div>
-                    <p class="price-normal" data-i18n="pricing.starter.normal">Normalpreis 300 – 500 €</p>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.starter.f1">1–3 Seiten (z.B. Start, Über mich, Kontakt)</li>
-                        <li data-i18n="pricing.starter.f2">Sieht auf Handy & Computer gut aus</li>
-                        <li data-i18n="pricing.starter.f3">Kontaktformular für Kundenanfragen</li>
-                        <li data-i18n="pricing.starter.f4">Auffindbar bei Google (SEO)</li>
-                        <li data-i18n="pricing.starter.f5">Fertig in ca. 1 Woche</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline" data-i18n="pricing.starter.btn">Unverbindlich anfragen</a>
-                </div>
-                <div class="pricing-card featured">
-                    <h3 data-i18n="pricing.komplett.title">Komplett-Paket</h3>
-                    <p class="subtitle" data-i18n="pricing.komplett.sub">Mehr Seiten, eigenes Design, Social-Media-Einbindung</p>
-                    <div class="price">300 €<span> – 600 €</span></div>
-                    <p class="price-normal" data-i18n="pricing.komplett.normal">Normalpreis 600 – 1.000 €</p>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.komplett.f1">4–7 Seiten mit individuellem Design</li>
-                        <li data-i18n="pricing.komplett.f2">Optimiert für Google-Suche (SEO)</li>
-                        <li data-i18n="pricing.komplett.f3">Einbindung Ihrer Social-Media-Kanäle</li>
-                        <li data-i18n="pricing.komplett.f4">Bildergalerie, Teamseite o.Ä.</li>
-                        <li data-i18n="pricing.komplett.f5">Fertig in 1–2 Wochen</li>
-                    </ul>
-                    <a href="#contact" class="btn" data-i18n="pricing.komplett.btn">Unverbindlich anfragen</a>
-                </div>
-                <div class="pricing-card">
-                    <h3 data-i18n="pricing.support.title">Pflege & Support</h3>
-                    <p class="subtitle" data-i18n="pricing.support.sub">Nach dem Start: Änderungen und Pflege</p>
-                    <div class="price">20 €<span>/Std.</span></div>
-                    <p class="price-normal" data-i18n="pricing.support.normal">Normalpreis 40 €/Std.</p>
-                    <ul class="pricing-features">
-                        <li data-i18n="pricing.support.f1">Texte und Bilder aktualisieren</li>
-                        <li data-i18n="pricing.support.f2">Technische Pflege & Updates</li>
-                        <li data-i18n="pricing.support.f3">Kleine Anpassungen & Erweiterungen</li>
-                        <li data-i18n="pricing.support.f4">Erreichbar per Telefon & E-Mail</li>
-                        <li data-i18n="pricing.support.f5">Schnelle Reaktion, keine Wartezeit</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline" data-i18n="pricing.support.btn">Unverbindlich anfragen</a>
-                </div>
-            </div>
+    <!-- Abb. 1: App -->
+    <figure class="fig fig-app">
+      <div class="wrap">
+        <figcaption class="figcap">
+          <span class="kind">Abb.&nbsp;1 · App</span>
+          <span class="title">GingR: Gym &amp; Krafttraining</span>
+          <span class="desc">Trainingslog, das Geräte kennt. Eigene App der ly&#8209;webstudio&nbsp;UG für iOS und Android, bald im App&nbsp;Store und bei Google&nbsp;Play. Entwurf, Code, Texte und Store-Bilder von mir.</span>
+        </figcaption>
+        <ul class="screens">
+          <li>
+            <img src="assets/img/gingr-01-workout.webp" width="560" height="1217" loading="lazy" sizes="(max-width: 760px) 55vw, 25vw" alt="GingR, laufendes Workout: Bankdrücken und Rudern am Kabel, je drei abgehakte Sätze">
+            <p><b>Läuft ohne Netz.</b> Im Kellerstudio gibt es keinen Empfang, und ein Satz muss zwischen zwei Übungen in zwei Sekunden abgehakt sein. Deshalb liegt jedes Training zuerst auf dem Gerät und wird später abgeglichen, nicht umgekehrt.</p>
+          </li>
+          <li>
+            <img src="assets/img/gingr-02-geraetewechsel.webp" width="560" height="1217" loading="lazy" sizes="(max-width: 760px) 55vw, 25vw" alt="GingR, Auswahl von Gerät und Variante: Standard oder Turm mit dickem Kabel, darunter vorgeschlagene Aufwärmsätze">
+            <p><b>Geräte statt Übungsnamen.</b> „Rudern am Turm mit dickem Kabel“ ist eine eigene Variante mit eigenem Verlauf, weil 40&nbsp;kg an zwei Geräten nicht dasselbe sind. Die Aufwärmsätze rundet die App auf das, was im Studio wirklich aufliegt.</p>
+          </li>
+          <li>
+            <img src="assets/img/gingr-04-heatmap.webp" width="560" height="1217" loading="lazy" sizes="(max-width: 760px) 55vw, 25vw" alt="GingR, Auswertung: Muskel-Heatmap der letzten 90 Tage in der Vorderansicht">
+            <p><b>Ohne Konto, ohne Werbung.</b> Auch Auswertungen wie diese Heatmap gehen ohne Anmeldung – wer nur trainieren will, soll sich nicht erst registrieren. Und zwischen zwei Sätzen blendet sich nichts ein.</p>
+          </li>
+        </ul>
+        <table class="kv app-facts">
+          <caption>GingR in Zahlen</caption>
+          <tbody>
+            <tr><th scope="row">Art</th><td>App für iOS und Android</td></tr>
+            <tr><th scope="row">Stand</th><td>bald im App&nbsp;Store und bei Google&nbsp;Play</td></tr>
+            <tr><th scope="row">Herausgeber</th><td>ly&#8209;webstudio UG (haftungsbeschränkt)</td></tr>
+            <tr><th scope="row">Konto</th><td>nicht nötig</td></tr>
+            <tr><th scope="row">Werbung</th><td>keine</td></tr>
+            <tr><th scope="row">Meine Rolle</th><td>Entwurf, Code, Texte, Store&#8209;Bilder</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </figure>
 
-            <div class="additional-costs">
-                <div class="cost-card">
-                    <h3 data-i18n="extras.title">Extras, falls Sie mehr brauchen</h3>
-                    <ul>
-                        <li><span data-i18n="extras.e1.label">Weitere Unterseite</span> <strong>30–50€</strong></li>
-                        <li><span data-i18n="extras.e2.label">Einfaches Logo-Design</span> <strong>50–100€</strong></li>
-                        <li><span data-i18n="extras.e3.label">Blog / Neuigkeiten-Bereich</span> <strong>50–100€</strong></li>
-                        <li><span data-i18n="extras.e4.label">Website in mehreren Sprachen</span> <strong>ab 100€</strong></li>
-                    </ul>
-                </div>
-                <div class="cost-card">
-                    <h3 data-i18n="extras.running.title">Laufende Kosten, die nicht bei mir anfallen</h3>
-                    <ul>
-                        <li><span data-i18n="extras.r1.label">Ihre Internetadresse (.de)</span> <strong>ca. 10–15€/Jahr</strong></li>
-                        <li><span data-i18n="extras.r2.label">Speicherplatz (Hosting)</span> <strong>ca. 3–10€/Monat</strong></li>
-                        <li><span data-i18n="extras.r3.label">Sicherheitszertifikat (SSL)</span> <strong data-i18n="extras.r3.price">oft kostenlos</strong></li>
-                    </ul>
-                    <p class="note" data-i18n="extras.note">* Diese Kosten zahlen Sie direkt an Ihren Hosting-Anbieter. Bei der Einrichtung helfe ich.</p>
-                </div>
+    <!-- Abb. 2: Website -->
+    <figure class="fig fig-web">
+      <div class="wrap fig-web-in">
+        <figcaption class="figcap">
+          <span class="kind">Abb.&nbsp;2 · Website</span>
+          <span class="title">Zahnarztpraxis am Kastanienplatz</span>
+          <span class="desc">Ein frei erfundenes Beispiel, aber voll ausgearbeitet und hier offen zum Anklicken. Diese Praxis, ihre Namen und Nummern gibt es nicht.</span>
+        </figcaption>
+
+        <div class="webcol">
+        <div class="shots">
+          <div class="shot shot-desk">
+            <div class="frame">
+              <img src="assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="800" loading="lazy" sizes="(max-width: 760px) 92vw, 58vw" alt="Beispielseite am Computer: Kopfzeile mit vier Menüpunkten und Telefonnummer, links Überschrift und Termin-Knopf, rechts die Sprechzeiten als Tabelle">
+              <span class="mark mark-l" style="--x:42.36%; --y:10.4%" aria-hidden="true">1</span>
+              <span class="mark mark-r" style="--x:88.89%; --y:10.4%" aria-hidden="true">2</span>
+              <span class="mark mark-l" style="--x:58.8%; --y:27.7%" aria-hidden="true">3</span>
             </div>
+            <p class="shot-meta">Erster Bildschirm am Computer, 1440&nbsp;×&nbsp;800&nbsp;px. <a href="beispiel-zahnarzt/">Beispielseite öffnen</a></p>
+          </div>
+          <div class="shot shot-mob">
+            <div class="frame">
+              <img src="assets/img/beispiel-zahnarzt-handy.webp" width="480" height="1038" loading="lazy" sizes="(max-width: 760px) 74vw, 16vw" alt="Dieselbe Beispielseite auf dem Handy: Anruf-Knopf direkt unter dem Praxisnamen, darunter Überschrift und Sprechzeiten">
+              <span class="mark mark-l" style="--x:0%; --y:17.1%" aria-hidden="true">4</span>
+            </div>
+            <p class="shot-meta">Auf dem Handy, 390&nbsp;×&nbsp;844&nbsp;px<span class="wide-only">, im selben Maßstab daneben</span>.</p>
+          </div>
         </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label" data-i18n="contact.label">Kontakt</span>
-                <h2 data-i18n="contact.title">Haben Sie Fragen? Melden Sie sich einfach</h2>
-                <p data-i18n="contact.subtitle">Das Erstgespräch ist kostenlos und unverbindlich</p>
-            </div>
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <h3 data-i18n="contact.reach">So erreichen Sie mich</h3>
-                    <p data-i18n="contact.reachtext">Egal ob Sie schon konkrete Vorstellungen haben oder erst einmal nur Fragen: Schreiben Sie mir. Ich antworte werktags innerhalb von 24 Stunden.</p>
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-item-text">
-                                <strong data-i18n="contact.email.label">E-Mail</strong>
-                                <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-item-text">
-                                <strong data-i18n="contact.phone.label">Telefon</strong>
-                                <a href="tel:+491794904546">+49 179 4904546</a>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-item-text">
-                                <strong data-i18n="contact.location.label">Zusammenarbeit</strong>
-                                <span data-i18n="contact.location.value">Ortsunabhängig, per Videocall oder Telefon</span>
-                            </div>
-                        </div>
-                        <div class="contact-item">
-                            <div class="contact-item-text">
-                                <strong data-i18n="contact.availability.label">Erreichbarkeit</strong>
-                                <span data-i18n="contact.availability.value">Antwort werktags innerhalb von 24 Stunden</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="contact-form-wrapper">
-                    <h3 data-i18n="contact.form.title">Nachricht schreiben</h3>
-
-                    <!-- Ohne JavaScript kann das Formular nichts senden. Dann zählen Mail und Telefon. -->
-                    <noscript>
-                        <p class="form-hint">Dieses Formular braucht JavaScript. Schreiben Sie mir
-                            an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
-                            oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
-                    </noscript>
-
-                    <!-- Sichtbar, solange script.js nicht gelaufen ist (siehe .form-fallback in styles.css) -->
-                    <p class="form-hint form-fallback" id="formFallback" data-i18n="contact.form.fallback">Das
-                        Formular lädt gerade nicht. Schreiben Sie mir an
-                        <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
-                        oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
-
-                    <div class="form-feedback form-feedback-ok" id="formSuccess" role="status" tabindex="-1" hidden>
-                        <p data-i18n="contact.form.success">Danke, Ihre Nachricht ist angekommen. Ich melde mich
-                            werktags innerhalb von 24 Stunden per E-Mail bei Ihnen.</p>
-                    </div>
-
-                    <form id="contactForm" method="post">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name" data-i18n="contact.form.name">Name *</label>
-                                <input type="text" id="name" name="name" required autocomplete="name"
-                                    placeholder="Ihr Name" data-i18n-ph="contact.form.name.ph">
-                            </div>
-                            <div class="form-group">
-                                <label for="email" data-i18n="contact.form.email">E-Mail *</label>
-                                <input type="email" id="email" name="email" required autocomplete="email"
-                                    placeholder="ihre@email.de" data-i18n-ph="contact.form.email.ph">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="phone" data-i18n="contact.form.phone">Telefon (optional)</label>
-                            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+49 123 456789">
-                        </div>
-
-                        <!-- Falle für Formular-Roboter: unsichtbar, nicht anspringbar, wird nie ausgefüllt -->
-                        <div class="hp-field" aria-hidden="true">
-                            <label for="website">Website</label>
-                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
-                        </div>
-
-                        <fieldset class="form-group service-fieldset">
-                            <legend data-i18n="contact.form.services">Worum geht es? (optional)</legend>
-                            <div class="service-buttons">
-                                <label class="service-btn">
-                                    <input type="checkbox" name="service">
-                                    <span data-i18n="contact.form.s1">Neue Website, bis 3 Seiten</span>
-                                </label>
-
-                                <label class="service-btn">
-                                    <input type="checkbox" name="service">
-                                    <span data-i18n="contact.form.s2">Neue Website, 4 bis 7 Seiten</span>
-                                </label>
-
-                                <label class="service-btn">
-                                    <input type="checkbox" name="service">
-                                    <span data-i18n="contact.form.s3">Ich habe schon eine Website und will sie ersetzen</span>
-                                </label>
-
-                                <label class="service-btn">
-                                    <input type="checkbox" name="service">
-                                    <span data-i18n="contact.form.s4">Pflege einer bestehenden Seite</span>
-                                </label>
-
-                                <label class="service-btn">
-                                    <input type="checkbox" name="service">
-                                    <span data-i18n="contact.form.s5">Weiß ich noch nicht</span>
-                                </label>
-                            </div>
-                        </fieldset>
-
-                        <div class="form-group">
-                            <label for="message" data-i18n="contact.form.message">Ihre Nachricht *</label>
-                            <textarea id="message" name="message" required
-                                placeholder="Erzählen Sie mir von Ihrem Projekt" data-i18n-ph="contact.form.message.ph"></textarea>
-                        </div>
-
-                        <div class="form-feedback form-feedback-error" id="formError" role="alert" hidden>
-                            <p data-i18n="contact.form.error">Das Senden hat nicht geklappt. Schreiben Sie mir
-                                bitte direkt an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
-                                oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
-                        </div>
-
-                        <p class="form-privacy" data-i18n="contact.widerruf">Als Privatperson haben Sie ein 14-tägiges Widerrufsrecht. Die Einzelheiten stehen in der <a href="widerruf.html">Widerrufsbelehrung</a>.</p>
-                        <p class="form-privacy" data-i18n="contact.form.privacy">Ihre Angaben werden über EmailJS (Server in den USA) an mich übermittelt und nur für Ihre Anfrage genutzt. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-                        <button type="submit" class="btn btn-lg" id="formSubmit" data-i18n="contact.form.submit" disabled>
-                            Nachricht senden
-                            <span>→</span>
-                        </button>
-                    </form>
-                </div>
-            </div>
+          <p class="webnote"><b>18&#8239;KB HTML, mit den Schriften 89&#8239;KB, nichts von fremden Servern.</b> Keine Schriften von Google, keine eingebettete Karte: Die Anfahrt ist eine gezeichnete Skizze aus Text und Linien. Eine Praxisseite muss auf dem Handy im Wartezimmer sofort da sein.</p>
         </div>
-    </section>
 
-    </main>
+        <ol class="notes">
+          <li><span class="n" aria-hidden="true">1</span><p><b>Vier Menüpunkte, nicht neun.</b> Sie folgen den Fragen, mit denen Patienten auf die Seite kommen: Was macht die Praxis, wer arbeitet dort, wie komme ich hin, was tue ich im Notfall?</p></li>
+          <li><span class="n" aria-hidden="true">2</span><p><b>Die Nummer steht oben rechts</b>, auf jeder Unterseite. Wer eine Praxis sucht, will meist einfach anrufen und nicht erst den Kontaktbereich finden.</p></li>
+          <li><span class="n" aria-hidden="true">3</span><p><b>Sprechzeiten im ersten Bildschirm</b>, als Tabelle aus Text statt als Bild. So lesen Google und Vorleseprogramme sie mit. Direkt darunter steht, was bei Schmerzen am Wochenende zu tun ist.</p></li>
+          <li><span class="n" aria-hidden="true">4</span><p><b>Auf dem Handy</b> ist die Nummer der erste Knopf, gleich unter dem Namen. Die Reihenfolge bleibt dieselbe wie am Computer, nur einspaltig.</p></li>
+        </ol>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="logo">ly-webstudio</a>
-                    <p data-i18n="footer.desc">Websites für kleine Unternehmen und Selbstständige. Ortsunabhängig, zum Festpreis, gebaut von einer Person.</p>
-                </div>
-                <div class="footer-column">
-                    <h4 data-i18n="footer.nav">Navigation</h4>
-                    <ul>
-                        <li><a href="#home" data-i18n="footer.nav.start">Start</a></li>
-                        <li><a href="#about" data-i18n="footer.nav.about">Über mich</a></li>
-                        <li><a href="#how-it-works" data-i18n="footer.nav.process">Ablauf</a></li>
-                        <li><a href="#styles" data-i18n="footer.nav.examples">Beispiele</a></li>
-                        <li><a href="#pricing" data-i18n="footer.nav.pricing">Preise</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4 data-i18n="footer.services">Leistungen</h4>
-                    <ul>
-                        <li><a href="#pricing" data-i18n="footer.s1">Starter-Paket</a></li>
-                        <li><a href="#pricing" data-i18n="footer.s2">Komplett-Paket</a></li>
-                        <li><a href="#pricing" data-i18n="footer.s3">Pflege & Support</a></li>
-                        <li><a href="#contact" data-i18n="footer.s4">Beratung</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4 data-i18n="footer.contact">Kontakt</h4>
-                    <ul>
-                        <li><a href="#contact" data-i18n="footer.contactform">Kontaktformular</a></li>
-                        <li><a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a></li>
-                        <li><a href="tel:+491794904546">+49 179 4904546</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-i18n="footer.copyright">© 2026 ly-webstudio UG (haftungsbeschränkt)</p>
-                <div class="footer-legal">
-                    <a href="impressum.html" hreflang="de" data-i18n="footer.impressum">Impressum</a>
-                    <a href="datenschutz.html" hreflang="de" data-i18n="footer.datenschutz">Datenschutz</a>
-                    <a href="agb.html" hreflang="de" data-i18n="footer.agb">AGB</a>
-                    <a href="widerruf.html" hreflang="de" data-i18n="footer.widerruf">Widerruf</a>
-                </div>
-            </div>
+        <p class="next"><b>Als Nächstes dran:</b> eine eigene Website für GingR. Die Seite, die Sie hier lesen, und die App gehören zusammen – der Rest der Arbeit wächst mit jedem Auftrag.</p>
+      </div>
+    </figure>
+  </section>
+
+  <!-- ============================ Leistungen und Preise ============================ -->
+  <section class="sec" id="leistungen" aria-labelledby="h-leistungen">
+    <div class="wrap sec-in">
+      <div class="rail">
+        <h2 id="h-leistungen">Leistungen und Preise</h2>
+        <p>Für meine ersten 5 Projekte gilt der Einführungspreis. Im Gegenzug darf ich die fertige Website als Referenz zeigen. Danach gilt der Normalpreis.</p>
+      </div>
+
+      <div class="body">
+        <table class="tbl was">
+          <caption>Was ich mache</caption>
+          <colgroup><col class="c-was"><col><col class="c-num"></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Leistung</th>
+              <th scope="col">Was damit gemeint ist</th>
+              <th scope="col" class="num">Preis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Website</th>
+              <td>1 bis 7 Seiten, Kontaktformular, SEO&#8209;Grundlagen, gleich gut auf Handy und Computer</td>
+              <td class="num" data-label="Preis">Paketpreis,<br>siehe unten</td>
+            </tr>
+            <tr>
+              <th scope="row">App</th>
+              <td>für iOS und Android, so wie GingR oben</td>
+              <td class="num" data-label="Preis">nach Aufwand</td>
+            </tr>
+            <tr>
+              <th scope="row">Kleines Werkzeug</th>
+              <td>Rechner, Formular, Auswertung: die eine Sache, die im Alltag jede Woche Zeit frisst</td>
+              <td class="num" data-label="Preis">nach Aufwand</td>
+            </tr>
+            <tr>
+              <th scope="row">Automatisierung</th>
+              <td>wiederkehrende Handgriffe am Rechner, Daten zusammenführen, Berichte erzeugen</td>
+              <td class="num" data-label="Preis">nach Aufwand</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="3">Für Apps, Werkzeuge und Automatisierung gibt es kein Paket: <b>Preis nach Aufwand, wir klären ihn im Erstgespräch.</b> Für Websites und für Pflege &amp; Support gelten die Pakete darunter.</td></tr>
+          </tfoot>
+        </table>
+
+        <h3 class="h3-lead">Websites: drei Pakete</h3>
+        <table class="tbl preise">
+          <caption class="vh">Pakete mit Einführungspreis und Normalpreis</caption>
+          <colgroup><col class="c-pak"><col><col class="c-num"><col class="c-num"></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Paket</th>
+              <th scope="col">Was dabei ist</th>
+              <th scope="col" class="num">Einführungspreis <span>erste 5 Projekte</span></th>
+              <th scope="col" class="num">Normalpreis <span>danach</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Starter&#8209;Paket</th>
+              <td>
+                <ul class="lines">
+                  <li>1–3 Seiten, z.&#8239;B. Start, Über mich, Kontakt</li>
+                  <li>Kontaktformular</li>
+                  <li>SEO&#8209;Grundlagen</li>
+                  <li>fertig in ca. 1 Woche nach Eingang der Inhalte</li>
+                </ul>
+              </td>
+              <td class="num intro" data-label="Einführungspreis">150–300&#8239;€</td>
+              <td class="num normal" data-label="Normalpreis">300–500&#8239;€</td>
+            </tr>
+            <tr>
+              <th scope="row">Komplett&#8209;Paket</th>
+              <td>
+                <ul class="lines">
+                  <li>4–7 Seiten, individuelles Design</li>
+                  <li>SEO</li>
+                  <li>Social&#8209;Media&#8209;Einbindung</li>
+                  <li>fertig in 1–2 Wochen nach Eingang der Inhalte</li>
+                </ul>
+              </td>
+              <td class="num intro" data-label="Einführungspreis">300–600&#8239;€</td>
+              <td class="num normal" data-label="Normalpreis">600–1.000&#8239;€</td>
+            </tr>
+            <tr>
+              <th scope="row">Pflege &amp; Support</th>
+              <td>
+                <ul class="lines">
+                  <li>Texte und Bilder aktualisieren</li>
+                  <li>technische Pflege</li>
+                  <li>kleine Anpassungen</li>
+                  <li>erreichbar per Telefon und E&#8209;Mail</li>
+                </ul>
+              </td>
+              <td class="num intro" data-label="Einführungspreis">20&#8239;€ / Std.</td>
+              <td class="num normal" data-label="Normalpreis">40&#8239;€ / Std.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="it-block">
+          <h3>Apps, Werkzeuge, Automatisierung</h3>
+          <p>Nicht jedes Projekt ist eine Website. GingR ist eine App, und in derselben Werkstatt entstehen kleine Programme, die eine wiederkehrende Handarbeit übernehmen: Daten aus einer Liste in die nächste, ein Formular, das am Ende eine fertige Datei ausspuckt, ein Skript, das jede Nacht dasselbe tut, damit es niemand mehr morgens tun muss. Ich studiere Informatik, und das ist der Teil des Berufs, für den ich das Studium mache.</p>
+          <p class="stance"><b>Preis nach Aufwand, wir klären ihn im Erstgespräch.</b> Pakete gibt es hier nicht, weil zwei Werkzeuge selten gleich viel Arbeit sind. Was der Umfang kostet, sage ich Ihnen, bevor ich anfange.</p>
         </div>
-    </footer>
 
+        <table class="kv">
+          <caption>Konditionen</caption>
+          <tbody>
+            <tr><th scope="row">Festpreis</th><td>Den genauen Preis nenne ich nach dem Erstgespräch, bevor die Arbeit beginnt.</td></tr>
+            <tr><th scope="row">Umsatzsteuer</th><td>Kleinunternehmer nach §&nbsp;19 UStG, daher keine Umsatzsteuer. Alle Preise sind Endpreise.</td></tr>
+            <tr><th scope="row">Zahlung</th><td>50&#8239;% bei Auftrag, 50&#8239;% nach Fertigstellung.</td></tr>
+            <tr><th scope="row">Korrekturen</th><td>Zwei Korrekturrunden sind enthalten.</td></tr>
+            <tr><th scope="row">Lieferzeit</th><td>Zählt ab Eingang der Inhalte. Texte, Fotos und Logo kommen von Ihnen.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="costs">
+          <div>
+            <h3>Extras</h3>
+            <p class="sub">falls Sie mehr brauchen</p>
+            <ul class="leaders">
+              <li><span class="t">Weitere Unterseite</span><span class="dots" aria-hidden="true"></span><span class="v">30–50&#8239;€</span></li>
+              <li><span class="t">Einfaches Logo</span><span class="dots" aria-hidden="true"></span><span class="v">50–100&#8239;€</span></li>
+              <li><span class="t">Blog oder Neuigkeiten</span><span class="dots" aria-hidden="true"></span><span class="v">50–100&#8239;€</span></li>
+              <li><span class="t">Mehrere Sprachen</span><span class="dots" aria-hidden="true"></span><span class="v">ab 100&#8239;€</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3>Laufende Kosten</h3>
+            <p class="sub">zahlen Sie an Ihren Anbieter, nicht an mich. Beim Einrichten helfe ich.</p>
+            <ul class="leaders">
+              <li><span class="t">Domain (.de)</span><span class="dots" aria-hidden="true"></span><span class="v">ca. 10–15&#8239;€ / Jahr</span></li>
+              <li><span class="t">Hosting</span><span class="dots" aria-hidden="true"></span><span class="v">ca. 3–10&#8239;€ / Monat</span></li>
+              <li><span class="t">SSL&#8209;Zertifikat</span><span class="dots" aria-hidden="true"></span><span class="v">oft kostenlos</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Ablauf ============================ -->
+  <section class="sec" id="ablauf" aria-labelledby="h-ablauf">
+    <div class="wrap sec-in">
+      <div class="rail">
+        <h2 id="h-ablauf">Ablauf</h2>
+        <p>Vier Schritte. In jeder Zeile steht, was Sie tun, was ich tue und wann Geld fließt.</p>
+      </div>
+
+      <div class="body">
+        <table class="tbl ablauf">
+          <caption class="vh">Ablauf in vier Schritten mit Aufgaben und Zahlungen</caption>
+          <colgroup><col class="c-step"><col><col><col class="c-money"></colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Schritt</th>
+              <th scope="col">Ihr Teil</th>
+              <th scope="col">Mein Teil</th>
+              <th scope="col">Geld</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><span class="st-n" aria-hidden="true">1</span>Erstgespräch</th>
+              <td data-label="Ihr Teil">Anrufen oder schreiben und erzählen, was Sie brauchen. Vorbereiten müssen Sie nichts.</td>
+              <td data-label="Mein Teil">Zuhören, nachfragen, danach den Festpreis nennen – per Telefon oder Video&#8209;Call.</td>
+              <td class="money" data-label="Geld">kostenlos</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="st-n" aria-hidden="true">2</span>Inhalte und Entwurf</th>
+              <td data-label="Ihr Teil">Texte, Fotos und Logo schicken.</td>
+              <td data-label="Mein Teil">Den Entwurf bauen. Ab Eingang Ihrer Inhalte läuft die Lieferzeit von 1–2 Wochen.</td>
+              <td class="money" data-label="Geld">50&#8239;% bei Auftrag</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="st-n" aria-hidden="true">3</span>Zwei Rückmeldungen</th>
+              <td data-label="Ihr Teil">Sagen, was anders soll – zweimal, gesammelt.</td>
+              <td data-label="Mein Teil">Beide Runden umsetzen.</td>
+              <td class="money" data-label="Geld">im Preis enthalten</td>
+            </tr>
+            <tr>
+              <th scope="row"><span class="st-n" aria-hidden="true">4</span>Die Seite geht online</th>
+              <td data-label="Ihr Teil">Domain und Hosting auf Ihren Namen.</td>
+              <td data-label="Mein Teil">Die Seite online stellen und beim Einrichten helfen.</td>
+              <td class="money" data-label="Geld">50&#8239;% nach Fertigstellung</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="deliver">
+          <h3>Was Sie liefern</h3>
+          <p class="sub">Damit ich anfangen kann, brauche ich von Ihnen:</p>
+          <ol class="alpha">
+            <li>Ihre Texte – Leistungen, Preise, Öffnungszeiten, was bei Ihnen dazugehört. Formulieren kann ich mit, schreiben müssen Sie nicht allein.</li>
+            <li>Fotos, zum Beispiel von Ihren Räumen, Ihrer Arbeit oder Ihrem Team.</li>
+            <li>Ihr Logo, falls Sie eines haben. Wenn nicht, steht ein einfaches in den Extras.</li>
+            <li>Zwei Rückmeldungen zu meinen Entwürfen.</li>
+            <li>Domain und Hosting auf Ihren Namen. Die laufenden Kosten zahlen Sie direkt an den Anbieter, beim Einrichten helfe ich.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Über mich ============================ -->
+  <section class="sec" id="ueber-mich" aria-labelledby="h-ueber">
+    <div class="wrap sec-in">
+      <div class="rail">
+        <h2 id="h-ueber">Über mich</h2>
+        <p>Eine Person, eine Nummer, eine Rechnung.</p>
+      </div>
+      <div class="body about">
+        <div class="about-text">
+          <p>Ich bin Leon Brodersen, Geschäftsführer der ly&#8209;webstudio UG (haftungsbeschränkt), und studiere Informatik. Den Code schreibe ich selbst. Hinter mir steht keine Agentur, die Ihr Projekt weitergibt, und Sie haben von der ersten Frage bis zur fertigen Seite mit derselben Person zu tun.</p>
+          <p>Wo Ihr Betrieb sitzt, spielt keine Rolle: Erstgespräch und Abstimmung laufen per Video&#8209;Call, Telefon und E&#8209;Mail.</p>
+          <p>GingR ist meine eigene App und zugleich mein Prüfstand. Was ich dort über Offline&#8209;Speicherung, Datenschutz und Tempo lerne, steckt anschließend in Ihrem Projekt.</p>
+        </div>
+        <table class="kv kv-firma">
+          <caption>Rechtliches</caption>
+          <tbody>
+            <tr><th scope="row">Firma</th><td>ly&#8209;webstudio UG (haftungsbeschränkt)</td></tr>
+            <tr><th scope="row">Geschäftsführer</th><td>Leon Brodersen</td></tr>
+            <tr><th scope="row">Registernummer</th><td>HRB 285808 B</td></tr>
+            <tr><th scope="row">Steuerlich</th><td>Kleinunternehmer nach §&nbsp;19 UStG</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ Kontakt ============================ -->
+  <section class="sec contact" id="kontakt" aria-labelledby="h-kontakt">
+    <div class="wrap sec-in">
+      <div class="rail">
+        <h2 id="h-kontakt">Kontakt</h2>
+        <p>Das Erstgespräch ist kostenlos, per Telefon oder Video&#8209;Call. Vorbereiten müssen Sie nichts – Texte und Fotos kommen erst, wenn wir uns einig sind.</p>
+      </div>
+
+      <div class="body contact-in">
+        <div class="reach">
+          <a class="big" href="tel:+491794904546">0179&nbsp;4904546</a>
+          <a class="big mail" href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
+          <p class="reach-note">Am liebsten Telefon: In zehn Minuten ist meist klar, ob ich der Richtige für Ihr Vorhaben bin. Wenn nicht, sage ich das auch.</p>
+          <h3 class="next-h3">Was dann passiert</h3>
+          <ol class="steps-mini">
+            <li>Wir sprechen, kostenlos, 10 bis 20 Minuten.</li>
+            <li>Danach nenne ich Ihnen Umfang und Festpreis.</li>
+            <li>Erst wenn Sie zusagen, schicken Sie Texte und Fotos.</li>
+          </ol>
+        </div>
+
+        <form class="form" id="form" novalidate>
+          <div class="row2">
+            <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+            <div class="field"><label for="f-mail">E&#8209;Mail</label><input id="f-mail" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="field"><label for="f-tel">Telefon <span class="opt">(optional)</span></label><input id="f-tel" name="phone" type="tel" autocomplete="tel"></div>
+          <fieldset class="choice">
+            <legend>Worum geht es? <span class="opt">(optional, mehreres möglich)</span></legend>
+            <label><input type="checkbox" name="thema" value="starter"> Starter&#8209;Paket</label>
+            <label><input type="checkbox" name="thema" value="komplett"> Komplett&#8209;Paket</label>
+            <label><input type="checkbox" name="thema" value="pflege"> Pflege &amp; Support</label>
+            <label><input type="checkbox" name="thema" value="projekt"> App, Werkzeug, Automatisierung</label>
+            <label><input type="checkbox" name="thema" value="unklar"> Noch unklar</label>
+          </fieldset>
+          <div class="field"><label for="f-msg">Nachricht</label><textarea id="f-msg" name="message" rows="5" required></textarea></div>
+
+          <!-- Roboter-Falle. Für Menschen unsichtbar, für Vorleseprogramme ausgeblendet. -->
+          <div class="trap" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+          <button class="btn" type="submit" id="form-submit" disabled>Nachricht senden</button>
+          <p class="form-fallback" id="form-fallback">Der Versand über dieses Formular braucht JavaScript. Ohne JavaScript erreichen Sie mich unter <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a> oder telefonisch unter <a href="tel:+491794904546">0179&nbsp;4904546</a>.</p>
+          <p class="form-note">Die Nachricht geht direkt an mich, ohne Newsletter und ohne Weitergabe. Was mit Ihren Angaben passiert, steht in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          <p class="form-status" id="form-status" role="status"
+             data-sending="Wird gesendet …"
+             data-success="Danke, Ihre Nachricht ist bei mir. Ich antworte in der Regel am selben Tag."
+             data-error="Der Versand hat nicht funktioniert. Bitte schreiben Sie mir direkt an kontaktleonyago@gmail.com oder rufen Sie an: 0179 4904546."></p>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p>ly&#8209;webstudio UG (haftungsbeschränkt) · Geschäftsführer Leon Brodersen · HRB 285808 B · Kleinunternehmer nach §&nbsp;19 UStG</p>
+    <ul>
+      <li><a href="impressum.html">Impressum</a></li>
+      <li><a href="datenschutz.html">Datenschutz</a></li>
+      <li><a href="agb.html">AGB</a></li>
+      <li><a href="widerruf.html">Widerruf</a></li>
+      <li><a href="/en/" hreflang="en" lang="en">English</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://www.ly-webstudio.de/#organisation",
+      "name": "ly-webstudio",
+      "legalName": "ly-webstudio UG (haftungsbeschränkt)",
+      "url": "https://www.ly-webstudio.de/",
+      "image": "https://www.ly-webstudio.de/og-image.jpg",
+      "email": "kontaktleonyago@gmail.com",
+      "telephone": "+49 179 4904546",
+      "founder": { "@type": "Person", "name": "Leon Brodersen" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Buchfinkweg 50",
+        "postalCode": "12351",
+        "addressLocality": "Berlin",
+        "addressCountry": "DE"
+      },
+      "knowsLanguage": ["de", "en"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.ly-webstudio.de/#website",
+      "url": "https://www.ly-webstudio.de/",
+      "name": "ly-webstudio",
+      "inLanguage": "de",
+      "publisher": { "@id": "https://www.ly-webstudio.de/#organisation" }
+    },
+    {
+      "@type": "Service",
+      "name": "Websites und Informatik-Projekte",
+      "serviceType": "Webentwicklung, App-Entwicklung, Automatisierung",
+      "provider": { "@id": "https://www.ly-webstudio.de/#organisation" },
+      "areaServed": { "@type": "Country", "name": "Deutschland" },
+      "availableChannel": {
+        "@type": "ServiceChannel",
+        "serviceUrl": "https://www.ly-webstudio.de/#kontakt",
+        "servicePhone": "+49 179 4904546"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Website-Pakete",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "name": "Starter-Paket",
+            "description": "1–3 Seiten mit Kontaktformular und SEO-Grundlagen. Einführungspreis für die ersten 5 Projekte.",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "minPrice": "150",
+              "maxPrice": "300",
+              "priceCurrency": "EUR",
+              "valueAddedTaxIncluded": true
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Komplett-Paket",
+            "description": "4–7 Seiten mit individuellem Design, SEO und Social-Media-Einbindung. Einführungspreis für die ersten 5 Projekte.",
+            "priceSpecification": {
+              "@type": "PriceSpecification",
+              "minPrice": "300",
+              "maxPrice": "600",
+              "priceCurrency": "EUR",
+              "valueAddedTaxIncluded": true
+            }
+          },
+          {
+            "@type": "Offer",
+            "name": "Pflege & Support",
+            "description": "Aktualisierungen, technische Pflege und kleine Anpassungen, nach Stunden abgerechnet. Einführungspreis für die ersten 5 Projekte.",
+            "priceSpecification": {
+              "@type": "UnitPriceSpecification",
+              "price": "20",
+              "priceCurrency": "EUR",
+              "unitCode": "HUR",
+              "valueAddedTaxIncluded": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+</script>
 </body>
 </html>

@@ -33,15 +33,18 @@
     src: url('fonts/inter-v20-latin-800.woff2') format('woff2');
 }
 
+/* Dieselben Farben wie die Startseite: warmer Papierton, tiefe Tinte, das
+   Orange aus GingR als einziger Akzent. Gemessene Kontraste auf #FAF6F0:
+   Tinte 16,4:1 · gedämpfte Tinte 7,0:1 · Akzent 5,1:1. */
 :root {
-    --primary: #10b981;
-    --accent: #0d9488;
-    --link: #047857;
-    --text-dark: #111827;
-    --text-medium: #4b5563;
-    --text-light: #6b7280;
-    --border: #e5e7eb;
-    --bg: #ffffff;
+    --primary: #B04A0B;
+    --accent: #F0942E;
+    --link: #B04A0B;
+    --text-dark: #1C1815;
+    --text-medium: #5C5349;
+    --text-light: #5C5349;
+    --border: rgba(28, 24, 21, 0.16);
+    --bg: #FAF6F0;
 }
 
 *,
@@ -84,16 +87,19 @@ body {
     min-height: 4.5rem;
 }
 
+/* Der Name steht in Tinte, wie auf der Startseite. Kein Farbverlauf im Text:
+   der wäre dekorativ und auf dem Papierton schlechter zu lesen. */
 .logo {
-    font-size: 1.6rem;
+    font-size: 1.1875rem;
     font-weight: 800;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     text-decoration: none;
+    color: var(--text-dark);
+}
+
+.logo:hover {
     color: var(--primary);
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .legal-back {

@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Zahnarztpraxis am Kastanienplatz – erfundenes Beispiel von ly-webstudio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%230B5561'/%3E%3Ctext x='16' y='24' font-family='Georgia,serif' font-size='20' fill='%23ffffff' text-anchor='middle'%3EK%3C/text%3E%3C/svg%3E">
+<style>
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+
+:root {
+  --ink: #1B2A2E;
+  --muted: #55646A;
+  --petrol: #0B5561;
+  --petrol-dark: #08434C;
+  --line: #D9DFE0;
+  --ground: #FFFFFF;
+  --map: #F1EFEA;
+  --serif: "Iowan Old Style", "Charter", "Sitka Text", Cambria, Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 400 17px/1.55 var(--sans); }
+a { color: var(--petrol); }
+a:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+.strip { background: var(--ink); color: #E6ECED; font-size: 13px; line-height: 1.45; }
+.strip .wrap { display: flex; justify-content: space-between; gap: 24px; padding-top: 9px; padding-bottom: 9px; }
+.strip p { margin: 0; }
+.strip a { color: #fff; }
+
+.site-head { border-bottom: 1px solid var(--line); }
+.site-head .wrap { display: flex; align-items: center; gap: 40px; min-height: 92px; }
+.brand { display: flex; align-items: center; gap: 14px; margin-right: auto; color: var(--ink); text-decoration: none; }
+.brand-mark { flex: none; width: 42px; height: 42px; border-radius: 4px; background: var(--petrol); color: #fff; font: 400 26px/42px var(--serif); text-align: center; }
+.brand-name { display: block; font: 400 21px/1.15 var(--serif); }
+.brand-sub { display: block; margin-top: 3px; font-size: 13px; color: var(--muted); }
+.main-nav ul { display: flex; gap: 34px; margin: 0; padding: 0; list-style: none; }
+.main-nav a { color: var(--ink); font-weight: 500; font-size: 16px; text-decoration: none; }
+.main-nav a:hover { color: var(--petrol); text-decoration: underline; text-underline-offset: 5px; }
+.call { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 46px; padding: 0 18px; border: 1.5px solid var(--petrol); border-radius: 6px; color: var(--petrol); font-weight: 600; text-decoration: none; white-space: nowrap; font-feature-settings: "tnum"; }
+.call small { font-size: 13px; font-weight: 500; color: var(--muted); }
+
+.hero .wrap { display: grid; grid-template-columns: 7fr 5fr; column-gap: 80px; padding-top: 68px; padding-bottom: 72px; }
+.hero-text { grid-column: 1; grid-row: 1; }
+.hours { grid-column: 2; grid-row: 1 / span 2; }
+.facts { grid-column: 1; grid-row: 2; align-self: end; }
+h1 { margin: 0 0 24px; font: 400 60px/1.05 var(--serif); letter-spacing: -0.01em; max-width: 12.5em; }
+.lede { margin: 0 0 34px; max-width: 31em; font-size: 20px; line-height: 1.5; color: var(--muted); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; }
+.btn { display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px; border-radius: 6px; background: var(--petrol); color: #fff; font-weight: 600; text-decoration: none; }
+.btn:hover { background: var(--petrol-dark); }
+.textlink { font-weight: 600; text-underline-offset: 4px; font-feature-settings: "tnum"; }
+.facts { display: flex; flex-wrap: wrap; margin: 48px 0 0; padding: 20px 0 0; list-style: none; border-top: 1px solid var(--line); font-size: 15px; }
+.facts li { padding-right: 20px; margin-right: 20px; border-right: 1px solid var(--line); }
+.facts li:last-child { border-right: 0; margin-right: 0; padding-right: 0; }
+
+.hours h2 { margin: 4px 0 14px; font: 400 28px/1.2 var(--serif); }
+table { width: 100%; border-collapse: collapse; font-feature-settings: "tnum"; }
+th, td { padding: 10px 0; border-top: 1px solid var(--line); text-align: left; vertical-align: top; font-weight: 400; }
+thead th { border-top: 0; padding-top: 0; font-size: 13px; color: var(--muted); }
+tbody th { font-weight: 600; }
+td { text-align: right; }
+thead th:not(:first-child) { text-align: right; }
+tbody tr:last-child > * { border-bottom: 1px solid var(--line); }
+.closed { color: var(--muted); }
+.urgent { margin-top: 26px; }
+.urgent h3 { margin: 0 0 4px; font-size: 17px; font-weight: 600; }
+.urgent p { margin: 0; color: var(--muted); }
+
+.block { padding: 88px 0; border-top: 1px solid var(--line); }
+.block h2 { margin: 0 0 40px; font: 400 40px/1.1 var(--serif); }
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 56px; margin: 0; padding: 0; list-style: none; }
+.services h3 { margin: 0 0 6px; font-size: 18px; font-weight: 600; }
+.services p { margin: 0; color: var(--muted); }
+
+.two { display: grid; grid-template-columns: 7fr 5fr; gap: 80px; align-items: start; }
+.team { margin: 0; padding: 0; list-style: none; }
+.team li { display: grid; grid-template-columns: 14em 1fr; gap: 24px; padding: 13px 0; border-top: 1px solid var(--line); }
+.team li:last-child { border-bottom: 1px solid var(--line); }
+.team span { color: var(--muted); }
+.intro { margin: 0 0 32px; max-width: 34em; }
+.bring h3 { margin: 0 0 12px; font: 400 24px/1.25 var(--serif); }
+.bring ul { margin: 0; padding-left: 1.1em; }
+.bring li { margin: 0 0 8px; }
+.bring p { color: var(--muted); font-size: 15px; }
+
+.map svg { display: block; width: 100%; height: auto; border-radius: 6px; }
+.map figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+.route dl { margin: 0; }
+.route dt { font-weight: 600; margin-top: 18px; }
+.route dt:first-child { margin-top: 0; }
+.route dd { margin: 2px 0 0; color: var(--muted); }
+
+.book { display: grid; grid-template-columns: 7fr 5fr; gap: 80px; }
+.book .big { display: inline-block; margin: 0 0 8px; font: 400 44px/1.1 var(--serif); text-decoration: none; font-feature-settings: "tnum"; }
+.book p { margin: 0 0 14px; max-width: 32em; }
+
+.site-foot { border-top: 1px solid var(--line); padding: 28px 0 40px; font-size: 14px; color: var(--muted); }
+.site-foot .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; }
+.site-foot a { color: var(--muted); }
+.site-foot ul { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; }
+
+@media (max-width: 1000px) {
+  .main-nav ul { gap: 22px; }
+  .hero .wrap, .two, .book { gap: 48px; }
+  h1 { font-size: 48px; }
+}
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .wrap { padding: 0 20px; }
+  .strip { font-size: 12px; }
+  .strip .wrap { display: block; padding-top: 7px; padding-bottom: 7px; }
+  .strip a { display: none; }
+  .site-head .wrap { flex-wrap: wrap; gap: 0; min-height: 0; padding-top: 14px; padding-bottom: 0; }
+  .brand { width: 100%; }
+  .brand-mark { width: 36px; height: 36px; font-size: 22px; line-height: 36px; }
+  .brand-name { font-size: 18px; }
+  .brand-sub { font-size: 12px; }
+  .call { order: 2; width: 100%; margin-top: 14px; min-height: 50px; background: var(--petrol); color: #fff; }
+  .call small { color: #D5E6E8; }
+  .main-nav { order: 3; width: 100%; overflow-x: auto; }
+  .main-nav ul { gap: 22px; padding: 12px 0 13px; }
+  .main-nav a { font-size: 15px; white-space: nowrap; }
+  .hero .wrap { grid-template-columns: 1fr; row-gap: 36px; padding-top: 30px; padding-bottom: 48px; }
+  .hero-text, .hours, .facts { grid-column: 1; grid-row: auto; }
+  .textlink { display: none; }
+  h1 { font-size: 36px; line-height: 1.08; margin-bottom: 16px; }
+  .lede { font-size: 17px; margin-bottom: 24px; }
+  .btn { width: 100%; justify-content: center; }
+  .facts { display: block; margin-top: 0; padding-top: 0; border-top: 0; }
+  .facts li { border-right: 0; margin: 0; padding: 10px 0; border-top: 1px solid var(--line); }
+  .hours h2 { font-size: 24px; }
+  .block { padding: 56px 0; }
+  .block h2 { font-size: 30px; margin-bottom: 24px; }
+  .services { grid-template-columns: 1fr; gap: 24px; }
+  .two, .book { grid-template-columns: 1fr; gap: 40px; }
+  .team li { grid-template-columns: 1fr; gap: 0; }
+  .book .big { font-size: 32px; }
+  .site-foot .wrap { display: block; }
+  .site-foot ul { margin-top: 12px; }
+}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <p><strong>Erfundenes Beispiel</strong> von ly-webstudio. Diese Praxis, alle Namen, Adressen und Nummern sind ausgedacht.</p>
+    <a href="../index.html#arbeiten">Zurück zu ly-webstudio</a>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#">
+      <span class="brand-mark" aria-hidden="true">K</span>
+      <span>
+        <span class="brand-name">Zahnarztpraxis am Kastanienplatz</span>
+        <span class="brand-sub">Dr. Jana Brandt · Dr. Ole Fischer</span>
+      </span>
+    </a>
+    <nav class="main-nav" aria-label="Hauptmenü" data-mark="1">
+      <ul>
+        <li><a href="#leistungen">Leistungen</a></li>
+        <li><a href="#praxis">Praxis &amp; Team</a></li>
+        <li><a href="#anfahrt">Anfahrt</a></li>
+        <li><a href="#notfall">Notfall</a></li>
+      </ul>
+    </nav>
+    <a class="call" href="tel:+491234567890" data-mark="2"><small>Anrufen</small> 01234 567 890</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <h1>Zahnmedizin für die ganze Familie, am Kastanienplatz.</h1>
+        <p class="lede">Vorsorge und Zahnreinigung, Füllungen, Wurzelbehandlungen und Zahnersatz. Wir nehmen neue Patientinnen und Patienten auf, Kinder ab dem ersten Zahn.</p>
+        <div class="actions">
+          <a class="btn" href="#termin">Termin anfragen</a>
+          <a class="textlink" href="tel:+491234567890">oder 01234 567 890 anrufen</a>
+        </div>
+      </div>
+
+      <div class="hours" id="notfall" data-mark="3">
+        <h2>Sprechzeiten</h2>
+        <table>
+          <thead>
+            <tr><th scope="col"><span class="sr">Tag</span></th><th scope="col">Vormittag</th><th scope="col">Nachmittag</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Montag</th><td>8–13 Uhr</td><td>14–18 Uhr</td></tr>
+            <tr><th scope="row">Dienstag</th><td>8–13 Uhr</td><td>14–18 Uhr</td></tr>
+            <tr><th scope="row">Mittwoch</th><td>8–13 Uhr</td><td class="closed">geschlossen</td></tr>
+            <tr><th scope="row">Donnerstag</th><td>8–13 Uhr</td><td>14–19 Uhr</td></tr>
+            <tr><th scope="row">Freitag</th><td>8–13 Uhr</td><td class="closed">geschlossen</td></tr>
+            <tr><th scope="row">Sa und So</th><td colspan="2" class="closed">geschlossen</td></tr>
+          </tbody>
+        </table>
+        <div class="urgent">
+          <h3>Schmerzen außerhalb der Sprechzeiten?</h3>
+          <p>Rufen Sie trotzdem unsere Nummer an. Die Ansage nennt den zahnärztlichen Notdienst, der gerade Dienst hat.</p>
+        </div>
+      </div>
+
+      <ul class="facts">
+        <li>Eingang ohne Stufen</li>
+        <li>Zwei Parkplätze im Hof</li>
+        <li>Bus 142 hält am Platz</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="leistungen">
+    <div class="wrap">
+      <h2>Leistungen</h2>
+      <ul class="services">
+        <li><h3>Kontrolle und Vorsorge</h3><p>Untersuchung, Zahnstein entfernen und den Stempel ins Bonusheft.</p></li>
+        <li><h3>Professionelle Zahnreinigung</h3><p>Beläge und Verfärbungen entfernen, Zwischenräume reinigen, Tipps für zu Hause.</p></li>
+        <li><h3>Füllungen</h3><p>Zahnfarbene Füllungen. Was Ihre Krankenkasse übernimmt, klären wir vor der Behandlung.</p></li>
+        <li><h3>Wurzelbehandlung</h3><p>Mit örtlicher Betäubung und ohne Eile, wenn nötig in zwei Terminen.</p></li>
+        <li><h3>Zahnersatz</h3><p>Kronen, Brücken und Prothesen. Den Heil- und Kostenplan gehen wir mit Ihnen durch.</p></li>
+        <li><h3>Kinder</h3><p>Der erste Besuch ab dem ersten Zahn, damit die Praxis kein fremder Ort bleibt.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="praxis">
+    <div class="wrap two">
+      <div>
+        <h2>Praxis &amp; Team</h2>
+        <p class="intro">Zwei Behandlungsräume im Erdgeschoss, ein kleines Team, und am Empfang immer jemand, der Ihren Namen kennt.</p>
+        <ul class="team">
+          <li><strong>Dr. Jana Brandt</strong><span>Zahnärztin</span></li>
+          <li><strong>Dr. Ole Fischer</strong><span>Zahnarzt</span></li>
+          <li><strong>Aylin Demir</strong><span>Zahnmedizinische Fachangestellte, Prophylaxe</span></li>
+          <li><strong>Tom Richter</strong><span>Empfang und Abrechnung</span></li>
+        </ul>
+      </div>
+      <div class="bring">
+        <h3>Zum ersten Termin bitte mitbringen</h3>
+        <ul>
+          <li>Ihre Gesundheitskarte</li>
+          <li>das Bonusheft, falls vorhanden</li>
+          <li>eine Liste Ihrer Medikamente</li>
+          <li>Röntgenbilder der letzten Jahre, falls Sie welche haben</li>
+        </ul>
+        <p>Den Anamnesebogen füllen Sie bei uns am Empfang aus. Planen Sie dafür zehn Minuten ein.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="anfahrt">
+    <div class="wrap two">
+      <figure class="map" style="margin:0">
+        <svg viewBox="0 0 560 340" role="img" aria-labelledby="map-title">
+          <title id="map-title">Lageskizze: Die Praxis liegt an der Nordseite des Kastanienplatzes, die Bushaltestelle an der Bahnhofstraße südlich davon.</title>
+          <rect width="560" height="340" fill="#F1EFEA"/>
+          <g fill="none" stroke-linecap="square">
+            <path d="M0 262 H560 M150 0 V340 M440 0 V340" stroke="#DAD5CC" stroke-width="30"/>
+            <path d="M0 262 H560 M150 0 V340 M440 0 V340" stroke="#FFFFFF" stroke-width="26"/>
+            <path d="M150 58 H440" stroke="#DAD5CC" stroke-width="16"/>
+            <path d="M150 58 H440" stroke="#FFFFFF" stroke-width="13"/>
+          </g>
+          <rect x="196" y="116" width="200" height="104" rx="4" fill="#DDE5DC"/>
+          <g fill="#B9C9B7">
+            <circle cx="222" cy="140" r="11"/><circle cx="262" cy="140" r="11"/><circle cx="330" cy="140" r="11"/><circle cx="370" cy="140" r="11"/>
+            <circle cx="222" cy="196" r="11"/><circle cx="370" cy="196" r="11"/>
+          </g>
+          <text x="296" y="176" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#3E4D52">Kastanienplatz</text>
+          <rect x="208" y="72" width="104" height="36" rx="3" fill="#0B5561"/>
+          <text x="260" y="95" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF">Praxis, Nr. 3</text>
+          <rect x="322" y="72" width="36" height="36" rx="3" fill="#FFFFFF" stroke="#0B5561" stroke-width="2"/>
+          <text x="340" y="96" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="17" font-weight="600" fill="#0B5561">P</text>
+          <path d="M296 246 V228 H176 V90 H208" fill="none" stroke="#0B5561" stroke-width="2.5" stroke-dasharray="5 5"/>
+          <circle cx="296" cy="246" r="13" fill="#FFFFFF" stroke="#1B2A2E" stroke-width="2"/>
+          <text x="296" y="251" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#1B2A2E">H</text>
+          <text x="296" y="300" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#3E4D52">Haltestelle Bus 142</text>
+          <text x="24" y="267" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#55646A">Bahnhofstraße</text>
+          <text x="155" y="330" transform="rotate(-90 155 330)" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#55646A">Lindenstraße</text>
+          <text x="445" y="200" transform="rotate(-90 445 200)" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#55646A">Am Markt</text>
+          <text x="530" y="34" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="13" font-weight="600" fill="#55646A">N</text>
+          <path d="M530 12 L525 22 H535 Z" fill="#55646A"/>
+        </svg>
+        <figcaption>Skizze, nicht maßstäblich. Gestrichelt: der Weg von der Haltestelle, etwa zwei Minuten.</figcaption>
+      </figure>
+      <div class="route">
+        <h2>Anfahrt</h2>
+        <dl>
+          <dt>Adresse</dt>
+          <dd>Kastanienplatz 3, 12345 Beispielstadt</dd>
+          <dt>Mit dem Bus</dt>
+          <dd>Linie 142 bis Kastanienplatz, dann zwei Minuten zu Fuß über den Platz.</dd>
+          <dt>Mit dem Auto</dt>
+          <dd>Zwei Parkplätze im Hof, Einfahrt neben dem Haus. Einer davon ist breiter.</dd>
+          <dt>Ohne Stufen</dt>
+          <dd>Eingang und Behandlungsräume liegen ebenerdig.</dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="termin">
+    <div class="wrap book">
+      <div>
+        <h2>Termin anfragen</h2>
+        <a class="big" href="tel:+491234567890">01234 567 890</a>
+        <p>Am schnellsten per Telefon während der Sprechzeiten.</p>
+        <p>Per E-Mail an <a href="mailto:termin@praxis-kastanienplatz.example">termin@praxis-kastanienplatz.example</a> antworten wir am nächsten Werktag. Bitte schicken Sie keine Befunde per E-Mail.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p style="margin:0">Zahnarztpraxis am Kastanienplatz · Kastanienplatz 3 · 12345 Beispielstadt</p>
+    <ul>
+      <li><a href="#">Impressum</a></li>
+      <li><a href="#">Datenschutz</a></li>
+    </ul>
+  </div>
+</footer>
+
+</body>
+</html>
