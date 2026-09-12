@@ -231,6 +231,25 @@ body {
     margin-bottom: 0;
 }
 
+/* Das Muster-Widerrufsformular steht in einem <pre>. Ohne diese Regel behält es
+   white-space: pre, bricht nie um und schiebt die ganze Seite seitwärts: bei
+   390 px Fenster waren es gemessen 804 px Breite. */
+.legal-form {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: inherit;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+}
+
+/* Deutsche Komposita in Überschriften sind länger als 320 px. */
+.legal h1,
+.legal h2 {
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
 .legal-date {
     margin-top: 3rem !important;
     padding-top: 1rem;
