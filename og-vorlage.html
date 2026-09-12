@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Vorlage für das Teilen-Bild</title>
+<!-- Quelle von og-image.jpg. Neu erzeugen: diese Seite bei 1200 x 630 px
+     aufnehmen und auf 1200 x 630 herunterrechnen. Sie ist absichtlich nicht
+     verlinkt und steht auf noindex. -->
+<style>
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #FAF6F0; color: #1C1815;
+    font: 400 21px/1.5 "Inter", system-ui, sans-serif;
+    display: grid; grid-template-columns: 1fr 330px;
+    align-items: end; gap: 56px;
+    padding: 64px 72px;
+  }
+  .brand { font-size: 25px; font-weight: 800; letter-spacing: -0.03em; }
+  h1 {
+    margin: 26px 0 0; font-size: 74px; line-height: 1.0;
+    font-weight: 800; letter-spacing: -0.038em; max-width: 15em;
+  }
+  .sub { margin-top: 22px; font-size: 25px; color: #5C5349; letter-spacing: -0.01em; }
+  .rule { margin-top: 30px; width: 132px; height: 4px; background: #F0942E; }
+  .facts {
+    margin-top: 26px; display: flex; gap: 30px;
+    font-size: 19px; color: #5C5349; font-variant-numeric: tabular-nums;
+  }
+  .facts b { color: #1C1815; font-weight: 600; }
+  figure { align-self: end; }
+  figure img { display: block; width: 330px; height: auto; }
+  figcaption { margin-top: 10px; font-size: 16px; color: #5C5349; }
+</style>
+</head>
+<body>
+  <div>
+    <p class="brand">ly&#8209;webstudio</p>
+    <h1>Websites und Informatik-Projekte</h1>
+    <p class="sub">Gebaut von einer Person: Websites, Apps, Werkzeuge, Automatisierung.</p>
+    <div class="rule"></div>
+    <div class="facts">
+      <span>Website ab <b>150&#8239;€</b></span>
+      <span>fertig in <b>1–2 Wochen</b></span>
+      <span>Erstgespräch <b>kostenlos</b></span>
+    </div>
+  </div>
+  <figure>
+    <img src="/assets/img/leon-640.webp" width="330" height="413" alt="">
+    <figcaption>Leon Brodersen, Geschäftsführer</figcaption>
+  </figure>
+</body>
+</html>
