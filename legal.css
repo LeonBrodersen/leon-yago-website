@@ -38,7 +38,6 @@
    Tinte 16,4:1 · gedämpfte Tinte 7,0:1 · Akzent 5,1:1. */
 :root {
     --primary: #B04A0B;
-    --accent: #F0942E;
     --link: #B04A0B;
     --text-dark: #1C1815;
     --text-medium: #5C5349;
@@ -235,6 +234,24 @@ body {
 
 .legal-notice p:last-child {
     margin-bottom: 0;
+}
+
+/* Das Muster-Widerrufsformular ist ein <pre>. Ohne diese Regel behält es
+   white-space: pre, bricht nie um und schiebt die ganze Seite seitwärts. */
+.legal-form {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-family: inherit;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    margin: 0 0 1.5rem;
+}
+
+/* Deutsche Komposita in Überschriften sind länger als 320 px. */
+.legal h1,
+.legal h2 {
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 .legal-date {
