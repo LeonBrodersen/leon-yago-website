@@ -2,7 +2,27 @@
 // INTERNATIONALIZATION (i18n)
 // ========================================
 
-let currentLang = localStorage.getItem('lang') || 'de';
+/**
+ * Lesen und Schreiben in einer Hülle: Browser, die Website-Speicher blockieren,
+ * werfen beim Zugriff einen Fehler. Ohne try/catch bricht dann das ganze Skript ab.
+ */
+function readStoredLang() {
+    try {
+        return localStorage.getItem('lang');
+    } catch (e) {
+        return null;
+    }
+}
+
+function storeLang(lang) {
+    try {
+        localStorage.setItem('lang', lang);
+    } catch (e) {
+        // Speicher gesperrt: Die Sprache gilt dann nur für diesen Besuch.
+    }
+}
+
+let currentLang = readStoredLang() === 'en' ? 'en' : 'de';
 
 const translations = {
     de: {
@@ -70,19 +90,19 @@ const translations = {
         'styles.notice': { text: '<strong>Hinweis:</strong> Die gezeigten Unternehmen sind <strong>frei erfunden</strong>. Alle Namen, Adressen und Kontaktdaten dienen ausschließlich zur Demonstration und haben keinen Bezug zu realen Unternehmen.', html: true },
         'styles.s1.title': { text: 'Zahnarztpraxis', html: false },
         'styles.s1.desc': { text: 'Klar, sauber und vertrauenswürdig. So könnte die Website einer Praxis oder eines Arztes aussehen.', html: false },
-        'styles.s1.f1': { text: '✓ Seriös', html: false },
-        'styles.s1.f2': { text: '✓ Übersichtlich', html: false },
-        'styles.s1.f3': { text: '✓ Vertrauensvoll', html: false },
+        'styles.s1.f1': { text: '<span aria-hidden="true">✓</span> Seriös', html: true },
+        'styles.s1.f2': { text: '<span aria-hidden="true">✓</span> Übersichtlich', html: true },
+        'styles.s1.f3': { text: '<span aria-hidden="true">✓</span> Vertrauensvoll', html: true },
         'styles.s2.title': { text: 'Steuerberatung', html: false },
         'styles.s2.desc': { text: 'Professionell und seriös. Ideal für Berater, Anwälte oder Finanzdienstleister.', html: false },
-        'styles.s2.f1': { text: '✓ Professionell', html: false },
-        'styles.s2.f2': { text: '✓ Vertrauensvoll', html: false },
-        'styles.s2.f3': { text: '✓ Klassisch', html: false },
+        'styles.s2.f1': { text: '<span aria-hidden="true">✓</span> Professionell', html: true },
+        'styles.s2.f2': { text: '<span aria-hidden="true">✓</span> Vertrauensvoll', html: true },
+        'styles.s2.f3': { text: '<span aria-hidden="true">✓</span> Klassisch', html: true },
         'styles.s3.title': { text: 'Café & Restaurant', html: false },
         'styles.s3.desc': { text: 'Warm und einladend. So könnte die Website eines Cafés, Restaurants oder Hotels aussehen.', html: false },
-        'styles.s3.f1': { text: '✓ Einladend', html: false },
-        'styles.s3.f2': { text: '✓ Appetitlich', html: false },
-        'styles.s3.f3': { text: '✓ Gemütlich', html: false },
+        'styles.s3.f1': { text: '<span aria-hidden="true">✓</span> Einladend', html: true },
+        'styles.s3.f2': { text: '<span aria-hidden="true">✓</span> Appetitlich', html: true },
+        'styles.s3.f3': { text: '<span aria-hidden="true">✓</span> Gemütlich', html: true },
         'styles.s1.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
         'styles.s2.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
         'styles.s3.cta': { text: 'Demo ansehen <span class="arrow" aria-hidden="true">→</span>', html: true },
@@ -120,12 +140,12 @@ const translations = {
         'pricing.support.btn': { text: 'Unverbindlich anfragen', html: false },
 
         // Extras
-        'extras.title': { text: '📦 Extras, falls Sie mehr brauchen', html: false },
+        'extras.title': { text: 'Extras, falls Sie mehr brauchen', html: false },
         'extras.e1.label': { text: 'Weitere Unterseite', html: false },
         'extras.e2.label': { text: 'Einfaches Logo-Design', html: false },
         'extras.e3.label': { text: 'Blog / Neuigkeiten-Bereich', html: false },
         'extras.e4.label': { text: 'Website in mehreren Sprachen', html: false },
-        'extras.running.title': { text: '🔄 Laufende Kosten (nicht bei uns)', html: false },
+        'extras.running.title': { text: 'Laufende Kosten (nicht bei uns)', html: false },
         'extras.r1.label': { text: 'Ihre Internetadresse (.de)', html: false },
         'extras.r2.label': { text: 'Speicherplatz (Hosting)', html: false },
         'extras.r3.label': { text: 'Sicherheitszertifikat (SSL)', html: false },
@@ -147,17 +167,24 @@ const translations = {
         'contact.form.name': { text: 'Name *', html: false },
         'contact.form.email': { text: 'E-Mail *', html: false },
         'contact.form.phone': { text: 'Telefon (optional)', html: false },
-        'contact.form.services': { text: 'Gewünschte Leistung(en) *', html: false },
-        'contact.form.s1': { text: '💻 Starter-Paket', html: false },
-        'contact.form.s2': { text: '🚀 Komplett-Paket', html: false },
-        'contact.form.s3': { text: '🔧 Pflege & Support', html: false },
-        'contact.form.s4': { text: '💬 Erstberatung', html: false },
-        'contact.form.s4.price': { text: 'Kostenlos', html: false },
-        'contact.form.s5': { text: '📋 Sonstiges', html: false },
-        'contact.form.s5.price': { text: 'Auf Anfrage', html: false },
+        'contact.form.services': { text: 'Worum geht es? (optional)', html: false },
+        'contact.form.s1': { text: 'Neue Website, bis 3 Seiten', html: false },
+        'contact.form.s2': { text: 'Neue Website, 4 bis 7 Seiten', html: false },
+        'contact.form.s3': { text: 'Ich habe schon eine Website und will sie ersetzen', html: false },
+        'contact.form.s4': { text: 'Pflege einer bestehenden Seite', html: false },
+        'contact.form.s5': { text: 'Weiß ich noch nicht', html: false },
         'contact.form.message': { text: 'Ihre Nachricht *', html: false },
         'contact.form.privacy': { text: 'Ihre Angaben werden über EmailJS (Server in den USA) an mich übermittelt und nur für Ihre Anfrage genutzt. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.', html: true },
         'contact.form.submit': { text: 'Nachricht senden <span>→</span>', html: true },
+        'contact.form.sending': { text: 'Wird gesendet …', html: false },
+        'contact.form.success': { text: 'Danke, Ihre Nachricht ist angekommen. Ich melde mich werktags innerhalb von 24 Stunden per E-Mail bei Ihnen.', html: false },
+        'contact.form.error': { text: 'Das Senden hat nicht geklappt. Schreiben Sie mir bitte direkt an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a> oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.', html: true },
+        'contact.form.fallback': { text: 'Das Formular lädt gerade nicht. Schreiben Sie mir an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a> oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.', html: true },
+
+        // Beschriftungen, die nur Screenreader vorlesen
+        'a11y.skip': { text: 'Zum Inhalt springen', html: false },
+        'a11y.menu.open': { text: 'Menü öffnen', html: false },
+        'a11y.menu.close': { text: 'Menü schließen', html: false },
 
         // Footer
         'footer.desc': { text: 'Professionelle Webseiten für kleine Unternehmen in Berlin und Brandenburg. Persönlich, zuverlässig und zu fairen Preisen.', html: false },
@@ -244,19 +271,19 @@ const translations = {
         'styles.notice': { text: '<strong>Note:</strong> The shown businesses are <strong>entirely fictional</strong>. All names, addresses, and contact details are for demonstration purposes only and have no connection to real businesses.', html: true },
         'styles.s1.title': { text: 'Dental Practice', html: false },
         'styles.s1.desc': { text: 'Clean, clear, and trustworthy. This is what a practice or doctor\'s website could look like.', html: false },
-        'styles.s1.f1': { text: '✓ Professional', html: false },
-        'styles.s1.f2': { text: '✓ Clear', html: false },
-        'styles.s1.f3': { text: '✓ Trustworthy', html: false },
+        'styles.s1.f1': { text: '<span aria-hidden="true">✓</span> Professional', html: true },
+        'styles.s1.f2': { text: '<span aria-hidden="true">✓</span> Clear', html: true },
+        'styles.s1.f3': { text: '<span aria-hidden="true">✓</span> Trustworthy', html: true },
         'styles.s2.title': { text: 'Tax Advisory', html: false },
         'styles.s2.desc': { text: 'Professional and serious. Ideal for consultants, lawyers, or financial service providers.', html: false },
-        'styles.s2.f1': { text: '✓ Professional', html: false },
-        'styles.s2.f2': { text: '✓ Trustworthy', html: false },
-        'styles.s2.f3': { text: '✓ Classic', html: false },
+        'styles.s2.f1': { text: '<span aria-hidden="true">✓</span> Professional', html: true },
+        'styles.s2.f2': { text: '<span aria-hidden="true">✓</span> Trustworthy', html: true },
+        'styles.s2.f3': { text: '<span aria-hidden="true">✓</span> Classic', html: true },
         'styles.s3.title': { text: 'Café & Restaurant', html: false },
         'styles.s3.desc': { text: 'Warm and inviting. This is what a café, restaurant, or hotel website could look like.', html: false },
-        'styles.s3.f1': { text: '✓ Inviting', html: false },
-        'styles.s3.f2': { text: '✓ Appetizing', html: false },
-        'styles.s3.f3': { text: '✓ Cozy', html: false },
+        'styles.s3.f1': { text: '<span aria-hidden="true">✓</span> Inviting', html: true },
+        'styles.s3.f2': { text: '<span aria-hidden="true">✓</span> Appetizing', html: true },
+        'styles.s3.f3': { text: '<span aria-hidden="true">✓</span> Cozy', html: true },
         'styles.s1.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
         'styles.s2.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
         'styles.s3.cta': { text: 'View demo <span class="arrow" aria-hidden="true">→</span>', html: true },
@@ -294,12 +321,12 @@ const translations = {
         'pricing.support.btn': { text: 'Inquire without obligation', html: false },
 
         // Extras
-        'extras.title': { text: '📦 Extras, if you need more', html: false },
+        'extras.title': { text: 'Extras, if you need more', html: false },
         'extras.e1.label': { text: 'Additional subpage', html: false },
         'extras.e2.label': { text: 'Simple logo design', html: false },
         'extras.e3.label': { text: 'Blog / news section', html: false },
         'extras.e4.label': { text: 'Multi-language website', html: false },
-        'extras.running.title': { text: '🔄 Running costs (not from us)', html: false },
+        'extras.running.title': { text: 'Running costs (not from us)', html: false },
         'extras.r1.label': { text: 'Your domain name (.de)', html: false },
         'extras.r2.label': { text: 'Storage (Hosting)', html: false },
         'extras.r3.label': { text: 'Security certificate (SSL)', html: false },
@@ -321,17 +348,24 @@ const translations = {
         'contact.form.name': { text: 'Name *', html: false },
         'contact.form.email': { text: 'Email *', html: false },
         'contact.form.phone': { text: 'Phone (optional)', html: false },
-        'contact.form.services': { text: 'Desired service(s) *', html: false },
-        'contact.form.s1': { text: '💻 Starter Package', html: false },
-        'contact.form.s2': { text: '🚀 Complete Package', html: false },
-        'contact.form.s3': { text: '🔧 Maintenance & Support', html: false },
-        'contact.form.s4': { text: '💬 Initial Consultation', html: false },
-        'contact.form.s4.price': { text: 'Free', html: false },
-        'contact.form.s5': { text: '📋 Other', html: false },
-        'contact.form.s5.price': { text: 'On request', html: false },
+        'contact.form.services': { text: 'What is it about? (optional)', html: false },
+        'contact.form.s1': { text: 'New website, up to 3 pages', html: false },
+        'contact.form.s2': { text: 'New website, 4 to 7 pages', html: false },
+        'contact.form.s3': { text: 'I already have a website and want to replace it', html: false },
+        'contact.form.s4': { text: 'Maintenance for an existing site', html: false },
+        'contact.form.s5': { text: 'I don\'t know yet', html: false },
         'contact.form.message': { text: 'Your message *', html: false },
         'contact.form.privacy': { text: 'Your details are sent to me via EmailJS (servers in the USA) and used only to handle your request. More in the <a href="datenschutz.html" hreflang="de">privacy policy</a> (in German).', html: true },
         'contact.form.submit': { text: 'Send message <span>→</span>', html: true },
+        'contact.form.sending': { text: 'Sending …', html: false },
+        'contact.form.success': { text: 'Thank you, your message has arrived. I will reply by email within 24 hours on working days.', html: false },
+        'contact.form.error': { text: 'Sending did not work. Please write to me directly at <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a> or call: <a href="tel:+491794904546">+49 179 4904546</a>.', html: true },
+        'contact.form.fallback': { text: 'The form is not loading right now. Please write to me at <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a> or call: <a href="tel:+491794904546">+49 179 4904546</a>.', html: true },
+
+        // Labels only screen readers announce
+        'a11y.skip': { text: 'Skip to content', html: false },
+        'a11y.menu.open': { text: 'Open menu', html: false },
+        'a11y.menu.close': { text: 'Close menu', html: false },
 
         // Footer
         'footer.desc': { text: 'Professional websites for small businesses in Berlin and Brandenburg. Personal, reliable, and at fair prices.', html: false },
@@ -375,7 +409,6 @@ const placeholderTranslations = {
  */
 function applyLanguage(lang) {
     currentLang = lang;
-    localStorage.setItem('lang', lang);
 
     // Update document language attribute
     document.documentElement.lang = lang;
@@ -410,54 +443,70 @@ function applyLanguage(lang) {
         }
     });
 
-    // Update language toggle button styling
-    document.querySelectorAll('.lang-option').forEach(opt => {
-        const optLang = opt.getAttribute('data-lang');
-        if (optLang === lang) {
-            opt.classList.add('active');
-        } else {
-            opt.classList.remove('active');
+    // Apply aria-label translations (Beschriftungen nur für Screenreader)
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+        const key = el.getAttribute('data-i18n-aria');
+        const a = trans[key];
+        if (a) {
+            el.setAttribute('aria-label', a.text);
         }
     });
 
-    // Update toggle button title/tooltip + slide class
+    // Sprachschalter: gedrückter Zustand für Screenreader und Farbe für alle anderen
+    document.querySelectorAll('.lang-option').forEach(opt => {
+        const active = opt.getAttribute('data-lang') === lang;
+        opt.classList.toggle('active', active);
+        opt.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    // Position des Schiebers
     const toggle = document.getElementById('langToggle');
     if (toggle) {
-        toggle.title = lang === 'de' ? 'Switch to English' : 'Auf Deutsch wechseln';
-        if (lang === 'en') {
-            toggle.classList.add('lang-en');
-        } else {
-            toggle.classList.remove('lang-en');
-        }
+        toggle.classList.toggle('lang-en', lang === 'en');
     }
+
+    // Bei gespeichertem Englisch hat das Inline-Skript im <head> den Inhalt kurz
+    // verborgen. Jetzt steht die richtige Sprache, der Inhalt darf erscheinen.
+    document.documentElement.classList.remove('lang-pending');
 }
 
 /**
- * Toggle between German and English
+ * Sprache umstellen und die Wahl merken. Gespeichert wird nur nach einem Klick:
+ * Einen Standardwert zu hinterlegen ist technisch nicht erforderlich.
+ * @param {string} lang - Language code: 'de' or 'en'
  */
-function toggleLanguage() {
-    applyLanguage(currentLang === 'de' ? 'en' : 'de');
+function setLanguage(lang) {
+    applyLanguage(lang);
+    storeLang(lang);
 }
 
 /**
- * Initialize i18n on page load
+ * Initialize i18n
  */
-document.addEventListener('DOMContentLoaded', function() {
-    // Set up language toggle click handler
-    const toggle = document.getElementById('langToggle');
-    if (toggle) {
-        toggle.addEventListener('click', toggleLanguage);
-    }
+function initI18n() {
+    document.querySelectorAll('.lang-option').forEach(opt => {
+        opt.addEventListener('click', function () {
+            setLanguage(this.getAttribute('data-lang') === 'en' ? 'en' : 'de');
+        });
+    });
 
     // Always apply language to ensure correct toggle state on load
     applyLanguage(currentLang);
-});
+}
+
+// Das Skript wird mit defer geladen, der Aufbau der Seite ist hier also fertig.
+// Die Abfrage bleibt als Sicherung, falls es jemand ohne defer einbindet.
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initI18n);
+} else {
+    initI18n();
+}
 
 // Export functions for use in other scripts
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         applyLanguage,
-        toggleLanguage,
+        setLanguage,
         currentLang: () => currentLang,
         translations,
         placeholderTranslations

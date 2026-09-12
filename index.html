@@ -12,7 +12,7 @@
     <meta name="keywords" content="Website erstellen lassen Berlin, Webdesigner Berlin, günstige Website Berlin, Homepage erstellen lassen, Webdesign Brandenburg, Website für Unternehmen, Webseite erstellen lassen günstig, Webdesign kleine Unternehmen, Webentwicklung Berlin, Homepage für Firma">
     <meta name="author" content="ly-webstudio">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <meta name="theme-color" content="#10b981">
+    <meta name="theme-color" content="#047857">
     <meta name="format-detection" content="telephone=no">
     <link rel="canonical" href="https://www.ly-webstudio.de/">
 
@@ -160,40 +160,63 @@
     </script>
 
     <link rel="stylesheet" href="styles.css">
+
+    <script>
+        // Läuft vor dem ersten Bild der Seite. Setzt die gespeicherte Sprache am html-Element
+        // und verbirgt bei Englisch den Inhalt für den Moment, den i18n.js zum Übersetzen
+        // braucht. Sonst lesen englische Besucher zuerst die deutsche Fassung.
+        // Die Klasse "js" zeigt an, dass JavaScript läuft; script.js ergänzt später "js-ready".
+        (function () {
+            var root = document.documentElement;
+            root.classList.add('js');
+            var lang = null;
+            try { lang = localStorage.getItem('lang'); } catch (e) { /* Speicher gesperrt */ }
+            if (lang === 'en') {
+                root.lang = 'en';
+                root.classList.add('lang-pending');
+                // Notbremse: Wenn i18n.js nicht lädt, wird der Inhalt trotzdem sichtbar.
+                setTimeout(function () { root.classList.remove('lang-pending'); }, 1500);
+            }
+        })();
+    </script>
+    <script src="i18n.js" defer></script>
+    <script src="script.js" defer></script>
 </head>
 
 <body>
 
-    <div class="toast" id="toast">
-        <div class="toast-icon">✓</div>
-        <div class="toast-message"></div>
-    </div>
+    <a class="skip-link" href="#inhalt" data-i18n="a11y.skip">Zum Inhalt springen</a>
 
     <!-- Navigation -->
-    <nav>
-        <div class="nav-container">
-            <a href="#" class="logo">ly-webstudio</a>
-            <ul class="nav-links">
-                <li><a href="#home" data-i18n="nav.start">Start</a></li>
-                <li><a href="#about" data-i18n="nav.about">Über mich</a></li>
-                <li><a href="#why-us" data-i18n="nav.benefits">Vorteile</a></li>
-                <li><a href="#how-it-works" data-i18n="nav.process">Ablauf</a></li>
-                <li><a href="#styles" data-i18n="nav.examples">Beispiele</a></li>
-                <li><a href="#pricing" data-i18n="nav.pricing">Preise</a></li>
-                <li><a href="#contact" class="nav-cta" data-i18n="nav.contact">Kontakt</a></li>
-            </ul>
-            <button class="lang-toggle" id="langToggle" aria-label="Sprache wechseln" title="Switch to English">
-                <span class="lang-slider"></span>
-                <span class="lang-option active" data-lang="de">DE</span>
-                <span class="lang-option" data-lang="en">EN</span>
-            </button>
-            <button class="mobile-menu-btn" aria-label="Menü öffnen">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
+    <header>
+        <nav>
+            <div class="nav-container">
+                <a href="#" class="logo">ly-webstudio</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" data-i18n="nav.start">Start</a></li>
+                    <li><a href="#about" data-i18n="nav.about">Über mich</a></li>
+                    <li><a href="#why-us" data-i18n="nav.benefits">Vorteile</a></li>
+                    <li><a href="#how-it-works" data-i18n="nav.process">Ablauf</a></li>
+                    <li><a href="#styles" data-i18n="nav.examples">Beispiele</a></li>
+                    <li><a href="#pricing" data-i18n="nav.pricing">Preise</a></li>
+                    <li><a href="#contact" class="nav-cta" data-i18n="nav.contact">Kontakt</a></li>
+                </ul>
+                <div class="lang-toggle" id="langToggle" role="group" aria-label="Sprache / Language">
+                    <span class="lang-slider" aria-hidden="true"></span>
+                    <button type="button" class="lang-option active" data-lang="de" lang="de" aria-pressed="true">DE</button>
+                    <button type="button" class="lang-option" data-lang="en" lang="en" aria-pressed="false">EN</button>
+                </div>
+                <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-controls="navLinks"
+                    aria-expanded="false" aria-label="Menü öffnen" data-i18n-aria="a11y.menu.open">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main id="inhalt">
 
     <!-- Hero Section -->
     <section class="hero" id="home">
@@ -236,7 +259,7 @@
                 <div class="about-images">
                     <div class="about-card">
                         <img src="IMG_1178.webp" alt="Leon Brodersen – Webdesign und Informatik-Student, ly-webstudio Berlin" class="about-image" loading="lazy">
-                        <h4>Leon Brodersen</h4>
+                        <h3>Leon Brodersen</h3>
                         <span class="role" data-i18n="about.role">Webdesign & Entwicklung</span>
                     </div>
                 </div>
@@ -250,19 +273,19 @@
 
                     <div class="about-features">
                         <div class="about-feature">
-                            <span class="about-feature-icon">✓</span>
+                            <span class="about-feature-icon" aria-hidden="true">✓</span>
                             <span data-i18n="about.f1">Sie sprechen direkt mit mir</span>
                         </div>
                         <div class="about-feature">
-                            <span class="about-feature-icon">✓</span>
+                            <span class="about-feature-icon" aria-hidden="true">✓</span>
                             <span data-i18n="about.f2">Faire Preise, keine Überraschungen</span>
                         </div>
                         <div class="about-feature">
-                            <span class="about-feature-icon">✓</span>
+                            <span class="about-feature-icon" aria-hidden="true">✓</span>
                             <span data-i18n="about.f3">Ihre Website in 1–2 Wochen fertig</span>
                         </div>
                         <div class="about-feature">
-                            <span class="about-feature-icon">✓</span>
+                            <span class="about-feature-icon" aria-hidden="true">✓</span>
                             <span data-i18n="about.f4">Wir erklären alles verständlich</span>
                         </div>
                     </div>
@@ -270,9 +293,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Scroll to Top Button -->
-    <button class="scroll-top" id="scrollTop" aria-label="Nach oben scrollen">↑</button>
 
     <!-- Why Us Section -->
     <section class="why-us" id="why-us">
@@ -431,9 +451,9 @@
                         <h3 id="style-title-minimalist" data-i18n="styles.s1.title">Zahnarztpraxis</h3>
                         <p data-i18n="styles.s1.desc">Klar, sauber und vertrauenswürdig. So könnte die Website einer Praxis oder eines Arztes aussehen.</p>
                         <div class="style-features">
-                            <span data-i18n="styles.s1.f1">✓ Seriös</span>
-                            <span data-i18n="styles.s1.f2">✓ Übersichtlich</span>
-                            <span data-i18n="styles.s1.f3">✓ Vertrauensvoll</span>
+                            <span data-i18n="styles.s1.f1"><span aria-hidden="true">✓</span> Seriös</span>
+                            <span data-i18n="styles.s1.f2"><span aria-hidden="true">✓</span> Übersichtlich</span>
+                            <span data-i18n="styles.s1.f3"><span aria-hidden="true">✓</span> Vertrauensvoll</span>
                         </div>
                         <div class="style-colors">
                             <div class="color-dot" style="background: #111827;"></div>
@@ -472,9 +492,9 @@
                         <h3 id="style-title-corporate" data-i18n="styles.s2.title">Steuerberatung</h3>
                         <p data-i18n="styles.s2.desc">Professionell und seriös. Ideal für Berater, Anwälte oder Finanzdienstleister.</p>
                         <div class="style-features">
-                            <span data-i18n="styles.s2.f1">✓ Professionell</span>
-                            <span data-i18n="styles.s2.f2">✓ Vertrauensvoll</span>
-                            <span data-i18n="styles.s2.f3">✓ Klassisch</span>
+                            <span data-i18n="styles.s2.f1"><span aria-hidden="true">✓</span> Professionell</span>
+                            <span data-i18n="styles.s2.f2"><span aria-hidden="true">✓</span> Vertrauensvoll</span>
+                            <span data-i18n="styles.s2.f3"><span aria-hidden="true">✓</span> Klassisch</span>
                         </div>
                         <div class="style-colors">
                             <div class="color-dot" style="background: #1e3a5f;"></div>
@@ -513,9 +533,9 @@
                         <h3 id="style-title-warm" data-i18n="styles.s3.title">Café & Restaurant</h3>
                         <p data-i18n="styles.s3.desc">Warm und einladend. So könnte die Website eines Cafés, Restaurants oder Hotels aussehen.</p>
                         <div class="style-features">
-                            <span data-i18n="styles.s3.f1">✓ Einladend</span>
-                            <span data-i18n="styles.s3.f2">✓ Appetitlich</span>
-                            <span data-i18n="styles.s3.f3">✓ Gemütlich</span>
+                            <span data-i18n="styles.s3.f1"><span aria-hidden="true">✓</span> Einladend</span>
+                            <span data-i18n="styles.s3.f2"><span aria-hidden="true">✓</span> Appetitlich</span>
+                            <span data-i18n="styles.s3.f3"><span aria-hidden="true">✓</span> Gemütlich</span>
                         </div>
                         <div class="style-colors">
                             <div class="color-dot" style="background: #8b4513;"></div>
@@ -599,7 +619,7 @@
 
             <div class="additional-costs">
                 <div class="cost-card">
-                    <h4 data-i18n="extras.title">📦 Extras, falls Sie mehr brauchen</h4>
+                    <h3><span class="cost-icon" aria-hidden="true">📦</span> <span data-i18n="extras.title">Extras, falls Sie mehr brauchen</span></h3>
                     <ul>
                         <li><span data-i18n="extras.e1.label">Weitere Unterseite</span> <strong>30–50€</strong></li>
                         <li><span data-i18n="extras.e2.label">Einfaches Logo-Design</span> <strong>50–100€</strong></li>
@@ -608,7 +628,7 @@
                     </ul>
                 </div>
                 <div class="cost-card">
-                    <h4 data-i18n="extras.running.title">🔄 Laufende Kosten (nicht bei uns)</h4>
+                    <h3><span class="cost-icon" aria-hidden="true">🔄</span> <span data-i18n="extras.running.title">Laufende Kosten (nicht bei uns)</span></h3>
                     <ul>
                         <li><span data-i18n="extras.r1.label">Ihre Internetadresse (.de)</span> <strong>ca. 10–15€/Jahr</strong></li>
                         <li><span data-i18n="extras.r2.label">Speicherplatz (Hosting)</span> <strong>ca. 3–10€/Monat</strong></li>
@@ -634,28 +654,28 @@
                     <p data-i18n="contact.reachtext">Egal ob Sie schon konkrete Vorstellungen haben oder erst mal nur Fragen – schreiben Sie uns einfach. Wir melden uns innerhalb von 24 Stunden bei Ihnen.</p>
                     <div class="contact-details">
                         <div class="contact-item">
-                            <div class="contact-icon">📧</div>
+                            <div class="contact-icon" aria-hidden="true">📧</div>
                             <div class="contact-item-text">
                                 <strong data-i18n="contact.email.label">E-Mail</strong>
-                                <span>kontaktleonyago@gmail.com</span>
+                                <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
                             </div>
                         </div>
                         <div class="contact-item">
-                            <div class="contact-icon">📱</div>
+                            <div class="contact-icon" aria-hidden="true">📱</div>
                             <div class="contact-item-text">
                                 <strong data-i18n="contact.phone.label">Telefon</strong>
-                                <span>+49 179 4904546</span>
+                                <a href="tel:+491794904546">+49 179 4904546</a>
                             </div>
                         </div>
                         <div class="contact-item">
-                            <div class="contact-icon">📍</div>
+                            <div class="contact-icon" aria-hidden="true">📍</div>
                             <div class="contact-item-text">
                                 <strong data-i18n="contact.location.label">Standort</strong>
                                 <span>Berlin</span>
                             </div>
                         </div>
                         <div class="contact-item">
-                            <div class="contact-icon">⏰</div>
+                            <div class="contact-icon" aria-hidden="true">⏰</div>
                             <div class="contact-item-text">
                                 <strong data-i18n="contact.availability.label">Erreichbarkeit</strong>
                                 <span data-i18n="contact.availability.value">Flexibel nach Vereinbarung</span>
@@ -665,71 +685,93 @@
                 </div>
                 <div class="contact-form-wrapper">
                     <h3 data-i18n="contact.form.title">Nachricht schreiben</h3>
-                    <form id="contactForm">
+
+                    <!-- Ohne JavaScript kann das Formular nichts senden. Dann zählen Mail und Telefon. -->
+                    <noscript>
+                        <p class="form-hint">Dieses Formular braucht JavaScript. Schreiben Sie mir
+                            an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
+                            oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
+                    </noscript>
+
+                    <!-- Sichtbar, solange script.js nicht gelaufen ist (siehe .form-fallback in styles.css) -->
+                    <p class="form-hint form-fallback" id="formFallback" data-i18n="contact.form.fallback">Das
+                        Formular lädt gerade nicht. Schreiben Sie mir an
+                        <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
+                        oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
+
+                    <div class="form-feedback form-feedback-ok" id="formSuccess" role="status" tabindex="-1" hidden>
+                        <p data-i18n="contact.form.success">Danke, Ihre Nachricht ist angekommen. Ich melde mich
+                            werktags innerhalb von 24 Stunden per E-Mail bei Ihnen.</p>
+                    </div>
+
+                    <form id="contactForm" method="post">
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="name" data-i18n="contact.form.name">Name *</label>
-                                <input type="text" id="name" name="name" required placeholder="Ihr Name" data-i18n-ph="contact.form.name.ph">
+                                <input type="text" id="name" name="name" required autocomplete="name"
+                                    placeholder="Ihr Name" data-i18n-ph="contact.form.name.ph">
                             </div>
                             <div class="form-group">
                                 <label for="email" data-i18n="contact.form.email">E-Mail *</label>
-                                <input type="email" id="email" name="email" required placeholder="ihre@email.de" data-i18n-ph="contact.form.email.ph">
+                                <input type="email" id="email" name="email" required autocomplete="email"
+                                    placeholder="ihre@email.de" data-i18n-ph="contact.form.email.ph">
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="phone" data-i18n="contact.form.phone">Telefon (optional)</label>
-                            <input type="tel" id="phone" name="phone" placeholder="+49 123 456789">
+                            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+49 123 456789">
                         </div>
-                <div class="form-group">
-                            <label data-i18n="contact.form.services">Gewünschte Leistung(en) *</label>
+
+                        <!-- Falle für Formular-Roboter: unsichtbar, nicht anspringbar, wird nie ausgefüllt -->
+                        <div class="hp-field" aria-hidden="true">
+                            <label for="website">Website</label>
+                            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+                        </div>
+
+                        <fieldset class="form-group service-fieldset">
+                            <legend data-i18n="contact.form.services">Worum geht es? (optional)</legend>
                             <div class="service-buttons">
                                 <label class="service-btn">
-                                    <input type="checkbox" name="service[]" value="💻 Starter-Paket – 150-300€">
-                                    <span data-i18n="contact.form.s1">💻 Starter-Paket</span>
-                                    <small>150–300€</small>
+                                    <input type="checkbox" name="service">
+                                    <span data-i18n="contact.form.s1">Neue Website, bis 3 Seiten</span>
                                 </label>
 
                                 <label class="service-btn">
-                                    <input type="checkbox" name="service[]" value="🚀 Komplett-Paket – 300-600€">
-                                    <span data-i18n="contact.form.s2">🚀 Komplett-Paket</span>
-                                    <small>300–600€</small>
+                                    <input type="checkbox" name="service">
+                                    <span data-i18n="contact.form.s2">Neue Website, 4 bis 7 Seiten</span>
                                 </label>
 
                                 <label class="service-btn">
-                                    <input type="checkbox" name="service[]" value="🔧 Pflege & Support – 20€/Std.">
-                                    <span data-i18n="contact.form.s3">🔧 Pflege & Support</span>
-                                    <small>20€/Std.</small>
+                                    <input type="checkbox" name="service">
+                                    <span data-i18n="contact.form.s3">Ich habe schon eine Website und will sie ersetzen</span>
                                 </label>
 
                                 <label class="service-btn">
-                                    <input type="checkbox" name="service[]" value="💬 Erstberatung – Kostenlos">
-                                    <span data-i18n="contact.form.s4">💬 Erstberatung</span>
-                                    <small data-i18n="contact.form.s4.price">Kostenlos</small>
+                                    <input type="checkbox" name="service">
+                                    <span data-i18n="contact.form.s4">Pflege einer bestehenden Seite</span>
                                 </label>
 
                                 <label class="service-btn">
-                                    <input type="checkbox" name="service[]" value="📋 Sonstiges – Auf Anfrage">
-                                    <span data-i18n="contact.form.s5">📋 Sonstiges</span>
-                                    <small data-i18n="contact.form.s5.price">Auf Anfrage</small>
+                                    <input type="checkbox" name="service">
+                                    <span data-i18n="contact.form.s5">Weiß ich noch nicht</span>
                                 </label>
-
-                                <input
-                                        type="text"
-                                        id="services_combined"
-                                        name="services_combined"
-                                        style="display:none; visibility:hidden; opacity:0; height:0; border:none; padding:0; margin:0;"
-                                >
-
-
                             </div>
-                        </div>
+                        </fieldset>
+
                         <div class="form-group">
                             <label for="message" data-i18n="contact.form.message">Ihre Nachricht *</label>
                             <textarea id="message" name="message" required
                                 placeholder="Erzählen Sie uns von Ihrem Projekt..." data-i18n-ph="contact.form.message.ph"></textarea>
                         </div>
+
+                        <div class="form-feedback form-feedback-error" id="formError" role="alert" hidden>
+                            <p data-i18n="contact.form.error">Das Senden hat nicht geklappt. Schreiben Sie mir
+                                bitte direkt an <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>
+                                oder rufen Sie an: <a href="tel:+491794904546">+49 179 4904546</a>.</p>
+                        </div>
+
                         <p class="form-privacy" data-i18n="contact.form.privacy">Ihre Angaben werden über EmailJS (Server in den USA) an mich übermittelt und nur für Ihre Anfrage genutzt. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-                        <button type="submit" class="btn btn-lg" data-i18n="contact.form.submit">
+                        <button type="submit" class="btn btn-lg" id="formSubmit" data-i18n="contact.form.submit" disabled>
                             Nachricht senden
                             <span>→</span>
                         </button>
@@ -738,6 +780,8 @@
             </div>
         </div>
     </section>
+
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -769,7 +813,7 @@
                 <div class="footer-column">
                     <h4 data-i18n="footer.contact">Kontakt</h4>
                     <ul>
-                        <li><a href="mailto:kontaktleonyago@gmail.com" data-i18n="footer.contactform">Kontaktformular</a></li>
+                        <li><a href="#contact" data-i18n="footer.contactform">Kontaktformular</a></li>
                         <li><a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a></li>
                         <li><a href="tel:+491794904546">+49 179 4904546</a></li>
                     </ul>
@@ -786,11 +830,5 @@
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        emailjs.init("Z57gOiO7JF_9Z8kpq")
-    </script>
-    <script src="i18n.js"></script>
-    <script src="script.js"></script>
 </body>
 </html>
