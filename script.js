@@ -2,39 +2,62 @@
 // löschen. Diese Zeile kann nach einigen Monaten entfallen.
 try { localStorage.removeItem('cookiesAccepted'); } catch (e) {}
 
-// ========================================
-// SCROLL TO TOP BUTTON
-// ========================================
+// Zeigt an, dass dieses Skript wirklich läuft. Solange die Klasse fehlt, bleibt der
+// Ausweich-Hinweis am Formular sichtbar (siehe .form-fallback in styles.css).
+document.documentElement.classList.add('js-ready');
 
-const scrollTopBtn = document.getElementById('scrollTop');
-
-window.addEventListener('scroll', function () {
-    if (scrollTopBtn) {
-        if (window.pageYOffset > 300) {
-            scrollTopBtn.classList.add('visible');
-        } else {
-            scrollTopBtn.classList.remove('visible');
-        }
+/**
+ * Text aus dem Wörterbuch von i18n.js holen.
+ * Liefert einen leeren Text, wenn i18n.js nicht geladen ist.
+ */
+function t(key) {
+    try {
+        const dict = translations[currentLang] || translations.de;
+        return dict && dict[key] ? dict[key].text : '';
+    } catch (e) {
+        return '';
     }
-});
-
-if (scrollTopBtn) {
-    scrollTopBtn.addEventListener('click', function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
 }
 
 // ========================================
 // MOBILE MENU
 // ========================================
 
-const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+
+function isMenuOpen() {
+    return !!navLinks && navLinks.classList.contains('active');
+}
+
+function setMenu(open) {
+    if (!mobileMenuBtn || !navLinks) return;
+    navLinks.classList.toggle('active', open);
+    mobileMenuBtn.classList.toggle('active', open);
+    mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+
+    // Die Beschriftung wechselt mit dem Zustand und wird beim Sprachwechsel mitgezogen.
+    const key = open ? 'a11y.menu.close' : 'a11y.menu.open';
+    mobileMenuBtn.setAttribute('data-i18n-aria', key);
+    const label = t(key);
+    if (label) mobileMenuBtn.setAttribute('aria-label', label);
+}
 
 if (mobileMenuBtn && navLinks) {
     mobileMenuBtn.addEventListener('click', function () {
-        navLinks.classList.toggle('active');
-        this.classList.toggle('active');
+        setMenu(!isMenuOpen());
+    });
+
+    // Nach dem Tippen auf einen Link soll der Abschnitt zu sehen sein, nicht das Menü.
+    navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () { setMenu(false); });
+    });
+
+    // Tipp neben das Menü schließt es ebenfalls.
+    document.addEventListener('click', function (e) {
+        if (!isMenuOpen()) return;
+        if (navLinks.contains(e.target) || mobileMenuBtn.contains(e.target)) return;
+        setMenu(false);
     });
 }
 
@@ -43,22 +66,16 @@ if (mobileMenuBtn && navLinks) {
 // ========================================
 
 document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape') {
-        closeStyleDemo();
-        document.body.style.overflow = '';
-    }
-});
+    if (e.key !== 'Escape') return;
 
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', function () {
-        const submitBtn = this.querySelector('button[type="submit"]');
-        submitBtn.classList.add('loading');
-        setTimeout(() => {
-            submitBtn.classList.remove('loading');
-        }, 2000);
-    });
-}
+    if (isMenuOpen()) {
+        setMenu(false);
+        if (mobileMenuBtn) mobileMenuBtn.focus();
+        return;
+    }
+
+    closeStyleDemo();
+});
 
 // ========================================
 // STYLE DEMOS
@@ -169,58 +186,136 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// ========================================
+// KONTAKTFORMULAR
+// ========================================
 
-document.addEventListener("DOMContentLoaded", function () {
+// Versand über die REST-Schnittstelle von EmailJS, ohne deren SDK von einem
+// Fremd-CDN. Der Endpunkt für Formulare erwartet multipart/form-data mit
+// service_id, template_id und user_id (dem öffentlichen Schlüssel).
+// Doku: https://www.emailjs.com/docs/rest-api/send-form/
+const EMAILJS_ENDPOINT = 'https://api.emailjs.com/api/v1.0/email/send-form';
+const EMAILJS_SERVICE_ID = 'service_b6nweer';
+const EMAILJS_TEMPLATE_ID = 'template_wojbfmi';
+const EMAILJS_PUBLIC_KEY = 'Z57gOiO7JF_9Z8kpq';
 
-    const contactForm = document.getElementById("contactForm");
+const contactForm = document.getElementById('contactForm');
+const formSubmit = document.getElementById('formSubmit');
+const formSuccess = document.getElementById('formSuccess');
+const formError = document.getElementById('formError');
 
-    contactForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+// Der Knopf wird im HTML gesperrt ausgeliefert und erst hier freigegeben. Läuft dieses
+// Skript nicht, kann niemand absenden und der Ausweich-Hinweis bleibt stehen.
+if (formSubmit) formSubmit.disabled = false;
 
-        // Leistungen auslesen
-        const selectedServices = [...document.querySelectorAll('input[name="service[]"]:checked')]
-            .map(cb => {
-                const label = cb.closest(".service-btn");
-                const title = label.querySelector("span").textContent.trim();
-                const price = label.querySelector("small").textContent.trim();
-                return `${title} – ${price}`;
-            })
-            .join("\n");
+let sending = false;
 
-        // Hidden Feld füllen
-        document.getElementById("services_combined").value = selectedServices;
+/**
+ * Eine der beiden stehenden Meldungen zeigen. Der Text wird beim Einblenden neu
+ * gesetzt, damit role="status" bzw. role="alert" ihn auch ansagen.
+ */
+function showFormFeedback(box, key) {
+    if (!box) return;
+    box.hidden = false;
 
-        // Debug
-        console.log("Services werden gesendet:", selectedServices);
+    const target = box.querySelector('[data-i18n]');
+    if (!target) return;
 
-        // Button
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        submitBtn.textContent = "Wird gesendet...";
-        submitBtn.disabled = true;
+    let entry = null;
+    try {
+        entry = translations[currentLang][key];
+    } catch (e) {
+        return; // Ohne Wörterbuch bleibt der im HTML hinterlegte Text stehen.
+    }
+    if (!entry) return;
 
-        // EmailJS senden
-        emailjs.sendForm("service_b6nweer", "template_wojbfmi", contactForm)
-            .then(() => {
-                showToast("Nachricht wurde erfolgreich gesendet!");
-                contactForm.reset();
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Nachricht senden →";
-            })
-            .catch((err) => {
-                console.error("EmailJS Fehler:", err);
-                showToast("Fehler beim Senden – bitte erneut versuchen.");
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Nachricht senden →";
-            });
-    });
-
-});
-
-function showToast(message) {
-    const toast = document.getElementById("toast");
-    toast.querySelector(".toast-message").textContent = message;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3000);
+    if (entry.html) {
+        target.innerHTML = entry.text;
+    } else {
+        target.textContent = entry.text;
+    }
 }
 
+function setSending(active) {
+    sending = active;
+    if (!formSubmit) return;
 
+    formSubmit.disabled = active;
+    formSubmit.setAttribute('aria-busy', active ? 'true' : 'false');
+    formSubmit.innerHTML = active
+        ? (t('contact.form.sending') || 'Wird gesendet …')
+        : (t('contact.form.submit') || 'Nachricht senden <span>→</span>');
+}
+
+/**
+ * Erfolg: Das Formular verschwindet, an seiner Stelle steht eine Bestätigung,
+ * die nicht von allein wieder weggeht.
+ */
+function showFormSuccess() {
+    setSending(false);
+    if (formError) formError.hidden = true;
+    if (contactForm) {
+        contactForm.reset();
+        contactForm.hidden = true;
+    }
+    showFormFeedback(formSuccess, 'contact.form.success');
+    if (formSuccess) formSuccess.focus();
+}
+
+function fieldValue(id) {
+    const el = document.getElementById(id);
+    return el ? el.value.trim() : '';
+}
+
+/** Gewählte Leistungen als Klartext, in der Sprache, die der Besucher sieht. */
+function selectedServices() {
+    if (!contactForm) return '';
+    return [...contactForm.querySelectorAll('.service-btn input:checked')]
+        .map(cb => {
+            const label = cb.closest('.service-btn');
+            const text = label ? label.querySelector('[data-i18n]') : null;
+            return text ? text.textContent.trim() : '';
+        })
+        .filter(Boolean)
+        .join(', ');
+}
+
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (sending) return;
+
+        // Roboter-Falle: Ist das unsichtbare Feld gefüllt, war kein Mensch am Werk.
+        // Dann sieht die Bestätigung normal aus, gesendet wird nichts.
+        const honeypot = contactForm.querySelector('input[name="website"]');
+        if (honeypot && honeypot.value.trim() !== '') {
+            showFormSuccess();
+            return;
+        }
+
+        const data = new FormData();
+        data.append('service_id', EMAILJS_SERVICE_ID);
+        data.append('template_id', EMAILJS_TEMPLATE_ID);
+        data.append('user_id', EMAILJS_PUBLIC_KEY);
+        data.append('name', fieldValue('name'));
+        data.append('email', fieldValue('email'));
+        data.append('phone', fieldValue('phone'));
+        data.append('message', fieldValue('message'));
+        data.append('services_combined', selectedServices());
+
+        if (formError) formError.hidden = true;
+        setSending(true);
+
+        // Kein Content-Type setzen: Den Rand der multipart-Daten bestimmt der Browser.
+        fetch(EMAILJS_ENDPOINT, { method: 'POST', body: data })
+            .then(res => {
+                if (!res.ok) throw new Error('EmailJS antwortete mit ' + res.status);
+                showFormSuccess();
+            })
+            .catch(err => {
+                console.error('Kontaktformular:', err);
+                setSending(false);
+                showFormFeedback(formError, 'contact.form.error');
+            });
+    });
+}
