@@ -2,14 +2,6 @@
 @font-face {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url('./fonts/inter-v20-latin-300.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-display: swap;
     src: url('./fonts/inter-v20-latin-regular.woff2') format('woff2');
@@ -55,8 +47,10 @@
 }
 
 :root {
-    --primary: #10b981;
-    --primary-dark: #059669;
+    /* Kontrast: Weiß auf #047857 ergibt 5,48:1, auf dem alten #10b981 nur 2,54:1.
+       #065f46 ist der dunklere Hover-Ton (7,68:1), damit Hover nicht heller wird. */
+    --primary: #047857;
+    --primary-dark: #065f46;
     --primary-light: #ecfdf5;
     --accent: #0d9488;
     --text-dark: #111827;
@@ -76,6 +70,13 @@
 
 html {
     scroll-behavior: smooth;
+    /* Die Navigation liegt fest oben. Ohne diesen Abstand landen Sprungziele darunter. */
+    scroll-padding-top: 96px;
+}
+
+section[id],
+main[id] {
+    scroll-margin-top: 96px;
 }
 
 body {
@@ -92,137 +93,22 @@ body {
     padding: 0 24px;
 }
 
-/* Toast Notification */
-.toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%) translateY(100px);
+/* Sprungmarke zum Inhalt, sichtbar nur mit Tastaturfokus */
+.skip-link {
+    position: absolute;
+    top: 8px;
+    left: -9999px;
+    z-index: 1100;
+    padding: 12px 20px;
     background: var(--bg-dark);
-    color: white;
-    padding: 16px 32px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: var(--shadow-xl);
-    z-index: 10000;
-    opacity: 0;
-    transition: all 0.4s ease;
-}
-
-.toast.show {
-    transform: translateX(-50%) translateY(0);
-    opacity: 1;
-}
-
-.toast-icon {
-    width: 24px;
-    height: 24px;
-    background: var(--primary);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-}
-
-/* Cookie Banner */
-.cookie-banner {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--bg-dark);
-    color: white;
-    padding: 20px;
-    z-index: 9999;
-    display: none;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
-}
-
-.cookie-banner.show {
-    display: block;
-}
-
-.cookie-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    flex-wrap: wrap;
-}
-
-.cookie-text {
-    flex: 1;
-    min-width: 300px;
-}
-
-.cookie-text p {
-    margin: 0;
-    font-size: 0.95rem;
-    line-height: 1.6;
-}
-
-.cookie-text a {
-    color: var(--primary);
-    text-decoration: underline;
-}
-
-.cookie-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.cookie-btn {
-    padding: 12px 24px;
+    color: var(--bg-white);
     border-radius: 8px;
     font-weight: 600;
-    cursor: pointer;
-    border: none;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
+    text-decoration: none;
 }
 
-.cookie-btn-accept {
-    background: var(--primary);
-    color: white;
-}
-
-.cookie-btn-accept:hover {
-    background: var(--primary-dark);
-}
-
-/* Scroll to Top Button */
-.scroll-top {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 48px;
-    height: 48px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 50%;
-    font-size: 1.2rem;
-    cursor: pointer;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 998;
-}
-
-.scroll-top.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.scroll-top:hover {
-    background: var(--primary-dark);
-    transform: translateY(-3px);
+.skip-link:focus {
+    left: 8px;
 }
 
 /* Navigation */
@@ -248,6 +134,8 @@ nav {
 }
 
 .logo {
+    /* Ohne nowrap bricht der Name in schmalen Kopfzeilen zu „ly- / webstudio“ um */
+    white-space: nowrap;
     font-size: 1.6rem;
     font-weight: 800;
     background: linear-gradient(135deg, var(--primary), var(--accent));
@@ -304,6 +192,12 @@ nav {
     transform: translateY(-2px);
 }
 
+/* „transition: all“ würde auch outline-color weich einblenden. Dann ist der
+   Fokusring einen Moment lang blass und kaum zu sehen. */
+.nav-cta {
+    transition: background-color 0.3s ease, transform 0.3s ease !important;
+}
+
 .nav-cta::after {
     display: none !important;
 }
@@ -312,6 +206,7 @@ nav {
 .lang-toggle {
     position: relative;
     display: flex;
+    flex-shrink: 0;
     align-items: center;
     background: var(--primary-light);
     border: 1.5px solid #a7f3d0;
@@ -346,10 +241,15 @@ nav {
     transform: translateX(100%);
 }
 
+/* Zwei echte Knöpfe: So heißt der sichtbare Text auch der zugängliche Name (WCAG 2.5.3). */
 .lang-option {
     position: relative;
     z-index: 1;
     padding: 4px 10px;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
     border-radius: 5px;
     color: var(--primary);
     transition: color 0.25s ease;
@@ -370,6 +270,8 @@ nav {
     padding: 8px;
     flex-direction: column;
     gap: 5px;
+    /* Ohne shrink: 0 drückt die enge Kopfzeile den Knopf unter 44 px zusammen */
+    flex-shrink: 0;
 }
 
 .mobile-menu-btn span {
@@ -379,127 +281,6 @@ nav {
     background: var(--text-dark);
     transition: 0.3s;
     border-radius: 2px;
-}
-
-/* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 2000;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.modal-overlay.active {
-    display: flex;
-}
-
-.modal {
-    background: white;
-    border-radius: var(--radius-lg);
-    max-width: 700px;
-    width: 100%;
-    max-height: 85vh;
-    overflow-y: auto;
-    position: relative;
-    box-shadow: var(--shadow-xl);
-}
-
-.modal-header {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-    color: white;
-    padding: 24px 32px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-.modal-header h2 {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0;
-}
-
-.modal-close {
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    background: rgba(255, 255, 255, 0.2);
-    border: none;
-    color: white;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-.modal-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg);
-}
-
-.modal-body {
-    padding: 32px;
-}
-
-.modal-body h3 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    margin: 24px 0 12px 0;
-}
-
-.modal-body h3:first-child {
-    margin-top: 0;
-}
-
-.modal-body p {
-    color: var(--text-medium);
-    line-height: 1.8;
-    margin-bottom: 12px;
-}
-
-.modal-body ul {
-    color: var(--text-medium);
-    line-height: 1.8;
-    margin: 12px 0;
-    padding-left: 24px;
-}
-
-.modal-body li {
-    margin-bottom: 8px;
-}
-
-.modal-body a {
-    color: var(--primary);
-    text-decoration: none;
-}
-
-.modal-body a:hover {
-    text-decoration: underline;
-}
-
-.contact-box {
-    background: var(--bg-gray);
-    padding: 20px 24px;
-    border-radius: var(--radius);
-    margin: 16px 0;
-}
-
-.contact-box p {
-    margin: 4px 0;
 }
 
 /* Buttons */
@@ -515,7 +296,8 @@ nav {
     border-radius: var(--radius);
     font-weight: 600;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    /* Bewusst keine Sammel-Transition: sonst blendet auch der Fokusring weich ein. */
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     border: none;
     cursor: pointer;
 }
@@ -548,29 +330,6 @@ nav {
 
 .btn-accent:hover {
     background: #0f766e;
-}
-
-.btn.loading {
-    position: relative;
-    color: transparent !important;
-    pointer-events: none;
-}
-
-.btn.loading::after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    border: 2px solid white;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
 }
 
 /* Hero Section */
@@ -737,7 +496,7 @@ section {
     display: block;
 }
 
-.about-card h4 {
+.about-card h3 {
     font-size: 1.3rem;
     font-weight: 700;
     margin-bottom: 4px;
@@ -1088,7 +847,7 @@ section {
 .preview-btn {
     height: 18px;
     width: 50px;
-    background: #10b981;
+    background: var(--primary);
     border-radius: 4px;
     margin-top: 4px;
 }
@@ -1312,8 +1071,8 @@ section {
 
 .style-features span {
     font-size: 0.8rem;
-    color: #059669;
-    background: #ecfdf5;
+    color: var(--primary-dark);
+    background: var(--primary-light);
     padding: 4px 10px;
     border-radius: 20px;
 }
@@ -1378,66 +1137,25 @@ section {
         grid-template-columns: 1fr;
         gap: 20px;
     }
-
-    .style-demo-header {
-        padding: 12px 16px;
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .style-demo-close {
-        width: 100%;
-        justify-content: center;
-    }
 }
-.style-demo-close {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10001;
-    background: #ef4444;
-    border: none;
-    padding: 12px 20px;
-    border-radius: 50px;
+
+/* „Demo ansehen“ ist ein echter Button in der Karte */
+button.style-cta {
+    width: 100%;
+    border: 0;
+    font-family: inherit;
+    line-height: inherit;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
+}
+
+.style-card:has(.style-cta:focus-visible) {
+    border-color: var(--primary);
+    box-shadow: var(--shadow-xl);
+}
+
+.style-card:has(.style-cta:focus-visible) .style-cta {
+    background: var(--primary);
     color: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.style-demo-close:hover {
-    background: #dc2626;
-    transform: translateX(-50%) translateY(-2px);
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
-}
-
-.close-icon {
-    font-size: 1.2rem;
-    font-weight: 700;
-}
-
-.close-text {
-    font-size: 0.9rem;
-}
-
-@media (max-width: 768px) {
-    .style-demo-close {
-        padding: 10px 16px;
-        font-size: 0.85rem;
-    }
-
-    .close-text {
-        display: none;
-    }
-
-    .close-icon {
-        font-size: 1rem;
-    }
 }
 
 
@@ -1457,7 +1175,8 @@ section {
 
 .design-styles .section-label {
     display: inline-block;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    /* Helles Ende von #667eea auf #5566d9 gezogen: Weiß darauf 4,90:1 statt 3,66:1 */
+    background: linear-gradient(135deg, #5566d9, #764ba2);
     color: white;
     padding: 8px 20px;
     border-radius: 50px;
@@ -1634,7 +1353,7 @@ section {
 
 .preview-btn {
     height: 14px;
-    background: #10b981;
+    background: var(--primary);
     border-radius: 3px;
     width: 30%;
 }
@@ -1867,7 +1586,8 @@ section {
     font-weight: 600;
     font-size: 0.9rem;
     color: var(--text-dark);
-    transition: all 0.3s ease;
+    /* Keine Sammel-Transition, sonst blendet der Fokusring weich ein */
+    transition: background-color 0.3s ease, color 0.3s ease, gap 0.3s ease;
 }
 
 .style-cta .arrow {
@@ -1910,38 +1630,113 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.95);
+    background: #111827;
     z-index: 10000;
     display: none;
     flex-direction: column;
+    overscroll-behavior: contain;
 }
 
 .style-demo-overlay.active {
     display: flex;
 }
 
+html.demo-open,
+html.demo-open body {
+    overflow: hidden;
+}
+
+/* Schmale Leiste über der Demo, sie verdeckt nichts von der Demo selbst */
+.style-demo-header {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 60px;
+    padding: 8px 12px 8px 24px;
+    background: #111827;
+    color: white;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.style-demo-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 12px;
+    row-gap: 2px;
+    min-width: 0;
+}
+
+.style-demo-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: white;
+}
+
+.style-demo-hint {
+    font-size: 0.875rem;
+    line-height: 1.3;
+    color: #d1d5db;
+}
+
+.style-demo-close {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0 16px;
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.style-demo-close:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.style-demo-close .close-icon {
+    font-size: 1rem;
+    line-height: 1;
+}
+
 /* iframe für isolierte Demo-Darstellung */
 .style-demo-frame {
     flex: 1;
+    display: block;
     width: 100%;
-    height: calc(100% - 60px); /* Abzüglich Header-Höhe */
+    min-height: 0;
     border: none;
     background: white;
 }
 
-.style-demo-info {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 10001;
-    background: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 600;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+@media (max-width: 640px) {
+    .style-demo-header {
+        min-height: 56px;
+        padding: 6px 8px 6px 16px;
+    }
+
+    .style-demo-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .style-demo-close {
+        padding: 0 12px;
+    }
 }
 
 .demo-badge {
@@ -1957,6 +1752,21 @@ section {
 /* Pricing Section */
 .pricing {
     background: var(--bg-white);
+}
+
+.pricing-intro {
+    max-width: 60ch;
+    margin: -8px auto 40px;
+    text-align: center;
+    color: var(--text-medium);
+    line-height: 1.6;
+}
+
+.price-normal {
+    margin-top: -12px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
 }
 
 .pricing-grid {
@@ -1997,7 +1807,8 @@ section {
     top: -14px;
     left: 50%;
     transform: translateX(-50%);
-    background: linear-gradient(135deg, var(--primary), var(--accent));
+    /* Volle Fläche statt Verlauf: Weiß auf dem hellen Ende des Verlaufs war zu blass. */
+    background: var(--primary);
     color: white;
     padding: 6px 24px;
     border-radius: 50px;
@@ -2077,7 +1888,7 @@ section {
     box-shadow: var(--shadow);
 }
 
-.cost-card h4 {
+.cost-card h3 {
     font-size: 1.25rem;
     font-weight: 700;
     margin-bottom: 20px;
@@ -2129,6 +1940,8 @@ section {
     background: linear-gradient(135deg, var(--primary), var(--primary-dark));
     padding: 60px 48px;
     color: white;
+    /* Ohne min-width wächst die Grid-Spalte auf die Breite der längsten E-Mail-Adresse */
+    min-width: 0;
 }
 
 .contact-info h3 {
@@ -2137,8 +1950,8 @@ section {
     margin-bottom: 16px;
 }
 
+/* Kein opacity: 0.9 – das drückte den Kontrast auf dem Grün auf 2,31:1 */
 .contact-info>p {
-    opacity: 0.9;
     line-height: 1.8;
     margin-bottom: 40px;
 }
@@ -2172,8 +1985,16 @@ section {
     margin-bottom: 2px;
 }
 
-.contact-item-text span {
-    opacity: 0.9;
+.contact-item-text span,
+.contact-item-text a {
+    /* anywhere: Die E-Mail-Adresse muss auch bei 320 px umbrechen können */
+    overflow-wrap: anywhere;
+}
+
+.contact-item-text a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 .contact-form-wrapper {
@@ -2196,12 +2017,25 @@ section {
     margin-bottom: 24px;
 }
 
-.form-group label {
+/* Nur die Beschriftung des Feldes selbst, nicht die Kacheln der Leistungsauswahl */
+.form-group>label,
+.form-group>legend {
     display: block;
     margin-bottom: 8px;
+    padding: 0;
     font-weight: 600;
     color: var(--text-dark);
     font-size: 0.95rem;
+}
+
+/* Die Leistungsauswahl ist eine Gruppe. fieldset und legend sagen das auch
+   Screenreadern. Ohne min-width: 0 wächst ein fieldset auf seine min-content-Breite
+   und sprengt das Raster. */
+.service-fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0 0 24px;
+    min-width: 0;
 }
 
 .form-group input,
@@ -2220,7 +2054,6 @@ section {
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-    outline: none;
     border-color: var(--primary);
     background: white;
     box-shadow: 0 0 0 4px var(--primary-light);
@@ -2234,6 +2067,19 @@ section {
 .form-group input::placeholder,
 .form-group textarea::placeholder {
     color: var(--text-light);
+}
+
+.form-privacy {
+    margin: -8px 0 20px;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-medium);
+}
+
+.form-privacy a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
 }
 
 /* Checkbox Styles */
@@ -2344,13 +2190,25 @@ footer {
     color: white;
 }
 
-/* Accessibility - Focus States */
-a:focus-visible,
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible {
-    outline: 3px solid var(--primary);
+/* Accessibility - Focus States
+   Gilt für jedes bedienbare Element. Der alte grüne Ring hatte selbst auf Weiß
+   nur 2,54:1; #111827 kommt auf 17,74:1. */
+:focus-visible {
+    outline: 3px solid var(--text-dark);
     outline-offset: 2px;
+}
+
+/* Der Ring liegt außerhalb des Elements. Wo die Fläche ringsum dunkel oder grün
+   ist, braucht er die Gegenfarbe. */
+footer :focus-visible,
+.contact-info :focus-visible,
+.style-demo-header :focus-visible,
+.skip-link:focus-visible {
+    outline-color: var(--bg-white);
+}
+
+[hidden] {
+    display: none !important;
 }
 
 /* Responsive Design */
@@ -2400,7 +2258,10 @@ textarea:focus-visible {
     }
 }
 
-@media (max-width: 768px) {
+/* Das Hamburger-Menü übernimmt schon ab 1024 px. Zwischen 769 und etwa 1000 px
+   brach die Desktop-Leiste sonst um: Logo zweizeilig, „Über mich“ zweizeilig,
+   Sprachschalter über dem rechten Rand. */
+@media (max-width: 1024px) {
     .nav-links {
         display: none;
         position: absolute;
@@ -2448,8 +2309,19 @@ textarea:focus-visible {
         margin-right: 4px;
     }
 
+    /* Trefferflächen am Handy: 44 px nach Apples Empfehlung, nicht nur die 24 px
+       aus WCAG 2.5.8. Auf dem Desktop bleibt die Kopfzeile kompakt. */
     .mobile-menu-btn {
         display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+    }
+
+    .lang-option {
+        padding: 12px 14px;
     }
 
     .mobile-menu-btn.active span:nth-child(1) {
@@ -2463,7 +2335,9 @@ textarea:focus-visible {
     .mobile-menu-btn.active span:nth-child(3) {
         transform: rotate(-45deg) translate(5px, -5px);
     }
+}
 
+@media (max-width: 768px) {
     .hero {
         padding: 120px 0 80px;
     }
@@ -2546,52 +2420,24 @@ textarea:focus-visible {
         font-size: 0.85rem;
     }
 
-    .cookie-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .cookie-buttons {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .modal {
-        max-height: 90vh;
-    }
-
-    .modal-header {
-        padding: 20px 24px;
-    }
-
-    .modal-body {
-        padding: 24px;
-    }
-
     .styles-note {
         flex-direction: column;
         text-align: center;
         padding: 32px 24px;
     }
-
-    .style-demo-close .close-text {
-        display: none;
-    }
-
-    .style-demo-close {
-        padding: 12px 16px;
-        border-radius: 50%;
-    }
-
-    .style-demo-info {
-        left: 50%;
-        transform: translateX(-50%);
-        top: auto;
-        bottom: 20px;
-    }
 }
 
 @media (max-width: 480px) {
+    /* Bei 320 px müssen Logo, Sprachschalter und Menü-Knopf zusammen in eine Zeile.
+       Die beiden Bedienelemente behalten ihre Trefferfläche, das Logo gibt nach. */
+    .nav-container {
+        padding: 18px 16px;
+    }
+
+    .logo {
+        font-size: 1.3rem;
+    }
+
     .hero-text h1 {
         font-size: 2rem;
     }
@@ -2630,7 +2476,7 @@ textarea:focus-visible {
 }
 
 .style-notice strong {
-    color: #10b981;
+    color: var(--primary-dark);
 }
 /* Service Selection Buttons */
 .service-buttons {
@@ -2644,23 +2490,37 @@ textarea:focus-visible {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 1rem;
+    /* Oben bleibt Platz für den Haken der ausgewählten Kachel, sonst liegt er
+       bei mehrzeiligen Beschriftungen auf dem Text. */
+    padding: 1.75rem 1rem 1.25rem;
     background: #f9fafb;
     border: 2px solid #e5e7eb;
     border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
     min-height: 90px;
 }
 
 .service-btn:hover {
-    border-color: #10b981;
+    border-color: var(--primary);
     background: #f0fdf4;
 }
 
+/* display: none nahm den Kästchen die Tastaturbedienung und versteckte sie vor
+   Screenreadern. Jetzt sind sie nur optisch weg und bleiben anspringbar. */
 .service-btn input[type="checkbox"] {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    margin: 0;
+    pointer-events: none;
+}
+
+.service-btn:has(input:focus-visible) {
+    outline: 3px solid var(--text-dark);
+    outline-offset: 2px;
 }
 
 .service-btn span {
@@ -2677,13 +2537,13 @@ textarea:focus-visible {
 
 /* Selected State */
 .service-btn:has(input:checked) {
-    border-color: #10b981;
+    border-color: var(--primary);
     background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2);
 }
 
 .service-btn:has(input:checked) span {
-    color: #059669;
+    color: var(--primary-dark);
 }
 
 .service-btn:has(input:checked)::after {
@@ -2691,7 +2551,7 @@ textarea:focus-visible {
     position: absolute;
     top: 8px;
     right: 8px;
-    background: #10b981;
+    background: var(--primary);
     color: white;
     width: 20px;
     height: 20px;
@@ -2713,7 +2573,7 @@ textarea:focus-visible {
     }
 
     .service-btn {
-        padding: 0.75rem 0.5rem;
+        padding: 1.5rem 0.5rem 0.75rem;
         min-height: 80px;
     }
 
@@ -2722,37 +2582,121 @@ textarea:focus-visible {
     }
 }
 
-.modal-date {
-    margin-top: 2rem;
-    padding-top: 1rem;
-    border-top: 1px solid #e5e7eb;
-    color: #6b7280;
-    text-align: right;
+/* Falle für Formular-Roboter: für Menschen unsichtbar, für Screenreader ausgeblendet */
+.hp-field {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
 }
 
-.toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #16a34a;
-    color: white;
-    padding: 14px 22px;
-    border-radius: 10px;
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    font-size: 15px;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: 0.35s ease;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-    z-index: 9999;
+/* Hinweis, wenn das Formular nicht arbeiten kann */
+.form-hint {
+    margin-bottom: 20px;
+    padding: 14px 18px;
+    background: var(--bg-gray);
+    border-left: 4px solid var(--text-medium);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-dark);
 }
 
-.toast.show {
-    opacity: 1;
-    transform: translateY(0);
+.form-hint a {
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+
+/* Der Ausweich-Hinweis erscheint nur, wenn JavaScript läuft, script.js aber nicht.
+   Dann fehlt die Klasse js-ready und der Sendeknopf bleibt gesperrt. */
+.form-fallback {
+    display: none;
+}
+
+html.js .form-fallback {
+    display: block;
+}
+
+html.js-ready .form-fallback {
+    display: none;
+}
+
+/* Stehende Rückmeldungen: die Bestätigung ersetzt das Formular, der Fehler steht
+   über dem Knopf. Beide verschwinden nicht von allein. */
+.form-feedback {
+    margin-bottom: 24px;
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    border-left: 4px solid;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.form-feedback p {
+    margin: 0;
+}
+
+.form-feedback a {
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+
+.form-feedback-ok {
+    background: var(--primary-light);
+    border-left-color: var(--primary);
+    color: var(--primary-dark);
+}
+
+/* Ein Fehler ist nie grün und hat nie einen Haken. */
+.form-feedback-error {
+    background: #fef2f2;
+    border-left-color: #b91c1c;
+    color: #991b1b;
+}
+
+/* Bei gespeichertem Englisch verbirgt das Inline-Skript im <head> den Inhalt, bis
+   i18n.js übersetzt hat. Sonst liest man erst die deutsche Fassung. */
+html.lang-pending body {
+    visibility: hidden;
+}
+
+/* Wer im Betriebssystem weniger Bewegung eingestellt hat, bekommt keine
+   Scroll-Animation über tausende Pixel und keine springenden Karten. */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .style-card {
+        opacity: 1;
+        transform: none;
+    }
+
+    .btn:hover,
+    .nav-cta:hover,
+    .about-card:hover,
+    .service-card:hover,
+    .why-card:hover,
+    .step-card:hover,
+    .style-card:hover,
+    .pricing-card:hover {
+        transform: none;
+    }
+
+    .pricing-card.featured:hover {
+        transform: scale(1.05);
+    }
 }
 
 
