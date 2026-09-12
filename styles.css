@@ -1754,6 +1754,21 @@ html.demo-open body {
     background: var(--bg-white);
 }
 
+.pricing-intro {
+    max-width: 60ch;
+    margin: -8px auto 40px;
+    text-align: center;
+    color: var(--text-medium);
+    line-height: 1.6;
+}
+
+.price-normal {
+    margin-top: -12px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

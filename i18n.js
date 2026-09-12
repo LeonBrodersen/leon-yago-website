@@ -112,8 +112,11 @@ const translations = {
         // Pricing
         'pricing.label': { text: 'Preise', html: false },
         'pricing.title': { text: 'Website erstellen lassen – was kostet das?', html: false },
-        'pricing.subtitle': { text: 'Klare Preise, keine Überraschungen – Sie wissen vorher genau, was Sie bezahlen', html: false },
-        'pricing.badge': { text: 'Empfohlen', html: false },
+        'pricing.subtitle': { text: 'Den genauen Festpreis nenne ich nach dem Erstgespräch, bevor die Arbeit beginnt', html: false },
+        'pricing.intro': { text: 'Die Preise unten sind <strong>Einführungspreise für meine ersten fünf Projekte</strong>. Dafür darf ich die fertige Website als Referenz zeigen. Danach gilt der Normalpreis, der bei jedem Paket mit dabeisteht.', html: true },
+        'pricing.starter.normal': { text: 'Normalpreis 300 – 500 €', html: false },
+        'pricing.komplett.normal': { text: 'Normalpreis 600 – 1.000 €', html: false },
+        'pricing.support.normal': { text: 'Normalpreis 40 €/Std.', html: false },
         'pricing.starter.title': { text: 'Starter-Paket', html: false },
         'pricing.starter.sub': { text: 'Ihr professioneller Online-Auftritt', html: false },
         'pricing.starter.f1': { text: '1–3 Seiten (z.B. Start, Über mich, Kontakt)', html: false },
@@ -123,7 +126,7 @@ const translations = {
         'pricing.starter.f5': { text: 'Fertig in ca. 1 Woche', html: false },
         'pricing.starter.btn': { text: 'Unverbindlich anfragen', html: false },
         'pricing.komplett.title': { text: 'Komplett-Paket', html: false },
-        'pricing.komplett.sub': { text: 'Alles, was Ihr Unternehmen braucht', html: false },
+        'pricing.komplett.sub': { text: 'Mehr Seiten, eigenes Design, Social-Media-Einbindung', html: false },
         'pricing.komplett.f1': { text: '4–7 Seiten mit individuellem Design', html: false },
         'pricing.komplett.f2': { text: 'Optimiert für Google-Suche (SEO)', html: false },
         'pricing.komplett.f3': { text: 'Einbindung Ihrer Social-Media-Kanäle', html: false },
@@ -131,7 +134,7 @@ const translations = {
         'pricing.komplett.f5': { text: 'Fertig in 1–2 Wochen', html: false },
         'pricing.komplett.btn': { text: 'Unverbindlich anfragen', html: false },
         'pricing.support.title': { text: 'Pflege & Support', html: false },
-        'pricing.support.sub': { text: 'Wir bleiben an Ihrer Seite', html: false },
+        'pricing.support.sub': { text: 'Nach dem Start: Änderungen und Pflege', html: false },
         'pricing.support.f1': { text: 'Texte und Bilder aktualisieren', html: false },
         'pricing.support.f2': { text: 'Technische Pflege & Updates', html: false },
         'pricing.support.f3': { text: 'Kleine Anpassungen & Erweiterungen', html: false },
@@ -175,6 +178,7 @@ const translations = {
         'contact.form.s4': { text: 'Pflege einer bestehenden Seite', html: false },
         'contact.form.s5': { text: 'Weiß ich noch nicht', html: false },
         'contact.form.message': { text: 'Ihre Nachricht *', html: false },
+        'contact.widerruf': { text: 'Als Privatperson haben Sie ein 14-tägiges Widerrufsrecht. Die Einzelheiten stehen in der <a href="widerruf.html">Widerrufsbelehrung</a>.', html: true },
         'contact.form.privacy': { text: 'Ihre Angaben werden über EmailJS (Server in den USA) an mich übermittelt und nur für Ihre Anfrage genutzt. Mehr dazu in der <a href="datenschutz.html">Datenschutzerklärung</a>.', html: true },
         'contact.form.submit': { text: 'Nachricht senden <span>→</span>', html: true },
         'contact.form.sending': { text: 'Wird gesendet …', html: false },
@@ -206,6 +210,7 @@ const translations = {
         'footer.impressum': { text: 'Impressum', html: false },
         'footer.datenschutz': { text: 'Datenschutz', html: false },
         'footer.agb': { text: 'AGB', html: false },
+        'footer.widerruf': { text: 'Widerruf', html: false },
     },
     en: {
         // Navigation
@@ -294,8 +299,11 @@ const translations = {
         // Pricing
         'pricing.label': { text: 'Pricing', html: false },
         'pricing.title': { text: 'Get a website – what does it cost?', html: false },
-        'pricing.subtitle': { text: 'Clear prices, no surprises – you know exactly what you\'ll pay', html: false },
-        'pricing.badge': { text: 'Recommended', html: false },
+        'pricing.subtitle': { text: 'I give you the exact fixed price after the first conversation, before the work starts', html: false },
+        'pricing.intro': { text: 'The prices below are <strong>introductory prices for my first five projects</strong>. In return I may show the finished website as a reference. After that the regular price applies, shown with every package.', html: true },
+        'pricing.starter.normal': { text: 'Regular price 300 – 500 €', html: false },
+        'pricing.komplett.normal': { text: 'Regular price 600 – 1,000 €', html: false },
+        'pricing.support.normal': { text: 'Regular price 40 €/hour', html: false },
         'pricing.starter.title': { text: 'Starter Package', html: false },
         'pricing.starter.sub': { text: 'Your professional online presence', html: false },
         'pricing.starter.f1': { text: '1–3 pages (e.g. Home, About, Contact)', html: false },
@@ -305,7 +313,7 @@ const translations = {
         'pricing.starter.f5': { text: 'Ready in approx. 1 week', html: false },
         'pricing.starter.btn': { text: 'Inquire without obligation', html: false },
         'pricing.komplett.title': { text: 'Complete Package', html: false },
-        'pricing.komplett.sub': { text: 'Everything your business needs', html: false },
+        'pricing.komplett.sub': { text: 'More pages, custom design, social media integration', html: false },
         'pricing.komplett.f1': { text: '4–7 pages with custom design', html: false },
         'pricing.komplett.f2': { text: 'Optimized for Google search (SEO)', html: false },
         'pricing.komplett.f3': { text: 'Social media integration', html: false },
@@ -313,7 +321,7 @@ const translations = {
         'pricing.komplett.f5': { text: 'Ready in 1–2 weeks', html: false },
         'pricing.komplett.btn': { text: 'Inquire without obligation', html: false },
         'pricing.support.title': { text: 'Maintenance & Support', html: false },
-        'pricing.support.sub': { text: 'I stay by your side', html: false },
+        'pricing.support.sub': { text: 'After launch: changes and maintenance', html: false },
         'pricing.support.f1': { text: 'Update texts and images', html: false },
         'pricing.support.f2': { text: 'Technical maintenance & updates', html: false },
         'pricing.support.f3': { text: 'Small adjustments & extensions', html: false },
@@ -357,6 +365,7 @@ const translations = {
         'contact.form.s4': { text: 'Maintenance for an existing site', html: false },
         'contact.form.s5': { text: 'I don\'t know yet', html: false },
         'contact.form.message': { text: 'Your message *', html: false },
+        'contact.widerruf': { text: 'As a private customer you have a 14-day right of withdrawal. The details are in the <a href="widerruf.html" hreflang="de">withdrawal notice</a> (in German).', html: true },
         'contact.form.privacy': { text: 'Your details are sent to me via EmailJS (servers in the USA) and used only to handle your request. More in the <a href="datenschutz.html" hreflang="de">privacy policy</a> (in German).', html: true },
         'contact.form.submit': { text: 'Send message <span>→</span>', html: true },
         'contact.form.sending': { text: 'Sending …', html: false },
@@ -388,20 +397,22 @@ const translations = {
         'footer.impressum': { text: 'Legal Notice', html: false },
         'footer.datenschutz': { text: 'Privacy Policy', html: false },
         'footer.agb': { text: 'Terms & Conditions', html: false },
+        'footer.widerruf': { text: 'Right of withdrawal', html: false },
     }
 };
 
-// Placeholder translations for form inputs
+// Platzhalter der Formularfelder. Achtung: Sie stehen NICHT in den Wörterbüchern oben,
+// sondern nur hier. data-i18n-ph greift ausschließlich auf dieses Objekt zu.
 const placeholderTranslations = {
     de: {
         'contact.form.name.ph': 'Ihr Name',
         'contact.form.email.ph': 'ihre@email.de',
-        'contact.form.message.ph': 'Erzählen Sie uns von Ihrem Projekt...',
+        'contact.form.message.ph': 'Erzählen Sie mir von Ihrem Projekt',
     },
     en: {
         'contact.form.name.ph': 'Your name',
         'contact.form.email.ph': 'your@email.com',
-        'contact.form.message.ph': 'Tell me about your project...',
+        'contact.form.message.ph': 'Tell me about your project',
     }
 };
 
