@@ -236,8 +236,9 @@ body {
     margin-bottom: 0;
 }
 
-/* Das Muster-Widerrufsformular ist ein <pre>. Ohne diese Regel behält es
-   white-space: pre, bricht nie um und schiebt die ganze Seite seitwärts. */
+/* Das Muster-Widerrufsformular steht in einem <pre>. Ohne diese Regel behält es
+   white-space: pre, bricht nie um und schiebt die ganze Seite seitwärts: bei
+   390 px Fenster waren es gemessen 804 px Breite. */
 .legal-form {
     white-space: pre-wrap;
     overflow-wrap: anywhere;
