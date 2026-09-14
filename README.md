@@ -61,6 +61,19 @@ aufeinander und auf sich selbst als `canonical`, und beide stehen mit `xhtml:lin
 `sitemap.xml`. Wer eine Aussage auf einer Seite ändert, muss sie auf der anderen mitändern — es gibt
 kein gemeinsames Wörterbuch mehr, das das erzwingt.
 
+## Nach jeder Änderung an CSS oder JavaScript: Versionsnummer hochsetzen
+
+GitHub Pages schickt jede Datei mit `Cache-Control: max-age=600`. Wer die Seite in den zehn Minuten vor
+einem Update besucht hat, bekommt danach das neue HTML, aber sein Browser nimmt `styles.css` ungefragt
+aus dem Cache. Am 14.09.2026 stand die neue Startseite deshalb bei Leon ohne Gestaltung da (neues
+HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `sim.js`,
+`script.js` und `legal.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien ändert, setzt das Datum in
+allen HTML-Dateien neu** — sonst kommt derselbe Fehler wieder:
+
+```bash
+grep -rl '?v=' --include='*.html' . | xargs sed -i '' 's/?v=[0-9]*/?v=JJJJMMTT/g'
+```
+
 ## Gemessene Zahlen im Text
 
 Die Startseite nennt ihr eigenes Gewicht („12 Dateien, 233 KB beim ersten Aufruf“) und das der
