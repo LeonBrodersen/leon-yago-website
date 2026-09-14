@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Café Mühlenstein – erfundenes Beispiel von ly-webstudio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%237A2A14'/%3E%3Ctext x='16' y='23' font-family='Helvetica,Arial,sans-serif' font-weight='700' font-size='19' fill='%23ffffff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<style>
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* Kontraste, gerechnet statt geschätzt (WCAG 2.1): ink #241A12 auf papier
+   #FBF7F1 = 15,98:1; ink auf hof #EFE7DA = 13,90:1 und auf marktplatz #E1D8C7
+   = 12,06:1; muted #5B4C3F auf papier = 7,72:1, auf hof = 6,71:1; ziegel
+   #7A2A14 auf papier = 9,07:1, papier auf ziegel = 9,07:1; creme #F2E9DC auf
+   ink = 14,18:1; warm #E3C9AE auf ink = 10,74:1, auf ziegel (Knopf am
+   Telefon) = 6,10:1; wasserschrift #24383B auf #B7C9CB = 7,18:1; linie
+   #9C866F auf papier = 3,25:1, das ist die Farbe aller Tabellen- und
+   Abschnittslinien, des Knopfrahmens und des Fokusrings.
+   Schrift also überall über 4,5:1, Linien und Ränder über 3:1. */
+:root {
+  --ink: #241A12;
+  --muted: #5B4C3F;
+  --ziegel: #7A2A14;
+  --line: #9C866F;
+  --papier: #FBF7F1;
+  --creme: #F2E9DC;
+  --warm: #E3C9AE;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--papier); color: var(--ink); font: 400 17px/1.6 var(--sans); }
+a { color: var(--ziegel); }
+a:focus-visible { outline: 2px solid var(--ziegel); outline-offset: 3px; }
+.strip a, .foot a { color: var(--warm); }
+.strip a:focus-visible, .foot a:focus-visible { outline-color: var(--warm); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+.skip { position: absolute; left: -9999px; top: 0; z-index: 2; padding: 10px 16px; background: var(--papier); font-weight: 700; }
+.skip:focus { left: 8px; top: 8px; }
+
+.strip { background: var(--ink); color: var(--creme); font-size: 13px; line-height: 1.5; }
+.strip .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 24px; padding: 10px 32px; }
+.strip p { margin: 0; }
+
+.head { border-bottom: 1px solid var(--line); }
+.head .wrap { display: flex; align-items: center; gap: 32px; min-height: 74px; }
+.brand { display: flex; align-items: center; gap: 10px; margin-right: auto; font-weight: 700; font-size: 15px; }
+.mark { flex: none; width: 28px; height: 28px; border-radius: 3px; background: var(--ziegel); color: #fff; font: 700 16px/28px var(--sans); text-align: center; }
+.menu ul { display: flex; gap: 26px; margin: 0; padding: 0; list-style: none; }
+.menu a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ink); font-size: 15px; text-decoration: none; }
+.menu a:hover { color: var(--ziegel); text-decoration: underline; text-underline-offset: 5px; }
+.call { display: inline-flex; align-items: baseline; gap: 9px; font-feature-settings: "tnum"; min-height: 44px; padding: 10px 16px; border: 1px solid var(--line); border-radius: 3px; font-weight: 700; white-space: nowrap; text-decoration: none; }
+.call span { font-size: 13px; color: var(--muted); }
+table, .tel { font-feature-settings: "tnum"; }
+
+.top .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 26px 56px; }
+h1 { margin: 0 0 14px; font: 700 44px/1.08 var(--sans); letter-spacing: -0.022em; }
+h2 { margin: 0; font: 700 22px/1.25 var(--sans); letter-spacing: -0.01em; }
+.lede { margin: 0 0 28px; font-size: 19px; line-height: 1.5; }
+address { font-style: normal; }
+.ort { margin: 0 0 4px; }
+.tel { font-weight: 700; }
+.nach { margin: 10px 0 0; }
+.satz { grid-column: 1; align-self: end; margin: 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; }
+.zeiten { grid-column: 2; grid-row: 1 / span 2; border-left: 1px solid var(--line); padding-left: 40px; }
+.zeiten h2 { margin: 4px 0 16px; }
+.zeiten td { white-space: nowrap; }
+.satz, .ehrlich, .fuss, .preisnote, figcaption { color: var(--muted); font-size: 15px; }
+.ehrlich, .fuss { margin: 14px 0 0; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 11px 4px 11px 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: baseline; font-weight: 400; }
+thead th { padding-top: 0; font-size: 13px; color: var(--muted); }
+tbody th { padding-right: 16px; }
+
+.band { border-top: 1px solid var(--line); }
+.band .wrap, .foot .wrap { display: grid; grid-template-columns: 13em minmax(0, 1fr); column-gap: 48px; }
+.top .wrap, .band .wrap, .foot .wrap { padding-top: 56px; padding-bottom: 56px; }
+.karten { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 48px; row-gap: 40px; }
+.karten h3 { margin: 0 0 10px; font-size: 17px; font-weight: 700; }
+.karten td { width: 6em; padding-right: 0; text-align: right; white-space: nowrap; }
+.karten th span { display: block; font-size: 14px; line-height: 1.45; font-weight: 400; color: var(--muted); }
+.preisnote { margin: 32px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+
+.liste { display: grid; grid-template-columns: 13em minmax(0, 1fr); margin: 0; }
+.liste dt { padding: 12px 16px 12px 0; font-weight: 700; }
+.liste dd { grid-column: 2; margin: 0; padding: 12px 0; }
+.liste dt, .liste dd { border-top: 1px solid var(--line); }
+.liste dt:last-of-type, .liste dd:last-of-type { border-bottom: 1px solid var(--line); }
+
+.weg { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); column-gap: 48px; align-items: start; }
+.weg .liste { grid-template-columns: 1fr; }
+.weg .liste dt { padding-bottom: 2px; border-bottom: 0; }
+.weg .liste dd { grid-column: 1; padding-top: 0; border-top: 0; border-bottom: 0; color: var(--muted); }
+.skizze { margin: 0; }
+.skizze svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+figcaption { margin-top: 10px; }
+
+.foot { background: var(--ink); color: var(--creme); }
+.foot p, .foot address { margin: 0 0 14px; font-size: 15px; }
+.letzte { margin: 18px 0 0; padding-top: 18px; border-top: 1px solid #55463A; max-width: 46em; }
+
+@media (max-width: 940px) {
+  .band .wrap, .foot .wrap, .liste { grid-template-columns: 11em minmax(0, 1fr); }
+  .top .wrap, .band .wrap, .foot .wrap, .weg { column-gap: 32px; }
+  .karten { grid-template-columns: 1fr; }
+  h1 { font-size: 38px; }
+}
+@media (max-width: 780px) {
+  body { font-size: 16px; }
+  .wrap { padding: 0 18px; }
+  .strip .wrap { display: block; padding: 8px 18px; }
+  .head .wrap { flex-wrap: wrap; gap: 0; min-height: 0; padding-top: 14px; padding-bottom: 0; }
+  .brand { width: 100%; font-size: 16px; }
+  .call { order: 2; width: 100%; margin-top: 14px; justify-content: center; min-height: 50px; background: var(--ziegel); border-color: var(--ziegel); color: var(--papier); }
+  .call span { color: var(--warm); }
+  .menu { order: 3; width: 100%; margin-top: 4px; overflow-x: auto; border-top: 1px solid var(--line); }
+  .menu ul { gap: 20px; }
+  .menu a { white-space: nowrap; }
+  .top .wrap { grid-template-columns: 1fr; row-gap: 28px; padding-top: 28px; padding-bottom: 36px; }
+  .top .wrap > * { grid-column: 1; grid-row: auto; }
+  h1 { font-size: 31px; margin-bottom: 12px; }
+  .lede { font-size: 17px; margin-bottom: 20px; }
+  .zeiten { border-left: 0; padding-left: 0; }
+  .zeiten table { font-size: 15px; }
+  .band .wrap, .foot .wrap { grid-template-columns: 1fr; row-gap: 20px; padding-top: 40px; padding-bottom: 40px; }
+  .karten, .weg, .liste { grid-template-columns: 1fr; }
+  .karten, .weg { row-gap: 32px; }
+  .liste dt { padding: 12px 0 2px; }
+  .liste dd { grid-column: 1; padding: 0 0 12px; border-top: 0; }
+  .liste dt:last-of-type { border-bottom: 0; }
+  th, td { padding-top: 10px; padding-bottom: 10px; }
+  tbody th { padding-right: 10px; }
+  .karten td { width: 5em; }
+  .letzte { margin-top: 6px; }
+}
+@media (max-width: 380px) {
+  h1 { font-size: 28px; }
+  h2 { font-size: 20px; }
+  .zeiten table { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<div class="strip">
+  <div class="wrap">
+    <p><strong>Erfundenes Beispiel</strong> von ly-webstudio. Das Café, die Namen, Preise und Nummern sind ausgedacht.</p>
+    <a href="../index.html#arbeiten">Zurück zu ly-webstudio</a>
+  </div>
+</div>
+
+<header class="head">
+  <div class="wrap">
+    <span class="brand"><span class="mark" aria-hidden="true">M</span>Café Mühlenstein</span>
+    <nav class="menu" aria-label="Bereiche dieser Seite">
+      <ul>
+        <li><a href="#karte">Karte</a></li>
+        <li><a href="#wissen">Gut zu wissen</a></li>
+        <li><a href="#saal">Mühlensaal</a></li>
+        <li><a href="#anfahrt">Anfahrt</a></li>
+      </ul>
+    </nav>
+    <a class="call" href="tel:+491234890122"><span>Anrufen</span>01234 890 122</a>
+  </div>
+</header>
+
+<main id="inhalt">
+<section class="top">
+  <div class="wrap">
+    <div>
+      <h1>Café Mühlenstein</h1>
+      <p class="lede">Kaffee, Kuchen aus der eigenen Backstube und Frühstück bis zum späten Vormittag, im Erdgeschoss der alten Wassermühle.</p>
+      <address>
+        <p class="ort">Am Mühlenstein 2, 12345 Beispielstadt</p>
+        <a class="tel" href="tel:+491234890122">01234 890 122</a>
+      </address>
+      <p class="nach"><a href="#anfahrt">Anfahrt, Skizze und Parken</a></p>
+    </div>
+
+    <div class="zeiten">
+      <h2>Öffnungszeiten</h2>
+      <table>
+        <caption class="sr">Öffnungszeiten und Frühstückszeiten nach Wochentag</caption>
+        <thead>
+          <tr><td></td><th scope="col">Café</th><th scope="col">Frühstück</th></tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">Dienstag bis Freitag</th><td>8.30–18 Uhr</td><td>bis 11.30 Uhr</td></tr>
+          <tr><th scope="row">Samstag</th><td>8.30–17 Uhr</td><td>bis 12.30 Uhr</td></tr>
+          <tr><th scope="row">Sonntag</th><td>10–17 Uhr</td><td>bis 12.30 Uhr</td></tr>
+          <tr><th scope="row">Montag</th><td colspan="2">Ruhetag, auch an Feiertagen</td></tr>
+        </tbody>
+      </table>
+      <p class="ehrlich">Diese Seite kennt die Uhrzeit nicht und zeigt keinen Live-Status. Die Zeiten gelten das ganze Jahr.</p>
+      <p class="ehrlich">Am 24. und 31. Dezember bis 13 Uhr, vom 1. bis 6. Januar geschlossen. Wer kurz vor Schluss noch Kuchen möchte, ruft besser vorher an.</p>
+    </div>
+
+    <p class="satz">Zwölf Plätze drinnen, zwölf im Hof am Bach. Einzelne Tische reservieren wir nicht, kommen Sie einfach vorbei. Ab sechs Personen rufen Sie besser vorher an.</p>
+  </div>
+</section>
+
+<section class="band" id="karte">
+  <div class="wrap">
+    <h2>Karte</h2>
+    <div>
+      <div class="karten">
+        <div>
+          <h3>Kaffee und Getränke</h3>
+          <table>
+            <caption class="sr">Preise für Kaffee und Getränke</caption>
+            <tbody>
+              <tr><th scope="row">Filterkaffee, Tasse</th><td>2,80&#8239;€</td></tr>
+              <tr><th scope="row">Filterkaffee, Kanne <span>reicht für zwei Tassen</span></th><td>5,20&#8239;€</td></tr>
+              <tr><th scope="row">Espresso</th><td>2,30&#8239;€</td></tr>
+              <tr><th scope="row">Cappuccino</th><td>3,60&#8239;€</td></tr>
+              <tr><th scope="row">Milchkaffee</th><td>3,90&#8239;€</td></tr>
+              <tr><th scope="row">Heiße Schokolade mit Sahne</th><td>3,80&#8239;€</td></tr>
+              <tr><th scope="row">Tee, Kanne <span>sechs Sorten, sie stehen auf der Tafel</span></th><td>3,60&#8239;€</td></tr>
+              <tr><th scope="row">Apfelsaft, 0,3 Liter <span>von der Kelterei im Nachbardorf</span></th><td>3,20&#8239;€</td></tr>
+              <tr><th scope="row">Mineralwasser, 0,25 Liter</th><td>2,40&#8239;€</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Kuchen und Gebäck</h3>
+          <table>
+            <caption class="sr">Preise für Kuchen und Gebäck</caption>
+            <tbody>
+              <tr><th scope="row">Käsekuchen</th><td>3,90&#8239;€</td></tr>
+              <tr><th scope="row">Apfelkuchen mit Streuseln</th><td>3,70&#8239;€</td></tr>
+              <tr><th scope="row">Bienenstich</th><td>3,90&#8239;€</td></tr>
+              <tr><th scope="row">Schokoladentorte</th><td>4,30&#8239;€</td></tr>
+              <tr><th scope="row">Butterkuchen, Stück</th><td>2,60&#8239;€</td></tr>
+              <tr><th scope="row">Sahne dazu</th><td>0,80&#8239;€</td></tr>
+              <tr><th scope="row">Ganze Torte auf Vorbestellung <span>zwölf Stücke, drei Tage vorher bestellen</span></th><td>38,00&#8239;€</td></tr>
+            </tbody>
+          </table>
+          <p class="fuss">In der Vitrine stehen täglich vier bis fünf Sorten, nicht alle sieben. Welche, sagen wir Ihnen am Telefon.</p>
+        </div>
+        <div>
+          <h3>Frühstück</h3>
+          <table>
+            <caption class="sr">Preise für Frühstück</caption>
+            <tbody>
+              <tr><th scope="row">Kleines Frühstück <span>zwei Brötchen, Butter, Marmelade, ein Ei</span></th><td>7,80&#8239;€</td></tr>
+              <tr><th scope="row">Mühlenfrühstück <span>Brot, Käse, Schinken, Ei, Joghurt, Obst</span></th><td>12,90&#8239;€</td></tr>
+              <tr><th scope="row">Rührei mit Schnittlauch <span>mit zwei Scheiben Brot aus der Backstube</span></th><td>8,20&#8239;€</td></tr>
+              <tr><th scope="row">Porridge mit Apfel und Zimt</th><td>6,40&#8239;€</td></tr>
+              <tr><th scope="row">Croissant mit Butter und Marmelade</th><td>4,20&#8239;€</td></tr>
+            </tbody>
+          </table>
+          <p class="fuss">Zu jedem Frühstück gehört eine Tasse Filterkaffee oder eine Kanne Tee, die zahlen Sie nicht extra.</p>
+        </div>
+      </div>
+      <p class="preisnote">Alle Preise in Euro, einschließlich Mehrwertsteuer. Hafer- oder Sojadrink statt Kuhmilch kostet nichts extra. Zum Mitnehmen zahlen Sie dasselbe wie am Tisch, mit eigenem Becher 30 Cent weniger.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="wissen">
+  <div class="wrap">
+    <h2>Gut zu wissen</h2>
+    <dl class="liste">
+      <dt>Bezahlen</dt>
+      <dd>Bargeld immer, girocard ab 10&#8239;€. Darunter nicht, die Gebühr wäre höher als der Kaffee. Keine Kreditkarten.</dd>
+      <dt>Hunde</dt>
+      <dd>Dürfen mit herein, an der Leine. Die Wasserschüssel steht links neben der Tür.</dd>
+      <dt>Draußen sitzen</dt>
+      <dd>Sechs Tische im Hof am Bach, April bis Oktober. Nicht überdacht, bei Regen räumen wir ab.</dd>
+      <dt>Mit Kindern</dt>
+      <dd>Zwei Hochstühle, eine Kiste Bauklötze. Der Wickeltisch ist auf der Toilette im Erdgeschoss.</dd>
+      <dt>WLAN</dt>
+      <dd>Kostenlos, das Passwort steht auf der Tafel hinter der Theke.</dd>
+      <dt>Arbeiten am Laptop</dt>
+      <dd>Vormittags gern, an drei Tischen gibt es Steckdosen. Ab 14 Uhr brauchen wir die Tische für Kuchengäste und bitten Sie zusammenzurücken.</dd>
+      <dt>Allergien</dt>
+      <dd>Der Ordner mit allen Zutaten liegt am Tresen, fragen Sie danach. Gebacken wird zwei Meter hinter der Theke, Mehlstaub liegt in der Luft.</dd>
+      <dt>Was wir nicht haben</dt>
+      <dd>Keinen Mittagstisch, kein warmes Essen außer Rührei. Vor der Tür liegt eine Stufe von acht Zentimetern, die Rampe legen wir auf Zuruf an. Im Mühlensaal oben fehlt die Toilette, dafür geht es eine schmale Treppe hinunter. Und sonntags ist der Kuchen oft gegen 15 Uhr aus.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="band" id="saal">
+  <div class="wrap">
+    <h2>Mühlensaal für Feiern</h2>
+    <dl class="liste">
+      <dt>Plätze</dt>
+      <dd>24 Personen an vier langen Tischen für Kaffee und Kuchen. Mit einem Buffet an der Wand bleiben 18 Plätze.</dd>
+      <dt>Raummiete</dt>
+      <dd>45,00&#8239;€ für drei Stunden, jede weitere Stunde 12,00&#8239;€. Ab 250,00&#8239;€ Verzehr entfällt die Miete.</dd>
+      <dt>Kaffee und Kuchen</dt>
+      <dd>Kannen zu vier Tassen für 5,20&#8239;€, Kuchen zu den Preisen der Karte. Abgerechnet wird hinterher, nach dem, was auf dem Tisch stand.</dd>
+      <dt>Eigene Torte</dt>
+      <dd>Dürfen Sie mitbringen, wir stellen Teller und Heber. Dafür 1,50&#8239;€ je Person. Dekoration gern, Konfetti nicht.</dd>
+      <dt>Wie lange vorher</dt>
+      <dd>Zwei Wochen reichen meistens. Für Samstage im Advent und im Mai fragen Sie zwei Monate vorher.</dd>
+      <dt>Anfragen</dt>
+      <dd>Telefonisch unter <a class="tel" href="tel:+491234890122">01234 890 122</a> oder per E-Mail an <a href="mailto:hallo@cafe-muehlenstein.example">hallo@cafe-muehlenstein.example</a>. Wir antworten in zwei Werktagen. Gebucht ist der Saal, wenn Sie unsere schriftliche Bestätigung haben.</dd>
+      <dt>Musik und Schluss</dt>
+      <dd>Eine Steckdose und Platz für eine kleine Box sind da, eine Anlage nicht. Um 22 Uhr ist Schluss, darüber wohnen Leute.</dd>
+    </dl>
+  </div>
+</section>
+
+<section class="band" id="anfahrt">
+  <div class="wrap">
+    <h2>Anfahrt</h2>
+    <div class="weg">
+      <dl class="liste">
+        <dt>Adresse</dt>
+        <dd>Am Mühlenstein 2, 12345 Beispielstadt</dd>
+        <dt>Zu Fuß vom Marktplatz</dt>
+        <dd>Über die Bachbrücke, dann rechts den Mühlenweg am Wasser entlang. Vier Minuten, das Mühlrad sehen Sie schon von der Brücke.</dd>
+        <dt>Mit dem Bus</dt>
+        <dd>Linie 7 bis Mühlenweg, danach 200 Meter nach Westen.</dd>
+        <dt>Mit dem Auto</dt>
+        <dd>Am Haus gibt es keine Parkplätze. Am Festplatz stehen Sie kostenlos, von dort sind es 200 Meter.</dd>
+        <dt>Mit dem Fahrrad</dt>
+        <dd>Sechs Bügel an der Hofmauer, unter dem Vordach.</dd>
+      </dl>
+      <figure class="skizze">
+        <svg viewBox="0 0 420 300" role="img" aria-labelledby="skizze-titel" font-family="Inter, system-ui, sans-serif" font-size="15">
+          <title id="skizze-titel">Lageskizze: Das Café liegt in der alten Mühle am Mühlbach, westlich der Bachbrücke. Marktplatz südlich des Bachs, Haltestelle und Festplatz am Mühlenweg.</title>
+          <rect width="420" height="300" fill="#EFE7DA"/>
+          <path d="M0 224C90 224 130 210 206 212S320 232 420 226" fill="none" stroke="#B7C9CB" stroke-width="22"/>
+          <g fill="none" stroke-linecap="square">
+            <path d="M0 112H420M302 0V300" stroke="#CDBFAA" stroke-width="20"/>
+            <path d="M0 112H420M302 0V300" stroke="#FBF7F1" stroke-width="16"/>
+            <path d="M291 198V252M313 198V252" stroke="#5B4C3F" stroke-width="2.5"/>
+          </g>
+          <rect x="326" y="246" width="78" height="42" fill="#E1D8C7"/>
+          <text x="365" y="272" text-anchor="middle" fill="#241A12">Marktplatz</text>
+          <rect x="184" y="132" width="90" height="54" fill="#DBE3D4"/>
+          <text x="229" y="150" text-anchor="middle" font-size="13" fill="#241A12">Hof</text>
+          <g fill="#AEC0AA">
+            <circle cx="199" cy="164" r="6"/><circle cx="229" cy="164" r="6"/><circle cx="259" cy="164" r="6"/>
+            <circle cx="199" cy="179" r="6"/><circle cx="229" cy="179" r="6"/><circle cx="259" cy="179" r="6"/>
+          </g>
+          <g fill="none" stroke="#7A2A14">
+            <circle cx="26" cy="218" r="13" fill="#EFE7DA" stroke-width="3"/>
+            <path d="M26 205V231M13 218H39M17 209L35 227M35 209L17 227" stroke-width="2"/>
+          </g>
+          <rect x="40" y="182" width="130" height="76" fill="#7A2A14"/>
+          <text x="105" y="214" text-anchor="middle" font-size="14" font-weight="700" fill="#FBF7F1">Café Mühlenstein</text>
+          <text x="105" y="234" text-anchor="middle" font-size="12" fill="#F2E9DC">Am Mühlenstein 2</text>
+          <rect x="97" y="178" width="18" height="8" fill="#FBF7F1"/>
+          <path d="M365 246H302V112H105V178" fill="none" stroke="#7A2A14" stroke-width="2.5" stroke-dasharray="6 5"/>
+          <circle cx="246" cy="112" r="11" fill="#FBF7F1" stroke="#241A12" stroke-width="2"/>
+          <text x="246" y="117" text-anchor="middle" font-size="12" font-weight="700" fill="#241A12">H</text>
+          <text x="246" y="90" text-anchor="middle" font-size="13" fill="#5B4C3F">Bus 7</text>
+          <rect x="326" y="26" width="78" height="50" fill="#FBF7F1" stroke="#7A2A14" stroke-width="2"/>
+          <text x="365" y="59" text-anchor="middle" font-size="20" font-weight="700" fill="#7A2A14">P</text>
+          <text x="365" y="94" text-anchor="middle" font-size="13" fill="#5B4C3F">Festplatz</text>
+          <text x="186" y="219" font-size="13" fill="#24383B">Mühlbach</text>
+          <text x="12" y="96" font-size="13" fill="#5B4C3F">Mühlenweg</text>
+          <text x="18" y="46" text-anchor="middle" font-size="13" font-weight="700" fill="#5B4C3F">N</text>
+          <path d="M18 12L12 26H24Z" fill="#5B4C3F"/>
+        </svg>
+        <figcaption>Skizze, nicht maßstäblich. Gestrichelt: der Weg vom Marktplatz über die Bachbrücke bis zur Tür, etwa vier Minuten.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <h2>Anbieter</h2>
+    <div>
+      <p>Angaben nach § 5 DDG, für dieses Beispiel erfunden.</p>
+      <address>
+        Café Mühlenstein<br>
+        Inhaberin: Marlene Kordt, verantwortlich für den Inhalt<br>
+        Am Mühlenstein 2<br>
+        12345 Beispielstadt<br>
+        Telefon: <a href="tel:+491234890122">01234 890 122</a><br>
+        E-Mail: <a href="mailto:hallo@cafe-muehlenstein.example">hallo@cafe-muehlenstein.example</a><br>
+        Umsatzsteuer-Identifikationsnummer: DE000000000
+      </address>
+      <p class="letzte">Es gibt dieses Café nicht: Name, Inhaberin, Adresse, E-Mail und Preise sind erfunden, die Rufnummer liegt in einem nicht vergebenen Bereich. Gebaut hat die Seite ly-webstudio: eine Datei, keine fremden Server, keine Cookies. <a href="../index.html#arbeiten">Zurück zu ly-webstudio</a></p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

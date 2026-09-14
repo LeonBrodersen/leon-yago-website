@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Vorlage für das Teilen-Bild</title>
+<!-- Quelle von og-image.jpg. Neu erzeugen: diese Seite bei 1200 x 630 px
+     aufnehmen und auf 1200 x 630 herunterrechnen. Sie ist absichtlich nicht
+     verlinkt und steht auf noindex. -->
+<style>
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-800.woff2") format("woff2"); font-weight: 800; font-display: block; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    background: #F6F7F4; color: #141A17;
+    font: 400 21px/1.5 "Inter", system-ui, sans-serif;
+    display: grid; grid-template-columns: 1fr 330px;
+    align-items: end; gap: 56px;
+    padding: 64px 72px;
+  }
+  .brand { font-size: 25px; font-weight: 800; letter-spacing: -0.03em; }
+  h1 {
+    margin: 26px 0 0; font-size: 104px; line-height: 0.95;
+    font-weight: 800; letter-spacing: -0.038em; max-width: 15em;
+  }
+  .sub { margin-top: 22px; font-size: 27px; color: #4A544F; letter-spacing: -0.01em; max-width: 24em; }
+  .rule { margin-top: 30px; width: 132px; height: 4px; background: #047857; }
+  .facts {
+    margin-top: 26px; display: flex; gap: 30px;
+    font-size: 19px; color: #4A544F; font-variant-numeric: tabular-nums;
+  }
+  .facts span { white-space: nowrap; }
+  .facts b { color: #141A17; font-weight: 600; }
+  figure { align-self: end; }
+  figure img { display: block; width: 330px; height: auto; }
+  figcaption { margin-top: 10px; font-size: 16px; color: #4A544F; }
+</style>
+</head>
+<body>
+  <div>
+    <p class="brand">ly&#8209;webstudio</p>
+    <h1>Ich baue Websites.</h1>
+    <p class="sub">Für kleine Unternehmen und Selbstständige, zum Festpreis. Und wenn es mehr sein soll, auch Apps.</p>
+    <div class="rule"></div>
+    <div class="facts">
+      <span>fertig in <b>1–2 Wochen</b></span>
+      <span>Erstgespräch <b>kostenlos</b></span>
+    </div>
+  </div>
+  <figure>
+    <img src="/assets/img/leon-frei-640.webp" width="330" height="413" alt="">
+    <figcaption>Leon Brodersen, Geschäftsführer</figcaption>
+  </figure>
+</body>
+</html>

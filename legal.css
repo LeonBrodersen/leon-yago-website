@@ -33,15 +33,17 @@
     src: url('fonts/inter-v20-latin-800.woff2') format('woff2');
 }
 
+/* Dieselben Farben wie die Startseite: das Markengrün als einziger Akzent.
+   Das GingR-Orange gehört nur der App-Simulation. Gemessene Kontraste auf
+   #F6F7F4: Tinte 16,4:1 · gedämpfte Tinte 7,3:1 · Akzent 5,1:1. */
 :root {
-    --primary: #10b981;
-    --accent: #0d9488;
+    --primary: #047857;
     --link: #047857;
-    --text-dark: #111827;
-    --text-medium: #4b5563;
-    --text-light: #6b7280;
-    --border: #e5e7eb;
-    --bg: #ffffff;
+    --text-dark: #141A17;
+    --text-medium: #4A544F;
+    --text-light: #4A544F;
+    --border: rgba(20, 26, 23, 0.15);
+    --bg: #F6F7F4;
 }
 
 *,
@@ -84,16 +86,19 @@ body {
     min-height: 4.5rem;
 }
 
+/* Der Name steht in Tinte, wie auf der Startseite. Kein Farbverlauf im Text:
+   der wäre dekorativ und auf dem Papierton schlechter zu lesen. */
 .logo {
-    font-size: 1.6rem;
+    font-size: 1.1875rem;
     font-weight: 800;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     text-decoration: none;
+    color: var(--text-dark);
+}
+
+.logo:hover {
     color: var(--primary);
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .legal-back {

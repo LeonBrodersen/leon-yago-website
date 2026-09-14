@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Preise, Ablauf und Bedingungen | ly-webstudio</title>
+    <meta name="description" content="Was eine Website bei ly-webstudio kostet: drei Pakete mit Einführungs- und Normalpreis, Ablauf in vier Schritten, was Sie liefern, Extras und laufende Kosten.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#F6F7F4">
+    <link rel="canonical" href="https://www.ly-webstudio.de/angebot/">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="stylesheet" href="/legal.css">
+    <style>
+      /* Nur was die Rechtstexte nicht brauchen: zwei Tabellen und eine
+         Ablaufliste. Alles andere kommt aus legal.css, damit diese Seite
+         aussieht wie Impressum und AGB — es ist dieselbe Sorte Seite: eine zum
+         Nachschlagen. */
+      .tbl { width: 100%; border-collapse: collapse; margin: 0 0 1.5rem; text-align: left; }
+      .tbl caption { padding-bottom: 0.5rem; font-weight: 600; color: var(--text-dark); text-align: left; }
+      .tbl th, .tbl td { padding: 0.6rem 1rem 0.65rem 0; border-top: 1px solid var(--border); vertical-align: top; }
+      .tbl thead th { padding-top: 0; border-top: 0; border-bottom: 2px solid var(--text-dark); font-size: 0.9rem; }
+      .tbl thead th span { display: block; font-weight: 400; }
+      .tbl tbody th { font-weight: 600; color: var(--text-dark); hyphens: none; }
+      .tbl td:last-child, .tbl th:last-child { padding-right: 0; }
+      .tbl .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .tbl .jetzt { color: var(--text-dark); font-weight: 600; }
+      .kein-paket { border-left: 3px solid var(--primary); padding-left: 1rem; }
+      .zurueck { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+
+      @media (max-width: 34rem) {
+        /* Nebeneinander wären vier Spalten auf 320 px unlesbar. Zeile für Zeile,
+           Beschriftung vor jedem Wert. */
+        .tbl, .tbl tbody, .tbl thead, .tbl tr, .tbl th, .tbl td { display: block; width: auto; }
+        .tbl thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+        .tbl tbody tr { padding: 0.9rem 0; border-top: 1px solid var(--border); }
+        .tbl tbody th, .tbl td { padding: 0; border: 0; }
+        .tbl tbody th { margin-bottom: 0.35rem; font-size: 1.05rem; }
+        .tbl td { margin-top: 0.35rem; }
+        .tbl .num { text-align: left; }
+        .tbl td[data-label]::before { content: attr(data-label) ": "; color: var(--text-medium); font-size: 0.85rem; }
+      }
+    </style>
+</head>
+
+<body>
+    <header class="legal-header">
+        <div class="legal-bar">
+            <a href="/" class="logo">ly-webstudio</a>
+            <a href="/" class="legal-back">Zur Startseite</a>
+        </div>
+    </header>
+
+    <main class="legal">
+        <h1>Preise, Ablauf und Bedingungen</h1>
+        <p class="legal-lead">Auf der Startseite stehen die Preise. Hier steht alles, was danach
+            kommt — zum Nachschlagen, bevor Sie anrufen.</p>
+
+        <h2 id="pakete">Drei Pakete für Websites</h2>
+        <p>Für meine <strong>ersten fünf Projekte</strong> gilt der Einführungspreis. Im Gegenzug darf ich
+            das fertige Projekt als Referenz zeigen; diese Erlaubnis können Sie jederzeit widerrufen.
+            Danach gilt der Normalpreis.</p>
+
+        <table class="tbl">
+            <caption>Pakete, Einführungspreis und Normalpreis</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Paket</th>
+                    <th scope="col">Was dabei ist</th>
+                    <th scope="col" class="num">Einführungspreis <span>erste 5 Projekte</span></th>
+                    <th scope="col" class="num">Normalpreis <span>danach</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Starter</th>
+                    <td data-label="Was dabei ist">1–3 Seiten, Kontaktformular, SEO-Grundlagen. Fertig in
+                        etwa einer Woche nach Eingang der Inhalte.</td>
+                    <td class="num jetzt" data-label="Einführungspreis">150–300 €</td>
+                    <td class="num" data-label="Normalpreis">300–500 €</td>
+                </tr>
+                <tr>
+                    <th scope="row">Komplett</th>
+                    <td data-label="Was dabei ist">4–7 Seiten, individuelles Design, SEO,
+                        Social-Media-Einbindung. Fertig in ein bis zwei Wochen.</td>
+                    <td class="num jetzt" data-label="Einführungspreis">300–600 €</td>
+                    <td class="num" data-label="Normalpreis">600–1.000 €</td>
+                </tr>
+                <tr>
+                    <th scope="row">Pflege &amp; Support</th>
+                    <td data-label="Was dabei ist">Texte und Bilder aktualisieren, technische Pflege,
+                        kleine Anpassungen. Nach Aufwand abgerechnet.</td>
+                    <td class="num jetzt" data-label="Einführungspreis">20 € / Std.</td>
+                    <td class="num" data-label="Normalpreis">40 € / Std.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="kein-paket"><strong>Apps, Werkzeuge und Automatisierung haben kein Paket.</strong> Zwei
+            Werkzeuge sind selten gleich viel Arbeit. Umfang und Preis — als Festpreis oder als Stundensatz
+            — nenne ich Ihnen nach dem Erstgespräch in Textform, bevor ich anfange.</p>
+
+        <h2 id="ablauf">Ablauf in vier Schritten</h2>
+        <table class="tbl">
+            <caption>Wer was tut und wann Geld fließt</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Schritt</th>
+                    <th scope="col">Ihr Teil</th>
+                    <th scope="col">Mein Teil</th>
+                    <th scope="col">Geld</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1. Erstgespräch</th>
+                    <td data-label="Ihr Teil">Anrufen oder schreiben und erzählen, was Sie brauchen.
+                        Vorbereiten müssen Sie nichts.</td>
+                    <td data-label="Mein Teil">Zuhören, nachfragen, danach den Festpreis nennen — per
+                        Telefon oder Video-Call.</td>
+                    <td class="jetzt" data-label="Geld">kostenlos</td>
+                </tr>
+                <tr>
+                    <th scope="row">2. Inhalte und Entwurf</th>
+                    <td data-label="Ihr Teil">Texte, Fotos und Logo schicken.</td>
+                    <td data-label="Mein Teil">Den Entwurf bauen. Ab Eingang Ihrer Inhalte läuft die
+                        Lieferzeit.</td>
+                    <td class="jetzt" data-label="Geld">50 % bei Auftrag</td>
+                </tr>
+                <tr>
+                    <th scope="row">3. Zwei Rückmeldungen</th>
+                    <td data-label="Ihr Teil">Sagen, was anders soll — zweimal, gesammelt.</td>
+                    <td data-label="Mein Teil">Beide Runden umsetzen.</td>
+                    <td class="jetzt" data-label="Geld">im Preis enthalten</td>
+                </tr>
+                <tr>
+                    <th scope="row">4. Die Seite geht online</th>
+                    <td data-label="Ihr Teil">Domain und Hosting auf Ihren Namen.</td>
+                    <td data-label="Mein Teil">Die Seite online stellen und beim Einrichten helfen.</td>
+                    <td class="jetzt" data-label="Geld">50 % nach Fertigstellung</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 id="liefern">Was Sie liefern</h2>
+        <ul>
+            <li>Ihre Texte — Leistungen, Preise, Öffnungszeiten, was bei Ihnen dazugehört. Formulieren kann
+                ich mit; schreiben müssen Sie nicht allein.</li>
+            <li>Fotos, zum Beispiel von Ihren Räumen, Ihrer Arbeit oder Ihrem Team.</li>
+            <li>Ihr Logo, falls Sie eines haben. Wenn nicht, steht ein einfaches unter den Extras.</li>
+            <li>Zwei Rückmeldungen zu meinen Entwürfen.</li>
+            <li>Domain und Hosting auf Ihren Namen. Die laufenden Kosten zahlen Sie direkt an den
+                Anbieter, beim Einrichten helfe ich.</li>
+        </ul>
+
+        <h2 id="konditionen">Konditionen</h2>
+        <dl class="legal-facts">
+            <dt>Festpreis</dt>
+            <dd>Den genauen Preis nenne ich nach dem Erstgespräch, bevor die Arbeit beginnt.</dd>
+            <dt>Umsatzsteuer</dt>
+            <dd>Kleinunternehmer nach § 19 UStG, daher keine Umsatzsteuer. Alle Preise sind Endpreise.</dd>
+            <dt>Zahlung</dt>
+            <dd>50 % bei Auftrag, 50 % nach Fertigstellung.</dd>
+            <dt>Korrekturen</dt>
+            <dd>Zwei Korrekturrunden sind enthalten.</dd>
+            <dt>Lieferzeit</dt>
+            <dd>Zählt ab Eingang der Inhalte. Texte, Fotos und Logo kommen von Ihnen.</dd>
+            <dt>Widerrufsrecht</dt>
+            <dd>Als Privatperson haben Sie vierzehn Tage Widerrufsrecht. Einzelheiten in der
+                <a href="/widerruf.html">Widerrufsbelehrung</a>.</dd>
+        </dl>
+
+        <h2 id="extras">Extras und laufende Kosten</h2>
+        <p><strong>Extras</strong>, falls Sie mehr brauchen: weitere Unterseite 30–50 € · einfaches Logo
+            50–100 € · Blog oder Neuigkeiten 50–100 € · mehrere Sprachen ab 100 €.</p>
+        <p><strong>Laufende Kosten</strong> zahlen Sie an Ihren Anbieter, nicht an mich — beim Einrichten
+            helfe ich: Domain (.de) etwa 10–15 € pro Jahr · Hosting etwa 3–10 € pro Monat · SSL-Zertifikat
+            oft kostenlos.</p>
+
+        <h2 id="weiter">Und jetzt?</h2>
+        <p>Rufen Sie an: <a href="tel:+491794904546">0179 4904546</a>. Oder schreiben Sie an
+            <a href="mailto:kontaktleonyago@gmail.com">kontaktleonyago@gmail.com</a>. Das Erstgespräch
+            kostet nichts, und in zehn Minuten ist meist klar, ob ich der Richtige für Ihr Vorhaben bin.</p>
+        <p><a class="zurueck" href="/">&#8592; Zurück zur Startseite</a></p>
+
+        <p class="legal-date">Stand: September 2026</p>
+    </main>
+
+    <footer class="legal-footer">
+        <div class="legal-bar">
+            <p>ly-webstudio UG (haftungsbeschränkt) · Leon Brodersen · HRB 285808 B</p>
+            <nav aria-label="Rechtliches">
+                <a href="/impressum.html">Impressum</a>
+                <a href="/datenschutz.html">Datenschutz</a>
+                <a href="/agb.html">AGB</a>
+                <a href="/widerruf.html">Widerruf</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>
