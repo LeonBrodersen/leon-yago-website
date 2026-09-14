@@ -1,43 +1,44 @@
-/* Die Simulation: ein Telefon, das sich beim Scrollen in den Raum dreht, und
-   darin eine nachgebaute Satzeingabe, die durchläuft.
+/* Die Simulation: ein Telefon, das sich beim Scrollen zum Leser dreht, und
+   darin GingR, wie es wirklich aussieht, während ein Satz eingetragen wird.
 
-   Zwei Regeln, an denen der Eindruck hängt:
-   1. Bewegt wird ausschließlich über transform und opacity. Alles andere löst
-      Layout aus und ruckelt auf dem Handy.
-   2. Den Fortschritt schreibt das Skript als eine einzige Zahl --p (0 bis 1) an
-      die Bühne. Alles andere rechnet CSS daraus. Dadurch gibt es keinen Zustand,
-      der auseinanderlaufen kann, und Zurückscrollen spult wirklich zurück.
+   Drei Regeln, an denen der Eindruck hängt:
+   1. Den Fortschritt schreibt sim.js als eine Zahl --p (0 bis 1) an die Section.
+      Drehung, Balken und Goldlicht rechnet CSS daraus; die Schritte im Telefon
+      sind Klassen am .app-schirm. Zurückscrollen spult deshalb wirklich zurück.
+   2. Bewegt wird nur über transform und opacity. Zustände wechseln hart per
+      Klasse, ohne Farbübergänge — so macht es auch die App (Keypad und
+      Pausenkarte erscheinen dort ohne Animation).
+   3. Im Telefon zählt der Maßstab der App. Der Bildschirm ist ein Container,
+      --app-pt ist ein iOS-Punkt bei 402 pt Breite; jedes Maß unten ist ein
+      pt-Wert aus GymApp (src/theme/tokens.ts, gemessen am Store-Bild
+      01-workout.png). So stimmt das Verhältnis bei jeder Telefongröße.
 
-   Gemessene Kontraste (WCAG, auf Karte #14161A gerechnet):
-     Text    #F2F4F3 = 15,6:1
-     gedämpft #9AA3AA =  7,1:1
-     Akzent  #F08A24 =  8,6:1   (nur große Schrift und Flächen)
-     Rand    #5F666E =  3,1:1   (Bedienelemente, ≥ 3:1)
-   Auf dem Grund #0B0C0D liegen alle Werte höher. */
+   Farben: nur die Dunkel-Tokens der App (tokens.ts palette.dark) plus die am
+   Store-Bild gemessenen iOS-Werte für Glasknöpfe und Kopflinie. Auf dem Grund
+   #131311 (gerechnet, WCAG): Text #F2F0EB 16,3:1 · Grau #A29D92 6,9:1 · Orange #F0942E 8,0:1. */
+
+/* ================================================================ Seitenteil */
 
 .sim {
-  --ink: #0B0C0D;
-  --karte: #14161A;
-  --karte-2: #1B1F24;
-  --linie: #272C33;
-  --rand: #5F666E;
-  --text: #F2F4F3;
-  --gedaempft: #9AA3AA;
-  --akzent: #F08A24;
+  --sim-grund: #131311;
+  --sim-text: #F2F0EB;
+  --sim-grau: #A29D92;
+  --sim-akzent: #F0942E;
+  --sim-linie: #33302A;
 
   /* Fortschritt 0 bis 1. Ohne Skript bleibt 1 stehen, also der Endzustand. */
   --p: 1;
 
   position: relative;
-  background: var(--ink);
-  color: var(--text);
-  padding: 0 clamp(20px, 5vw, 64px);
+  background: var(--sim-grund);
+  color: var(--sim-text);
+  padding-inline: clamp(20px, 5vw, 64px);
 }
 
-/* Die Strecke, über die gescrollt wird. Sie ist absichtlich in vh angegeben:
-   der Weg soll sich am Bildschirm bemessen, nicht am Text. */
-.sim-strecke { height: 230vh; position: relative; }
-@media (max-width: 760px) { .sim-strecke { height: 260vh; } }
+/* Die Strecke, über die gescrollt wird. In vh, weil sich der Weg am Bildschirm
+   bemessen soll, nicht am Text. Die Seite hat eine harte Höhengrenze. */
+.sim-strecke { height: 200vh; position: relative; }
+@media (max-width: 760px) { .sim-strecke { height: 225vh; } }
 
 .sim-buehne {
   position: sticky;
@@ -45,63 +46,61 @@
   height: 100vh;
   height: 100svh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(270px, 27vw, 340px);
+  grid-template-columns: minmax(0, 1fr) clamp(260px, 30vw, 390px);
+  /* Eine Zeile über die volle Bühnenhöhe: das Telefon misst sich an ihr. */
+  grid-template-rows: minmax(0, 1fr);
   align-items: center;
   gap: clamp(28px, 5vw, 80px);
   max-width: 1180px;
   margin-inline: auto;
+  padding-block: clamp(16px, 4vh, 40px);
 }
 @media (max-width: 860px) {
   .sim-buehne {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
-    align-content: center;
-    gap: 18px;
+    align-items: start;
+    gap: 16px;
     padding-block: 16px;
   }
 }
 
 /* ---------------------------------------------------------------- Beschriftung */
-.sim-text { align-self: center; }
+.sim-text { align-self: center; min-width: 0; }
 .sim-augenbraue {
   margin: 0 0 14px;
   font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--akzent);
+  color: var(--sim-akzent);
 }
 .sim-text h2 {
   margin: 0 0 12px;
-  font-size: clamp(1.7rem, 4vw, 2.8rem);
-  line-height: 1.05;
+  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
+  line-height: 1.08;
   letter-spacing: -0.03em;
   font-weight: 800;
   text-wrap: balance;
 }
-.sim-text > p {
+.sim-vorsatz {
   margin: 0;
   max-width: 30em;
-  color: var(--gedaempft);
+  color: var(--sim-grau);
   font-size: clamp(1rem, 1.4vw, 1.125rem);
 }
-@media (max-width: 860px) {
-  .sim-text h2 { font-size: clamp(1.4rem, 6vw, 1.9rem); }
-  .sim-text > p { font-size: 0.9375rem; }
-}
 
-/* Die Takte liegen übereinander; sichtbar ist der, der gerade dran ist. So
-   springt die Höhe nicht, wenn ein längerer Takt kommt. */
+/* Die Takte liegen im selben Rasterfeld übereinander; sichtbar ist der, der dran
+   ist. Das Feld ist so hoch wie der längste Takt, deshalb springt nichts, und
+   es braucht keine geschätzte Mindesthöhe, die an einer Sprache reißt. */
 .sim-takte {
-  position: relative;
+  display: grid;
   margin: clamp(18px, 3vh, 32px) 0 0;
   padding: 0;
   list-style: none;
-  min-height: 4.5em;
 }
 .sim-takte li {
-  position: absolute;
-  inset: 0;
+  grid-area: 1 / 1;
   display: flex;
   align-items: flex-start;
   gap: 12px;
@@ -111,32 +110,38 @@
   font-size: clamp(1.0625rem, 1.8vw, 1.375rem);
   font-weight: 600;
   letter-spacing: -0.015em;
+  line-height: 1.3;
 }
 .sim-takte li.ist-da { opacity: 1; transform: none; }
-.sim-takte .nr {
+.sim-nr {
   flex: none;
   width: 1.75rem;
-  color: var(--akzent);
+  color: var(--sim-akzent);
   font-variant-numeric: tabular-nums;
   font-size: 0.8125rem;
-  font-weight: 700;
-  padding-top: 0.45em;
+  font-weight: 600;
+  padding-top: 0.35em;
 }
 .sim-takte small {
   display: block;
   margin-top: 4px;
   font-size: 0.875rem;
   font-weight: 400;
-  color: var(--gedaempft);
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--sim-grau);
 }
-@media (max-width: 860px) { .sim-takte { min-height: 5.5em; } }
+@media (max-width: 860px) {
+  .sim-text h2 { font-size: clamp(1.35rem, 6vw, 1.9rem); }
+  .sim-vorsatz { font-size: 0.9375rem; }
+  .sim-takte { margin-top: 14px; }
+}
 
-/* Ein Balken statt Punkten: er zeigt, wie viel Strecke noch kommt, und ist
-   ehrlicher als fünf Kreise, von denen einer leuchtet. */
+/* Ein Balken statt Punkten: er zeigt, wie viel Strecke noch kommt. */
 .sim-balken {
-  margin-top: clamp(16px, 3vh, 28px);
+  margin-top: clamp(14px, 3vh, 28px);
   height: 2px;
-  background: var(--linie);
+  background: var(--sim-linie);
   position: relative;
   overflow: hidden;
 }
@@ -144,35 +149,66 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--akzent);
+  background: var(--sim-akzent);
   transform: scaleX(var(--p));
   transform-origin: left center;
 }
 
+.sim-fussnote {
+  margin: clamp(20px, 3.5vh, 32px) 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sim-grau);
+  max-width: 34em;
+}
+/* Am Handy zählt jeder Pixel Höhe fürs Telefon. */
+@media (max-width: 860px) { .sim-fussnote { display: none; } }
+
+.sim-unsichtbar {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 /* ---------------------------------------------------------------- Das Gerät */
+
+/* Die Zelle des Telefons ist ein Größen-Container: --sim-w nimmt die Breite, die
+   in ihre Höhe UND Breite passt. 0,43 = 430/902 Seitenverhältnis mal 0,9 Luft,
+   weil die Drehung das Gerät perspektivisch um bis zu 8 % größer zeichnet. */
 .sim-geraet {
-  justify-self: stretch;
-  /* Perspektive am Elternteil, damit die Drehung Tiefe hat und nicht flach
-     kippt. Der Wert ist bewusst groß: kleine Perspektive verzerrt das Gerät
-     zur Karikatur. */
+  --sim-w: min(100cqw, calc(100cqh * 0.43));
+  margin: 0;
+  align-self: stretch;
+  min-width: 0;
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+  /* Perspektive am Elternteil, damit die Drehung Tiefe hat. Bewusst groß:
+     kleine Perspektive verzerrt das Gerät zur Karikatur. */
   perspective: 1400px;
   perspective-origin: 50% 45%;
-  width: 100%;
 }
-@media (max-width: 860px) { .sim-geraet { width: min(232px, 58vw); justify-self: center; } }
 
+/* iPhone 17 Pro: 402 × 874 pt Bildschirm, rundum 14 pt Rand (2,5 Rahmen, der
+   Rest schwarzes Glas), Bildschirmecken 62 pt. Eine Einheit hier = ein pt. */
 .sim-telefon {
+  --sim-e: calc(var(--sim-w) / 430);
   position: relative;
-  aspect-ratio: 390 / 800;
-  border-radius: 34px;
+  width: var(--sim-w);
+  aspect-ratio: 430 / 902;
+  border-radius: calc(76 * var(--sim-e));
   background: #000;
-  border: 1px solid #2E343B;
-  padding: 6px;
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.95);
+  box-shadow:
+    inset 0 0 0 calc(2.5 * var(--sim-e)) #3A3833,
+    0 40px 80px -36px rgba(0, 0, 0, 0.9);
 
   /* Die Drehung: von schräg liegend (wie in der Hand) zum Leser hin.
-     rotateY geht von -24deg auf +6deg, rotateX von 10deg auf 0deg, dazu ein
-     wenig Weg nach vorn. Alles aus derselben Zahl --p. */
+     rotateY -24deg → +6deg, rotateX 10deg → 0deg, dazu ein wenig nach vorn.
+     Alles aus derselben Zahl --p. */
   transform:
     rotateY(calc(-24deg + var(--p) * 30deg))
     rotateX(calc(10deg - var(--p) * 10deg))
@@ -181,221 +217,560 @@
   will-change: transform;
 }
 
-.sim-schirm {
+/* ================================================================ Die App */
+
+.app-schirm {
+  --app-grund: #131311;
+  --app-flaeche: #1D1C19;
+  --app-feld: #26241F;
+  --app-rand: #33302A;
+  --app-text: #F2F0EB;
+  --app-grau: #A29D92;
+  --app-akzent: #F0942E;
+  --app-auf-akzent: #1C1206;
+  --app-gold: #F3CE6B;
+  /* iOS-eigen, gemessen: Glasknöpfe der Kopfzeile und die Linie darunter. */
+  --app-glas: #1B1B19;
+  --app-glas-ring: #393732;
+  --app-kopf-linie: #4B4944;
+
+  /* Ein iOS-Punkt. Nur in Kindern benutzen: cqw bezieht sich dort auf diesen
+     Bildschirm, am Element selbst auf die Zelle außen. */
+  --app-pt: calc(100cqw / 402);
+  /* Haarlinie: ein Gerätepixel, wie StyleSheet.hairlineWidth. */
+  --app-haar: 0.5px;
+  /* Laufweite. iOS gibt SF je Punktgröße ein eigenes Tracking (17 pt enger als
+     13 pt). Der Browser nimmt das Tracking der gezeichneten px-Größe, im
+     kleinen Telefon also ein zu weites. Die Tabelle ist fast linear, darum ist
+     der Ausgleich für jede Schriftgröße derselbe Wert in px. Gemessen gegen die
+     CoreText-Breiten der Spezifikation: ±2 % bei 0,5 bis 0,9 px je pt. */
+  --app-spur: calc(0.85 * (var(--app-pt) - 1px));
+
+  container-type: inline-size;
   position: absolute;
-  inset: 6px;
-  border-radius: 28px;
-  background: var(--ink);
+  inset: calc(14 * var(--sim-e));
+  border-radius: calc(62 * var(--sim-e));
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  font-size: clamp(9px, 1.05vw, 11.5px);
+  background: var(--app-grund);
+  color: var(--app-text);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, Roboto, "Segoe UI", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  /* Im Telefon bricht nichts um, bis auf den Fakt in der Pausenkarte. */
+  white-space: nowrap;
+  user-select: none;
 }
-@media (max-width: 860px) { .sim-schirm { font-size: 9px; } }
+/* An den Kindern gesetzt, weil cqw erst dort den Bildschirm meint. */
+.app-schirm > * { letter-spacing: var(--app-spur); }
 
-/* Kopfzeile der App */
+/* Haarlinien liegen als Überlagerung über der Fläche, damit ihre Rundung auf
+   ganze Pixel die Maße innen nicht verschiebt (Karteninhalt ab 32,3 pt). */
+.app-karte,
+.app-pause,
+.app-tastatur { position: relative; }
+.app-karte::after,
+.app-pause::after,
+.app-tastatur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--app-haar) solid var(--app-rand);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+/* ------------------------------------------------ Statusleiste und Kopfzeile */
+/* Hintergrund #1D1C19 von 0 bis 116 pt, Haarlinie #4B4944 bei 116. */
 .app-kopf {
+  position: relative;
+  flex: none;
+  height: calc(116.33 * var(--app-pt));
+  background: var(--app-flaeche);
+}
+.app-kopf::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom: var(--app-haar) solid var(--app-kopf-linie);
+}
+/* Uhr hell: die schwarze Uhr im Store-Bild ist ein Fehler der App. */
+.app-uhr {
+  position: absolute;
+  left: calc(51 * var(--app-pt));
+  top: calc(22.6 * var(--app-pt));
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(20 * var(--app-pt));
+  font-weight: 600;
+  /* Die Systemuhr hat proportionale Ziffern: gemessen 43,2 pt breit. */
+  font-variant-numeric: normal;
+  color: var(--app-text);
+}
+.app-insel {
+  position: absolute;
+  left: calc(138.3 * var(--app-pt));
+  top: calc(14 * var(--app-pt));
+  width: calc(125.5 * var(--app-pt));
+  height: calc(36.5 * var(--app-pt));
+  border-radius: calc(18.25 * var(--app-pt));
+  background: #000;
+}
+.app-symbole {
+  position: absolute;
+  left: calc(288 * var(--app-pt));
+  top: calc(26 * var(--app-pt));
+  width: calc(80 * var(--app-pt));
+  height: calc(13 * var(--app-pt));
+  fill: var(--app-text);
+  overflow: visible;
+}
+.app-symbole .app-wlan { fill: none; stroke: var(--app-text); stroke-width: 2.3; }
+.app-symbole .app-akku-rand { fill: none; stroke: var(--app-text); stroke-width: 1; opacity: 0.4; }
+.app-symbole .app-akku-nase { opacity: 0.4; }
+
+/* Glasknöpfe (iOS 26): Kreis 44,2 pt links, Kapsel rechts, Oberkante 61,8 pt. */
+.app-glas {
+  position: absolute;
+  top: calc(61.8 * var(--app-pt));
+  height: calc(44.2 * var(--app-pt));
+  border-radius: calc(22.1 * var(--app-pt));
+  background: var(--app-glas);
+  border: calc(1 * var(--app-pt)) solid var(--app-glas-ring);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app-zurueck { left: calc(15.8 * var(--app-pt)); width: calc(44.2 * var(--app-pt)); }
+.app-zurueck svg {
+  width: calc(11 * var(--app-pt));
+  height: calc(19 * var(--app-pt));
+  margin-left: calc(-1.5 * var(--app-pt));
+  fill: none;
+  stroke: var(--app-text);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.app-fertig {
+  right: calc(15.8 * var(--app-pt));
+  min-width: calc(44.2 * var(--app-pt));
+  padding: 0 calc(3.2 * var(--app-pt));
+  font-size: calc(17 * var(--app-pt));
+  color: var(--app-akzent);
+}
+.app-titel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(61.8 * var(--app-pt));
+  height: calc(44.2 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(17 * var(--app-pt));
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- Liste */
+.app-liste {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+/* Die App zieht die Karte beim Öffnen des Keypads animiert nach oben
+   (scrollToIndex). Hier dasselbe als transform. */
+.app-rolle {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: calc(16 * var(--app-pt));
+  transition: transform 320ms cubic-bezier(0.25, 0.8, 0.3, 1);
+}
+
+/* Laufzeit-Pille: pill, 12/4 pt Innenabstand, caption 13/18. */
+.app-lauf {
+  align-self: flex-start;
+  margin-bottom: calc(12 * var(--app-pt));
+  padding: calc(4 * var(--app-pt)) calc(12 * var(--app-pt));
+  border-radius: 999px;
+  background: var(--app-feld);
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+
+/* Karte: Fläche, Haarlinie, Radius 16, Innenabstand 16, Kinderabstand 8. */
+.app-karte {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--app-pt));
+  padding: calc(16.33 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt));
+  background: var(--app-flaeche);
+}
+.app-karte + .app-karte { margin-top: calc(12 * var(--app-pt)); }
+
+.app-karte-kopf {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5em 1.2em 0.9em;
-  border-bottom: 1px solid var(--linie);
+  gap: calc(12 * var(--app-pt));
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
 }
-.app-kopf b { font-size: 1.15em; letter-spacing: -0.01em; }
-.app-kopf span { color: var(--akzent); font-weight: 600; }
+.app-uebung { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
+.app-chevron { color: var(--app-grau); }
 
-.app-inhalt { padding: 1.1em 1.2em; display: grid; gap: 1em; }
-
-.app-uebung { display: grid; gap: 0.35em; }
-.app-uebung b { font-size: 1.15em; }
-.app-uebung .stange { color: var(--gedaempft); }
-
-/* Die Satzzeile: Nummer, Gewicht, Wiederholungen, Häkchen. Das Raster ist fest,
-   damit beim Füllen nichts wandert. */
-.app-satz {
-  display: grid;
-  grid-template-columns: 2.6em 1fr 1fr 2.4em;
-  gap: 0.5em;
+/* Chips: 32 hoch, pill, 12 pt seitlich, caption 13. „+ Supersatz" mit 1-pt-Rand. */
+.app-chips,
+.app-pause-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * var(--app-pt));
+}
+.app-chip {
+  display: inline-flex;
   align-items: center;
+  height: calc(32 * var(--app-pt));
+  padding: 0 calc(12 * var(--app-pt));
+  border-radius: 999px;
+  background: var(--app-feld);
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
 }
-.app-satz .kopfzeile { color: var(--gedaempft); font-size: 0.85em; }
-.app-feld {
-  border: 1px solid var(--rand);
-  border-radius: 0.5em;
-  padding: 0.55em 0.4em;
-  text-align: center;
-  font-variant-numeric: tabular-nums;
-  font-weight: 600;
-  min-height: 2.4em;
-  display: grid;
-  place-items: center;
-  transition: border-color 200ms ease, background-color 200ms ease;
+.app-chip-rand {
+  background: none;
+  border: calc(1 * var(--app-pt)) solid var(--app-akzent);
+  color: var(--app-akzent);
 }
-.app-feld.ist-gefuellt { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
-.app-nr { color: var(--gedaempft); text-align: center; font-variant-numeric: tabular-nums; }
 
-/* Das Häkchen wächst aus der Mitte, statt einzublenden — das liest sich wie ein
-   Druck auf den Knopf. */
-.app-haken {
-  width: 2.2em;
-  height: 2.2em;
-  border: 1px solid var(--rand);
-  border-radius: 0.5em;
-  display: grid;
-  place-items: center;
-  transition: background-color 200ms ease, border-color 200ms ease;
+/* Spaltenköpfe: „Satz" links in 44 pt, „kg"/„Wdh." mittig über den Feldern. */
+.app-spalten {
+  display: flex;
+  gap: calc(8 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
 }
-.app-haken svg { width: 1.1em; height: 1.1em; display: block; }
-.app-haken path {
-  stroke: var(--gedaempft);
-  stroke-width: 2.4;
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  /* Länge des Pfades, per Skript nicht nötig: 18 ist großzügig gerundet. */
-  stroke-dasharray: 18;
-  stroke-dashoffset: 18;
-  transition: stroke-dashoffset 320ms ease 60ms, stroke 200ms ease;
-}
-.app-haken.ist-gesetzt { background: var(--akzent); border-color: var(--akzent); }
-.app-haken.ist-gesetzt path { stroke: var(--ink); stroke-dashoffset: 0; }
+.app-spalten > span { flex: 1 1 0; text-align: center; }
+.app-spalten > span:first-child,
+.app-spalten > span:last-child { flex: none; width: calc(44 * var(--app-pt)); text-align: left; }
 
-/* Der Scheiben-Hinweis: die Zeile, die in der App unter dem Zahlenfeld steht. */
-.app-scheiben {
-  border-left: 2px solid var(--akzent);
-  padding-left: 0.7em;
-  opacity: 0;
-  transform: translate3d(0, 6px, 0);
-  transition: opacity 260ms ease, transform 260ms ease;
-}
-.app-scheiben.ist-da { opacity: 1; transform: none; }
-.app-scheiben b { display: block; font-variant-numeric: tabular-nums; }
-.app-scheiben span { color: var(--gedaempft); }
-
-/* Der Pausentimer. Der Ring läuft am Fortschritt, nicht an einer Uhr: dadurch
-   zeigt Zurückscrollen wirklich den Zustand von vorher. */
-.app-pause {
+/* Satzzeile: 44 | Feld | Feld | 44, Abstand 8. */
+.app-satz {
   display: flex;
   align-items: center;
-  gap: 0.8em;
-  opacity: 0;
-  transform: translate3d(0, 6px, 0);
-  transition: opacity 260ms ease, transform 260ms ease;
+  gap: calc(8 * var(--app-pt));
 }
-.app-pause.ist-da { opacity: 1; transform: none; }
-.app-ring { width: 3.4em; height: 3.4em; flex: none; }
-.app-ring circle { fill: none; stroke-width: 3.2; }
-.app-ring .spur { stroke: var(--linie); }
-.app-ring .lauf {
-  stroke: var(--akzent);
-  stroke-linecap: round;
-  /* Umfang bei r = 15: 2 * pi * 15 = 94,25 */
-  stroke-dasharray: 94.25;
-  stroke-dashoffset: calc(94.25 * (1 - var(--ring, 0.35)));
-  transform: rotate(-90deg);
-  transform-origin: 50% 50%;
+.app-nr,
+.app-feld,
+.app-ende,
+.app-haken {
+  height: calc(44 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.app-pause .zeit { font-size: 1.4em; font-weight: 700; font-variant-numeric: tabular-nums; }
-.app-pause .wort { color: var(--gedaempft); display: block; font-size: 0.85em; font-weight: 400; }
-
-/* Der Knopf, den die App unter jedem Satzblock hat. Er ist hier Bild, kein
-   Bedienelement — deshalb kein button, damit ihn die Tastatur nicht anfährt. */
-.app-knopf {
-  border: 1px solid var(--akzent);
-  border-radius: 0.5em;
-  padding: 0.6em;
-  text-align: center;
-  color: var(--akzent);
+.app-nr {
+  flex: none;
+  width: calc(44 * var(--app-pt));
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-feld);
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+/* Feld: immer 2 pt Rand, sonst durchsichtig — so verrutscht nichts, wenn das
+   Keypad (orange) oder ein Rekord (gold) ihn färbt. Grau = Vorschlag. */
+.app-feld {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  border: calc(2 * var(--app-pt)) solid transparent;
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-feld);
+  color: var(--app-grau);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-feld.ist-eingetragen { color: var(--app-text); }
+.app-ende { flex: none; width: calc(44 * var(--app-pt)); }
+/* Offen: orange gefüllter Kasten, ✓ 17/600 in #1C1206. Bestätigt: nur graue Glyphe. */
+.app-haken {
+  width: calc(44 * var(--app-pt));
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-akzent);
+  color: var(--app-auf-akzent);
+  font-size: calc(17 * var(--app-pt));
   font-weight: 600;
 }
-
-/* Die zweite Übung liegt gedimmt darunter: sie zeigt, dass ein Training mehr
-   als eine Zeile hat, ohne die Aufmerksamkeit zu stehlen. */
-.app-spaeter { opacity: 0.45; }
-.app-leer { border-style: dashed; }
-.app-leer-haken { border: 1px dashed var(--rand); border-radius: 0.5em; }
-
-.app-leiste {
-  margin-top: auto;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.2em;
-  padding: 0.9em 0.6em 1.4em;
-  border-top: 1px solid var(--linie);
-  text-align: center;
-  font-size: 0.82em;
-  color: var(--gedaempft);
+.app-ok {
+  color: var(--app-grau);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
 }
-.app-leiste .ist-auf { color: var(--akzent); font-weight: 600; }
 
-.sim-fussnote {
-  margin: clamp(20px, 3.5vh, 32px) 0 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--gedaempft);
-  max-width: 34em;
-}
-.sim-fussnote b { color: var(--text); font-weight: 600; }
-@media (max-width: 860px) { /* Der Knopf, den die App unter jedem Satzblock hat. Er ist hier Bild, kein
-   Bedienelement — deshalb kein button, damit ihn die Tastatur nicht anfährt. */
+/* „+ Satz": umrandet, 44 hoch, Radius 10, 17 Regular; 12 pt unter dem letzten Satz. */
 .app-knopf {
-  border: 1px solid var(--akzent);
-  border-radius: 0.5em;
-  padding: 0.6em;
-  text-align: center;
-  color: var(--akzent);
+  height: calc(44 * var(--app-pt));
+  margin-top: calc(4 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: calc(1 * var(--app-pt)) solid var(--app-akzent);
+  border-radius: calc(10 * var(--app-pt));
+  color: var(--app-akzent);
+  font-size: calc(17 * var(--app-pt));
+}
+
+/* Goldlicht über der Rekordzelle (pr-sweep.tsx): ein Streifen, 75 % der Zelle
+   breit, Mitte 75 %, Rand 25 % Deckkraft, einmal quer; die Ziffern glimmen
+   dabei golden. Hier läuft er am Scrollweg statt an der Uhr.
+   Fenster: ab --p 0,62 über 0,09 — muss zu „sim-bestaetigt" in sim.js passen. */
+.app-licht {
+  --app-t: clamp(0, calc((var(--p) - 0.62) / 0.09), 1);
+  position: absolute;
+  inset: 0;
+  border-radius: calc(8 * var(--app-pt));
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.app-licht-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: calc(81.75 * var(--app-pt));
+  background: linear-gradient(90deg,
+    rgba(243, 206, 107, 0) 0%,
+    rgba(243, 206, 107, 0.25) 30%,
+    rgba(243, 206, 107, 0.75) 50%,
+    rgba(243, 206, 107, 0.25) 70%,
+    rgba(243, 206, 107, 0) 100%);
+  /* inOut-Kurve wie motion.ts, als Smoothstep: t² · (3 − 2t). */
+  transform: translate3d(calc((-81.75 + var(--app-t) * var(--app-t) * (3 - 2 * var(--app-t)) * 190.75) * var(--app-pt)), 0, 0);
+}
+.app-licht-ziffern {
+  position: relative;
+  color: var(--app-gold);
+  opacity: calc(4 * var(--app-t) * (1 - var(--app-t)));
+}
+
+/* ------------------------------------------------------- unten: Pause, Keypad */
+/* „Pause starten": plain, 44 hoch, mittig, 34 pt über der Unterkante. */
+.app-ruhe {
+  flex: none;
+  height: calc(44 * var(--app-pt));
+  margin: 0 calc(16 * var(--app-pt)) calc(34 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--app-akzent);
+  font-size: calc(17 * var(--app-pt));
+}
+
+/* Laufende Pause: Karte, Radius 10, Haarlinie, 16 pt seitlich (rest-timer-bar.tsx). */
+.app-pause {
+  flex: none;
+  margin: 0 calc(16 * var(--app-pt)) calc(34 * var(--app-pt));
+  padding: 0 calc(16.33 * var(--app-pt));
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-flaeche);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-pause-zeile {
+  min-height: calc(44 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.app-akzent { color: var(--app-akzent); }
+.app-pause-chips {
+  padding: calc(12 * var(--app-pt)) 0;
+  border-top: var(--app-haar) solid var(--app-rand);
+}
+.app-fakt {
+  display: flex;
+  flex-direction: column;
+  gap: calc(4 * var(--app-pt));
+  padding: calc(12 * var(--app-pt)) 0;
+  border-top: var(--app-haar) solid var(--app-rand);
+  white-space: normal;
+}
+.app-fakt-kopf {
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
   font-weight: 600;
 }
-
-/* Die zweite Übung liegt gedimmt darunter: sie zeigt, dass ein Training mehr
-   als eine Zeile hat, ohne die Aufmerksamkeit zu stehlen. */
-.app-spaeter { opacity: 0.45; }
-.app-leer { border-style: dashed; }
-.app-leer-haken { border: 1px dashed var(--rand); border-radius: 0.5em; }
-
-.app-leiste {
-  margin-top: auto;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.2em;
-  padding: 0.9em 0.6em 1.4em;
-  border-top: 1px solid var(--linie);
-  text-align: center;
-  font-size: 0.82em;
-  color: var(--gedaempft);
+.app-fakt-weiter {
+  align-self: flex-end;
+  min-height: calc(32 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  color: var(--app-akzent);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
 }
-.app-leiste .ist-auf { color: var(--akzent); font-weight: 600; }
 
-.sim-fussnote { display: none; } }
+/* Keypad (keypad.tsx): oben Radius 16, Haarlinie, 12 Innenabstand, 8 Abstand;
+   Tasten 48 hoch, Radius 10, heading 22/600; ✓ doppelt so breit. Reicht wie in
+   der App bis an die Unterkante, der Home-Indikator liegt darüber. */
+.app-tastatur {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--app-pt));
+  padding: calc(12.33 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt)) calc(16 * var(--app-pt)) 0 0;
+  background: var(--app-flaeche);
+}
+.app-tast-kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(8 * var(--app-pt));
+  padding: 0 calc(8 * var(--app-pt));
+}
+.app-tast-text { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.app-tast-kontext {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-tast-einheit,
+.app-hinweis {
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-hinweis { text-align: right; overflow: hidden; }
+.app-anzeige,
+.app-taste {
+  font-size: calc(22 * var(--app-pt));
+  line-height: calc(28 * var(--app-pt));
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.app-tast-reihe { display: flex; gap: calc(8 * var(--app-pt)); }
+.app-taste {
+  flex: 1 1 0;
+  min-height: calc(48 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-grund);
+}
+.app-taste-weg {
+  color: var(--app-grau);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 400;
+}
+.app-taste-ok { flex-grow: 2; background: var(--app-akzent); color: var(--app-auf-akzent); }
+
+.app-home {
+  position: absolute;
+  left: 50%;
+  bottom: calc(8 * var(--app-pt));
+  width: calc(134 * var(--app-pt));
+  height: calc(5 * var(--app-pt));
+  margin-left: calc(-67 * var(--app-pt));
+  border-radius: calc(2.5 * var(--app-pt));
+  background: var(--app-text);
+}
+
+/* ---------------------------------------------------------------- Zustände */
+/* Das HTML trägt alle Schritt-Klassen, also den Endzustand. sim.js nimmt sie für
+   frühere Takte weg; jede Regel hier beschreibt ein „noch nicht".
+     sim-offen        Keypad auf dem kg-Feld von Satz 2
+     sim-7, sim-5     die getippten Ziffern
+     sim-uebernommen  Keypad-✓: 75 steht weiß im Feld
+     sim-bestaetigt   Zeilen-✓: Satz bestätigt, Rekord
+     sim-pause        Pausenkarte läuft
+   Kurz gedrückt: sim-druck-7, sim-druck-5, sim-druck-haken. */
+
+.app-tastatur,
+.app-ruhe,
+.app-satz-2 .app-haken,
+.app-wert-vorschlag,
+.app-a0, .app-a1,
+.app-h0, .app-h1 { display: none; }
+
+.app-wert-vorschlag { color: var(--app-grau); }
+.app-wert-neu { color: var(--app-text); }
+.app-feld-kg { border-color: var(--app-gold); }
+.app-feld-wdh { color: var(--app-text); }
+
+/* Vor dem Keypad-✓: grauer Vorschlag im Feld. */
+.app-schirm:not(.sim-uebernommen) .app-wert-vorschlag { display: inline; }
+.app-schirm:not(.sim-uebernommen) .app-wert-neu { display: none; }
+
+/* Vor dem Zeilen-✓: Wdh. grau, oranger Kasten, kein Goldrand. */
+.app-schirm:not(.sim-bestaetigt) .app-feld-kg { border-color: transparent; }
+.app-schirm:not(.sim-bestaetigt) .app-feld-wdh { color: var(--app-grau); }
+.app-schirm:not(.sim-bestaetigt) .app-satz-2 .app-haken { display: flex; }
+.app-schirm:not(.sim-bestaetigt) .app-satz-2 .app-ok { display: none; }
+.app-schirm.sim-druck-haken .app-haken { opacity: 0.7; }
+
+/* Ohne laufende Pause: „Pause starten" statt der Karte. */
+.app-schirm:not(.sim-pause) .app-pause { display: none; }
+.app-schirm:not(.sim-pause) .app-ruhe { display: flex; }
+
+/* Keypad offen: Rand orange, Liste hoch, unten nur das Keypad. */
+.app-schirm.sim-offen:not(.sim-uebernommen) .app-tastatur { display: flex; }
+.app-schirm.sim-offen:not(.sim-uebernommen) .app-ruhe { display: none; }
+.app-schirm.sim-offen:not(.sim-uebernommen) .app-feld-kg { border-color: var(--app-akzent); }
+.app-schirm.sim-offen:not(.sim-uebernommen) .app-rolle { transform: translate3d(0, calc(-54 * var(--app-pt)), 0); }
+
+/* Anzeige und Scheiben-Zeile: „–" und Leerzeile, dann „7", dann „75". */
+.app-schirm:not(.sim-7) .app-a0,
+.app-schirm:not(.sim-7) .app-h0 { display: inline; }
+.app-schirm.sim-7:not(.sim-5) .app-a1,
+.app-schirm.sim-7:not(.sim-5) .app-h1 { display: inline; }
+.app-schirm:not(.sim-5) .app-a2,
+.app-schirm:not(.sim-5) .app-h2 { display: none; }
+.app-schirm.sim-druck-7 .app-taste-7,
+.app-schirm.sim-druck-5 .app-taste-5 { background: var(--app-feld); }
 
 /* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
-/* Ohne Skript steht --p auf 1: das Gerät ist zum Leser gedreht, der Satz ist
-   eingetragen, alle Takte sind sichtbar. Dann liegen die Takte nebeneinander,
-   weil ohne Bewegung kein Takt „dran" ist. */
+/* Ohne Skript steht --p auf 1 und alle Schritt-Klassen stehen im HTML: das
+   Telefon zeigt den Endzustand, die Takte liegen als Liste untereinander. */
 .no-js .sim-strecke { height: auto; }
-.no-js .sim-buehne { position: static; height: auto; padding-block: clamp(40px, 8vh, 90px); }
-.no-js .sim-takte { min-height: 0; display: grid; gap: 12px; }
-.no-js .sim-takte li { position: static; opacity: 1; transform: none; }
-.no-js .sim-balken { display: none; }
+.no-js .sim-buehne { position: static; height: auto; grid-template-rows: auto; padding-block: clamp(48px, 9vh, 96px); }
+.no-js .sim-geraet { container-type: normal; align-self: center; --sim-w: min(340px, 80vw); }
+.no-js .sim-telefon { transform: none; }
+.no-js .sim-takte { gap: 16px; }
+.no-js .sim-takte li { grid-area: auto; opacity: 1; transform: none; }
+.no-js .sim-balken,
 .no-js .sim-vorsatz { display: none; }
-.no-js .app-feld { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
-.no-js .app-haken { background: var(--akzent); border-color: var(--akzent); }
-.no-js .app-haken path { stroke: var(--ink); stroke-dashoffset: 0; }
-.no-js .app-scheiben, .no-js .app-pause { opacity: 1; transform: none; }
+.no-js .sim-fussnote { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Kein Drehen, kein Ein- und Ausblenden. Die Strecke bleibt kurz, und der
-     Endzustand steht sofort da. */
+  /* Kein Drehen, kein Ein- und Ausblenden: der Endzustand steht sofort da.
+     sim.js tut dann nichts außer no-js zu entfernen. */
   .sim-strecke { height: auto; }
-  .sim-buehne { position: static; height: auto; padding-block: clamp(40px, 8vh, 90px); }
+  .sim-buehne { position: static; height: auto; grid-template-rows: auto; padding-block: clamp(48px, 9vh, 96px); }
+  .sim-geraet { container-type: normal; align-self: center; --sim-w: min(340px, 80vw); }
   .sim-telefon { transform: none; }
-  .sim-takte { min-height: 0; display: grid; gap: 12px; }
-  .sim-takte li { position: static; opacity: 1; transform: none; transition: none; }
-  .sim-balken { display: none; }
+  .sim-takte { gap: 16px; }
+  .sim-takte li { grid-area: auto; opacity: 1; transform: none; transition: none; }
+  .sim-balken,
   .sim-vorsatz { display: none; }
-  .app-feld, .app-haken, .app-scheiben, .app-pause, .app-haken path { transition: none; }
-  .app-feld { border-color: var(--akzent); background: rgba(240, 138, 36, 0.08); }
-  .app-haken { background: var(--akzent); border-color: var(--akzent); }
-  .app-haken path { stroke: var(--ink); stroke-dashoffset: 0; }
-  .app-scheiben, .app-pause { opacity: 1; transform: none; }
+  .sim-fussnote { display: block; }
+  .app-rolle { transition: none; }
 }

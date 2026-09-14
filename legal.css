@@ -33,17 +33,17 @@
     src: url('fonts/inter-v20-latin-800.woff2') format('woff2');
 }
 
-/* Dieselben Farben wie die Startseite: warmer Papierton, tiefe Tinte, das
-   Orange aus GingR als einziger Akzent. Gemessene Kontraste auf #FAF6F0:
-   Tinte 16,4:1 · gedämpfte Tinte 7,0:1 · Akzent 5,1:1. */
+/* Dieselben Farben wie die Startseite: das Markengrün als einziger Akzent.
+   Das GingR-Orange gehört nur der App-Simulation. Gemessene Kontraste auf
+   #F6F7F4: Tinte 16,4:1 · gedämpfte Tinte 7,3:1 · Akzent 5,1:1. */
 :root {
-    --primary: #B04A0B;
-    --link: #B04A0B;
-    --text-dark: #1C1815;
-    --text-medium: #5C5349;
-    --text-light: #5C5349;
-    --border: rgba(28, 24, 21, 0.16);
-    --bg: #FAF6F0;
+    --primary: #047857;
+    --link: #047857;
+    --text-dark: #141A17;
+    --text-medium: #4A544F;
+    --text-light: #4A544F;
+    --border: rgba(20, 26, 23, 0.15);
+    --bg: #F6F7F4;
 }
 
 *,

@@ -1,23 +1,24 @@
-/* ly-webstudio.de — kurze Fassung.
+/* ly-webstudio.de — Startseite.
 
-   Der Aufbau ist die Gestaltung: helles Papier, dann ein dunkler Abschnitt mit
-   der Simulation, dann wieder Papier. Dieser eine Wechsel gibt der Seite einen
-   Höhepunkt. Die verworfene Fassung hatte denselben Ton über 18 Bildschirme —
-   sachlich richtig und trotzdem tot.
+   Zwei Welten auf einer Seite, und das ist Absicht: das Studio auf hellem
+   Grund in seiner eigenen Farbe, und mittendrin GingR als eine Arbeit unter
+   mehreren, in den Farben der App selbst (sim.css). Bis zum 14.09. war die
+   ganze Seite aus dem GingR-Orange abgeleitet — Leon: GingR ist nur ein Teil
+   von dem, was er macht. Deshalb gehört das Orange jetzt nur noch der App.
 
-   Vier Abschnitte, jeder mit genau einer Aufgabe:
-     Kopf        wer und was, plus ein Weg zum Anruf
-     Simulation  zeigen, dass hier jemand Oberflächen baut (sim.css)
-     Arbeiten    drei Tafeln, je eine Zeile
+   Fünf Abschnitte, jeder mit genau einer Aufgabe:
+     Kopf        Websites zuerst, Apps als Zusatz, plus ein Weg zum Anruf
+     Websites    zwei Beispielseiten zum Ansehen
+     GingR       zeigen, dass hier auch Apps entstehen (sim.css)
+     Preise      die Zahlen, mit Normalpreis und § 19 UStG im selben Block
      Kontakt     Nummer, Adresse, kurzes Formular
    Alles Nachschlagbare liegt auf /angebot/.
 
-   Gemessene Kontraste (WCAG):
-     ink   #1C1815 auf papier #FAF6F0 = 16,4:1
-     ink-2 #5C5349 auf papier         =  7,0:1
-     ember #B04A0B auf papier         =  5,1:1   · weiß auf ember = 5,5:1
-     feld  #8A8078 auf weiß           =  3,7:1   (Formularrand, ≥ 3:1)
-   Die Werte der dunklen Bühne stehen in sim.css.
+   Gemessene Kontraste (WCAG), Markengrün wie auf der Seite vor dem Umbau:
+     ink    #141A17 auf papier #F6F7F4 = 16,4:1
+     ink-2  #4A544F auf papier         =  7,3:1
+     akzent #047857 auf papier         =  5,1:1   · weiß auf akzent = 5,5:1
+     feld   #7A847F auf weiß           =  3,9:1   (Formularrand, ≥ 3:1)
 */
 
 @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
@@ -25,16 +26,15 @@
 @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-800.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 
 :root {
-  --papier: #FAF6F0;
-  --papier-2: #F2EAE0;
+  --papier: #F6F7F4;
+  --papier-2: #ECEFEA;
   --weiss: #FFFFFF;
-  --ink: #1C1815;
-  --ink-2: #5C5349;
-  --linie: rgba(28, 24, 21, 0.16);
-  --ember: #B04A0B;
-  --ember-dunkel: #8E3B08;
-  --feld: #8A8078;
-  --flame: #F08A24;
+  --ink: #141A17;
+  --ink-2: #4A544F;
+  --linie: rgba(20, 26, 23, 0.15);
+  --akzent: #047857;
+  --akzent-dunkel: #065F46;
+  --feld: #7A847F;
 
   --pad: clamp(1.25rem, 4vw, 3.5rem);
   --max: 74rem;
@@ -51,9 +51,9 @@ body {
   font-feature-settings: "cv05" 1;
 }
 img { display: block; max-width: 100%; height: auto; }
-a { color: var(--ember); text-underline-offset: 0.18em; text-decoration-thickness: from-font; }
-a:hover { color: var(--ember-dunkel); text-decoration-thickness: 2px; }
-:focus-visible { outline: 2px solid var(--ember); outline-offset: 3px; }
+a { color: var(--akzent); text-underline-offset: 0.18em; text-decoration-thickness: from-font; }
+a:hover { color: var(--akzent-dunkel); text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--akzent); outline-offset: 3px; }
 h1, h2, h3 { text-wrap: balance; }
 b, strong { font-weight: 600; }
 
@@ -70,21 +70,32 @@ b, strong { font-weight: 600; }
 /* Bei 320 px passen Marke und zwei Links nicht in eine Zeile — gemessen liefen
    sie 12 px über. Umbrechen kostet 40 px Höhe und keinen Inhalt. */
 .marke { color: var(--ink); font-size: 1.0625rem; font-weight: 800; letter-spacing: -0.03em; text-decoration: none; }
-.marke:hover { color: var(--ember); }
+.marke:hover { color: var(--akzent); }
 .leiste nav { display: flex; gap: clamp(0.875rem, 2vw, 1.75rem); font-size: 0.9375rem; }
 .leiste nav a { display: inline-flex; align-items: center; min-height: 2.75rem; text-decoration: none; }
 .leiste nav a:hover { text-decoration: underline; text-decoration-thickness: 2px; }
 
 /* ------------------------------------------------------------------- Kopf */
 .kopf { padding: clamp(2rem, 6vh, 4.5rem) 0 clamp(2.5rem, 7vh, 5rem); }
+/* Die Überschrift ist absichtlich nur drei Wörter lang: Websites sind das
+   Hauptgeschäft und stehen allein groß. Alles andere — für wen, zu welchem
+   Preis, und dass es auch Apps gibt — sagt die Zeile darunter. */
 h1 {
-  margin: 0 0 clamp(1.5rem, 4vh, 2.5rem);
-  font-size: clamp(2.25rem, 6.4vw, 4.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  margin: 0;
+  font-size: clamp(3rem, 10.5vw, 7.25rem);
+  line-height: 0.92;
+  letter-spacing: -0.055em;
   font-weight: 800;
-  max-width: 19em;
 }
+.unter {
+  margin: clamp(1rem, 2.5vh, 1.5rem) 0 clamp(1.75rem, 4.5vh, 2.75rem);
+  max-width: 27em;
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+  line-height: 1.22;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+}
+.unter .auch { color: var(--ink-2); }
 /* Porträt und eine Zeile daneben. Das Bild ist freigestellt (Alphakanal),
    deshalb steht es ohne Kasten auf dem Papier — und würde auch auf dunklem
    Grund sitzen. Die Fassung mit eingebranntem Papierton war genau deshalb ein
@@ -98,18 +109,18 @@ h1 {
 .knopf {
   display: inline-flex; align-items: center; justify-content: center; min-height: 3rem;
   padding: 0 1.375rem; border: 0; border-radius: 2px;
-  background: var(--ember); color: #fff;
+  background: var(--akzent); color: #fff;
   font: 600 1rem/1.2 var(--sans); text-decoration: none; cursor: pointer;
 }
-.knopf:hover { background: var(--ember-dunkel); color: #fff; }
+.knopf:hover { background: var(--akzent-dunkel); color: #fff; }
 .knopf:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 /* Gesperrt liegt der Sendeknopf im HTML aus; gesperrt sieht er auch so aus.
-   Weiß auf #5C5349 sind 7,5:1 — für Leute ohne JavaScript ein Dauerzustand. */
+   Weiß auf #4A544F sind 7,9:1 — für Leute ohne JavaScript ein Dauerzustand. */
 .knopf:disabled { background: var(--ink-2); cursor: not-allowed; }
 .ruf { padding: 0.75rem 0; font-weight: 600; font-variant-numeric: tabular-nums; }
 
 /* --------------------------------------------------------------- Arbeiten */
-.arbeiten { padding: clamp(2.5rem, 7vh, 5rem) 0 clamp(2rem, 5vh, 3.5rem); }
+.arbeiten { padding: clamp(0.5rem, 3vh, 2.5rem) 0 clamp(2rem, 5vh, 3.5rem); }
 .lab {
   margin: 0 0 clamp(1.25rem, 3vh, 2rem);
   font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.1em;
@@ -131,7 +142,8 @@ h1 {
   list-style: none;
 }
 .reihe > li { scroll-snap-align: start; }
-.tafel { display: grid; gap: 0.75rem; align-content: start; }
+/* margin: 0, sonst schiebt der Browser-Standard (40 px je Seite) jede Tafel am Handy nach rechts. */
+.tafel { display: grid; gap: 0.75rem; align-content: start; margin: 0; }
 /* Alle drei Tafeln haben dasselbe Format, sonst ragt ein hochkant aufgenommenes
    Telefon dreimal so hoch wie die beiden Website-Bilder und darunter klafft
    Leere. Vom App-Bildschirm liegt deshalb ein querformatiger Ausschnitt bereit
@@ -143,17 +155,41 @@ h1 {
   border: 1px solid var(--linie);
 }
 .tafel .bild img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-.tafel h3 { margin: 0; font-size: 1.125rem; font-weight: 600; letter-spacing: -0.015em; }
+.tafel h3 { margin: 0; font-size: 1.125rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.015em; }
 .tafel p { margin: 0; color: var(--ink-2); font-size: 0.9375rem; line-height: 1.45; }
+/* Zwei Tafeln stehen am Computer nebeneinander und füllen die Breite; eine
+   dritte Spalte bliebe leer. */
+@media (min-width: 900px) { .reihe { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; } }
 .tafel .offen { font-weight: 600; }
 .wisch { margin: 0.75rem 0 0; font-size: 0.875rem; color: var(--ink-2); }
 @media (min-width: 900px) { .wisch { display: none; } }
 
-/* ------------------------------------------------------------------ Preis */
-.preis { padding: clamp(1.5rem, 4vh, 2.75rem) 0; border-top: 1px solid var(--linie); }
-.preis p { margin: 0; max-width: 46em; font-size: clamp(1.125rem, 2vw, 1.5rem); line-height: 1.35; letter-spacing: -0.02em; }
-.preis .zahl { font-weight: 800; }
-.preis .mehr { display: inline-block; margin-top: 0.75rem; font-size: 1rem; font-weight: 600; }
+/* ----------------------------------------------------------------- Preise */
+/* Keine Karten: vier Zeilen mit Haarlinie, der Betrag rechts in Tabellenziffern.
+   Am Computer werden daraus vier Spalten nebeneinander. Die Karten der alten
+   Seite waren allein 2,8 Bildschirme hoch.
+   Rechtlich hängt alles an einem Block: Wer „150–300 €“ als Einführungspreis
+   zeigt, muss den Normalpreis daneben nennen (§ 5 UWG), und der Hinweis auf
+   § 19 UStG steht direkt darunter, nicht eine Seite tiefer. */
+.preise { padding: clamp(2.5rem, 7vh, 5rem) 0 clamp(2rem, 5vh, 3.5rem); }
+.preise .satz { margin: 0 0 clamp(1.25rem, 3vh, 2rem); max-width: 26em; font-size: clamp(1.25rem, 2.5vw, 1.875rem); line-height: 1.22; letter-spacing: -0.025em; font-weight: 600; }
+.preisliste { display: grid; margin: 0; padding: 0; list-style: none; }
+.preisliste li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 0.125rem 1rem; padding: 0.875rem 0; border-top: 1px solid var(--linie); }
+.preisliste h3 { margin: 0; font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em; }
+.preisliste .was { margin: 0.125rem 0 0; color: var(--ink-2); font-size: 0.9375rem; line-height: 1.4; }
+.preisliste .betrag { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.preisliste .betrag b { display: block; font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; white-space: nowrap; }
+.preisliste .betrag span { display: block; color: var(--ink-2); font-size: 0.875rem; white-space: nowrap; }
+@media (min-width: 860px) {
+  /* subgrid: Die Beträge der vier Spalten stehen auf einer Linie, auch wenn eine
+     Beschreibung eine Zeile kürzer ist. */
+  .preisliste { grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: auto auto; gap: 0 clamp(1.25rem, 2.5vw, 2.25rem); }
+  .preisliste li { grid-row: span 2; grid-template-columns: minmax(0, 1fr); grid-template-rows: subgrid; align-items: start; padding: 1rem 0 0; }
+  .preisliste .betrag { margin-top: 1rem; text-align: left; }
+  .preisliste .betrag b { font-size: clamp(1.5rem, 2.2vw, 1.875rem); }
+}
+.preise .fein { margin: 1.25rem 0 0; max-width: 46em; color: var(--ink-2); font-size: 0.875rem; line-height: 1.5; }
+.preise .mehr { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: 0.25rem; font-weight: 600; }
 
 /* ---------------------------------------------------------------- Kontakt */
 .kontakt { padding: clamp(2rem, 5vh, 3.5rem) 0 clamp(2.5rem, 6vh, 4rem); border-top: 1px solid var(--linie); }
@@ -173,15 +209,15 @@ h1 {
   font: 400 1rem/1.4 var(--sans);
 }
 .feld textarea { min-height: 6.5rem; resize: vertical; }
-.feld input:focus-visible, .feld textarea:focus-visible { outline: 2px solid var(--ember); outline-offset: 0; border-color: var(--ember); }
+.feld input:focus-visible, .feld textarea:focus-visible { outline: 2px solid var(--akzent); outline-offset: 0; border-color: var(--akzent); }
 /* Roboter-Falle: aus dem Bild geschoben statt display:none, sonst überspringen
    manche Ausfüllhelfer das Feld ganz. */
 .falle { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-hinweis { margin: 0.75rem 0 0; font-size: 0.875rem; line-height: 1.5; color: var(--ink-2); }
-.form-aus { margin: 0.75rem 0 0; padding: 0.75rem 0.875rem; border-left: 3px solid var(--flame); background: var(--weiss); font-size: 0.875rem; line-height: 1.5; color: var(--ink-2); }
+.form-aus { margin: 0.75rem 0 0; padding: 0.75rem 0.875rem; border-left: 3px solid var(--akzent); background: var(--weiss); font-size: 0.875rem; line-height: 1.5; color: var(--ink-2); }
 .form-stand { min-height: 1.5em; margin: 0.75rem 0 0; font-size: 0.9375rem; font-weight: 600; }
-.form-stand.ist-gut { color: var(--ink); padding-top: 0.5rem; border-top: 2px solid var(--flame); }
-.form-stand.ist-schlecht { color: var(--ember); }
+.form-stand.ist-gut { color: var(--ink); padding-top: 0.5rem; border-top: 2px solid var(--akzent); }
+.form-stand.ist-schlecht { color: var(--akzent); }
 
 /* -------------------------------------------------------------------- Fuß */
 .fuss { padding: 0 0 2.5rem; font-size: 0.875rem; color: var(--ink-2); }

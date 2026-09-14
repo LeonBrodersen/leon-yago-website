@@ -1,16 +1,18 @@
 /* Treiber der Simulation.
 
-   Das Skript tut absichtlich sehr wenig: Es rechnet aus der Scrollposition eine
-   Zahl zwischen 0 und 1, schreibt sie als --p an die Bühne und schaltet sechs
-   Klassen. Alles Sichtbare macht CSS. Gründe:
-   - Nur transform und opacity ändern sich, das läuft auf dem Compositor.
+   Das Skript tut absichtlich wenig: Es rechnet aus der Scrollposition eine Zahl
+   zwischen 0 und 1, schreibt sie als --p an die Section, schaltet Klassen und
+   zählt zwei Uhren. Alles Sichtbare macht CSS. Gründe:
    - Es gibt keinen zweiten Zustand, der mit dem Scrollen auseinanderlaufen kann:
-     Zurückscrollen spult zurück, weil alles aus --p folgt.
-   - Kein Timer. Der Pausenring hängt am Fortschritt, nicht an einer Uhr — sonst
-     würde er weiterlaufen, während man ihn gar nicht sieht.
+     Zurückscrollen spult zurück, weil alles aus p folgt.
+   - Kein Timer. Die Pause zählt am Scrollweg herunter, nicht an einer Uhr —
+     sonst liefe sie weiter, während man sie gar nicht sieht.
+   - Keine Texte. Beide Sprachen stehen fertig im HTML, samt Endzustand im
+     Telefon. Das Skript nimmt nur Klassen für frühere Schritte WEG; fehlt es
+     oder ist Bewegung reduziert, steht deshalb das fertige Bild da.
 
-   Der Scroll-Zuhörer setzt nur eine Markierung; gerechnet wird einmal pro
-   Bildwechsel in requestAnimationFrame. */
+   Der Scroll-Zuhörer setzt nur eine Markierung und bestellt höchstens einen
+   Bildwechsel; gerechnet wird dort. */
 (function () {
   'use strict';
 
@@ -22,103 +24,118 @@
 
   var strecke = sim.querySelector('.sim-strecke');
   var buehne = sim.querySelector('.sim-buehne');
+  var schirm = sim.querySelector('.app-schirm');
   var takte = [].slice.call(sim.querySelectorAll('.sim-takte li'));
-  var felder = [].slice.call(sim.querySelectorAll('.app-feld'));
-  var haken = sim.querySelector('.app-haken');
-  var scheiben = sim.querySelector('.app-scheiben');
-  var pause = sim.querySelector('.app-pause');
-  var zeit = sim.querySelector('.app-pause .zeit');
-  if (!strecke || !buehne) return;
+  var pauseZeit = sim.querySelector('.app-pause-zeit');
+  var laufZeit = sim.querySelector('.app-lauf-zeit');
+  if (!strecke || !buehne || !schirm) return;
 
+  /* Schaltet jemand die Bewegung während des Besuchs um, lädt die Seite neu:
+     ein halb gespulter Zustand ohne Bewegung wäre schlechter als ein Neustart. */
   var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (ruhig.addEventListener) {
+    ruhig.addEventListener('change', function () { location.reload(); });
+  }
   if (ruhig.matches) return; // CSS zeigt dann den Endzustand.
 
-  /* Die Takte und ihre Schwellen. Der erste Takt steht schon am Anfang da,
-     damit die Seite im Ruhezustand nicht leer wirkt. */
-  var SCHWELLEN = [0, 0.16, 0.3, 0.45, 0.6, 0.78];
-  var PAUSE_S = 90; // REST_SECONDS_DEFAULT der App
+  /* Ab welchem p die fünf Takte links dran sind. */
+  var TAKTE = [0, 0.12, 0.38, 0.52, 0.74];
 
-  var schmutzig = true;
+  /* Was im Telefon passiert, in der Reihenfolge der App (keypad.tsx,
+     exercise-card.tsx, rest-timer-bar.tsx). Eine Klasse gilt von … bis unter …;
+     die Bedeutung jeder Klasse steht in sim.css unter „Zustände".
+     Takt 02 tippt „7" und „5", jede Taste leuchtet kurz; Takt 04 schließt das
+     Keypad und hakt dann die Zeile ab. Das Goldlicht läuft ab 0,62 über 0,09
+     (sim.css, .app-licht) — beide Stellen zusammen ändern. */
+  var SCHRITTE = [
+    ['sim-offen', 0.12, 2],
+    ['sim-7', 0.19, 2],
+    ['sim-druck-7', 0.19, 0.22],
+    ['sim-5', 0.27, 2],
+    ['sim-druck-5', 0.27, 0.30],
+    ['sim-uebernommen', 0.53, 2],
+    ['sim-druck-haken', 0.60, 0.62],
+    ['sim-bestaetigt', 0.62, 2],
+    ['sim-pause', 0.74, 2]
+  ];
+
+  /* Die Pause beginnt bei 90 s (REST_SECONDS_DEFAULT) und bleibt am Ende der
+     Strecke bei 1:12 stehen: ein Standbild mit 0:00 läse sich wie abgelaufen.
+     Die Laufzeit oben zählt dieselben 18 Sekunden mit, von 18:42 bis 19:00. */
+  var PAUSE_AB = 0.74;
+  var PAUSE_S = 90;
+  var GELAUFEN_S = 18;
+  var LAUF_START_S = 18 * 60 + 42;
+
+  var schmutzig = false;
+  var bestellt = false;
   var letzterTakt = -1;
+  var letzterStand = '';
+  var letzteSekunde = -1;
 
-  function anmelden() { schmutzig = true; }
+  function anmelden() {
+    schmutzig = true;
+    if (!bestellt) {
+      bestellt = true;
+      requestAnimationFrame(rechnen);
+    }
+  }
 
   window.addEventListener('scroll', anmelden, { passive: true });
   window.addEventListener('resize', anmelden, { passive: true });
 
   function rechnen() {
-    if (!schmutzig) { requestAnimationFrame(rechnen); return; }
+    bestellt = false;
+    if (!schmutzig) return;
     schmutzig = false;
 
     var kasten = strecke.getBoundingClientRect();
     var fahrweg = kasten.height - buehne.offsetHeight;
-    if (fahrweg <= 0) { requestAnimationFrame(rechnen); return; }
-
-    var p = (-kasten.top) / fahrweg;
+    var p = fahrweg > 0 ? -kasten.top / fahrweg : 1;
     if (p < 0) p = 0;
     if (p > 1) p = 1;
 
     sim.style.setProperty('--p', p.toFixed(4));
 
-    /* Welcher Takt ist dran? Der letzte, dessen Schwelle überschritten ist.
-       Ohne Trick: eine Hysterese hatte hier die Takte zu früh ausgelöst, und an
-       der Kante zu flackern kostet nichts — die Klassen wechseln nur, wenn sich
-       der Takt wirklich ändert, und der Übergang dauert 260 ms. */
+    /* Welcher Takt ist dran? Der letzte, dessen Schwelle überschritten ist. */
     var takt = 0;
-    for (var i = 0; i < SCHWELLEN.length; i++) {
-      if (p >= SCHWELLEN[i]) takt = i;
+    for (var i = 0; i < TAKTE.length; i++) {
+      if (p >= TAKTE[i]) takt = i;
     }
-
     if (takt !== letzterTakt) {
       letzterTakt = takt;
       for (var j = 0; j < takte.length; j++) {
         takte[j].classList.toggle('ist-da', j === takt);
       }
-      /* Takt 1 trägt das Gewicht ein, Takt 2 die Wiederholungen. Die Felder
-         füllen sich in derselben Reihenfolge, in der man sie antippt. */
-      if (felder[0]) felder[0].classList.toggle('ist-gefuellt', takt >= 1);
-      if (scheiben) scheiben.classList.toggle('ist-da', takt >= 2);
-      if (felder[1]) felder[1].classList.toggle('ist-gefuellt', takt >= 3);
-      if (haken) haken.classList.toggle('ist-gesetzt', takt >= 4);
-      if (pause) pause.classList.toggle('ist-da', takt >= 5);
     }
 
-    /* Gewicht und Wiederholungen erscheinen ziffernweise, sobald ihr Takt läuft
-       — das liest sich wie Eintippen und nicht wie ein Einblenden. */
-    if (felder[0]) felder[0].textContent = ziffern('75', p, 0.16, 0.26);
-    if (felder[1]) felder[1].textContent = ziffern('11', p, 0.45, 0.55);
-
-    /* Der Ring läuft zwischen Takt 4 und dem Ende der Strecke. Die Restzeit
-       zählt dieselbe Strecke herunter, damit Ring und Zahl zusammenpassen. */
-    /* Der Ring entleert sich, so wie in der App, und bleibt am Ende der Strecke
-       bei einem Rest stehen: ein Standbild mit 0:00 läse sich wie abgelaufen. */
-    var gelaufen = 0;
-    if (p > 0.78) gelaufen = Math.min(1, (p - 0.78) / 0.22) * 0.8;
-    sim.style.setProperty('--ring', (1 - gelaufen).toFixed(4));
-    if (zeit) {
-      var rest = Math.max(0, Math.round(PAUSE_S * (1 - gelaufen)));
-      zeit.textContent = Math.floor(rest / 60) + ':' + ('0' + (rest % 60)).slice(-2);
+    /* Klassen im Telefon nur anfassen, wenn sich wirklich ein Schritt ändert. */
+    var stand = '';
+    for (var k = 0; k < SCHRITTE.length; k++) {
+      stand += p >= SCHRITTE[k][1] && p < SCHRITTE[k][2] ? '1' : '0';
+    }
+    if (stand !== letzterStand) {
+      letzterStand = stand;
+      for (var m = 0; m < SCHRITTE.length; m++) {
+        schirm.classList.toggle(SCHRITTE[m][0], stand.charAt(m) === '1');
+      }
     }
 
-    requestAnimationFrame(rechnen);
+    var anteil = p <= PAUSE_AB ? 0 : (p - PAUSE_AB) / (1 - PAUSE_AB);
+    var sekunde = Math.min(GELAUFEN_S, Math.floor(anteil * GELAUFEN_S));
+    if (sekunde !== letzteSekunde) {
+      letzteSekunde = sekunde;
+      if (pauseZeit) pauseZeit.textContent = uhr(PAUSE_S - sekunde);
+      if (laufZeit) laufZeit.textContent = uhr(LAUF_START_S + sekunde);
+    }
   }
 
-  /** Gibt die ersten Zeichen von wert zurück, je weiter p zwischen von und bis liegt. */
-  function ziffern(wert, p, von, bis) {
-    if (p <= von) return '';
-    var anteil = (p - von) / (bis - von);
-    if (anteil >= 1) return wert;
-    var n = Math.max(1, Math.ceil(anteil * wert.length));
-    return wert.slice(0, n);
+  /** 90 → „1:30", 1122 → „18:42" (formatDuration/formatClock der App unter einer Stunde). */
+  function uhr(s) {
+    return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
   }
 
-  requestAnimationFrame(rechnen);
-
-  /* Schaltet jemand die Bewegung mitten im Besuch aus, hört das Skript auf und
-     CSS übernimmt den Endzustand. */
-  if (ruhig.addEventListener) {
-    ruhig.addEventListener('change', function (e) {
-      if (e.matches) location.reload();
-    });
-  }
+  /* Einmal sofort, damit vor dem ersten Scrollen nicht kurz der Endzustand steht. */
+  schmutzig = true;
+  rechnen();
 })();
