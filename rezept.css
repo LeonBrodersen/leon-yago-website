@@ -1,0 +1,742 @@
+/* Die zweite Simulation: das Rezeptbuch, eine Web-App für Leons Freundeskreis
+   (Next.js + Supabase). Weil es eine Website ist und keine App, läuft sie in
+   einem Browserfenster, nicht im Telefon — so sieht man den Unterschied zu
+   GingR auch ohne zu lesen.
+
+   Mechanik wie bei GingR: sim.js schreibt eine Zahl --p an die Section und
+   schaltet Klassen am .rb-schirm. Das Gerüst (.sim, .sim-strecke, .sim-buehne,
+   .sim-takte …) kommt aus sim.css; hier steht nur, was anders ist:
+   - Farben: der Abschnitt steht auf dem dunklen Ziegelrot der App
+     (--accent-strong #933421), darin ihr Papier #FAF8F4. Gerechnet (WCAG):
+     Papier auf Ziegel 7,2:1 · Blassrosa #F0D9CF auf Ziegel 5,6:1.
+   - Spiegelbild: Fenster links, Text rechts. Am Handy wie bei GingR Text oben.
+   - Überschrift in Newsreader, der Serifenschrift der App.
+
+   Im Fenster gilt der Maßstab der App: Der Inhalt ist 960 CSS-Pixel breit
+   gebaut, mit den px-Werten aus Tailwind 4 im Code des Rezeptbuchs (Stand
+   24.09.2026, Ansicht ab „sm“), und wird als Ganzes auf die Fensterbreite
+   skaliert. Die „Kamera“ (--kz Zoom, --kx/--ky linke obere Ecke des Ausschnitts
+   in App-Pixeln) fährt je Schritt an die Stelle, um die es geht — am Handy
+   näher, weil 960 px dort auf gut ein Drittel schrumpfen. */
+
+@font-face {
+  font-family: "RB Geist";
+  src: url("/fonts/geist-latin-400-500.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RB Newsreader";
+  src: url("/fonts/newsreader-latin-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ================================================================ Seitenteil */
+
+.sim-rezept {
+  --sim-grund: #933421;
+  --sim-text: #FAF8F4;
+  --sim-grau: #F0D9CF;
+  --sim-akzent: #FAF8F4;
+  --sim-linie: rgba(250, 248, 244, 0.22);
+}
+
+.sim-rezept .sim-strecke { height: 230vh; }
+@media (max-width: 760px) { .sim-rezept .sim-strecke { height: 250vh; } }
+
+.sim-rezept .sim-buehne {
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  max-width: 1320px;
+}
+@media (max-width: 860px) {
+  .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1fr); }
+}
+
+.sim-rezept .sim-augenbraue { color: var(--sim-grau); }
+.sim-rezept .sim-text h2 {
+  font-family: "RB Newsreader", Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.sim-rezept .sim-nr { color: var(--sim-grau); }
+
+/* ---------------------------------------------------------------- Das Fenster */
+
+/* Die Zelle gibt die Breite vor; das Fenster nimmt, was in Breite UND Höhe
+   der Bühne passt. Am Handy steht es unter dem Text und geht fast bis an den Rand. */
+.rb-geraet {
+  order: -1;
+  margin: 0;
+  align-self: center;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+@media (max-width: 860px) {
+  .rb-geraet { order: 1; align-self: start; margin-inline: calc(-1 * clamp(8px, 3vw, 20px)); }
+}
+
+.rb-fenster {
+  --rb-hoch: 660;
+  position: relative;
+  width: min(100%, calc((100svh - 64px) * 960 / var(--rb-hoch)));
+  aspect-ratio: 960 / var(--rb-hoch);
+  /* Größen-Container: die Skalierung darin misst sich an diesem Fenster. */
+  container-type: inline-size;
+  border-radius: clamp(6px, 1vw, 12px);
+  overflow: hidden;
+  background: #FAF8F4;
+  box-shadow:
+    0 0 0 1px rgba(40, 8, 2, 0.35),
+    0 40px 80px -30px rgba(40, 8, 2, 0.75);
+  /* Die Drehung: von rechts schräg zum Leser hin, aus derselben Zahl --p wie
+     alles andere. Spiegelbild der Telefon-Drehung bei GingR. */
+  transform:
+    rotateY(calc(18deg - var(--p) * 22deg))
+    rotateX(calc(8deg - var(--p) * 8deg))
+    translate3d(0, 0, calc(var(--p) * 30px));
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+/* Am Handy höher als breit: mehr von der Seite im Bild, 960 × 1000 App-Pixel. */
+@media (max-width: 860px) {
+  .rb-fenster { --rb-hoch: 1040; }
+}
+
+/* Alles im Fenster ist in App-Pixeln gebaut und wird hier auf die Breite
+   gebracht. tan(atan2(a, b)) ist a/b als reine Zahl (Länge durch Länge). */
+.rb-innen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  height: calc(var(--rb-hoch) * 1px);
+  transform-origin: 0 0;
+  transform: scale(tan(atan2(100cqw, 960px)));
+  display: flex;
+  flex-direction: column;
+}
+
+/* Browserleiste: bewusst ohne Marke, nur Ampel und Adresse. */
+.rb-leiste {
+  flex: none;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #EDEAE5;
+  border-bottom: 1px solid #DAD5CD;
+}
+.rb-ampel {
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  display: flex;
+  gap: 8px;
+}
+.rb-ampel i { width: 12px; height: 12px; border-radius: 50%; background: #D9D4CC; }
+.rb-adresse {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 26px;
+  padding: 0 14px;
+  min-width: 340px;
+  justify-content: center;
+  border-radius: 7px;
+  background: #F8F6F2;
+  color: #3B3833;
+  font: 400 13px/1 "RB Geist", system-ui, sans-serif;
+}
+.rb-adresse svg {
+  width: 10px;
+  height: 12px;
+  fill: none;
+  stroke: #6B6560;
+  stroke-width: 1.3;
+}
+
+/* Der sichtbare Teil der Seite, darin die Kamera. */
+.rb-bild {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ================================================================ Die App */
+
+.rb-schirm {
+  /* src/app/globals.css */
+  --rb-papier: #FAF8F4;
+  --rb-flaeche: #FFFFFF;
+  --rb-tinte: #1A1815;
+  --rb-leise: #6B6560;
+  --rb-linie: #E4DFD7;
+  --rb-akzent: #B5432B;
+
+  /* Kamera, Grundstellung: die Seite von oben, ohne Zoom. */
+  --kz: 1;
+  --kx: 0;
+  --ky: 0;
+
+  position: absolute;
+  inset: 0;
+  background: var(--rb-papier);
+  color: var(--rb-tinte);
+  font-family: "RB Geist", ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: left;
+  letter-spacing: 0;
+  user-select: none;
+}
+/* Grundwerte wie Tailwinds Preflight, ohne Gewicht (:where), damit jede
+   Regel unten sie überschreibt. */
+:where(.rb-schirm) :where(p, h1, h2, dl, dd, ol, ul, small) { margin: 0; padding: 0; }
+:where(.rb-schirm) :where(li) { list-style: none; }
+:where(.rb-schirm) :where(i) { font-style: normal; }
+
+.rb-kamera {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  transform-origin: 0 0;
+  transform: scale(var(--kz)) translate(calc(var(--kx) * -1px), calc(var(--ky) * -1px));
+  transition: transform 650ms cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+
+/* Schriften der App: Geist, Serif = Newsreader. Größen = Tailwind 4. */
+.rb-serif,
+.rb-marke,
+.rb-h1,
+.rb-titel,
+.rb-h2,
+.rb-schritte span,
+.rb-schritt,
+.rb-guten-gross,
+.rb-info { font-family: "RB Newsreader", ui-serif, Georgia, serif; }
+
+/* ---------------------------------------------------------------- Kopfzeile */
+/* nav.tsx ab sm: h-14, px-4, border-b; Links px-3 py-1.5 text-sm. */
+.rb-nav {
+  height: 57px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--rb-linie);
+}
+.rb-marke { font-size: 20px; line-height: 28px; }
+.rb-links { display: flex; align-items: center; gap: 4px; }
+.rb-link,
+.rb-raus {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--rb-leise);
+}
+.rb-tour {
+  margin-left: 8px;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rb-linie);
+  border-radius: 50%;
+  color: var(--rb-leise);
+  font-size: 14px;
+  font-weight: 500;
+}
+.rb-ich {
+  margin-left: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px 4px 4px;
+  border-radius: 999px;
+  font-size: 14px;
+  line-height: 20px;
+}
+.rb-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rb-linie);
+  background: rgba(228, 223, 215, 0.4);
+}
+
+/* ------------------------------------------------------------ Bausteine */
+.rb-ansicht {
+  width: 768px;
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.rb-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--rb-linie);
+  border-radius: 50%;
+  color: var(--rb-leise);
+  font-size: 12px;
+  line-height: 1;
+  font-style: italic;
+  vertical-align: middle;
+}
+
+/* Button: rounded-md, font-medium, text-sm; sm = h-8 px-3, md = h-10 px-4. */
+.rb-knopf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.rb-knopf-gross { height: 40px; padding: 0 16px; }
+.rb-knopf-erst { background: var(--rb-tinte); color: var(--rb-papier); }
+.rb-knopf-zweit { border: 1px solid var(--rb-linie); background: var(--rb-flaeche); color: var(--rb-tinte); }
+.rb-knopf-leer { color: var(--rb-tinte); }
+.rb-aktionen { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+.rb-leise { color: var(--rb-leise); }
+
+/* ---------------------------------------------------------------- Import */
+/* page.tsx: max-w-2xl, h1 font-serif text-3xl, Vorspann text-sm mb-8. */
+.rb-import { width: 672px; }
+.rb-h1 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 400;
+}
+.rb-vorspann {
+  margin-bottom: 32px;
+  color: var(--rb-leise);
+  font-size: 14px;
+  line-height: 20px;
+}
+/* Reiter: border-b, je px-3 py-2 text-sm mit 2 px Unterstrich, -mb-px. */
+.rb-reiter {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--rb-linie);
+  margin-bottom: 24px;
+}
+.rb-reiter span {
+  margin-bottom: -1px;
+  padding: 8px 12px;
+  border-bottom: 2px solid transparent;
+  color: var(--rb-leise);
+  font-size: 14px;
+  line-height: 20px;
+}
+.rb-reiter .ist-an { border-bottom-color: var(--rb-tinte); color: var(--rb-tinte); font-weight: 500; }
+
+.rb-formular { display: flex; flex-direction: column; gap: 20px; }
+.rb-feld { display: flex; flex-direction: column; gap: 6px; }
+.rb-label { font-size: 14px; line-height: 20px; font-weight: 500; }
+/* Textarea: rows 14 bei text-sm = 280 + py-2 + Rand. */
+.rb-textfeld {
+  position: relative;
+  height: 298px;
+  padding: 8px 12px;
+  border: 1px solid var(--rb-linie);
+  border-radius: 6px;
+  background: var(--rb-flaeche);
+  font-size: 14px;
+  line-height: 20px;
+}
+.rb-zeile { display: block; }
+.rb-platzhalter {
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  color: rgba(107, 101, 96, 0.7);
+}
+.rb-hinweis { color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+
+/* Die Sprachwahl steht in der App ab sm in voller Breite in eigener Zeile
+   (w-full aus inputClasses schlägt w-auto). */
+.rb-diktat { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.rb-auswahl {
+  flex: 1 0 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 10px 0 12px;
+  border: 1px solid var(--rb-linie);
+  border-radius: 6px;
+  background: var(--rb-flaeche);
+  font-size: 14px;
+}
+.rb-auswahl::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-right: 1.5px solid var(--rb-tinte);
+  border-bottom: 1.5px solid var(--rb-tinte);
+  transform: rotate(45deg);
+}
+.rb-hoert { flex: 1 0 100%; color: var(--rb-leise); font-size: 12px; line-height: 16px; }
+
+.rb-haken-zeile { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; line-height: 20px; }
+.rb-haken-zeile small { display: block; color: var(--rb-leise); font-size: 12px; line-height: 16px; }
+/* Checkbox accent-foreground, angehakt. */
+.rb-kasten {
+  flex: none;
+  position: relative;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 3px;
+  background: var(--rb-tinte);
+}
+.rb-kasten::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(45deg);
+}
+
+.rb-absenden { display: flex; align-items: center; gap: 16px; }
+.rb-stand { color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+
+/* ---------------------------------------------------------------- Rezeptseite */
+.rb-entwurf { margin-bottom: 8px; color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+.rb-titelzeile { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+/* In der App bricht „Kaiserschmarrn“ ab 640 px als „Kaiserschmarr / n“ um,
+   weil die Knöpfe daneben nicht schrumpfen (break-words). Das ist ein Fehler
+   der App, kein Aussehen — hier steht der Titel in einer Zeile. */
+.rb-titel {
+  min-width: 0;
+  font-size: 48px;
+  line-height: 60px;
+  font-weight: 400;
+  white-space: nowrap;
+}
+.rb-titelzeile .rb-aktionen { flex: none; margin-top: 8px; justify-content: flex-end; }
+.rb-anreichern { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.rb-anreichern small { color: var(--rb-leise); font-size: 12px; line-height: 16px; }
+.rb-wer { margin-top: 12px; color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+.rb-fakten { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px 32px; font-size: 14px; line-height: 20px; }
+.rb-fakten dt { color: var(--rb-leise); }
+.rb-fakten dd { font-weight: 500; }
+.rb-naehr { margin-top: 32px; }
+.rb-naehr-kopf { display: flex; align-items: center; gap: 8px; color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+.rb-naehr .rb-fakten { margin-top: 8px; }
+.rb-naehr-fuss { margin-top: 8px; color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+
+/* md:grid-cols-[1fr_2fr] gap-12, 40 px unter dem Kopf (mb-10). */
+.rb-spalten {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 48px;
+}
+.rb-h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 400;
+}
+
+.rb-regler {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  font-size: 14px;
+  line-height: 20px;
+  margin-bottom: 20px;
+}
+.rb-portionen { display: flex; align-items: center; gap: 8px; }
+.rb-stepper { display: inline-flex; align-items: stretch; border: 1px solid var(--rb-linie); border-radius: 6px; }
+.rb-minus,
+.rb-plus { height: 32px; padding: 0 12px; display: inline-flex; align-items: center; }
+.rb-zahl {
+  min-width: 40px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-inline: 1px solid var(--rb-linie);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.rb-zurueck { color: var(--rb-leise); }
+.rb-rechts { display: flex; align-items: center; gap: 8px; }
+.rb-einheit { display: inline-flex; padding: 2px; border: 1px solid var(--rb-linie); border-radius: 6px; }
+.rb-einheit span { height: 28px; padding: 0 12px; display: inline-flex; align-items: center; border-radius: 4px; color: var(--rb-leise); }
+.rb-einheit .ist-an { background: var(--rb-tinte); color: var(--rb-papier); }
+.rb-gewichte { height: 32px; padding: 0 12px; display: inline-flex; align-items: center; border: 1px solid var(--rb-linie); border-radius: 6px; color: var(--rb-leise); }
+
+.rb-zutaten { border-block: 1px solid var(--rb-linie); }
+.rb-zutaten li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-height: 44px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 20px;
+}
+.rb-zutaten li + li { border-top: 1px solid var(--rb-linie); }
+/* Checkbox accent-accent, leer. */
+.rb-kaestchen {
+  flex: none;
+  align-self: flex-start;
+  position: relative;
+  top: 2px;
+  width: 16px;
+  height: 16px;
+  border: 1px solid #8F8A84;
+  border-radius: 3px;
+  background: var(--rb-flaeche);
+}
+.rb-menge {
+  flex: none;
+  width: 96px;
+  text-align: right;
+  color: var(--rb-leise);
+  font-variant-numeric: tabular-nums;
+}
+.rb-einkauf { margin-top: 20px; display: flex; gap: 8px; }
+
+.rb-schritte { display: flex; flex-direction: column; gap: 24px; }
+.rb-schritte li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 8px; }
+.rb-schritte span { color: var(--rb-leise); font-size: 24px; line-height: 32px; }
+.rb-schritte p { line-height: 26px; }
+
+/* ---------------------------------------------------------------- Kochmodus */
+/* cook-mode.tsx ab sm: min-h = Fenster − Kopf − 4rem, Kopf, Balken, Schritt
+   mittig (py-16), Fuß statisch mit border-t. */
+/* min-h-[100dvh − nav-h − 4rem]: Fensterhöhe − Leiste 40 − 56 − 64 (cook-mode.tsx). */
+.rb-kochen {
+  flex-direction: column;
+  min-height: calc((var(--rb-hoch) - 160 + 32) * 1px); /* + eigenes py-8 oben */
+  padding-bottom: 0;
+}
+.rb-koch-kopf { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.rb-koch-titel { color: var(--rb-leise); font-size: 14px; line-height: 20px; }
+.rb-koch-stand { font-size: 14px; line-height: 20px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.rb-fortschritt { margin-top: 16px; height: 2px; border-radius: 999px; background: var(--rb-linie); overflow: hidden; }
+.rb-fortschritt span {
+  display: block;
+  height: 100%;
+  background: var(--rb-akzent);
+  transform-origin: left center;
+  transform: scaleX(var(--rb-f, 1));
+  transition: transform 300ms;
+}
+.rb-schritt-flaeche {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 0;
+}
+.rb-schritt { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 16px; }
+.rb-schritt span { color: var(--rb-leise); font-size: 48px; line-height: 48px; }
+.rb-schritt p { font-size: 36px; line-height: 49.5px; }
+.rb-guten { text-align: center; }
+.rb-guten-gross { font-size: 48px; line-height: 48px; }
+.rb-guten-klein { margin-top: 16px; color: var(--rb-leise); font-size: 18px; line-height: 28px; }
+.rb-guten .rb-aktionen { margin-top: 40px; justify-content: center; gap: 12px; }
+.rb-koch-fuss {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rb-linie);
+}
+.rb-wach { color: var(--rb-leise); font-size: 12px; line-height: 16px; }
+
+/* ================================================================ Zustände */
+/* Das HTML trägt alle Klassen mit offenem Ende, also den Endzustand. sim.js
+   nimmt sie für frühere Stellen weg; jede Regel hier beschreibt ein „noch
+   nicht“ oder ein „gerade“.
+     rz-hoert           Diktat läuft („Stop dictating“, Listening …)
+     rz-z1 … rz-z10     diktierte Zeilen
+     rz-bereit          zum Knopf „Save as draft“ gerollt
+     rz-speichert       „Working…“ + „Saving…“
+     rz-strukturiert    „Working…“ + „Draft saved. Translating …“
+     rz-rezept          Rezeptseite des Entwurfs
+     rz-runter          dort bei den Zutaten
+     rz-s3, rz-s4       3 bzw. 4 Portionen
+     rz-kochen          Kochmodus, Schritt 1
+     rz-k2 … rz-k5      Schritt 2 bis 5
+     rz-fertig          „Enjoy your meal.“
+   Kurz gedrückt: rz-druck-speichern, -plus-1, -plus-2, -kochen, -weiter. */
+
+/* Ansichten: eine Seite zur Zeit, wie beim echten Seitenwechsel ohne Übergang. */
+.rb-rezept,
+.rb-kochen { display: none; }
+.rz-rezept .rb-import { display: none; }
+.rz-rezept .rb-rezept { display: block; }
+.rz-kochen .rb-rezept { display: none; }
+.rz-kochen .rb-kochen { display: flex; }
+
+/* Kopfzeile: „Import“ ist nur auf der Importseite aktiv (NavLink). */
+.rb-schirm:not(.rz-rezept) .rb-link-import { color: var(--rb-tinte); font-weight: 500; }
+
+/* Import: Platzhalter nur im leeren Feld, Zeilen erst, wenn diktiert. */
+.rb-zeile { visibility: hidden; }
+.rz-z1 .rb-platzhalter { display: none; }
+.rz-z1 .rb-zeile.rb-z1,
+.rz-z2 .rb-zeile.rb-z2,
+.rz-z3 .rb-zeile.rb-z3,
+.rz-z4 .rb-zeile.rb-z4,
+.rz-z5 .rb-zeile.rb-z5,
+.rz-z6 .rb-zeile.rb-z6,
+.rz-z7 .rb-zeile.rb-z7,
+.rz-z8 .rb-zeile.rb-z8,
+.rz-z9 .rb-zeile.rb-z9,
+.rz-z10 .rb-zeile.rb-z10 { visibility: visible; }
+
+.rb-stoppen,
+.rb-hoert { display: none; }
+.rz-hoert .rb-diktieren { display: none; }
+.rz-hoert .rb-stoppen { display: inline-flex; }
+.rz-hoert .rb-hoert { display: block; }
+
+.rb-arbeitet,
+.rb-stand { display: none; }
+.rz-speichert .rb-ruhig,
+.rz-strukturiert .rb-ruhig { display: none; }
+.rz-speichert .rb-arbeitet,
+.rz-strukturiert .rb-arbeitet { display: inline; }
+.rz-speichert .rb-stand-1 { display: inline; }
+.rz-strukturiert .rb-stand-2 { display: inline; }
+/* Während der Arbeit ist alles gesperrt (disabled:opacity-50). */
+.rz-speichert .rb-speichern,
+.rz-strukturiert .rb-speichern,
+.rz-speichert .rb-diktat,
+.rz-strukturiert .rb-diktat,
+.rz-speichert .rb-reiter span:not(.ist-an),
+.rz-strukturiert .rb-reiter span:not(.ist-an) { opacity: 0.5; }
+.rz-druck-speichern .rb-speichern { background: #000; }
+
+/* Portionen: 2, dann 3, dann 4. „Reset“ erst, wenn skaliert ist. */
+.rb-p3,
+.rb-p4,
+.rb-zurueck { display: none; }
+.rz-s3 .rb-p2 { display: none; }
+.rz-s3:not(.rz-s4) .rb-p3 { display: inline; }
+.rz-s4 .rb-p4 { display: inline; }
+.rz-s3 .rb-zurueck { display: inline; }
+.rz-druck-plus-1 .rb-plus,
+.rz-druck-plus-2 .rb-plus { background: rgba(228, 223, 215, 0.6); }
+.rz-druck-kochen .rb-kochen-knopf { background: #000; }
+
+/* Kochmodus: je Schritt ein Text, Balken = erledigt / 5. */
+.rb-schritt,
+.rb-guten,
+.rb-koch-stand i,
+.rb-fertig-text { display: none; }
+.rb-schirm:not(.rz-k2) .rb-k1 { display: inline; }
+.rz-k2:not(.rz-k3) .rb-k2,
+.rz-k3:not(.rz-k4) .rb-k3,
+.rz-k4:not(.rz-k5) .rb-k4,
+.rz-k5:not(.rz-fertig) .rb-k5 { display: inline; }
+.rb-schirm:not(.rz-k2) .rb-schritt.rb-k1,
+.rz-k2:not(.rz-k3) .rb-schritt.rb-k2,
+.rz-k3:not(.rz-k4) .rb-schritt.rb-k3,
+.rz-k4:not(.rz-k5) .rb-schritt.rb-k4,
+.rz-k5:not(.rz-fertig) .rb-schritt.rb-k5 { display: grid; }
+.rz-fertig .rb-kf { display: inline; }
+.rz-fertig .rb-guten { display: block; }
+.rz-fertig .rb-weiter { display: none; }
+.rz-k5 .rb-weiter-text { display: none; }
+.rz-k5 .rb-fertig-text { display: inline; }
+.rz-druck-weiter .rb-weiter { background: #000; }
+/* „Previous“ ist bei Schritt 1 gesperrt (disabled:opacity-50). */
+.rb-schirm:not(.rz-k2) .rb-zurueck-knopf { opacity: 0.5; }
+
+.rb-schirm { --rb-f: 0; }
+.rz-k2 { --rb-f: 0.2; }
+.rz-k3 { --rb-f: 0.4; }
+.rz-k4 { --rb-f: 0.6; }
+.rz-k5 { --rb-f: 0.8; }
+.rz-fertig { --rb-f: 1; }
+
+/* ---------------------------------------------------------------- Kamera */
+/* Ausschnitte in App-Pixeln. Später genannte Klassen gewinnen (gleiche
+   Spezifität), deshalb steht die Reihenfolge wie der Ablauf. */
+/* Gemessen am gebauten Fenster (Import: Textfeld 293–591, Diktat 637,
+   Knopf 825; Rezept: Zutaten ab 449, Liste 597–968). */
+.rz-hoert, .rz-z1 { --kz: 1.26; --kx: 102; --ky: 248; }
+.rz-bereit { --kz: 1.26; --kx: 102; --ky: 400; }
+.rz-rezept { --kz: 1; --kx: 0; --ky: 0; }
+.rz-runter { --kz: 1.17; --kx: 70; --ky: 432; }
+.rz-kochen { --kz: 1; --kx: 0; --ky: 0; }
+
+@media (max-width: 860px) {
+  .rz-hoert, .rz-z1 { --kz: 2; --kx: 130; --ky: 250; }
+  .rz-bereit { --kz: 1.45; --kx: 130; --ky: 470; }
+  .rz-rezept { --kz: 1.3; --kx: 80; --ky: 60; }
+  .rz-runter { --kz: 2.1; --kx: 80; --ky: 440; }
+  .rz-kochen { --kz: 1.1; --kx: 50; --ky: 50; }
+}
+
+/* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
+/* Das Standbild ist die Rezeptseite bei den Zutaten, nicht das Ende des
+   Kochmodus: Sie zeigt am meisten von der App. */
+.no-js .sim-rezept .sim-strecke { height: auto; }
+.no-js .rz-kochen .rb-kochen { display: none; }
+.no-js .rz-kochen .rb-rezept { display: block; }
+.no-js .rb-fenster { transform: none; }
+.no-js .rb-kamera { transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .sim-rezept .sim-strecke { height: auto; }
+  .rz-kochen .rb-kochen { display: none; }
+  .rz-kochen .rb-rezept { display: block; }
+  .rb-fenster { transform: none; }
+  .rb-kamera { transition: none; }
+  .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
+}
+.no-js .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
+@media (max-width: 860px) {
+  .no-js .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
+}
+@media (max-width: 860px) and (prefers-reduced-motion: reduce) {
+  .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
+}

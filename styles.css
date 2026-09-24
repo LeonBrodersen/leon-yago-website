@@ -1,15 +1,17 @@
 /* ly-webstudio.de — Startseite.
 
-   Zwei Welten auf einer Seite, und das ist Absicht: das Studio auf hellem
-   Grund in seiner eigenen Farbe, und mittendrin GingR als eine Arbeit unter
-   mehreren, in den Farben der App selbst (sim.css). Bis zum 14.09. war die
-   ganze Seite aus dem GingR-Orange abgeleitet — Leon: GingR ist nur ein Teil
-   von dem, was er macht. Deshalb gehört das Orange jetzt nur noch der App.
+   Mehrere Welten auf einer Seite, und das ist Absicht: das Studio auf hellem
+   Grund in seiner eigenen Farbe, und mittendrin zwei Arbeiten in den Farben
+   ihrer eigenen Apps — GingR (sim.css) und das Rezeptbuch (rezept.css). Bis
+   zum 14.09. war die ganze Seite aus dem GingR-Orange abgeleitet — Leon: GingR
+   ist nur ein Teil von dem, was er macht. Deshalb gehört das Orange nur der
+   App, das Ziegelrot nur dem Rezeptbuch.
 
-   Fünf Abschnitte, jeder mit genau einer Aufgabe:
+   Sechs Abschnitte, jeder mit genau einer Aufgabe:
      Kopf        Websites zuerst, Apps als Zusatz, plus ein Weg zum Anruf
      Websites    zwei Beispielseiten zum Ansehen
-     GingR       zeigen, dass hier auch Apps entstehen (sim.css)
+     GingR       zeigen, dass hier auch Apps entstehen (sim.css), im Telefon
+     Rezeptbuch  eine echte Web-App im Einsatz (rezept.css), im Browserfenster
      Preise      die Zahlen, mit Normalpreis und § 19 UStG im selben Block
      Kontakt     Nummer, Adresse, kurzes Formular
    Alles Nachschlagbare liegt auf /angebot/.
