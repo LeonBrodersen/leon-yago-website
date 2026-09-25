@@ -6,10 +6,13 @@
    Mechanik wie bei GingR: sim.js schreibt eine Zahl --p an die Section und
    schaltet Klassen am .rb-schirm. Das Gerüst (.sim, .sim-strecke, .sim-buehne,
    .sim-takte …) kommt aus sim.css; hier steht nur, was anders ist:
-   - Farben: der Abschnitt steht auf dem dunklen Ziegelrot der App
-     (--accent-strong #933421), darin ihr Papier #FAF8F4. Gerechnet (WCAG):
-     Papier auf Ziegel 7,2:1 · Blassrosa #F0D9CF auf Ziegel 5,6:1.
+   - Farben: der Abschnitt steht auf tiefem Waldgrün, verwandt mit dem
+     Markengrün der Seite. Das Ziegelrot der App war verworfen (Leon, 25.09.:
+     „diese Farbe mag ich nicht“ — Papier + Serif + Terrakotta ist der
+     bekannte KI-Look). Gerechnet (WCAG): #F2F6F3 auf #0B3D2E 11,2:1 ·
+     #A9CBBD auf #0B3D2E 7,0:1.
    - Spiegelbild: Fenster links, Text rechts. Am Handy wie bei GingR Text oben.
+   - Kein Versal-Label über der Überschrift (Leon: „sieht nach AI aus“).
    - Überschrift in Newsreader, der Serifenschrift der App.
 
    Im Fenster gilt der Maßstab der App: Der Inhalt ist 960 CSS-Pixel breit
@@ -37,11 +40,12 @@
 /* ================================================================ Seitenteil */
 
 .sim-rezept {
-  --sim-grund: #933421;
-  --sim-text: #FAF8F4;
-  --sim-grau: #F0D9CF;
-  --sim-akzent: #FAF8F4;
-  --sim-linie: rgba(250, 248, 244, 0.22);
+  --sim-grund: #0B3D2E;
+  --sim-text: #F2F6F3;
+  --sim-grau: #A9CBBD;
+  --sim-akzent: #F2F6F3;
+  --sim-linie: rgba(242, 246, 243, 0.2);
+  --rb-schatten: rgba(0, 12, 8, 0.7);
 }
 
 .sim-rezept .sim-strecke { height: 230vh; }
@@ -55,7 +59,6 @@
   .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1fr); }
 }
 
-.sim-rezept .sim-augenbraue { color: var(--sim-grau); }
 .sim-rezept .sim-text h2 {
   font-family: "RB Newsreader", Georgia, "Times New Roman", serif;
   font-weight: 400;
@@ -93,8 +96,8 @@
   overflow: hidden;
   background: #FAF8F4;
   box-shadow:
-    0 0 0 1px rgba(40, 8, 2, 0.35),
-    0 40px 80px -30px rgba(40, 8, 2, 0.75);
+    0 0 0 1px rgba(0, 0, 0, 0.25),
+    0 40px 80px -30px var(--rb-schatten);
   /* Die Drehung: von rechts schräg zum Leser hin, aus derselben Zahl --p wie
      alles andere. Spiegelbild der Telefon-Drehung bei GingR. */
   transform:

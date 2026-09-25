@@ -25,7 +25,7 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `script.js` | Klappmenü und Kontaktformular. Sonst nichts. Die Seite ist ohne JavaScript vollständig lesbar |
 | `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
 | `sim.css` | GingR im Telefon, in den Farben der App; dazu das gemeinsame Gerüst beider Simulationen |
-| `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster: Ziegelrot der App, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
+| `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Waldgrün, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
 | `beispiel-zahnarzt/` | erfundene Beispiel-Website, in sich geschlossen, `noindex` |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
