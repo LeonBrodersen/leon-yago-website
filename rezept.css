@@ -6,11 +6,12 @@
    Mechanik wie bei GingR: sim.js schreibt eine Zahl --p an die Section und
    schaltet Klassen am .rb-schirm. Das Gerüst (.sim, .sim-strecke, .sim-buehne,
    .sim-takte …) kommt aus sim.css; hier steht nur, was anders ist:
-   - Farben: der Abschnitt steht auf tiefem Waldgrün, verwandt mit dem
-     Markengrün der Seite. Das Ziegelrot der App war verworfen (Leon, 25.09.:
-     „diese Farbe mag ich nicht“ — Papier + Serif + Terrakotta ist der
-     bekannte KI-Look). Gerechnet (WCAG): #F2F6F3 auf #0B3D2E 11,2:1 ·
-     #A9CBBD auf #0B3D2E 7,0:1.
+   - Farben: der Abschnitt steht auf Stein #E6E1D8, heller Grund zwischen dem
+     dunklen GingR und den Preisen; das Fenster hebt sich per Schatten ab.
+     Leon hat am 25.09. aus Waldgrün, Nachtblau und Stein Stein gewählt; das
+     Ziegelrot der App davor war verworfen („diese Farbe mag ich nicht“ —
+     Papier + Serif + Terrakotta ist der bekannte KI-Look). Gerechnet (WCAG):
+     Tinte #1A1815 auf Stein 13,6:1 · Grau #5A534C auf Stein 5,8:1.
    - Spiegelbild: Fenster links, Text rechts. Am Handy wie bei GingR Text oben.
    - Kein Versal-Label über der Überschrift (Leon: „sieht nach AI aus“).
    - Überschrift in Newsreader, der Serifenschrift der App.
@@ -40,12 +41,12 @@
 /* ================================================================ Seitenteil */
 
 .sim-rezept {
-  --sim-grund: #0B3D2E;
-  --sim-text: #F2F6F3;
-  --sim-grau: #A9CBBD;
-  --sim-akzent: #F2F6F3;
-  --sim-linie: rgba(242, 246, 243, 0.2);
-  --rb-schatten: rgba(0, 12, 8, 0.7);
+  --sim-grund: #E6E1D8;
+  --sim-text: #1A1815;
+  --sim-grau: #5A534C;
+  --sim-akzent: #1A1815;
+  --sim-linie: rgba(26, 24, 21, 0.18);
+  --rb-schatten: rgba(60, 50, 40, 0.35);
 }
 
 .sim-rezept .sim-strecke { height: 230vh; }
