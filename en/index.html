@@ -37,8 +37,9 @@
 
     <link rel="preload" href="/fonts/inter-v20-latin-800.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/styles.css?v=20260914">
-    <link rel="stylesheet" href="/sim.css?v=20260914">
+    <link rel="stylesheet" href="/styles.css?v=20260924">
+    <link rel="stylesheet" href="/sim.css?v=20260924">
+    <link rel="stylesheet" href="/rezept.css?v=20260924">
 </head>
 
 <body>
@@ -120,7 +121,7 @@
   </section>
 
   <!-- ==================================================   GingR (app)  === -->
-  <section class="sim" id="gingr" data-sim aria-labelledby="sim-titel">
+  <section class="sim" id="gingr" data-sim="gingr" aria-labelledby="sim-titel">
     <!-- GingR simulation. Mechanics live in sim.js and sim.css. The phone holds
          the END STATE in the HTML (it stays that way without JavaScript and with
          reduced motion); sim.js removes the classes on .app-schirm for earlier
@@ -250,6 +251,206 @@
     </div>
   </section>
 
+  <!-- ================================================  Rezeptbuch (Web)  === -->
+  <section class="sim sim-rezept" id="rezeptbuch" data-sim="rezept" aria-labelledby="rezept-titel">
+    <!-- Recipe book simulation in a browser window. Mechanics in sim.js (flow
+         "rezept"), looks in rezept.css. The window holds the END STATE in the
+         HTML; sim.js removes the classes on .rb-schirm for earlier steps.
+         App texts verbatim from the recipe book repo (its UI is English). -->
+    <div class="sim-strecke">
+      <div class="sim-buehne">
+
+        <figure class="rb-geraet">
+          <div class="rb-fenster">
+            <div class="rb-innen">
+            <div class="rb-leiste" aria-hidden="true">
+              <span class="rb-ampel"><i></i><i></i><i></i></span>
+              <span class="rb-adresse"><svg viewBox="0 0 10 12"><rect x="1" y="5" width="8" height="6.2" rx="1.3"/><path d="M2.9 5V3.6a2.1 2.1 0 0 1 4.2 0V5"/></svg>ourkitchenbook.com</span>
+            </div>
+            <div class="rb-bild">
+              <div class="rb-schirm rz-z1 rz-z2 rz-z3 rz-z4 rz-z5 rz-z6 rz-z7 rz-z8 rz-z9 rz-z10 rz-bereit rz-rezept rz-runter rz-s3 rz-s4 rz-kochen rz-k2 rz-k3 rz-k4 rz-k5 rz-fertig" aria-hidden="true">
+                <div class="rb-kamera">
+
+                  <header class="rb-nav">
+                    <span class="rb-marke">Recipe Book</span>
+                    <span class="rb-links">
+                      <span class="rb-link">Recipes</span><span class="rb-link">Favorites</span><span class="rb-link">Activity</span><span class="rb-link">Members</span><span class="rb-link">New recipe</span><span class="rb-link rb-link-import">Import</span><span class="rb-link">Invites</span>
+                      <span class="rb-tour">?</span>
+                      <span class="rb-ich"><span class="rb-avatar"></span>Leon</span>
+                      <span class="rb-raus">Sign out</span>
+                    </span>
+                  </header>
+
+                  <!-- ============ /recipes/import?source=text (import-form.tsx) -->
+                  <div class="rb-ansicht rb-import">
+                    <h1 class="rb-h1">Import a recipe <span class="rb-info">i</span></h1>
+                    <p class="rb-vorspann">Photograph a cookbook page, paste a link, or dictate. The original goes into the recipe as pasted; the AI then structures and translates it into a draft you can edit.</p>
+                    <div class="rb-reiter"><span>Photos</span><span>Link</span><span class="ist-an">Text</span></div>
+                    <div class="rb-formular">
+                      <div class="rb-feld">
+                        <span class="rb-label">Recipe text</span>
+                        <div class="rb-textfeld">
+                          <span class="rb-platzhalter">Kaiserschmarrn<br><br>4 Eier<br>250 ml Milch<br>…</span>
+                          <span class="rb-zeile rb-z1">Kaiserschmarrn</span>
+                          <span class="rb-zeile rb-z2">Für 2 Personen, 10 Minuten Vorbereitung, 15 Minuten in der Pfanne</span>
+                          <span class="rb-zeile rb-z2">&nbsp;</span>
+                          <span class="rb-zeile rb-z3">4 Eier</span>
+                          <span class="rb-zeile rb-z4">250 ml Milch</span>
+                          <span class="rb-zeile rb-z5">125 g Mehl</span>
+                          <span class="rb-zeile rb-z6">1 EL Zucker</span>
+                          <span class="rb-zeile rb-z7">1 Prise Salz</span>
+                          <span class="rb-zeile rb-z8">30 g Butter</span>
+                          <span class="rb-zeile rb-z9">40 g Rosinen</span>
+                          <span class="rb-zeile rb-z10">Puderzucker zum Bestäuben</span>
+                        </div>
+                        <span class="rb-hinweis">Paste from anywhere or dictate. Any language and layout – it is saved as the original text.</span>
+                      </div>
+                      <div class="rb-diktat">
+                        <span class="rb-knopf rb-knopf-zweit rb-diktieren">Dictate</span>
+                        <span class="rb-knopf rb-knopf-erst rb-stoppen">Stop dictating</span>
+                        <span class="rb-auswahl">Deutsch</span>
+                        <span class="rb-hoert">Listening… speak the recipe; say the amounts with their units and “new line” to break a line.</span>
+                      </div>
+                      <div class="rb-haken-zeile">
+                        <span class="rb-kasten"></span>
+                        <span>Structure with AI right away<small>Translates to English, splits ingredients and steps, classifies and links the catalogue. Takes up to a minute. Off: the editor opens with the raw text only.</small></span>
+                      </div>
+                      <div class="rb-absenden">
+                        <span class="rb-knopf rb-knopf-erst rb-knopf-gross rb-speichern"><span class="rb-ruhig">Save as draft</span><span class="rb-arbeitet">Working…</span></span>
+                        <span class="rb-stand rb-stand-1">Saving…</span>
+                        <span class="rb-stand rb-stand-2">Draft saved. Translating, classifying and matching ingredients – up to a minute.</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ============ /recipes/[id] (page.tsx, ingredient-list.tsx) -->
+                  <div class="rb-ansicht rb-rezept">
+                    <p class="rb-entwurf">Draft · only you can see this</p>
+                    <div class="rb-titelzeile">
+                      <h1 class="rb-titel">Kaiserschmarrn</h1>
+                      <span class="rb-aktionen">
+                        <span class="rb-knopf rb-knopf-erst rb-kochen-knopf">Cook</span>
+                        <span class="rb-knopf rb-knopf-zweit">Edit</span>
+                        <span class="rb-anreichern"><span class="rb-aktionen"><span class="rb-knopf rb-knopf-leer">Recompute nutrition</span><span class="rb-knopf rb-knopf-zweit">Enrich with AI</span></span><small>Last enriched 24 Sept 2026</small></span>
+                        <span class="rb-info">i</span>
+                      </span>
+                    </div>
+                    <p class="rb-wer"><span>Leon</span> · 24 Sept 2026</p>
+                    <dl class="rb-fakten">
+                      <div><dt>Servings</dt><dd>2</dd></div>
+                      <div><dt>Prep</dt><dd>10 min</dd></div>
+                      <div><dt>Cook</dt><dd>15 min</dd></div>
+                      <div><dt>Difficulty</dt><dd>Easy</dd></div>
+                      <div><dt>Category</dt><dd>dessert</dd></div>
+                      <div><dt>Cuisine</dt><dd>austrian</dd></div>
+                      <div><dt>Diet</dt><dd>Vegetarian</dd></div>
+                    </dl>
+                    <div class="rb-naehr">
+                      <p class="rb-naehr-kopf">Per serving · about 88% of the ingredients counted <span class="rb-info">i</span></p>
+                      <dl class="rb-fakten">
+                        <div><dt>Energy</dt><dd>640 kcal</dd></div>
+                        <div><dt>Protein</dt><dd>24 g</dd></div>
+                        <div><dt>Carbs</dt><dd>77 g</dd></div>
+                        <div><dt>Fat</dt><dd>27 g</dd></div>
+                      </dl>
+                      <p class="rb-naehr-fuss">Not counted: icing sugar (no amount given).</p>
+                    </div>
+
+                    <div class="rb-spalten">
+                      <div>
+                        <h2 class="rb-h2">Ingredients <span class="rb-info">i</span></h2>
+                        <div class="rb-regler">
+                          <span class="rb-portionen">
+                            <span class="rb-leise">Servings</span>
+                            <span class="rb-stepper"><span class="rb-minus">−</span><span class="rb-zahl"><i class="rb-p2">2</i><i class="rb-p3">3</i><i class="rb-p4">4</i></span><span class="rb-plus">+</span></span>
+                            <span class="rb-zurueck">Reset</span>
+                          </span>
+                          <span class="rb-rechts"><span class="rb-einheit"><span class="ist-an">Metric</span><span>US</span></span><span class="rb-gewichte">Weights</span></span>
+                        </div>
+                        <ul class="rb-zutaten">
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">4</i><i class="rb-p3">6</i><i class="rb-p4">8</i></span><span>eggs</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">250 ml</i><i class="rb-p3">375 ml</i><i class="rb-p4">500 ml</i></span><span>milk</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">125 g</i><i class="rb-p3">188 g</i><i class="rb-p4">250 g</i></span><span>flour</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">13 g</i><i class="rb-p3">19 g</i><i class="rb-p4">25 g</i></span><span>sugar</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">1 pinch</i><i class="rb-p3">1½ pinches</i><i class="rb-p4">2 pinches</i></span><span>salt</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">30 g</i><i class="rb-p3">45 g</i><i class="rb-p4">60 g</i></span><span>butter</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"><i class="rb-p2">40 g</i><i class="rb-p3">60 g</i><i class="rb-p4">80 g</i></span><span>raisins</span></li>
+                          <li><span class="rb-kaestchen"></span><span class="rb-menge"></span><span>icing sugar<span class="rb-leise"> · for dusting</span></span></li>
+                        </ul>
+                        <div class="rb-einkauf"><span class="rb-knopf rb-knopf-zweit">Copy shopping list</span><span class="rb-knopf rb-knopf-leer">Print</span></div>
+                      </div>
+                      <div>
+                        <h2 class="rb-h2">Steps</h2>
+                        <ol class="rb-schritte">
+                          <li><span>1</span><p>Whisk the eggs, milk, flour, sugar and salt into a smooth batter. Stir in the raisins.</p></li>
+                          <li><span>2</span><p>Melt the butter in a large pan over medium heat and pour in the batter.</p></li>
+                          <li><span>3</span><p>Cook for about 5 minutes until the underside is golden, then turn it over in quarters.</p></li>
+                          <li><span>4</span><p>Tear the pancake into bite-sized pieces with two forks and fry for another 2–3 minutes.</p></li>
+                          <li><span>5</span><p>Dust with icing sugar and serve warm.</p></li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ============ /recipes/[id]/cook (cook-mode.tsx) -->
+                  <div class="rb-ansicht rb-kochen">
+                    <div class="rb-koch-kopf">
+                      <div>
+                        <p class="rb-koch-titel">Kaiserschmarrn</p>
+                        <p class="rb-koch-stand"><i class="rb-k1">Step 1 of 5</i><i class="rb-k2">Step 2 of 5</i><i class="rb-k3">Step 3 of 5</i><i class="rb-k4">Step 4 of 5</i><i class="rb-k5">Step 5 of 5</i><i class="rb-kf">Done</i></p>
+                      </div>
+                      <span class="rb-aktionen"><span class="rb-knopf rb-knopf-zweit">Ingredients</span><span class="rb-knopf rb-knopf-leer">Exit</span></span>
+                    </div>
+                    <div class="rb-fortschritt"><span></span></div>
+                    <div class="rb-schritt-flaeche">
+                      <div class="rb-schritt rb-k1"><span>1</span><p>Whisk the eggs, milk, flour, sugar and salt into a smooth batter. Stir in the raisins.</p></div>
+                      <div class="rb-schritt rb-k2"><span>2</span><p>Melt the butter in a large pan over medium heat and pour in the batter.</p></div>
+                      <div class="rb-schritt rb-k3"><span>3</span><p>Cook for about 5 minutes until the underside is golden, then turn it over in quarters.</p></div>
+                      <div class="rb-schritt rb-k4"><span>4</span><p>Tear the pancake into bite-sized pieces with two forks and fry for another 2–3 minutes.</p></div>
+                      <div class="rb-schritt rb-k5"><span>5</span><p>Dust with icing sugar and serve warm.</p></div>
+                      <div class="rb-guten rb-kf">
+                        <p class="rb-guten-gross">Enjoy your meal.</p>
+                        <p class="rb-guten-klein">All 5 steps done.</p>
+                        <span class="rb-aktionen"><span class="rb-knopf rb-knopf-erst rb-knopf-gross">Back to recipe</span><span class="rb-knopf rb-knopf-zweit rb-knopf-gross">Start over</span></span>
+                      </div>
+                    </div>
+                    <div class="rb-koch-fuss">
+                      <span class="rb-wach">Screen stays on</span>
+                      <span class="rb-aktionen"><span class="rb-knopf rb-knopf-zweit rb-knopf-gross rb-zurueck-knopf">Previous</span><span class="rb-knopf rb-knopf-erst rb-knopf-gross rb-weiter"><i class="rb-weiter-text">Next</i><i class="rb-fertig-text">Finish</i></span></span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            </div>
+          </div>
+          <figcaption class="sim-unsichtbar">The recipe book in a browser: the draft “Kaiserschmarrn”, dictated in German and turned into English, with ingredients for four servings and five steps.</figcaption>
+        </figure>
+
+        <div class="sim-text">
+          <h2 id="rezept-titel">A recipe book for my circle of friends</h2>
+          <p class="sim-vorsatz">Keep scrolling and a recipe gets dictated and cooked.</p>
+          <ol class="sim-takte">
+              <li class="ist-da"><span class="sim-nr" aria-hidden="true">01</span>
+                <span>Dictate a recipe<small>In German or any other language. A photo of a cookbook page or a link works too.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">02</span>
+                <span>AI turns it into a recipe<small>About a minute later it is there, in English, with ingredients, steps and nutrition.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">03</span>
+                <span>Four servings instead of two<small>Every amount scales along, in cups and ounces too if you like.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">04</span>
+                <span>Cook mode<small>One step per screen, big enough for the kitchen.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">05</span>
+                <span>Enjoy<small>Whoever cooks it logs it, and the others see it in the feed.</small></span></li>
+          </ol>
+          <div class="sim-balken" aria-hidden="true"></div>
+          <p class="sim-fussnote">Rebuilt from the app’s code, not a screen recording. The recipe book is private, invite only.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ===================================================== Prices ======== -->
   <section class="preise" id="prices" aria-labelledby="prices-titel">
     <div class="wrap">
@@ -337,8 +538,8 @@
   </div>
 </footer>
 
-<script src="/sim.js?v=20260914" defer></script>
-<script src="/script.js?v=20260914" defer></script>
+<script src="/sim.js?v=20260924" defer></script>
+<script src="/script.js?v=20260924" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

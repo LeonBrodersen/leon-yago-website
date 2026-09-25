@@ -23,11 +23,14 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `en/index.html` | die englische Fassung als eigene Datei (kein Sprachumschalter im Browser) |
 | `styles.css` | das Blatt für beide Startseiten; die Farben stehen als Variablen in `:root`, mit gemessenen Kontrasten im Kommentar darüber |
 | `script.js` | Klappmenü und Kontaktformular. Sonst nichts. Die Seite ist ohne JavaScript vollständig lesbar |
+| `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
+| `sim.css` | GingR im Telefon, in den Farben der App; dazu das gemeinsame Gerüst beider Simulationen |
+| `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
 | `beispiel-zahnarzt/` | erfundene Beispiel-Website, in sich geschlossen, `noindex` |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
 | `og-vorlage.html` | Quelle des Teilen-Bildes `og-image.jpg`, `noindex`, nirgends verlinkt |
-| `fonts/` | Inter als woff2, selbst ausgeliefert. **Keine Schriften von fremden Servern** |
+| `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
 | `assets/img/` | Porträt und Bildschirmfotos als webp |
 | `favicon/` | Symbole und `site.webmanifest` |
 
@@ -66,7 +69,7 @@ kein gemeinsames Wörterbuch mehr, das das erzwingt.
 GitHub Pages schickt jede Datei mit `Cache-Control: max-age=600`. Wer die Seite in den zehn Minuten vor
 einem Update besucht hat, bekommt danach das neue HTML, aber sein Browser nimmt `styles.css` ungefragt
 aus dem Cache. Am 14.09.2026 stand die neue Startseite deshalb bei Leon ohne Gestaltung da (neues
-HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `sim.js`,
+HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `rezept.css`, `sim.js`,
 `script.js` und `legal.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien ändert, setzt das Datum in
 allen HTML-Dateien neu** — sonst kommt derselbe Fehler wieder:
 
