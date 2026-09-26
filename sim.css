@@ -759,3 +759,17 @@
   .sim-fussnote { display: block; }
   .app-rolle { transition: none; }
 }
+
+/* ------------------------------------------------------------- Handy quer */
+/* Wenig Höhe, viel Breite: gestapelt wäre das Telefon keine 90 px breit.
+   Deshalb zweispaltig wie am Computer, ohne die Unterzeilen der Takte. */
+@media (max-width: 860px) and (orientation: landscape) and (max-height: 500px) {
+  .sim-buehne {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding-block: 12px;
+  }
+  .sim-takte small { display: none; }
+}

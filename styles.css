@@ -43,7 +43,6 @@
 @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-500.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
 @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
 @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
-@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-800.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Inter Display"; src: url("/fonts/inter-display-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
 
 :root {
@@ -84,7 +83,8 @@ body {
 }
 img { display: block; max-width: 100%; height: auto; }
 a { color: var(--akzent); text-underline-offset: 0.18em; text-decoration-thickness: from-font; }
-a:hover { color: var(--akzent-dunkel); text-decoration-thickness: 2px; }
+@media (hover: hover) { a:hover { color: var(--akzent-dunkel); text-decoration-thickness: 2px; } }
+a, button { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 2px solid var(--akzent); outline-offset: 3px; }
 h1, h2, h3 { text-wrap: balance; }
 b, strong { font-weight: 600; }
@@ -164,7 +164,8 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   background: currentColor; transform: scaleX(0); transform-origin: right center;
   transition: transform 0.6s var(--aus);
 }
-.leiste nav a:hover::after, .leiste nav a:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
+.leiste nav a:focus-visible::after { transform: scaleX(1); transform-origin: left center; }
+@media (hover: hover) { .leiste nav a:hover::after { transform: scaleX(1); transform-origin: left center; } }
 .leiste-dunkel .leiste { color: var(--nacht-text); }
 .marke, .leiste nav { transition: transform 0.7s var(--aus); }
 .leiste-weg .marke, .leiste-weg .leiste nav { transform: translate3d(0, -160%, 0); }
@@ -179,12 +180,13 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   opacity: 0; transform: translate3d(0, -0.5rem, 0); pointer-events: none;
   transition: opacity 0.4s ease, transform 0.6s var(--aus), background-color 0.35s ease, color 0.35s ease;
 }
-.leiste-knopf:hover { background: var(--akzent); color: #fff !important; }
+@media (hover: hover) { .leiste-knopf:hover { background: var(--akzent); color: #fff !important; } }
+.leiste-knopf:active { background: var(--akzent); color: #fff !important; }
 .knopf-an .leiste-knopf, .leiste-knopf:focus-visible { opacity: 1; transform: none; pointer-events: auto; }
 .leiste-dunkel .leiste-knopf { background: var(--papier); color: var(--ink) !important; }
-.leiste-dunkel .leiste-knopf:hover { background: #fff; }
+@media (hover: hover) { .leiste-dunkel .leiste-knopf:hover { background: #fff; } }
 .leiste-in nav { margin-left: auto; margin-right: 1.25rem; }
-.no-js .leiste-knopf { opacity: 1; transform: none; pointer-events: auto; }
+.no-js .leiste-knopf, html:not(.bewegt) .leiste-knopf { opacity: 1; transform: none; pointer-events: auto; }
 @media (max-width: 700px) {
   /* Am Handy weicht der Knopf mit der Leiste, sonst läge er über dem Text der
      Simulationen. Die Links Arbeiten und Kontakt übernimmt der Knopf. */
@@ -193,8 +195,18 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   .leiste nav .leiste-arbeiten, .leiste nav a[href="#kontakt"], .leiste nav a[href="#contact"] { display: none; }
   .leiste-knopf { min-height: 2.25rem; padding: 0 0.875rem; }
 }
-@media (max-width: 359px) { .leiste nav a[href="#preise"], .leiste nav a[href="#prices"] { display: none; } }
-.no-js .leiste { position: absolute; }
+/* Unter 400 px passen Marke, Preise, EN und Knopf nicht mehr (gemessen: der
+   Knopf ragte bei 375 px 16 px über den Rand). */
+@media (max-width: 400px) { .leiste nav a[href="#preise"], .leiste nav a[href="#prices"] { display: none; } }
+@media (max-width: 340px) {
+  .leiste-knopf { padding: 0 0.75rem; font-size: 0.8125rem; }
+  .leiste-in nav { margin-right: 0.25rem; }
+  .leiste nav a { min-width: 2.25rem; }
+  .marke { font-size: 1rem; }
+}
+/* Ohne Skript oder bei reduzierter Bewegung weicht die Leiste nicht aus und
+   färbt nicht um; fest oben läge sie dann über dem Text. Also scrollt sie weg. */
+.no-js .leiste, html:not(.bewegt) .leiste { position: absolute; }
 .bewegt .leiste { opacity: 0; }
 .bewegt.ist-gestartet .leiste { opacity: 1; transition: transform 0.7s var(--aus), color 0.35s ease, opacity 0.9s ease 0.2s; }
 
@@ -283,7 +295,7 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
 .unter .auch { color: var(--ink-2); font-weight: 400; }
 .tun { display: flex; flex-direction: column; align-items: flex-end; gap: 0.25rem; }
 .ruf { display: inline-flex; align-items: center; min-height: 2.75rem; font-size: 0.9375rem; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink); }
-.ruf:hover { color: var(--akzent); }
+@media (hover: hover) { .ruf:hover { color: var(--akzent); } }
 
 @media (max-width: 1020px) {
   .held-fuss { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
@@ -318,20 +330,20 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   transition: background-color 0.3s ease, transform 0.6s var(--aus);
   will-change: transform;
 }
-.knopf:hover { background: var(--akzent-dunkel); color: #fff; }
+@media (hover: hover) { .knopf:hover { background: var(--akzent-dunkel); color: #fff; } }
+.knopf:active { background: var(--akzent-dunkel); }
 .knopf:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 /* Gesperrt liegt der Sendeknopf im HTML aus; gesperrt sieht er auch so aus. */
 .knopf:disabled { background: var(--ink-2); cursor: not-allowed; }
 /* Beim Überfahren rollt die Beschriftung nach oben weg und kommt von unten
-   wieder. Die zweite Zeile ist nur Bild (::after aus data-text, mit leerem
-   Alternativtext, damit Vorleseprogramme sie nicht doppelt lesen). */
+   wieder. Die zweite Zeile ist ein eigenes Element mit aria-hidden, damit
+   Vorleseprogramme sie in keiner Safari-Fassung doppelt lesen. */
 .knopf-roll .knopf-text { display: grid; overflow: hidden; padding-block: 0.12em; margin-block: -0.12em; }
-.knopf-roll .knopf-rein,
-.knopf-roll .knopf-text::after { grid-area: 1 / 1; transition: transform 0.7s var(--aus); }
-.knopf-roll .knopf-text::after { content: attr(data-text); content: attr(data-text) / ""; transform: translate3d(0, 130%, 0); }
+.knopf-roll .knopf-rein { grid-area: 1 / 1; transition: transform 0.7s var(--aus); }
+.knopf-roll .knopf-zwei { transform: translate3d(0, 130%, 0); }
 @media (hover: hover) {
   .knopf-roll:hover .knopf-rein { transform: translate3d(0, -130%, 0); }
-  .knopf-roll:hover .knopf-text::after { transform: none; }
+  .knopf-roll:hover .knopf-zwei { transform: none; }
 }
 
 /* ------------------------------------------------------------ Schriftband */
@@ -595,7 +607,7 @@ html:not(.bewegt) .fenster { height: auto; aspect-ratio: 16 / 10; }
   clip-path: inset(0 calc(var(--auf) * var(--pad)) 0 calc(var(--auf) * var(--pad)) round calc(var(--auf) * 28px) calc(var(--auf) * 28px) 0 0);
 }
 .kontakt a { color: var(--nacht-text); }
-.kontakt a:hover { color: #fff; }
+@media (hover: hover) { .kontakt a:hover { color: #fff; } }
 .kontakt :focus-visible { outline-color: var(--nacht-text); }
 .kontakt-in {
   display: grid; gap: clamp(3rem, 6vw, 6rem);
@@ -613,7 +625,7 @@ html:not(.bewegt) .fenster { height: auto; aspect-ratio: 16 / 10; }
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat;
   transition: background-size 0.7s var(--aus);
 }
-.gross:hover { background-size: 100% 2px; text-decoration: none; }
+@media (hover: hover) { .gross:hover { background-size: 100% 2px; text-decoration: none; } }
 .post { display: inline-flex; align-items: center; min-height: 2.75rem; margin-top: 0.5rem; font-size: clamp(1.0625rem, 1.6vw, 1.375rem); font-weight: 500; overflow-wrap: anywhere; }
 .kontakt .dazu { margin: 1.25rem 0 0; max-width: 26em; color: var(--nacht-2); font-size: 0.9375rem; line-height: 1.55; }
 
@@ -633,7 +645,7 @@ html:not(.bewegt) .fenster { height: auto; aspect-ratio: 16 / 10; }
    manche Ausfüllhelfer das Feld ganz. */
 .falle { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .knopf-hell { background: var(--nacht-text); color: var(--nacht); margin-top: 0.5rem; }
-.knopf-hell:hover { background: #fff; color: var(--nacht); }
+@media (hover: hover) { .knopf-hell:hover { background: #fff; color: var(--nacht); } }
 .knopf-hell:focus-visible { outline-color: var(--nacht-text); }
 .knopf-hell:disabled { background: var(--feld-rand); color: var(--nacht-text); }
 .form-hinweis { margin: 1rem 0 0; font-size: 0.875rem; line-height: 1.5; color: var(--nacht-2); }
@@ -675,7 +687,7 @@ html:not(.bewegt) .fenster { height: auto; aspect-ratio: 16 / 10; }
 .fuss-in p { margin: 0; padding: 0.5rem 0; }
 .fuss ul { display: flex; flex-wrap: wrap; gap: 0 1.375rem; margin: 0; padding: 0; list-style: none; }
 .fuss a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--nacht-text); }
-.fuss a:hover { color: #fff; }
+@media (hover: hover) { .fuss a:hover { color: #fff; } }
 
 /* ---------------------------------------------------------------- Zeiger */
 /* Ein Punkt, der der Maus folgt, und über den Arbeiten zur Blase mit

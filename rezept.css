@@ -744,3 +744,16 @@
 @media (max-width: 860px) and (prefers-reduced-motion: reduce) {
   .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
 }
+
+/* Handy quer (siehe sim.css): Fenster links wie am Computer, im Format und mit
+   der Kamera des Computers. */
+@media (max-width: 860px) and (orientation: landscape) and (max-height: 500px) {
+  .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .rb-geraet { order: -1; align-self: center; margin-inline: 0; }
+  .rb-fenster { --rb-hoch: 660; width: min(100%, calc((100svh - 24px) * 960 / 660)); }
+  .rz-hoert, .rz-z1 { --kz: 1.26; --kx: 102; --ky: 248; }
+  .rz-bereit { --kz: 1.26; --kx: 102; --ky: 400; }
+  .rz-rezept { --kz: 1; --kx: 0; --ky: 0; }
+  .rz-runter { --kz: 1.17; --kx: 70; --ky: 432; }
+  .rz-kochen { --kz: 1; --kx: 0; --ky: 0; }
+}

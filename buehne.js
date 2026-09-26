@@ -291,8 +291,11 @@
       stellen: function (y) {
         if (y > heldHoehe * 1.2) return;
         var t = klemmen(y / heldHoehe, 0, 1);
-        heldTitel.style.transform = t > 0 ? 'translate3d(0,' + (y * 0.32).toFixed(1) + 'px,0)' : '';
-        heldTitel.style.opacity = t > 0 ? (1 - t * 0.85).toFixed(3) : '';
+        /* Am Handy steht das Fenster unter der Zeile; verschoben läge es über
+           dem Absatz darunter (gemessen bis 134 px). Dort nur ausblenden. */
+        var schieben = breiteFenster > 700 && t > 0;
+        heldTitel.style.transform = schieben ? 'translate3d(0,' + (y * 0.32).toFixed(1) + 'px,0)' : '';
+        heldTitel.style.opacity = t > 0 ? (1 - t * (schieben ? 0.85 : 0.6)).toFixed(3) : '';
       }
     });
   }
