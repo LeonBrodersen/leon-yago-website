@@ -1,6 +1,5 @@
-/* Das Kontaktformular — das einzige, was diese Seite außer der Simulation an
-   JavaScript braucht. Ein Klappmenü gibt es nicht mehr: die Seite hat zwei
-   weiterführende Links, und dafür ist ein Menüknopf Beiwerk.
+/* Das Kontaktformular. Die Bewegung der Startseite steht in buehne.js, die
+   beiden Simulationen in sim.js.
 
    Versand über die REST-Schnittstelle von EmailJS, ohne deren SDK von einem
    Fremd-CDN. Der Formular-Endpunkt erwartet multipart/form-data mit service_id,

@@ -14,7 +14,8 @@
      Tinte #1A1815 auf Stein 13,6:1 · Grau #5A534C auf Stein 5,8:1.
    - Spiegelbild: Fenster links, Text rechts. Am Handy wie bei GingR Text oben.
    - Kein Versal-Label über der Überschrift (Leon: „sieht nach AI aus“).
-   - Überschrift in Newsreader, der Serifenschrift der App.
+   - Der Kapiteltitel steht wie bei allen Kapiteln in Inter Display
+     (styles.css); Newsreader gibt es nur im Fenster.
 
    Im Fenster gilt der Maßstab der App: Der Inhalt ist 960 CSS-Pixel breit
    gebaut, mit den px-Werten aus Tailwind 4 im Code des Rezeptbuchs (Stand
@@ -60,12 +61,6 @@
   .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1fr); }
 }
 
-.sim-rezept .sim-text h2 {
-  font-family: "RB Newsreader", Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
 .sim-rezept .sim-nr { color: var(--sim-grau); }
 
 /* ---------------------------------------------------------------- Das Fenster */
@@ -96,9 +91,8 @@
   border-radius: clamp(6px, 1vw, 12px);
   overflow: hidden;
   background: #FAF8F4;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.25),
-    0 40px 80px -30px var(--rb-schatten);
+  /* Nur die Kante, kein weicher Schatten (der lag als brauner Fleck auf dem Stein). */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
   /* Die Drehung: von rechts schräg zum Leser hin, aus derselben Zahl --p wie
      alles andere. Spiegelbild der Telefon-Drehung bei GingR. */
   transform:
@@ -730,11 +724,11 @@
 /* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
 /* Das Standbild ist die Rezeptseite bei den Zutaten, nicht das Ende des
    Kochmodus: Sie zeigt am meisten von der App. */
-.no-js .sim-rezept .sim-strecke { height: auto; }
-.no-js .rz-kochen .rb-kochen { display: none; }
-.no-js .rz-kochen .rb-rezept { display: block; }
-.no-js .rb-fenster { transform: none; }
-.no-js .rb-kamera { transition: none; }
+:is(.no-js, .ruhig) .sim-rezept .sim-strecke { height: auto; }
+:is(.no-js, .ruhig) .rz-kochen .rb-kochen { display: none; }
+:is(.no-js, .ruhig) .rz-kochen .rb-rezept { display: block; }
+:is(.no-js, .ruhig) .rb-fenster { transform: none; }
+:is(.no-js, .ruhig) .rb-kamera { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .sim-rezept .sim-strecke { height: auto; }
   .rz-kochen .rb-kochen { display: none; }
@@ -743,10 +737,23 @@
   .rb-kamera { transition: none; }
   .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
 }
-.no-js .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
+:is(.no-js, .ruhig) .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
 @media (max-width: 860px) {
-  .no-js .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
+  :is(.no-js, .ruhig) .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
 }
 @media (max-width: 860px) and (prefers-reduced-motion: reduce) {
   .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
+}
+
+/* Handy quer (siehe sim.css): Fenster links wie am Computer, im Format und mit
+   der Kamera des Computers. */
+@media (max-width: 860px) and (orientation: landscape) and (max-height: 500px) {
+  .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+  .rb-geraet { order: -1; align-self: center; margin-inline: 0; }
+  .rb-fenster { --rb-hoch: 660; width: min(100%, calc((100svh - 24px) * 960 / 660)); }
+  .rz-hoert, .rz-z1 { --kz: 1.26; --kx: 102; --ky: 248; }
+  .rz-bereit { --kz: 1.26; --kx: 102; --ky: 400; }
+  .rz-rezept { --kz: 1; --kx: 0; --ky: 0; }
+  .rz-runter { --kz: 1.17; --kx: 70; --ky: 432; }
+  .rz-kochen { --kz: 1; --kx: 0; --ky: 0; }
 }

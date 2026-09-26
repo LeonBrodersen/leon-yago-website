@@ -32,7 +32,8 @@
   position: relative;
   background: var(--sim-grund);
   color: var(--sim-text);
-  padding-inline: clamp(20px, 5vw, 64px);
+  /* Dieselbe linke Kante wie alle Kapitel (styles.css --pad). */
+  padding-inline: var(--pad, clamp(20px, 5vw, 64px));
 }
 
 /* Die Strecke, über die gescrollt wird. In vh, weil sich der Weg am Bildschirm
@@ -51,7 +52,7 @@
   grid-template-rows: minmax(0, 1fr);
   align-items: center;
   gap: clamp(28px, 5vw, 80px);
-  max-width: 1180px;
+  max-width: var(--max, 1180px);
   margin-inline: auto;
   padding-block: clamp(16px, 4vh, 40px);
 }
@@ -67,16 +68,8 @@
 
 /* ---------------------------------------------------------------- Beschriftung */
 .sim-text { align-self: center; min-width: 0; }
-/* Kein Versal-Label über der Überschrift: Leon am 25.09., „sieht nach AI aus“
-   (erst beim Rezeptbuch, dann auch hier). Die Überschrift trägt allein. */
-.sim-text h2 {
-  margin: 0 0 12px;
-  font-size: clamp(1.7rem, 3.6vw, 2.6rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  font-weight: 800;
-  text-wrap: balance;
-}
+/* Die Überschrift steht seit dem 26.09. als Kapitelkopf vor der Bühne
+   (styles.css „Kapitelköpfe“); in der Textspalte beginnt es mit dem Vorsatz. */
 .sim-vorsatz {
   margin: 0;
   max-width: 30em;
@@ -126,7 +119,6 @@
   color: var(--sim-grau);
 }
 @media (max-width: 860px) {
-  .sim-text h2 { font-size: clamp(1.35rem, 6vw, 1.9rem); }
   .sim-vorsatz { font-size: 0.9375rem; }
   .sim-takte { margin-top: 14px; }
 }
@@ -197,8 +189,7 @@
   border-radius: calc(76 * var(--sim-e));
   background: #000;
   box-shadow:
-    inset 0 0 0 calc(2.5 * var(--sim-e)) #3A3833,
-    0 40px 80px -36px rgba(0, 0, 0, 0.9);
+    inset 0 0 0 calc(2.5 * var(--sim-e)) #3A3833;
 
   /* Die Drehung: von schräg liegend (wie in der Hand) zum Leser hin.
      rotateY -24deg → +6deg, rotateX 10deg → 0deg, dazu ein wenig nach vorn.
@@ -744,15 +735,15 @@
 /* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
 /* Ohne Skript steht --p auf 1 und alle Schritt-Klassen stehen im HTML: das
    Telefon zeigt den Endzustand, die Takte liegen als Liste untereinander. */
-.no-js .sim-strecke { height: auto; }
-.no-js .sim-buehne { position: static; height: auto; grid-template-rows: auto; padding-block: clamp(48px, 9vh, 96px); }
-.no-js .sim-geraet { container-type: normal; align-self: center; --sim-w: min(340px, 80vw); }
-.no-js .sim-telefon { transform: none; }
-.no-js .sim-takte { gap: 16px; }
-.no-js .sim-takte li { grid-area: auto; opacity: 1; transform: none; }
-.no-js .sim-balken,
-.no-js .sim-vorsatz { display: none; }
-.no-js .sim-fussnote { display: block; }
+:is(.no-js, .ruhig) .sim-strecke { height: auto; }
+:is(.no-js, .ruhig) .sim-buehne { position: static; height: auto; grid-template-rows: auto; padding-block: clamp(48px, 9vh, 96px); }
+:is(.no-js, .ruhig) .sim-geraet { container-type: normal; align-self: center; --sim-w: min(340px, 80vw); }
+:is(.no-js, .ruhig) .sim-telefon { transform: none; }
+:is(.no-js, .ruhig) .sim-takte { gap: 16px; }
+:is(.no-js, .ruhig) .sim-takte li { grid-area: auto; opacity: 1; transform: none; }
+:is(.no-js, .ruhig) .sim-balken,
+:is(.no-js, .ruhig) .sim-vorsatz { display: none; }
+:is(.no-js, .ruhig) .sim-fussnote { display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   /* Kein Drehen, kein Ein- und Ausblenden: der Endzustand steht sofort da.
@@ -767,4 +758,20 @@
   .sim-vorsatz { display: none; }
   .sim-fussnote { display: block; }
   .app-rolle { transition: none; }
+}
+
+/* ------------------------------------------------------------- Handy quer */
+/* Wenig Höhe, viel Breite: gestapelt wäre das Telefon keine 90 px breit.
+   Deshalb zweispaltig wie am Computer, ohne die Unterzeilen der Takte. Unter
+   500 px Höhe gilt ohnehin die ruhige Fassung (Klasse ruhig); die Spalte des
+   Telefons nimmt dann dessen feste Breite. */
+@media (max-width: 860px) and (orientation: landscape) and (max-height: 500px) {
+  .sim-buehne {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 1fr);
+    align-items: center;
+    gap: 24px;
+    padding-block: 12px;
+  }
+  .sim-takte small { display: none; }
 }
