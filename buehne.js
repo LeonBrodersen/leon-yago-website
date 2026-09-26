@@ -1,14 +1,19 @@
-/* buehne.js — die Bewegung der Startseite (Fassung „Bühne“, 27.09.2026).
+/* buehne.js — die Bewegung der Startseite (Fassung „Bühne“, 26.09.2026).
 
    Was hier passiert, in der Reihenfolge der Seite:
-     Auftakt     Beim ersten Besuch einer Sitzung startet das kleine Fenster in
-                 der Überschrift bildschirmfüllend und schrumpft in die Zeile.
-     Pille       Darin wechseln danach die eigenen Arbeiten.
-     Band        Drei Zeilen großer Schrift laufen beim Scrollen gegeneinander.
+     Auftakt     Wer von außen kommt, sieht eine dunkle Fläche, die in das
+                 kleine Fenster der Überschrift schrumpft; dann blendet das
+                 erste Bild darin auf.
+     Pille       Darin wechseln danach drei Web-Arbeiten.
+     Band        Drei Zeilen großer Schrift laufen beim Scrollen gegeneinander;
+                 jede zeigt eine ganze Aussage, von Anfang bis Ende.
      Werk        Die Bühne mit den Beispiel-Websites: wachsen, durchscrollen,
                  die nächste schiebt sich darüber.
+     Decken      Das nächste Kapitel schiebt sich über die stehende Bühne des
+                 vorigen, das dabei kleiner und dunkler wird.
      Aufziehen   Grüne und dunkle Fläche beginnen als Karte und ziehen auf.
-     Leiste      Farbe nach dem Abschnitt darunter; weicht beim Runterscrollen aus.
+     Leiste      Farbe nach dem Abschnitt darunter; weicht beim Runterscrollen
+                 aus. Der Knopf „Erstgespräch“ bleibt am Computer stehen.
      Zeiger      Über den Arbeiten eine Blase mit „Ansehen“.
      Magnet      Knöpfe folgen der Maus ein Stück.
      Wortmarke   Die Marke im Fuß füllt die Breite, Buchstaben steigen einzeln.
@@ -16,7 +21,8 @@
    Regeln, an denen die Ruhe hängt:
    - Bewegt wird nur über transform, opacity und clip-path. Nichts davon ändert
      das Layout; gemessen wird deshalb nur beim Laden und bei Größenänderung,
-     beim Scrollen wird nur gerechnet und geschrieben.
+     beim Scrollen wird nur gerechnet und geschrieben. Ausnahme ist der
+     Auftakt: ein festes Element über allem, das Lage und Größe animiert.
    - Ein Takt pro Bild. Mit Lenis (weiches Scrollen, nur mit Maus) hängt er an
      dessen Scroll-Ereignis, sonst am nativen Scrollen per requestAnimationFrame.
    - Ohne „bewegt“ (reduzierte Bewegung) tut das Skript fast nichts: Die Seite
@@ -38,31 +44,37 @@
   /* ------------------------------------------------------------ Wortmarke */
   /* Läuft immer, auch ohne Bewegung: Die Schrift soll die Breite füllen. */
   var wortmarke = document.querySelector('.wortmarke');
+  var wortmarkeInnen = null;
+  if (wortmarke) {
+    /* Ein innerer Kasten trägt den Text; gemessen wird er selbst, nicht eine
+       Probe daneben: Einzeln gesetzte Buchstaben verlieren ihre Unterschneidung
+       und werden breiter als der Probetext. */
+    wortmarkeInnen = document.createElement('span');
+    wortmarkeInnen.className = 'wortmarke-innen';
+    while (wortmarke.firstChild) wortmarkeInnen.appendChild(wortmarke.firstChild);
+    wortmarke.appendChild(wortmarkeInnen);
+  }
   function wortmarkeEinpassen() {
     if (!wortmarke) return;
     var stil = getComputedStyle(wortmarke);
     var platz = wortmarke.clientWidth - parseFloat(stil.paddingLeft) - parseFloat(stil.paddingRight);
-    wortmarke.style.fontSize = '';
-    var probe = document.createElement('span');
-    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;letter-spacing:inherit';
-    probe.textContent = wortmarke.textContent;
-    wortmarke.appendChild(probe);
-    var breite = probe.getBoundingClientRect().width;
-    wortmarke.removeChild(probe);
-    if (breite > 0 && platz > 0) {
-      wortmarke.style.fontSize = (parseFloat(stil.fontSize) * platz / breite * 0.995) + 'px';
+    for (var runde = 0; runde < 2; runde++) {
+      var breite = wortmarkeInnen.getBoundingClientRect().width;
+      if (!(breite > 0 && platz > 0)) return;
+      var groesse = parseFloat(getComputedStyle(wortmarke).fontSize);
+      wortmarke.style.fontSize = (groesse * platz / breite * 0.998).toFixed(2) + 'px';
     }
   }
   if (wortmarke && bewegt) {
     /* Buchstaben einzeln, damit sie nacheinander steigen. Der Text bleibt für
        die Einpassung derselbe; vorgelesen wird die Marke ohnehin nicht. */
-    var zeichen = wortmarke.textContent;
-    wortmarke.textContent = '';
+    var zeichen = wortmarkeInnen.textContent;
+    wortmarkeInnen.textContent = '';
     for (var zi = 0; zi < zeichen.length; zi++) {
       var sp = document.createElement('span');
       sp.textContent = zeichen.charAt(zi);
       sp.style.transitionDelay = (zi * 0.035) + 's';
-      wortmarke.appendChild(sp);
+      wortmarkeInnen.appendChild(sp);
     }
   }
   wortmarkeEinpassen();
@@ -110,6 +122,12 @@
   var breiteFenster = window.innerWidth;
 
   function obenVon(el) { return el.getBoundingClientRect().top + window.scrollY; }
+  /* Wie weit das folgende Kapitel die Strecke davor überdeckt (negativer Rand). */
+  function deckungVon(el) {
+    if (!el) return 0;
+    var m = parseFloat(getComputedStyle(el).marginTop);
+    return m < 0 ? -m : 0;
+  }
 
   function allesMessen() {
     hoehe = window.innerHeight;
@@ -159,6 +177,13 @@
     beobachten(el);
   });
 
+  /* Wer mit der Tastatur hinspringt, soll nicht auf ein noch verborgenes
+     Element blicken: beim Fokus sofort zeigen. */
+  document.addEventListener('focusin', function (e) {
+    var el = e.target.closest && e.target.closest('[data-auftauchen], [data-enthuellen]');
+    if (el) el.classList.add('ist-da');
+  });
+
   /* ------------------------------------------------------ Auftakt und Pille */
   var heldTitel = document.querySelector('.held-titel');
   var heldFuss = document.querySelector('.held-fuss');
@@ -199,14 +224,11 @@
   }
 
   function auftakt() {
-    var erstesBild = pille.querySelector('.pille-bild img');
+    /* Eine Fläche in Tinte, kein Bild: Der erste Eindruck soll die eigene
+       Schrift sein, nicht die Seite einer erfundenen Praxis. */
     var huelle = document.createElement('div');
     huelle.className = 'auftakt';
     huelle.setAttribute('aria-hidden', 'true');
-    var bild = document.createElement('img');
-    bild.alt = '';
-    bild.src = erstesBild.currentSrc || erstesBild.src;
-    huelle.appendChild(bild);
     wurzel.classList.add('auftakt-laeuft');
     document.body.appendChild(huelle);
 
@@ -217,17 +239,17 @@
       wurzel.classList.remove('auftakt-laeuft');
       if (huelle.parentNode) huelle.parentNode.removeChild(huelle);
       window.removeEventListener('scroll', abbrechen);
-      pilleStarten();
+      pille.classList.add('blendet-ein');
+      setTimeout(pilleStarten, 900);
     }
     var lauf = null;
     function abbrechen() { if (lauf) lauf.finish(); else ende(); kopfZeigen(0); }
     window.addEventListener('scroll', abbrechen, { passive: true });
 
-    /* Erst wenn Schrift und Bild da sind, steht die Zeile an ihrem Platz. */
+    /* Erst wenn die Schrift da ist, steht die Zeile an ihrem Platz. */
     var warten = [];
     if (document.fonts && document.fonts.ready) warten.push(document.fonts.ready);
-    if (bild.decode) warten.push(bild.decode().catch(function () {}));
-    var zeitlimit = new Promise(function (r) { setTimeout(r, 900); });
+    var zeitlimit = new Promise(function (r) { setTimeout(r, 700); });
     Promise.race([Promise.all(warten), zeitlimit]).then(function () {
       if (fertig) return;
       var r = pille.getBoundingClientRect();
@@ -235,9 +257,9 @@
       lauf = huelle.animate([
         { top: '0px', left: '0px', width: window.innerWidth + 'px', height: window.innerHeight + 'px', borderRadius: '0px' },
         { top: r.top + 'px', left: r.left + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: rund }
-      ], { duration: 1250, delay: 280, easing: 'cubic-bezier(0.76, 0, 0.24, 1)', fill: 'forwards' });
+      ], { duration: 1200, delay: 120, easing: 'cubic-bezier(0.76, 0, 0.24, 1)', fill: 'forwards' });
       lauf.onfinish = ende;
-      kopfZeigen(280 + 650);
+      kopfZeigen(120 + 600);
     });
   }
 
@@ -281,19 +303,32 @@
     var spuren = [].map.call(band.querySelectorAll('.band-zeile'), function (z) {
       return { spur: z.querySelector('.band-spur'), richtung: parseFloat(z.getAttribute('data-richtung')) || 1, gruppe: 0 };
     });
-    var bandOben = 0, bandHoehe = 0;
+    var bandOben = 0, bandHoehe = 0, rand = 0;
     teile.push({
       messen: function () {
         bandOben = obenVon(band);
         bandHoehe = band.offsetHeight;
-        spuren.forEach(function (s) { s.gruppe = s.spur.scrollWidth / 3; });
+        var probe = document.createElement('div');
+        probe.style.cssText = 'position:absolute;visibility:hidden;width:var(--pad)';
+        document.body.appendChild(probe);
+        rand = probe.offsetWidth;
+        document.body.removeChild(probe);
+        spuren.forEach(function (s) {
+          s.gruppe = s.spur.scrollWidth / 3;
+          /* So weit, dass die Aussage einmal ganz durchläuft, mindestens aber
+             ein halber Bildschirm Bewegung. */
+          s.weg = Math.max(breiteFenster * 0.5, s.gruppe - breiteFenster + 2 * rand);
+        });
       },
       stellen: function (y, h) {
-        var p = (y + h - bandOben) / (h + bandHoehe);
-        if (p < -0.1 || p > 1.1) return;
-        var weg = Math.min(breiteFenster * 0.5, 720);
+        var roh = (y + h - bandOben) / (h + bandHoehe);
+        if (roh < -0.1 || roh > 1.1) return;
+        var p = anteil(roh, 0.12, 0.88);
         spuren.forEach(function (s) {
-          var x = -s.gruppe * 0.5 + s.richtung * (p - 0.5) * weg;
+          /* Die zweite Kopie steht zu Beginn am linken Rand; nach links laufende
+             Zeilen zeigen am Anfang den Anfang der Aussage, die andere das Ende. */
+          var t = s.richtung < 0 ? p : 1 - p;
+          var x = rand - s.gruppe - s.weg * t;
           s.spur.style.transform = 'translate3d(' + x.toFixed(1) + 'px,0,0)';
         });
       }
@@ -317,6 +352,7 @@
     });
     var streckeOben = 0, fahrweg = 1, buehneHoehe = 1;
     var aktiv = -1;
+    var naechstes = werk.nextElementSibling;
 
     karten.forEach(function (k) { if (k.bild) k.bild.addEventListener('load', neuMessen); });
 
@@ -324,7 +360,7 @@
       messen: function () {
         streckeOben = obenVon(strecke);
         buehneHoehe = buehne.offsetHeight;
-        fahrweg = Math.max(1, strecke.offsetHeight - buehneHoehe);
+        fahrweg = Math.max(1, strecke.offsetHeight - buehneHoehe - deckungVon(naechstes));
         karten.forEach(function (k) {
           k.weg = Math.max(0, (k.bild ? k.bild.offsetHeight : 0) - k.bildRahmen.clientHeight);
         });
@@ -357,10 +393,12 @@
           b.bild.style.transform = 'translate3d(0,' + (-b.weg * rollenB).toFixed(1) + 'px,0)';
         }
         if (titel) {
-          titel.style.opacity = (1 - anteil(p, 0.1, 0.2)).toFixed(3);
+          titel.style.opacity = (1 - anteil(p, 0, 0.08)).toFixed(3);
           titel.style.transform = 'translate3d(0,' + (-p * h * 0.25).toFixed(1) + 'px,0)';
         }
-        var neuAktiv = p < 0.12 ? -1 : (p < 0.53 ? 0 : 1);
+        /* Beschriftung erst, wenn das Fenster ausgewachsen ist; vorher läge sie
+           unter seiner Kante. */
+        var neuAktiv = p < 0.2 ? -1 : (p < 0.53 ? 0 : 1);
         if (neuAktiv !== aktiv) {
           aktiv = neuAktiv;
           karten.forEach(function (k, i) { k.text.classList.toggle('ist-da', i === aktiv); });
@@ -369,15 +407,47 @@
     });
   }
 
+  /* ---------------------------------------------------------------- Decken */
+  /* Die Bühne davor steht noch, während das nächste Kapitel (mit negativem
+     Rand, styles.css „Decken“) darübergleitet: Sie wird bis 94 % kleiner und
+     dunkelt flach ab, die runden Ecken des neuen Kapitels werden gerade. */
+  [['.werk', '.werk-strecke', '.werk-buehne'], ['#gingr', '.sim-strecke', '.sim-buehne'], ['#rezeptbuch', '.sim-strecke', '.sim-buehne']].forEach(function (d) {
+    var vorher = document.querySelector(d[0]);
+    if (!vorher) return;
+    var dStrecke = vorher.querySelector(d[1]);
+    var dBuehne = vorher.querySelector(d[2]);
+    var danach = vorher.nextElementSibling;
+    if (!dStrecke || !dBuehne || !danach) return;
+    var ab = 0, lang = 0, letzterT = -1;
+    teile.push({
+      messen: function () {
+        lang = deckungVon(danach);
+        ab = obenVon(dStrecke) + dStrecke.offsetHeight - dBuehne.offsetHeight - lang;
+      },
+      stellen: function (y) {
+        if (!lang) return;
+        var t = klemmen((y - ab) / lang, 0, 1);
+        var gerundet = Math.round(t * 1000) / 1000;
+        if (gerundet === letzterT) return;
+        letzterT = gerundet;
+        var e = inAus(t);
+        dBuehne.style.transform = t > 0 ? 'scale(' + mischen(1, 0.94, e).toFixed(4) + ')' : '';
+        vorher.style.setProperty('--decke', (0.45 * t).toFixed(3));
+        danach.style.setProperty('--rund', mischen(28, 0, e).toFixed(1) + 'px');
+      }
+    });
+  });
+
   /* ------------------------------------------------------------- Aufziehen */
+  /* Die Karte bleibt sichtbar rund, bis ihre Kante das obere Drittel erreicht. */
   [].forEach.call(document.querySelectorAll('.werk, .kontakt'), function (flaeche) {
     var oben = 0;
     var letzter = -1;
     teile.push({
       messen: function () { oben = obenVon(flaeche); },
       stellen: function (y, h) {
-        var t = klemmen((y + h - oben) / (h * 0.75), 0, 1);
-        var auf = (1 - aus(t)).toFixed(3);
+        var t = klemmen((y + h - oben) / h, 0, 1);
+        var auf = (1 - weich(t)).toFixed(3);
         if (auf === letzter) return;
         letzter = auf;
         flaeche.style.setProperty('--auf', auf);
@@ -392,8 +462,13 @@
   });
   var letzteY = window.scrollY;
   var tonJetzt = null;
+  var knopfJetzt = null, knopfAb = 0, kontaktOben = 0;
+  var kontakt = document.querySelector('.kontakt');
   teile.push({
     messen: function () {
+      var kopf = document.querySelector('.held');
+      knopfAb = -1;
+      kontaktOben = kontakt ? obenVon(kontakt) : 0;
       abschnitte.forEach(function (a) {
         a.oben = obenVon(a.el);
         a.unten = a.oben + a.el.offsetHeight;
@@ -401,17 +476,20 @@
         if (a.grund === 'rgba(0, 0, 0, 0)' || a.grund === 'transparent') a.grund = getComputedStyle(document.body).backgroundColor;
       });
     },
-    stellen: function (y) {
+    stellen: function (y, h) {
       var mitte = y + 28;
       var treffer = null;
+      /* Kapitel überlappen sich beim Decken; oben liegt das spätere. */
       for (var i = 0; i < abschnitte.length; i++) {
-        if (mitte >= abschnitte[i].oben && mitte < abschnitte[i].unten) { treffer = abschnitte[i]; break; }
+        if (mitte >= abschnitte[i].oben && mitte < abschnitte[i].unten) treffer = abschnitte[i];
       }
       if (treffer && treffer !== tonJetzt) {
         tonJetzt = treffer;
         wurzel.classList.toggle('leiste-dunkel', treffer.dunkel);
         if (farbe && treffer.grund) farbe.setAttribute('content', treffer.grund);
       }
+      var knopfAn = y > knopfAb && !(kontaktOben && y + h * 0.5 > kontaktOben);
+      if (knopfAn !== knopfJetzt) { knopfJetzt = knopfAn; wurzel.classList.toggle('knopf-an', knopfAn); }
       var d = y - letzteY;
       if (y < 160 || d < -6) wurzel.classList.remove('leiste-weg');
       else if (d > 6) wurzel.classList.add('leiste-weg');

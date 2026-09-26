@@ -188,9 +188,19 @@
     for (var i = 0; i < sims.length; i++) stellen(sims[i]);
   }
 
+  /* Liegt das nächste Kapitel mit negativem Rand über dem Ende der Strecke
+     (styles.css „Decken“), gehört dieses Stück nicht mehr zum Ablauf: Die
+     Simulation ist fertig, bevor sie überdeckt wird. */
+  function deckung(sim) {
+    var n = sim.nextElementSibling;
+    if (!n) return 0;
+    var m = parseFloat(getComputedStyle(n).marginTop);
+    return m < 0 ? -m : 0;
+  }
+
   function stellen(s) {
     var kasten = s.strecke.getBoundingClientRect();
-    var fahrweg = kasten.height - s.buehne.offsetHeight;
+    var fahrweg = kasten.height - s.buehne.offsetHeight - deckung(s.sim);
     var p = fahrweg > 0 ? -kasten.top / fahrweg : 1;
     if (p < 0) p = 0;
     if (p > 1) p = 1;

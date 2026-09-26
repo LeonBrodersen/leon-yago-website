@@ -14,7 +14,8 @@
      Tinte #1A1815 auf Stein 13,6:1 · Grau #5A534C auf Stein 5,8:1.
    - Spiegelbild: Fenster links, Text rechts. Am Handy wie bei GingR Text oben.
    - Kein Versal-Label über der Überschrift (Leon: „sieht nach AI aus“).
-   - Überschrift in Newsreader, der Serifenschrift der App.
+   - Der Kapiteltitel steht wie bei allen Kapiteln in Inter Display
+     (styles.css); Newsreader gibt es nur im Fenster.
 
    Im Fenster gilt der Maßstab der App: Der Inhalt ist 960 CSS-Pixel breit
    gebaut, mit den px-Werten aus Tailwind 4 im Code des Rezeptbuchs (Stand
@@ -60,12 +61,6 @@
   .sim-rezept .sim-buehne { grid-template-columns: minmax(0, 1fr); }
 }
 
-.sim-rezept .sim-text h2 {
-  font-family: "RB Newsreader", Georgia, "Times New Roman", serif;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
-}
 .sim-rezept .sim-nr { color: var(--sim-grau); }
 
 /* ---------------------------------------------------------------- Das Fenster */
@@ -96,9 +91,8 @@
   border-radius: clamp(6px, 1vw, 12px);
   overflow: hidden;
   background: #FAF8F4;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.25),
-    0 40px 80px -30px var(--rb-schatten);
+  /* Nur die Kante, kein weicher Schatten (der lag als brauner Fleck auf dem Stein). */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
   /* Die Drehung: von rechts schräg zum Leser hin, aus derselben Zahl --p wie
      alles andere. Spiegelbild der Telefon-Drehung bei GingR. */
   transform:

@@ -35,12 +35,13 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
 
-    <link rel="preload" href="/fonts/inter-v20-latin-700.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-display-latin-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/assets/img/beispiel-zahnarzt-desktop.webp" as="image" type="image/webp" fetchpriority="high">
-    <link rel="stylesheet" href="/styles.css?v=20260927">
-    <link rel="stylesheet" href="/sim.css?v=20260927">
-    <link rel="stylesheet" href="/rezept.css?v=20260927">
+    <link rel="preload" href="/assets/img/pille-zahnarzt.webp" as="image" type="image/webp" media="(min-width: 701px)">
+    <link rel="preload" href="/assets/img/pille-zahnarzt-handy.webp" as="image" type="image/webp" media="(max-width: 700px)">
+    <link rel="stylesheet" href="/styles.css?v=20260926-2">
+    <link rel="stylesheet" href="/sim.css?v=20260926-2">
+    <link rel="stylesheet" href="/rezept.css?v=20260926-2">
     <!-- Vor dem ersten Bild: Klassen für Bewegung setzen, damit nichts erst
          sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js. -->
     <script>
@@ -64,6 +65,7 @@
       <a href="#contact">Contact</a>
       <a href="/" hreflang="de" lang="de" aria-label="Deutsch">DE</a>
     </nav>
+    <a class="leiste-knopf" href="#contact">First call</a>
   </div>
 </header>
 
@@ -79,9 +81,9 @@
       <h1 class="held-titel" id="held-titel" data-enthuellen>
         <span class="z z-1"><span class="z-in">I build</span></span>
         <span class="pille" aria-hidden="true">
-          <span class="pille-bild ist-da"><img src="/assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="900" alt="" fetchpriority="high"></span>
-          <span class="pille-bild"><img src="/assets/img/beispiel-cafe-desktop.webp" width="1440" height="900" alt="" loading="lazy"></span>
-          <span class="pille-bild"><img src="/assets/img/gingr-tafel-560.webp" width="560" height="350" alt="" loading="lazy"></span>
+          <span class="pille-bild ist-da"><picture><source media="(max-width: 700px)" srcset="/assets/img/pille-zahnarzt-handy.webp" width="1040" height="650"><img src="/assets/img/pille-zahnarzt.webp" width="1320" height="400" alt="" fetchpriority="high"></picture></span>
+          <span class="pille-bild"><picture><source media="(max-width: 700px)" srcset="/assets/img/pille-cafe-handy.webp" width="1040" height="650"><img src="/assets/img/pille-cafe.webp" width="1320" height="400" alt="" loading="lazy"></picture></span>
+          <span class="pille-bild"><picture><source media="(max-width: 700px)" srcset="/assets/img/pille-rezept-handy.webp" width="1040" height="650"><img src="/assets/img/pille-rezept.webp" width="1320" height="400" alt="" loading="lazy"></picture></span>
         </span>
         <span class="z z-2"><span class="z-in">websites.</span></span>
       </h1>
@@ -95,7 +97,7 @@
           <p><b>Leon Brodersen</b>, computer-science student and managing director of ly&#8209;webstudio UG&nbsp;(haftungsbeschränkt).
             You talk to the person who writes the code, in German or English.</p>
         </div>
-        <p class="unter">For small businesses and the self-employed, at a fixed price and in one to two weeks.
+        <p class="unter">For small businesses and the self-employed.
           <span class="auch">And if you need more, <a href="#gingr">apps</a> and other software projects too.</span></p>
         <div class="tun">
           <a class="knopf knopf-roll" href="#contact" data-magnet><span class="knopf-text" data-text="First call, free"><span class="knopf-rein">First call, free</span></span></a>
@@ -110,25 +112,19 @@
        steht derselbe Inhalt einmal als Liste; die bewegten Zeilen sind nur Bild. -->
   <section class="band" data-ton="hell" aria-label="How I work">
     <ul class="vh">
-      <li>Fixed price before the start</li>
+      <li>Fixed price, agreed up front</li>
       <li>Done in one to two weeks</li>
       <li>Straight to me, no middlemen</li>
     </ul>
     <div class="band-zeilen" aria-hidden="true">
       <div class="band-zeile" data-richtung="-1"><div class="band-spur">
-        <span>Fixed price</span><i></i><span>before the start</span><i></i>
-        <span>Fixed price</span><i></i><span>before the start</span><i></i>
-        <span>Fixed price</span><i></i><span>before the start</span><i></i>
+        <span>Fixed price, agreed up front</span><i></i><span>Fixed price, agreed up front</span><i></i><span>Fixed price, agreed up front</span><i></i>
       </div></div>
       <div class="band-zeile" data-richtung="1"><div class="band-spur">
-        <span>One to two</span><i></i><span>weeks</span><i></i>
-        <span>One to two</span><i></i><span>weeks</span><i></i>
-        <span>One to two</span><i></i><span>weeks</span><i></i>
+        <span>Done in one to two weeks</span><i></i><span>Done in one to two weeks</span><i></i><span>Done in one to two weeks</span><i></i>
       </div></div>
       <div class="band-zeile" data-richtung="-1"><div class="band-spur">
-        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
-        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
-        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
+        <span>Straight to me, no middlemen</span><i></i><span>Straight to me, no middlemen</span><i></i><span>Straight to me, no middlemen</span><i></i>
       </div></div>
     </div>
   </section>
@@ -142,10 +138,7 @@
   <section class="werk" id="work" data-ton="dunkel" aria-labelledby="werk-titel">
     <div class="werk-strecke">
       <div class="werk-buehne">
-        <h2 class="werk-titel" id="werk-titel" data-enthuellen>
-          <span class="z"><span class="z-in">Two example</span></span>
-          <span class="z"><span class="z-in">websites</span></span>
-        </h2>
+        <h2 class="werk-titel" id="werk-titel" data-enthuellen><span class="z"><span class="z-in">Examples</span></span></h2>
 
         <ol class="werk-liste">
           <li class="werk-karte">
@@ -153,15 +146,15 @@
               <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-zahnarzt</span></span>
               <span class="fenster-bild">
                 <picture>
-                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-zahnarzt-handy-lang.webp" width="780" height="5200">
-                  <img src="/assets/img/beispiel-zahnarzt-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-zahnarzt-handy-lang.webp 780w" sizes="min(100vw - 2rem, 26rem)" width="780" height="5200">
+                  <img src="/assets/img/beispiel-zahnarzt-lang-1344.webp" srcset="/assets/img/beispiel-zahnarzt-lang-1344.webp 1344w, /assets/img/beispiel-zahnarzt-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" loading="lazy" decoding="async"
                        alt="Example site for a dental practice, top to bottom: header with phone number, headline with opening hours as a table, treatments, team, directions with a sketch and appointment request">
                 </picture>
               </span>
             </a>
             <div class="werk-text">
               <h3>Zahnarztpraxis am Kastanienplatz</h3>
-              <p>An invented practice, built end to end: opening hours, treatments, directions.
+              <p>An invented practice, built end to end: opening hours, treatments, directions. In German.
                 <a class="offen" href="/beispiel-zahnarzt/" hreflang="de">Open it</a></p>
             </div>
           </li>
@@ -170,15 +163,15 @@
               <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-cafe</span></span>
               <span class="fenster-bild">
                 <picture>
-                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-cafe-handy-lang.webp" width="780" height="5200">
-                  <img src="/assets/img/beispiel-cafe-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-cafe-handy-lang.webp 780w" sizes="min(100vw - 2rem, 26rem)" width="780" height="5200">
+                  <img src="/assets/img/beispiel-cafe-lang-1344.webp" srcset="/assets/img/beispiel-cafe-lang-1344.webp 1344w, /assets/img/beispiel-cafe-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" loading="lazy" decoding="async"
                        alt="Example site for a café, top to bottom: name, address and opening hours, then the menu with prices and a good-to-know section">
                 </picture>
               </span>
             </a>
             <div class="werk-text">
               <h3>Café Mühlenstein</h3>
-              <p>A second example. The menu is on the page with prices, not as a PDF.
+              <p>A second example, also in German. The menu is on the page with prices, not as a PDF.
                 <a class="offen" href="/beispiel-cafe/" hreflang="de">Open it</a></p>
             </div>
           </li>
@@ -193,11 +186,14 @@
          the END STATE in the HTML (it stays that way without JavaScript and with
          reduced motion); sim.js removes the classes on .app-schirm for earlier
          beats. App texts verbatim from GymApp src/i18n/locales/en/common.json. -->
+    <div class="kapitel">
+      <h2 class="gross-titel" id="sim-titel" data-enthuellen><span class="z"><span class="z-in">GingR</span></span></h2>
+      <p class="kapitel-unter" data-auftauchen>A training log for iPhone and Android</p>
+    </div>
     <div class="sim-strecke">
       <div class="sim-buehne">
 
         <div class="sim-text">
-          <h2 id="sim-titel">GingR, a training log for iPhone and Android</h2>
           <p class="sim-vorsatz">Keep scrolling and a set runs through.</p>
           <ol class="sim-takte">
               <li class="ist-da"><span class="sim-nr" aria-hidden="true">01</span>
@@ -323,6 +319,10 @@
          "rezept"), looks in rezept.css. The window holds the END STATE in the
          HTML; sim.js removes the classes on .rb-schirm for earlier steps.
          App texts verbatim from the recipe book repo (its UI is English). -->
+    <div class="kapitel">
+      <h2 class="gross-titel" id="rezept-titel" data-enthuellen><span class="z"><span class="z-in">Recipe book</span></span></h2>
+      <p class="kapitel-unter" data-auftauchen>A web app for my circle of friends</p>
+    </div>
     <div class="sim-strecke">
       <div class="sim-buehne">
 
@@ -349,7 +349,7 @@
 
                   <!-- ============ /recipes/import?source=text (import-form.tsx) -->
                   <div class="rb-ansicht rb-import">
-                    <h1 class="rb-h1">Import a recipe <span class="rb-info">i</span></h1>
+                    <p class="rb-h1">Import a recipe <span class="rb-info">i</span></p>
                     <p class="rb-vorspann">Photograph a cookbook page, paste a link, or dictate. The original goes into the recipe as pasted; the AI then structures and translates it into a draft you can edit.</p>
                     <div class="rb-reiter"><span>Photos</span><span>Link</span><span class="ist-an">Text</span></div>
                     <div class="rb-formular">
@@ -393,7 +393,7 @@
                   <div class="rb-ansicht rb-rezept">
                     <p class="rb-entwurf">Draft · only you can see this</p>
                     <div class="rb-titelzeile">
-                      <h1 class="rb-titel">Kaiserschmarrn</h1>
+                      <p class="rb-titel">Kaiserschmarrn</p>
                       <span class="rb-aktionen">
                         <span class="rb-knopf rb-knopf-erst rb-kochen-knopf">Cook</span>
                         <span class="rb-knopf rb-knopf-zweit">Edit</span>
@@ -424,7 +424,7 @@
 
                     <div class="rb-spalten">
                       <div>
-                        <h2 class="rb-h2">Ingredients <span class="rb-info">i</span></h2>
+                        <p class="rb-h2">Ingredients <span class="rb-info">i</span></p>
                         <div class="rb-regler">
                           <span class="rb-portionen">
                             <span class="rb-leise">Servings</span>
@@ -446,7 +446,7 @@
                         <div class="rb-einkauf"><span class="rb-knopf rb-knopf-zweit">Copy shopping list</span><span class="rb-knopf rb-knopf-leer">Print</span></div>
                       </div>
                       <div>
-                        <h2 class="rb-h2">Steps</h2>
+                        <p class="rb-h2">Steps</p>
                         <ol class="rb-schritte">
                           <li><span>1</span><p>Whisk the eggs, milk, flour, sugar and salt into a smooth batter. Stir in the raisins.</p></li>
                           <li><span>2</span><p>Melt the butter in a large pan over medium heat and pour in the batter.</p></li>
@@ -495,7 +495,6 @@
         </figure>
 
         <div class="sim-text">
-          <h2 id="rezept-titel">A recipe book for my circle of friends</h2>
           <p class="sim-vorsatz">Keep scrolling and a recipe gets dictated and cooked.</p>
           <ol class="sim-takte">
               <li class="ist-da"><span class="sim-nr" aria-hidden="true">01</span>
@@ -545,7 +544,7 @@
       </ul>
 
       <div class="preise-fuss" data-auftauchen>
-        <p class="fein">The large figure is the introductory price for my first five projects; after that, the small one applies.
+        <p class="fein">The large figure is the introductory price for my first five projects, if I may show them as references. After that, the small one applies.
         Final prices without VAT: I am a small business under §&nbsp;19 of the German VAT Act.</p>
         <a class="mehr" href="/angebot/" hreflang="de" lang="de">What each package includes, process and terms (German) &#8594;</a>
       </div>
@@ -617,10 +616,10 @@
   </div>
 </footer>
 
-<script src="/assets/vendor/lenis.min.js?v=20260927" defer></script>
-<script src="/buehne.js?v=20260927" defer></script>
-<script src="/sim.js?v=20260927" defer></script>
-<script src="/script.js?v=20260927" defer></script>
+<script src="/assets/vendor/lenis.min.js?v=20260926-2" defer></script>
+<script src="/buehne.js?v=20260926-2" defer></script>
+<script src="/sim.js?v=20260926-2" defer></script>
+<script src="/script.js?v=20260926-2" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -657,11 +656,12 @@
       "name": "Websites, apps and other software projects",
       "serviceType": "Web development, app development",
       "provider": { "@id": "https://www.ly-webstudio.de/#organisation" },
-      "availableLanguage": ["de", "en"],
+      "areaServed": { "@type": "Country", "name": "Germany" },
       "availableChannel": {
         "@type": "ServiceChannel",
         "serviceUrl": "https://www.ly-webstudio.de/en/#contact",
-        "servicePhone": "+49 179 4904546"
+        "servicePhone": "+49 179 4904546",
+        "availableLanguage": ["de", "en"]
       },
       "offers": {
         "@type": "Offer",

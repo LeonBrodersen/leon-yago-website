@@ -1,7 +1,8 @@
 # ly-webstudio.de
 
 Die Website der ly-webstudio UG (haftungsbeschränkt). Statisches HTML, **kein Build, kein Framework,
-keine Abhängigkeiten**. Wer eine Datei ändert und pusht, hat die Änderung online.
+keine Abhängigkeiten von außen** (die eine Bibliothek, Lenis, liegt als Datei im Repo). Wer eine Datei
+ändert und pusht, hat die Änderung online.
 
 ```bash
 # Ansehen: irgendein Dateiserver auf dem Repo-Ordner
@@ -21,17 +22,19 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | --- | --- |
 | `index.html` | die deutsche Startseite, alles auf einer Seite |
 | `en/index.html` | die englische Fassung als eigene Datei (kein Sprachumschalter im Browser) |
-| `styles.css` | das Blatt für beide Startseiten; die Farben stehen als Variablen in `:root`, mit gemessenen Kontrasten im Kommentar darüber |
-| `script.js` | Klappmenü und Kontaktformular. Sonst nichts. Die Seite ist ohne JavaScript vollständig lesbar |
+| `styles.css` | das Blatt für beide Startseiten („Bühne“, seit 26.09.2026); die Farben stehen als Variablen in `:root`, mit gerechneten Kontrasten im Kommentar darüber |
+| `buehne.js` | die Bewegung der Startseite: Auftakt, Fenster in der Überschrift, Schriftband, Website-Bühne, Decken und Aufziehen zwischen den Kapiteln, Leiste, Zeiger. Ohne JavaScript und bei „Bewegung reduzieren“ steht alles fertig da |
+| `assets/vendor/lenis.min.js` | [Lenis](https://github.com/darkroomengineering/lenis) 1.3.26 (weiches Scrollen, nur mit Maus), MIT, Lizenztext in `assets/vendor/LICENSE-lenis.txt` |
+| `script.js` | das Kontaktformular. Die Seite ist ohne JavaScript vollständig lesbar |
 | `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
 | `sim.css` | GingR im Telefon, in den Farben der App; dazu das gemeinsame Gerüst beider Simulationen |
 | `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
-| `beispiel-zahnarzt/` | erfundene Beispiel-Website, in sich geschlossen, `noindex` |
+| `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex` |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
 | `og-vorlage.html` | Quelle des Teilen-Bildes `og-image.jpg`, `noindex`, nirgends verlinkt |
-| `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
-| `assets/img/` | Porträt und Bildschirmfotos als webp |
+| `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Inter Display 700 (der Schnitt für große Größen) für alle Titel, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
+| `assets/img/` | Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy |
 | `favicon/` | Symbole und `site.webmanifest` |
 
 ## Zwei Regeln, die die Seite überall einhält
@@ -51,8 +54,8 @@ EmailJS-Dashboard im Feld „To Email“ der Vorlage.
 
 Der Sendeknopf liegt im HTML **gesperrt** aus und wird erst von `script.js` freigegeben. Läuft das
 Skript nicht, bleibt der Knopf gesperrt und der Hinweis daneben sichtbar, der E-Mail-Adresse und
-Telefonnummer nennt. Die Meldungstexte stehen als `data-sending`, `data-success` und `data-error` am
-Element `#form-status` im HTML, deshalb trägt dieselbe Skriptdatei die deutsche und die englische Seite.
+Telefonnummer nennt. Die Meldungstexte stehen als `data-sendet`, `data-gut` und `data-schlecht` am
+Element `#form-stand` im HTML, deshalb trägt dieselbe Skriptdatei die deutsche und die englische Seite.
 
 Im Formular steckt ein unsichtbares Feld namens `website`. Ist es gefüllt, war ein Roboter am Werk:
 die Bestätigung sieht dann normal aus, gesendet wird nichts.
@@ -69,24 +72,24 @@ kein gemeinsames Wörterbuch mehr, das das erzwingt.
 GitHub Pages schickt jede Datei mit `Cache-Control: max-age=600`. Wer die Seite in den zehn Minuten vor
 einem Update besucht hat, bekommt danach das neue HTML, aber sein Browser nimmt `styles.css` ungefragt
 aus dem Cache. Am 14.09.2026 stand die neue Startseite deshalb bei Leon ohne Gestaltung da (neues
-HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `rezept.css`, `sim.js`,
-`script.js` und `legal.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien ändert, setzt das Datum in
-allen HTML-Dateien neu** — sonst kommt derselbe Fehler wieder:
+HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `rezept.css`, `buehne.js`, `sim.js`,
+`script.js`, `assets/vendor/lenis.min.js` und `legal.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien
+ändert, setzt das Datum in allen HTML-Dateien neu**, sonst kommt derselbe Fehler wieder. Zwei
+Änderungen am selben Tag: `-2`, `-3` anhängen (`?v=20260926-2`).
 
 ```bash
-grep -rl '?v=' --include='*.html' . | xargs sed -i '' 's/?v=[0-9]*/?v=JJJJMMTT/g'
+grep -rl '?v=' --include='*.html' . | xargs sed -i '' -E 's/\?v=[0-9]+(-[0-9]+)?/?v=JJJJMMTT/g'
 ```
 
-## Gemessene Zahlen im Text
+## Gemessene Zahlen im Code
 
-Die Startseite nennt ihr eigenes Gewicht („12 Dateien, 233 KB beim ersten Aufruf“) und das der
-Beispielseite. **Diese Zahlen sind gemessen, nicht geschätzt.** Wer Bilder, Schriften oder Abschnitte
-ändert, muss sie neu messen und den Satz anpassen, sonst steht eine Unwahrheit auf der Seite.
+Kommentare nennen gemessene oder gerechnete Werte (Kontraste in `styles.css`, Größen). **Wer Farben,
+Schriften oder Abschnitte ändert, rechnet sie neu**, sonst steht dort eine Unwahrheit.
 
 ## Bilder und Symbole neu erzeugen
 
-* **Teilen-Bild:** `og-vorlage.html` bei 1200 × 630 px aufnehmen, auf 1200 × 630 herunterrechnen, als
-  JPEG mit Qualität 86 speichern, nach `og-image.jpg`.
+* **Teilen-Bild:** `og-vorlage.html` bei 1200 × 630 px mit doppelter Pixeldichte aufnehmen, auf
+  1200 × 630 herunterrechnen, als JPEG speichern, nach `og-image.jpg`.
 * **Symbole:** `favicon/favicon.svg` ist die Quelle. Daraus entstehen `favicon-96x96.png` und
   `apple-touch-icon.png`; die beiden `web-app-manifest-*.png` kommen aus einer randlosen Fassung ohne
   abgerundete Ecken, weil sie im Manifest als `maskable` eingetragen sind.

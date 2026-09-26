@@ -32,7 +32,8 @@
   position: relative;
   background: var(--sim-grund);
   color: var(--sim-text);
-  padding-inline: clamp(20px, 5vw, 64px);
+  /* Dieselbe linke Kante wie alle Kapitel (styles.css --pad). */
+  padding-inline: var(--pad, clamp(20px, 5vw, 64px));
 }
 
 /* Die Strecke, über die gescrollt wird. In vh, weil sich der Weg am Bildschirm
@@ -51,7 +52,7 @@
   grid-template-rows: minmax(0, 1fr);
   align-items: center;
   gap: clamp(28px, 5vw, 80px);
-  max-width: 1180px;
+  max-width: var(--max, 1180px);
   margin-inline: auto;
   padding-block: clamp(16px, 4vh, 40px);
 }
@@ -67,16 +68,8 @@
 
 /* ---------------------------------------------------------------- Beschriftung */
 .sim-text { align-self: center; min-width: 0; }
-/* Kein Versal-Label über der Überschrift: Leon am 25.09., „sieht nach AI aus“
-   (erst beim Rezeptbuch, dann auch hier). Die Überschrift trägt allein. */
-.sim-text h2 {
-  margin: 0 0 14px;
-  font-size: clamp(1.9rem, 4.2vw, 3.75rem);
-  line-height: 1;
-  letter-spacing: -0.045em;
-  font-weight: 700;
-  text-wrap: balance;
-}
+/* Die Überschrift steht seit dem 26.09. als Kapitelkopf vor der Bühne
+   (styles.css „Kapitelköpfe“); in der Textspalte beginnt es mit dem Vorsatz. */
 .sim-vorsatz {
   margin: 0;
   max-width: 30em;
@@ -126,7 +119,6 @@
   color: var(--sim-grau);
 }
 @media (max-width: 860px) {
-  .sim-text h2 { font-size: clamp(1.35rem, 6vw, 1.9rem); }
   .sim-vorsatz { font-size: 0.9375rem; }
   .sim-takte { margin-top: 14px; }
 }
@@ -197,8 +189,7 @@
   border-radius: calc(76 * var(--sim-e));
   background: #000;
   box-shadow:
-    inset 0 0 0 calc(2.5 * var(--sim-e)) #3A3833,
-    0 40px 80px -36px rgba(0, 0, 0, 0.9);
+    inset 0 0 0 calc(2.5 * var(--sim-e)) #3A3833;
 
   /* Die Drehung: von schräg liegend (wie in der Hand) zum Leser hin.
      rotateY -24deg → +6deg, rotateX 10deg → 0deg, dazu ein wenig nach vorn.
