@@ -35,22 +35,34 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
 
-    <link rel="preload" href="/fonts/inter-v20-latin-800.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v20-latin-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="styles.css?v=20260926">
-    <link rel="stylesheet" href="sim.css?v=20260926">
-    <link rel="stylesheet" href="rezept.css?v=20260926">
+    <link rel="preload" href="/assets/img/beispiel-zahnarzt-desktop.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="stylesheet" href="/styles.css?v=20260927">
+    <link rel="stylesheet" href="/sim.css?v=20260927">
+    <link rel="stylesheet" href="/rezept.css?v=20260927">
+    <!-- Vor dem ersten Bild: Klassen für Bewegung setzen, damit nichts erst
+         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js. -->
+    <script>
+      (function (r) {
+        r.classList.remove('no-js');
+        r.classList.add('js');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('bewegt');
+      })(document.documentElement);
+    </script>
 </head>
 
 <body>
 <a class="skip" href="#inhalt">Zum Inhalt springen</a>
 
-<header class="leiste">
-  <div class="wrap leiste-in">
+<header class="leiste" data-leiste>
+  <div class="leiste-in">
     <a class="marke" href="/">ly&#8209;webstudio</a>
-    <nav aria-label="Weitere Seiten">
+    <nav aria-label="Abschnitte und Sprache">
+      <a class="leiste-arbeiten" href="#arbeiten">Arbeiten</a>
       <a href="#preise">Preise</a>
-      <a href="/en/" hreflang="en" lang="en">English</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="/en/" hreflang="en" lang="en" aria-label="English">EN</a>
     </nav>
   </div>
 </header>
@@ -58,70 +70,125 @@
 <main id="inhalt">
 
   <!-- ======================================================== Kopf ======= -->
-  <section class="kopf">
-    <div class="wrap">
-      <h1>Ich baue Websites.</h1>
-      <p class="unter">Für kleine Unternehmen und Selbstständige, zum Festpreis und in ein bis zwei Wochen.
-        <span class="auch">Und wenn es mehr sein soll, auch <a href="#gingr">Apps</a> und andere Informatik&#8209;Projekte.</span></p>
+  <!-- Die Überschrift trägt die Seite allein, wie bei den Vorbildern: drei
+       Wörter, sehr groß, und mitten darin ein kleines Fenster, in dem die
+       eigenen Arbeiten wechseln. Beim ersten Besuch startet dieses Fenster
+       bildschirmfüllend und schrumpft in die Zeile (buehne.js, „Auftakt“). -->
+  <section class="held" data-ton="hell" aria-labelledby="held-titel">
+    <div class="held-in">
+      <h1 class="held-titel" id="held-titel" data-enthuellen>
+        <span class="z z-1"><span class="z-in">Ich baue</span></span>
+        <span class="pille" aria-hidden="true">
+          <span class="pille-bild ist-da"><img src="/assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="900" alt="" fetchpriority="high"></span>
+          <span class="pille-bild"><img src="/assets/img/beispiel-cafe-desktop.webp" width="1440" height="900" alt="" loading="lazy"></span>
+          <span class="pille-bild"><img src="/assets/img/gingr-tafel-560.webp" width="560" height="350" alt="" loading="lazy"></span>
+        </span>
+        <span class="z z-2"><span class="z-in">Websites.</span></span>
+      </h1>
 
-      <div class="wer">
-        <img src="assets/img/leon-frei-320.webp"
-             srcset="assets/img/leon-frei-320.webp 320w, assets/img/leon-frei-640.webp 640w"
-             sizes="(max-width: 760px) 72px, 104px"
-             width="320" height="400" fetchpriority="high"
-             alt="Leon Brodersen, Kopf und Schultern, hellblaues Hemd">
-        <p><b>Leon Brodersen</b>, Informatikstudent und Geschäftsführer der ly&#8209;webstudio UG&nbsp;(haftungsbeschränkt).
-          Sie sprechen mit der Person, die den Code schreibt.</p>
+      <div class="held-fuss" data-auftauchen>
+        <div class="wer">
+          <img src="/assets/img/leon-frei-320.webp"
+               srcset="/assets/img/leon-frei-320.webp 320w, /assets/img/leon-frei-640.webp 640w"
+               sizes="72px" width="320" height="400"
+               alt="Leon Brodersen, Kopf und Schultern, hellblaues Hemd">
+          <p><b>Leon Brodersen</b>, Informatikstudent und Geschäftsführer der ly&#8209;webstudio UG&nbsp;(haftungsbeschränkt).
+            Sie sprechen mit der Person, die den Code schreibt.</p>
+        </div>
+        <p class="unter">Für kleine Unternehmen und Selbstständige, zum Festpreis und in ein bis zwei Wochen.
+          <span class="auch">Und wenn es mehr sein soll, auch <a href="#gingr">Apps</a> und andere Informatik&#8209;Projekte.</span></p>
+        <div class="tun">
+          <a class="knopf knopf-roll" href="#kontakt" data-magnet><span class="knopf-text" data-text="Erstgespräch, kostenlos"><span class="knopf-rein">Erstgespräch, kostenlos</span></span></a>
+          <a class="ruf" href="tel:+491794904546">oder anrufen: 0179&nbsp;4904546</a>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="tun">
-        <a class="knopf" href="#kontakt">Erstgespräch, kostenlos</a>
-        <a class="ruf" href="tel:+491794904546">oder anrufen: 0179&nbsp;4904546</a>
-      </div>
+  <!-- ==================================================== Schriftband ==== -->
+  <!-- Drei Zeilen, die beim Scrollen gegeneinander laufen. Für Vorleseprogramme
+       steht derselbe Inhalt einmal als Liste; die bewegten Zeilen sind nur Bild. -->
+  <section class="band" data-ton="hell" aria-label="Wie ich arbeite">
+    <ul class="vh">
+      <li>Festpreis vor dem Start</li>
+      <li>In ein bis zwei Wochen fertig</li>
+      <li>Direkt mit mir, ohne Umweg</li>
+    </ul>
+    <div class="band-zeilen" aria-hidden="true">
+      <div class="band-zeile" data-richtung="-1"><div class="band-spur">
+        <span>Festpreis</span><i></i><span>vor dem Start</span><i></i>
+        <span>Festpreis</span><i></i><span>vor dem Start</span><i></i>
+        <span>Festpreis</span><i></i><span>vor dem Start</span><i></i>
+      </div></div>
+      <div class="band-zeile" data-richtung="1"><div class="band-spur">
+        <span>In ein bis zwei</span><i></i><span>Wochen</span><i></i>
+        <span>In ein bis zwei</span><i></i><span>Wochen</span><i></i>
+        <span>In ein bis zwei</span><i></i><span>Wochen</span><i></i>
+      </div></div>
+      <div class="band-zeile" data-richtung="-1"><div class="band-spur">
+        <span>Direkt mit mir</span><i></i><span>ohne Umweg</span><i></i>
+        <span>Direkt mit mir</span><i></i><span>ohne Umweg</span><i></i>
+        <span>Direkt mit mir</span><i></i><span>ohne Umweg</span><i></i>
+      </div></div>
     </div>
   </section>
 
   <!-- ==================================================== Websites ======= -->
-  <section class="arbeiten" aria-labelledby="arbeiten-titel">
-    <div class="wrap">
-      <h2 id="arbeiten-titel" class="lab">Zwei Beispiel-Websites</h2>
+  <!-- Die Bühne: das erste Fenster wächst aus der Mitte fast auf Bildschirm-
+       größe, die Seite darin scrollt durch, dann schiebt sich das zweite
+       darüber. Gerechnet in buehne.js („Werk“), bewegt nur per transform.
+       Ohne Skript oder bei reduzierter Bewegung stehen beide Fenster
+       untereinander, jedes mit dem oberen Teil der Seite. -->
+  <section class="werk" id="arbeiten" data-ton="dunkel" aria-labelledby="werk-titel">
+    <div class="werk-strecke">
+      <div class="werk-buehne">
+        <h2 class="werk-titel" id="werk-titel" data-enthuellen>
+          <span class="z"><span class="z-in">Zwei Beispiel&#8209;</span></span>
+          <span class="z"><span class="z-in">Websites</span></span>
+        </h2>
 
-      <ul class="reihe">
-        <li>
-          <figure class="tafel">
-            <div class="bild">
-              <img src="assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="900" loading="lazy"
-                   sizes="(max-width: 900px) 70vw, 36rem"
-                   alt="Beispielseite einer Zahnarztpraxis: Kopfzeile mit Telefonnummer, Überschrift und die Sprechzeiten als Tabelle">
-            </div>
-            <figcaption>
+        <ol class="werk-liste">
+          <li class="werk-karte">
+            <a class="fenster" href="/beispiel-zahnarzt/" tabindex="-1" data-zeiger="Ansehen">
+              <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-zahnarzt</span></span>
+              <span class="fenster-bild">
+                <picture>
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-zahnarzt-handy-lang.webp" width="780" height="5200">
+                  <img src="/assets/img/beispiel-zahnarzt-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                       alt="Beispielseite einer Zahnarztpraxis, von oben nach unten: Kopfzeile mit Telefonnummer, Überschrift mit Sprechzeiten als Tabelle, Leistungen, Team, Anfahrt mit Skizze und Terminanfrage">
+                </picture>
+              </span>
+            </a>
+            <div class="werk-text">
               <h3>Zahnarztpraxis am Kastanienplatz</h3>
               <p>Erfundene Praxis, komplett gebaut: Sprechzeiten, Leistungen, Anfahrt.
-                <a class="offen" href="beispiel-zahnarzt/">Ansehen</a></p>
-            </figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="tafel">
-            <div class="bild">
-              <img src="assets/img/beispiel-cafe-desktop.webp" width="1440" height="900" loading="lazy"
-                   sizes="(max-width: 900px) 70vw, 36rem"
-                   alt="Beispielseite eines Cafés: Name, Adresse, Telefonnummer und die Öffnungszeiten als Tabelle">
+                <a class="offen" href="/beispiel-zahnarzt/">Ansehen</a></p>
             </div>
-            <figcaption>
+          </li>
+          <li class="werk-karte">
+            <a class="fenster" href="/beispiel-cafe/" tabindex="-1" data-zeiger="Ansehen">
+              <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-cafe</span></span>
+              <span class="fenster-bild">
+                <picture>
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-cafe-handy-lang.webp" width="780" height="5200">
+                  <img src="/assets/img/beispiel-cafe-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                       alt="Beispielseite eines Cafés, von oben nach unten: Name, Adresse und Öffnungszeiten, dann die Karte mit Preisen und der Abschnitt Gut zu wissen">
+                </picture>
+              </span>
+            </a>
+            <div class="werk-text">
               <h3>Café Mühlenstein</h3>
               <p>Zweites Beispiel. Die Karte steht mit Preisen auf der Seite, nicht als PDF.
-                <a class="offen" href="beispiel-cafe/">Ansehen</a></p>
-            </figcaption>
-          </figure>
-        </li>
-      </ul>
-      <p class="wisch">Zum Wischen, zwei Tafeln.</p>
+                <a class="offen" href="/beispiel-cafe/">Ansehen</a></p>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
 
   <!-- ==================================================   GingR (App)  === -->
-  <section class="sim" id="gingr" data-sim="gingr" aria-labelledby="sim-titel">
+  <section class="sim" id="gingr" data-sim="gingr" data-ton="dunkel" aria-labelledby="sim-titel">
     <!-- GingR-Simulation. Die Mechanik steht in sim.js und sim.css. Im Telefon
          steht der ENDZUSTAND fest im HTML (ohne JavaScript und bei reduzierter
          Bewegung bleibt er so stehen); sim.js nimmt die Klassen am .app-schirm
@@ -252,7 +319,7 @@
   </section>
 
   <!-- ================================================  Rezeptbuch (Web)  === -->
-  <section class="sim sim-rezept" id="rezeptbuch" data-sim="rezept" aria-labelledby="rezept-titel">
+  <section class="sim sim-rezept" id="rezeptbuch" data-sim="rezept" data-ton="hell" aria-labelledby="rezept-titel">
     <!-- Rezeptbuch-Simulation im Browserfenster. Mechanik in sim.js (Ablauf
          „rezept“), Aussehen in rezept.css. Im Fenster steht der ENDZUSTAND fest im
          HTML; sim.js nimmt die Klassen am .rb-schirm für frühere Schritte weg.
@@ -452,94 +519,109 @@
   </section>
 
   <!-- ====================================================== Preise ======= -->
-  <section class="preise" id="preise" aria-labelledby="preise-titel">
+  <section class="preise" id="preise" data-ton="hell" aria-labelledby="preise-titel">
     <div class="wrap">
-      <h2 id="preise-titel" class="lab">Preise</h2>
-      <p class="satz">Festpreis vor dem Start. Er gilt, auch wenn ich mich verschätzt habe.</p>
+      <div class="preise-kopf">
+        <h2 class="gross-titel" id="preise-titel" data-enthuellen><span class="z"><span class="z-in">Preise</span></span></h2>
+        <p class="satz" data-auftauchen>Festpreis vor dem Start. Er gilt, auch wenn ich mich verschätzt habe.</p>
+      </div>
 
       <ul class="preisliste">
-        <li>
-          <div><h3>Starter</h3><p class="was">1–3 Seiten, Kontaktformular</p></div>
+        <li data-auftauchen>
+          <h3>Starter</h3><p class="was">1–3 Seiten, Kontaktformular</p>
           <p class="betrag"><b>150–300&#8239;€</b><span>danach 300–500&#8239;€</span></p>
         </li>
-        <li>
-          <div><h3>Komplett</h3><p class="was">4–7 Seiten, eigenes Design</p></div>
+        <li data-auftauchen>
+          <h3>Komplett</h3><p class="was">4–7 Seiten, eigenes Design</p>
           <p class="betrag"><b>300–600&#8239;€</b><span>danach 600–1.000&#8239;€</span></p>
         </li>
-        <li>
-          <div><h3>Pflege</h3><p class="was">Änderungen nach dem Start</p></div>
+        <li data-auftauchen>
+          <h3>Pflege</h3><p class="was">Änderungen nach dem Start</p>
           <p class="betrag"><b>20&#8239;€ / Std.</b><span>danach 40&#8239;€ / Std.</span></p>
         </li>
-        <li>
-          <div><h3>Apps und mehr</h3><p class="was">kein Paket, zu verschieden</p></div>
+        <li data-auftauchen>
+          <h3>Apps und mehr</h3><p class="was">kein Paket, zu verschieden</p>
           <p class="betrag"><b>nach Aufwand</b><span>Preis vor dem Start</span></p>
         </li>
       </ul>
 
-      <p class="fein">Die große Zahl ist der Einführungspreis für meine ersten fünf Projekte, danach gilt die kleine.
-        Endpreise ohne Umsatzsteuer: Ich bin Kleinunternehmer nach §&nbsp;19&nbsp;UStG.</p>
-      <a class="mehr" href="angebot/">Was in den Paketen steckt, Ablauf und Bedingungen &#8594;</a>
+      <div class="preise-fuss" data-auftauchen>
+        <p class="fein">Die große Zahl ist der Einführungspreis für meine ersten fünf Projekte, danach gilt die kleine.
+          Endpreise ohne Umsatzsteuer: Ich bin Kleinunternehmer nach §&nbsp;19&nbsp;UStG.</p>
+        <a class="mehr" href="/angebot/">Was in den Paketen steckt, Ablauf und Bedingungen &#8594;</a>
+      </div>
     </div>
   </section>
 
   <!-- ===================================================== Kontakt ======= -->
-  <section class="kontakt" id="kontakt" aria-labelledby="kontakt-titel">
-    <div class="wrap kontakt-in">
-      <div>
-        <h2 id="kontakt-titel" class="lab">Kontakt</h2>
-        <a class="gross" href="tel:+491794904546">0179&nbsp;4904546</a><br>
-        <a class="post" href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
-        <p class="dazu">In zehn Minuten ist meist klar, ob ich der Richtige für Ihr Vorhaben bin.
-          Wenn nicht, sage ich das auch. Ich antworte werktags innerhalb von 24&nbsp;Stunden.</p>
+  <!-- Das dunkle Ende. Die Fläche wächst beim Hineinscrollen von einer
+       abgerundeten Karte auf volle Breite (buehne.js, „Aufziehen“). -->
+  <section class="kontakt" id="kontakt" data-ton="dunkel" aria-labelledby="kontakt-titel">
+    <div class="wrap">
+      <h2 class="gross-titel" id="kontakt-titel" data-enthuellen>
+        <span class="z"><span class="z-in">Erstgespräch,</span></span>
+        <span class="z"><span class="z-in">kostenlos.</span></span>
+      </h2>
+
+      <div class="kontakt-in">
+        <div class="kontakt-wege" data-auftauchen>
+          <a class="gross" href="tel:+491794904546">0179&nbsp;4904546</a>
+          <a class="post" href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
+          <p class="dazu">In zehn Minuten ist meist klar, ob ich der Richtige für Ihr Vorhaben bin.
+            Wenn nicht, sage ich das auch. Ich antworte werktags innerhalb von 24&nbsp;Stunden.</p>
+        </div>
+
+        <form class="form" id="form" novalidate data-auftauchen>
+          <div class="feld">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="feld">
+            <label for="f-mail">E&#8209;Mail oder Telefon</label>
+            <input id="f-mail" name="email" type="text" autocomplete="email" required>
+          </div>
+          <div class="feld">
+            <label for="f-msg">Worum geht es?</label>
+            <textarea id="f-msg" name="message" rows="4" required></textarea>
+          </div>
+
+          <!-- Roboter-Falle. Für Menschen unsichtbar, für Vorleseprogramme ausgeblendet. -->
+          <div class="falle" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+          <button class="knopf knopf-hell" type="submit" id="form-submit" disabled data-magnet>Nachricht senden</button>
+
+          <p class="form-aus" id="form-aus">Der Versand über dieses Formular braucht JavaScript. Ohne
+            JavaScript erreichen Sie mich unter <a href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
+            oder telefonisch unter <a href="tel:+491794904546">0179&nbsp;4904546</a>.</p>
+          <p class="form-hinweis">Die Nachricht geht direkt an mich. Was mit Ihren Angaben passiert, steht
+            in der <a href="/datenschutz.html">Datenschutzerklärung</a>.</p>
+          <p class="form-stand" id="form-stand" role="status"
+             data-sendet="Wird gesendet …"
+             data-gut="Danke, Ihre Nachricht ist bei mir. Ich antworte in der Regel am selben Tag."
+             data-schlecht="Der Versand hat nicht funktioniert. Bitte schreiben Sie mir direkt an support@ly-webstudio.de oder rufen Sie an: 0179 4904546."></p>
+        </form>
       </div>
-
-      <form class="form" id="form" novalidate>
-        <div class="feld">
-          <label for="f-name">Name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required>
-        </div>
-        <div class="feld">
-          <label for="f-mail">E&#8209;Mail oder Telefon</label>
-          <input id="f-mail" name="email" type="text" autocomplete="email" required>
-        </div>
-        <div class="feld">
-          <label for="f-msg">Worum geht es?</label>
-          <textarea id="f-msg" name="message" rows="4" required></textarea>
-        </div>
-
-        <!-- Roboter-Falle. Für Menschen unsichtbar, für Vorleseprogramme ausgeblendet. -->
-        <div class="falle" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-
-        <button class="knopf" type="submit" id="form-submit" disabled>Nachricht senden</button>
-
-        <p class="form-aus" id="form-aus">Der Versand über dieses Formular braucht JavaScript. Ohne
-          JavaScript erreichen Sie mich unter <a href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
-          oder telefonisch unter <a href="tel:+491794904546">0179&nbsp;4904546</a>.</p>
-        <p class="form-hinweis">Die Nachricht geht direkt an mich. Was mit Ihren Angaben passiert, steht
-          in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
-        <p class="form-stand" id="form-stand" role="status"
-           data-sendet="Wird gesendet …"
-           data-gut="Danke, Ihre Nachricht ist bei mir. Ich antworte in der Regel am selben Tag."
-           data-schlecht="Der Versand hat nicht funktioniert. Bitte schreiben Sie mir direkt an support@ly-webstudio.de oder rufen Sie an: 0179 4904546."></p>
-      </form>
     </div>
   </section>
 </main>
 
-<footer class="fuss">
+<footer class="fuss" data-ton="dunkel">
+  <p class="wortmarke" aria-hidden="true">ly&#8209;webstudio</p>
   <div class="wrap fuss-in">
     <p>ly&#8209;webstudio UG (haftungsbeschränkt) · Leon Brodersen · HRB 285808 B</p>
     <ul>
-      <li><a href="impressum.html">Impressum</a></li>
-      <li><a href="datenschutz.html">Datenschutz</a></li>
-      <li><a href="agb.html">AGB</a></li>
-      <li><a href="widerruf.html">Widerruf</a></li>
+      <li><a href="/impressum.html">Impressum</a></li>
+      <li><a href="/datenschutz.html">Datenschutz</a></li>
+      <li><a href="/agb.html">AGB</a></li>
+      <li><a href="/widerruf.html">Widerruf</a></li>
     </ul>
   </div>
 </footer>
 
-<script src="sim.js?v=20260926" defer></script>
-<script src="script.js?v=20260926" defer></script>
+<script src="/assets/vendor/lenis.min.js?v=20260927" defer></script>
+<script src="/buehne.js?v=20260927" defer></script>
+<script src="/sim.js?v=20260927" defer></script>
+<script src="/script.js?v=20260927" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

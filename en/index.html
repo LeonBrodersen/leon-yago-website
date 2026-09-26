@@ -35,93 +35,160 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
     <link rel="manifest" href="/favicon/site.webmanifest">
 
-    <link rel="preload" href="/fonts/inter-v20-latin-800.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/inter-v20-latin-700.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/styles.css?v=20260926">
-    <link rel="stylesheet" href="/sim.css?v=20260926">
-    <link rel="stylesheet" href="/rezept.css?v=20260926">
+    <link rel="preload" href="/assets/img/beispiel-zahnarzt-desktop.webp" as="image" type="image/webp" fetchpriority="high">
+    <link rel="stylesheet" href="/styles.css?v=20260927">
+    <link rel="stylesheet" href="/sim.css?v=20260927">
+    <link rel="stylesheet" href="/rezept.css?v=20260927">
+    <!-- Vor dem ersten Bild: Klassen für Bewegung setzen, damit nichts erst
+         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js. -->
+    <script>
+      (function (r) {
+        r.classList.remove('no-js');
+        r.classList.add('js');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('bewegt');
+      })(document.documentElement);
+    </script>
 </head>
 
 <body>
 <a class="skip" href="#content">Skip to content</a>
 
-<header class="leiste">
-  <div class="wrap leiste-in">
+<header class="leiste" data-leiste>
+  <div class="leiste-in">
     <a class="marke" href="/en/">ly&#8209;webstudio</a>
-    <nav aria-label="More pages">
+    <nav aria-label="Sections and language">
+      <a class="leiste-arbeiten" href="#work">Work</a>
       <a href="#prices">Prices</a>
-      <a href="/" hreflang="de" lang="de">Deutsch</a>
+      <a href="#contact">Contact</a>
+      <a href="/" hreflang="de" lang="de" aria-label="Deutsch">DE</a>
     </nav>
   </div>
 </header>
 
 <main id="content">
 
-  <!-- ======================================================== Top ======== -->
-  <section class="kopf">
-    <div class="wrap">
-      <h1>I build websites.</h1>
-      <p class="unter">For small businesses and the self-employed, at a fixed price and in one to two weeks.
-        <span class="auch">And if you need more, <a href="#gingr">apps</a> and other software projects too.</span></p>
+  <!-- ======================================================== Kopf ======= -->
+  <!-- Die Überschrift trägt die Seite allein, wie bei den Vorbildern: drei
+       Wörter, sehr groß, und mitten darin ein kleines Fenster, in dem die
+       eigenen Arbeiten wechseln. Beim ersten Besuch startet dieses Fenster
+       bildschirmfüllend und schrumpft in die Zeile (buehne.js, „Auftakt“). -->
+  <section class="held" data-ton="hell" aria-labelledby="held-titel">
+    <div class="held-in">
+      <h1 class="held-titel" id="held-titel" data-enthuellen>
+        <span class="z z-1"><span class="z-in">I build</span></span>
+        <span class="pille" aria-hidden="true">
+          <span class="pille-bild ist-da"><img src="/assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="900" alt="" fetchpriority="high"></span>
+          <span class="pille-bild"><img src="/assets/img/beispiel-cafe-desktop.webp" width="1440" height="900" alt="" loading="lazy"></span>
+          <span class="pille-bild"><img src="/assets/img/gingr-tafel-560.webp" width="560" height="350" alt="" loading="lazy"></span>
+        </span>
+        <span class="z z-2"><span class="z-in">websites.</span></span>
+      </h1>
 
-      <div class="wer">
-        <img src="/assets/img/leon-frei-320.webp"
-             srcset="/assets/img/leon-frei-320.webp 320w, /assets/img/leon-frei-640.webp 640w"
-             sizes="(max-width: 760px) 72px, 104px"
-             width="320" height="400" fetchpriority="high"
-             alt="Leon Brodersen, head and shoulders, light blue shirt">
-        <p><b>Leon Brodersen</b>, computer-science student and managing director of ly&#8209;webstudio UG&nbsp;(haftungsbeschränkt).
-          You talk to the person who writes the code, in German or English.</p>
+      <div class="held-fuss" data-auftauchen>
+        <div class="wer">
+          <img src="/assets/img/leon-frei-320.webp"
+               srcset="/assets/img/leon-frei-320.webp 320w, /assets/img/leon-frei-640.webp 640w"
+               sizes="72px" width="320" height="400"
+               alt="Leon Brodersen, head and shoulders, light blue shirt">
+          <p><b>Leon Brodersen</b>, computer-science student and managing director of ly&#8209;webstudio UG&nbsp;(haftungsbeschränkt).
+            You talk to the person who writes the code, in German or English.</p>
+        </div>
+        <p class="unter">For small businesses and the self-employed, at a fixed price and in one to two weeks.
+          <span class="auch">And if you need more, <a href="#gingr">apps</a> and other software projects too.</span></p>
+        <div class="tun">
+          <a class="knopf knopf-roll" href="#contact" data-magnet><span class="knopf-text" data-text="First call, free"><span class="knopf-rein">First call, free</span></span></a>
+          <a class="ruf" href="tel:+491794904546">or call +49&nbsp;179&nbsp;4904546</a>
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div class="tun">
-        <a class="knopf" href="#contact">First call, free</a>
-        <a class="ruf" href="tel:+491794904546">or call +49&nbsp;179&nbsp;4904546</a>
-      </div>
+  <!-- ==================================================== Schriftband ==== -->
+  <!-- Drei Zeilen, die beim Scrollen gegeneinander laufen. Für Vorleseprogramme
+       steht derselbe Inhalt einmal als Liste; die bewegten Zeilen sind nur Bild. -->
+  <section class="band" data-ton="hell" aria-label="How I work">
+    <ul class="vh">
+      <li>Fixed price before the start</li>
+      <li>Done in one to two weeks</li>
+      <li>Straight to me, no middlemen</li>
+    </ul>
+    <div class="band-zeilen" aria-hidden="true">
+      <div class="band-zeile" data-richtung="-1"><div class="band-spur">
+        <span>Fixed price</span><i></i><span>before the start</span><i></i>
+        <span>Fixed price</span><i></i><span>before the start</span><i></i>
+        <span>Fixed price</span><i></i><span>before the start</span><i></i>
+      </div></div>
+      <div class="band-zeile" data-richtung="1"><div class="band-spur">
+        <span>One to two</span><i></i><span>weeks</span><i></i>
+        <span>One to two</span><i></i><span>weeks</span><i></i>
+        <span>One to two</span><i></i><span>weeks</span><i></i>
+      </div></div>
+      <div class="band-zeile" data-richtung="-1"><div class="band-spur">
+        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
+        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
+        <span>Straight to me</span><i></i><span>no middlemen</span><i></i>
+      </div></div>
     </div>
   </section>
 
   <!-- ==================================================== Websites ======= -->
-  <section class="arbeiten" aria-labelledby="work-titel">
-    <div class="wrap">
-      <h2 id="work-titel" class="lab">Two example websites</h2>
+  <!-- Die Bühne: das erste Fenster wächst aus der Mitte fast auf Bildschirm-
+       größe, die Seite darin scrollt durch, dann schiebt sich das zweite
+       darüber. Gerechnet in buehne.js („Werk“), bewegt nur per transform.
+       Ohne Skript oder bei reduzierter Bewegung stehen beide Fenster
+       untereinander, jedes mit dem oberen Teil der Seite. -->
+  <section class="werk" id="work" data-ton="dunkel" aria-labelledby="werk-titel">
+    <div class="werk-strecke">
+      <div class="werk-buehne">
+        <h2 class="werk-titel" id="werk-titel" data-enthuellen>
+          <span class="z"><span class="z-in">Two example</span></span>
+          <span class="z"><span class="z-in">websites</span></span>
+        </h2>
 
-      <ul class="reihe">
-        <li>
-          <figure class="tafel">
-            <div class="bild">
-              <img src="/assets/img/beispiel-zahnarzt-desktop.webp" width="1440" height="900" loading="lazy"
-                   sizes="(max-width: 900px) 70vw, 36rem"
-                   alt="Example page for a dental practice: header with phone number, heading, and opening hours as a table">
-            </div>
-            <figcaption>
+        <ol class="werk-liste">
+          <li class="werk-karte">
+            <a class="fenster" href="/beispiel-zahnarzt/" hreflang="de" tabindex="-1" data-zeiger="Open">
+              <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-zahnarzt</span></span>
+              <span class="fenster-bild">
+                <picture>
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-zahnarzt-handy-lang.webp" width="780" height="5200">
+                  <img src="/assets/img/beispiel-zahnarzt-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                       alt="Example site for a dental practice, top to bottom: header with phone number, headline with opening hours as a table, treatments, team, directions with a sketch and appointment request">
+                </picture>
+              </span>
+            </a>
+            <div class="werk-text">
               <h3>Zahnarztpraxis am Kastanienplatz</h3>
               <p>An invented practice, built end to end: opening hours, treatments, directions.
                 <a class="offen" href="/beispiel-zahnarzt/" hreflang="de">Open it</a></p>
-            </figcaption>
-          </figure>
-        </li>
-        <li>
-          <figure class="tafel">
-            <div class="bild">
-              <img src="/assets/img/beispiel-cafe-desktop.webp" width="1440" height="900" loading="lazy"
-                   sizes="(max-width: 900px) 70vw, 36rem"
-                   alt="Example page for a café: name, address, phone number, and opening hours as a table">
             </div>
-            <figcaption>
+          </li>
+          <li class="werk-karte">
+            <a class="fenster" href="/beispiel-cafe/" hreflang="de" tabindex="-1" data-zeiger="Open">
+              <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-cafe</span></span>
+              <span class="fenster-bild">
+                <picture>
+                  <source media="(max-width: 700px)" srcset="/assets/img/beispiel-cafe-handy-lang.webp" width="780" height="5200">
+                  <img src="/assets/img/beispiel-cafe-lang.webp" width="1280" height="3000" loading="lazy" decoding="async"
+                       alt="Example site for a café, top to bottom: name, address and opening hours, then the menu with prices and a good-to-know section">
+                </picture>
+              </span>
+            </a>
+            <div class="werk-text">
               <h3>Café Mühlenstein</h3>
               <p>A second example. The menu is on the page with prices, not as a PDF.
                 <a class="offen" href="/beispiel-cafe/" hreflang="de">Open it</a></p>
-            </figcaption>
-          </figure>
-        </li>
-      </ul>
-      <p class="wisch">Swipe, two plates. Both examples are in German.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
     </div>
   </section>
 
   <!-- ==================================================   GingR (app)  === -->
-  <section class="sim" id="gingr" data-sim="gingr" aria-labelledby="sim-titel">
+  <section class="sim" id="gingr" data-sim="gingr" data-ton="dunkel" aria-labelledby="sim-titel">
     <!-- GingR simulation. Mechanics live in sim.js and sim.css. The phone holds
          the END STATE in the HTML (it stays that way without JavaScript and with
          reduced motion); sim.js removes the classes on .app-schirm for earlier
@@ -251,7 +318,7 @@
   </section>
 
   <!-- ================================================  Rezeptbuch (Web)  === -->
-  <section class="sim sim-rezept" id="rezeptbuch" data-sim="rezept" aria-labelledby="rezept-titel">
+  <section class="sim sim-rezept" id="rezeptbuch" data-sim="rezept" data-ton="hell" aria-labelledby="rezept-titel">
     <!-- Recipe book simulation in a browser window. Mechanics in sim.js (flow
          "rezept"), looks in rezept.css. The window holds the END STATE in the
          HTML; sim.js removes the classes on .rb-schirm for earlier steps.
@@ -450,82 +517,95 @@
     </div>
   </section>
 
-  <!-- ===================================================== Prices ======== -->
-  <section class="preise" id="prices" aria-labelledby="prices-titel">
+  <!-- ====================================================== Preise ======= -->
+  <section class="preise" id="prices" data-ton="hell" aria-labelledby="prices-titel">
     <div class="wrap">
-      <h2 id="prices-titel" class="lab">Prices</h2>
-      <p class="satz">Fixed price before the start. It holds, even if I misjudged the work.</p>
+      <div class="preise-kopf">
+        <h2 class="gross-titel" id="prices-titel" data-enthuellen><span class="z"><span class="z-in">Prices</span></span></h2>
+        <p class="satz" data-auftauchen>Fixed price before the start. It holds, even if I misjudged the work.</p>
+      </div>
 
       <ul class="preisliste">
-        <li>
-          <div><h3>Starter</h3><p class="was">1–3 pages, contact form</p></div>
+        <li data-auftauchen>
+          <h3>Starter</h3><p class="was">1–3 pages, contact form</p>
           <p class="betrag"><b>150–300&#8239;€</b><span>later 300–500&#8239;€</span></p>
         </li>
-        <li>
-          <div><h3>Complete</h3><p class="was">4–7 pages, own design</p></div>
+        <li data-auftauchen>
+          <h3>Complete</h3><p class="was">4–7 pages, own design</p>
           <p class="betrag"><b>300–600&#8239;€</b><span>later 600–1,000&#8239;€</span></p>
         </li>
-        <li>
-          <div><h3>Care</h3><p class="was">Changes after launch</p></div>
+        <li data-auftauchen>
+          <h3>Care</h3><p class="was">Changes after launch</p>
           <p class="betrag"><b>20&#8239;€ / hour</b><span>later 40&#8239;€ / hour</span></p>
         </li>
-        <li>
-          <div><h3>Apps and more</h3><p class="was">no package, too different</p></div>
+        <li data-auftauchen>
+          <h3>Apps and more</h3><p class="was">no package, too different</p>
           <p class="betrag"><b>by effort</b><span>price before the start</span></p>
         </li>
       </ul>
 
-      <p class="fein">The large figure is the introductory price for my first five projects; after that, the small one applies.
+      <div class="preise-fuss" data-auftauchen>
+        <p class="fein">The large figure is the introductory price for my first five projects; after that, the small one applies.
         Final prices without VAT: I am a small business under §&nbsp;19 of the German VAT Act.</p>
-      <a class="mehr" href="/angebot/" hreflang="de" lang="de">What each package includes, process and terms (German) &#8594;</a>
+        <a class="mehr" href="/angebot/" hreflang="de" lang="de">What each package includes, process and terms (German) &#8594;</a>
+      </div>
     </div>
   </section>
 
-  <!-- ==================================================== Contact ======== -->
-  <section class="kontakt" id="contact" aria-labelledby="contact-titel">
-    <div class="wrap kontakt-in">
-      <div>
-        <h2 id="contact-titel" class="lab">Contact</h2>
-        <a class="gross" href="tel:+491794904546">+49&nbsp;179&nbsp;4904546</a><br>
-        <a class="post" href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
-        <p class="dazu">Ten minutes are usually enough to tell whether I am the right person for your
+  <!-- ===================================================== Kontakt ======= -->
+  <!-- Das dunkle Ende. Die Fläche wächst beim Hineinscrollen von einer
+       abgerundeten Karte auf volle Breite (buehne.js, „Aufziehen“). -->
+  <section class="kontakt" id="contact" data-ton="dunkel" aria-labelledby="contact-titel">
+    <div class="wrap">
+      <h2 class="gross-titel" id="contact-titel" data-enthuellen>
+        <span class="z"><span class="z-in">First call,</span></span>
+        <span class="z"><span class="z-in">free.</span></span>
+      </h2>
+
+      <div class="kontakt-in">
+        <div class="kontakt-wege" data-auftauchen>
+          <a class="gross" href="tel:+491794904546">+49&nbsp;179&nbsp;4904546</a>
+          <a class="post" href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a>
+          <p class="dazu">Ten minutes are usually enough to tell whether I am the right person for your
           project. If I am not, I will say so. I reply within 24 hours on working days.</p>
-      </div>
-
-      <form class="form" id="form" novalidate>
-        <div class="feld">
-          <label for="f-name">Name</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required>
-        </div>
-        <div class="feld">
-          <label for="f-mail">E&#8209;mail or phone</label>
-          <input id="f-mail" name="email" type="text" autocomplete="email" required>
-        </div>
-        <div class="feld">
-          <label for="f-msg">What is it about?</label>
-          <textarea id="f-msg" name="message" rows="4" required></textarea>
         </div>
 
-        <!-- Bot trap. Invisible to people, hidden from screen readers. -->
-        <div class="falle" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+        <form class="form" id="form" novalidate data-auftauchen>
+          <div class="feld">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="feld">
+            <label for="f-mail">E&#8209;mail or phone</label>
+            <input id="f-mail" name="email" type="text" autocomplete="email" required>
+          </div>
+          <div class="feld">
+            <label for="f-msg">What is it about?</label>
+            <textarea id="f-msg" name="message" rows="4" required></textarea>
+          </div>
 
-        <button class="knopf" type="submit" id="form-submit" disabled>Send message</button>
+          <!-- Roboter-Falle. Für Menschen unsichtbar, für Vorleseprogramme ausgeblendet. -->
+          <div class="falle" aria-hidden="true"><label for="f-web">Website</label><input id="f-web" name="website" type="text" tabindex="-1" autocomplete="off"></div>
 
-        <p class="form-aus" id="form-aus">Sending this form needs JavaScript. Without it, reach me at
+          <button class="knopf knopf-hell" type="submit" id="form-submit" disabled data-magnet>Send message</button>
+
+          <p class="form-aus" id="form-aus">Sending this form needs JavaScript. Without it, reach me at
           <a href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a> or by phone at
           <a href="tel:+491794904546">+49&nbsp;179&nbsp;4904546</a>.</p>
-        <p class="form-hinweis">Your message goes straight to me. What happens to your details is in the
+          <p class="form-hinweis">Your message goes straight to me. What happens to your details is in the
           <a href="/datenschutz.html" hreflang="de" lang="de">privacy policy (German)</a>.</p>
-        <p class="form-stand" id="form-stand" role="status"
+          <p class="form-stand" id="form-stand" role="status"
            data-sendet="Sending …"
            data-gut="Thank you, your message reached me. I usually reply the same day."
            data-schlecht="Sending failed. Please write to support@ly-webstudio.de or call +49 179 4904546."></p>
-      </form>
+        </form>
+      </div>
     </div>
   </section>
 </main>
 
-<footer class="fuss">
+<footer class="fuss" data-ton="dunkel">
+  <p class="wortmarke" aria-hidden="true">ly&#8209;webstudio</p>
   <div class="wrap fuss-in">
     <p>ly&#8209;webstudio UG (haftungsbeschränkt) · Leon Brodersen · HRB 285808 B</p>
     <ul>
@@ -537,8 +617,10 @@
   </div>
 </footer>
 
-<script src="/sim.js?v=20260926" defer></script>
-<script src="/script.js?v=20260926" defer></script>
+<script src="/assets/vendor/lenis.min.js?v=20260927" defer></script>
+<script src="/buehne.js?v=20260927" defer></script>
+<script src="/sim.js?v=20260927" defer></script>
+<script src="/script.js?v=20260927" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

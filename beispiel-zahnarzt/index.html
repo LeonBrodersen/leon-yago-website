@@ -147,6 +147,13 @@ tbody tr:last-child > * { border-bottom: 1px solid var(--line); }
   .site-foot .wrap { display: block; }
   .site-foot ul { margin-top: 12px; }
 }
+/* Seitenwechsel ohne harten Schnitt (wie die Startseite, styles.css). */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: 260ms cubic-bezier(0.76, 0, 0.24, 1) both seite-raus; }
+::view-transition-new(root) { animation: 420ms cubic-bezier(0.19, 1, 0.22, 1) both seite-rein; }
+@keyframes seite-raus { to { opacity: 0; transform: translateY(-2vh); } }
+@keyframes seite-rein { from { opacity: 0; transform: translateY(3vh); } }
+@media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
 </style>
 </head>
 <body>
