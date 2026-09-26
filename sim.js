@@ -119,6 +119,25 @@
     }
   };
 
+  /* Maßstab des Rezeptbuch-Fensters: Fensterbreite durch App-Breite (960).
+     Steht in rezept.css schon als CSS, aber Safari rechnet die Formel dort
+     falsch und das Fenster bliebe leer. Läuft auch bei reduzierter Bewegung,
+     weil der Endzustand genauso skaliert werden muss. */
+  [].forEach.call(document.querySelectorAll('.rb-fenster'), function (fenster) {
+    var innen = fenster.querySelector('.rb-innen');
+    if (!innen) return;
+    function skalieren() {
+      /* Berechnete Breite statt clientWidth: die rundet auf ganze Pixel. */
+      var breite = parseFloat(getComputedStyle(fenster).width);
+      if (breite && innen.offsetWidth) {
+        innen.style.transform = 'scale(' + breite / innen.offsetWidth + ')';
+      }
+    }
+    skalieren();
+    if (window.ResizeObserver) new ResizeObserver(skalieren).observe(fenster);
+    else window.addEventListener('resize', skalieren, { passive: true });
+  });
+
   var sims = [];
   [].forEach.call(document.querySelectorAll('[data-sim]'), function (sim) {
     var ablauf = ABLAEUFE[sim.getAttribute('data-sim')];
