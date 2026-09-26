@@ -30,6 +30,30 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://www.ly-webstudio.de/og-image.jpg">
 
+    <!-- Vor allem anderen, auch vor den Stylesheets (ein Skript hinter einem
+         Stylesheet wartet, bis es geladen ist): Klassen für Bewegung setzen, damit nichts erst
+         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js.
+         Ruhig (ohne Bühnen, alles untereinander) bei „Bewegung reduzieren“ und
+         bei weniger als 500 px Höhe: stark gezoomt oder das Handy quer, dort
+         schrumpften Telefon und Fenster auf Streifen. Kommt buehne.js nicht
+         binnen 2,5 s an (langsames Netz, Blocker), gilt ebenfalls die ruhige
+         Fassung: sonst blieben Überschrift und Texte unsichtbar. -->
+    <script>
+      (function (r) {
+        r.classList.remove('no-js');
+        r.classList.add('js');
+        var ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerHeight < 500;
+        r.classList.add(ruhig ? 'ruhig' : 'bewegt');
+        if (!ruhig) {
+          window.lyNotbremse = setTimeout(function () {
+            if (r.classList.contains('buehne-an')) return;
+            r.classList.remove('bewegt');
+            r.classList.add('ruhig');
+          }, 2500);
+        }
+      })(document.documentElement);
+    </script>
+
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
@@ -39,22 +63,13 @@
     <link rel="preload" href="/fonts/inter-v20-latin-regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/assets/img/pille-zahnarzt.webp" as="image" type="image/webp" media="(min-width: 701px)">
     <link rel="preload" href="/assets/img/pille-zahnarzt-handy.webp" as="image" type="image/webp" media="(max-width: 700px)">
+    <!-- Die Bewegung früh holen: Die Skripte stehen am Ende der Seite und würden
+         sonst erst entdeckt, wenn der Rest schon lädt (bei 3G nach 1,5 s). -->
+    <link rel="preload" href="/assets/vendor/lenis.min.js?v=20260926-2" as="script">
+    <link rel="preload" href="/buehne.js?v=20260926-2" as="script">
     <link rel="stylesheet" href="/styles.css?v=20260926-2">
     <link rel="stylesheet" href="/sim.css?v=20260926-2">
     <link rel="stylesheet" href="/rezept.css?v=20260926-2">
-    <!-- Vor dem ersten Bild: Klassen für Bewegung setzen, damit nichts erst
-         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js.
-         Ruhig (ohne Bühnen, alles untereinander) bei „Bewegung reduzieren“ und
-         bei weniger als 500 px Höhe: stark gezoomt oder das Handy quer, dort
-         schrumpften Telefon und Fenster auf Streifen. -->
-    <script>
-      (function (r) {
-        r.classList.remove('no-js');
-        r.classList.add('js');
-        var ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerHeight < 500;
-        r.classList.add(ruhig ? 'ruhig' : 'bewegt');
-      })(document.documentElement);
-    </script>
 </head>
 
 <body>
@@ -151,7 +166,7 @@
               <span class="fenster-bild">
                 <picture>
                   <source media="(max-width: 700px)" srcset="/assets/img/beispiel-zahnarzt-handy-lang.webp 780w" sizes="min(100vw - 2rem, 26rem)" width="780" height="5200">
-                  <img src="/assets/img/beispiel-zahnarzt-lang-1344.webp" srcset="/assets/img/beispiel-zahnarzt-lang-1344.webp 1344w, /assets/img/beispiel-zahnarzt-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" fetchpriority="low" decoding="async"
+                  <img src="/assets/img/beispiel-zahnarzt-lang-1344.webp" srcset="/assets/img/beispiel-zahnarzt-lang-1344.webp 1344w, /assets/img/beispiel-zahnarzt-lang-2016.webp 2016w, /assets/img/beispiel-zahnarzt-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" loading="lazy" decoding="async"
                        alt="Beispielseite einer Zahnarztpraxis, von oben nach unten: Kopfzeile mit Telefonnummer, Überschrift mit Sprechzeiten als Tabelle, Leistungen, Team, Anfahrt mit Skizze und Terminanfrage">
                 </picture>
               </span>
@@ -168,7 +183,7 @@
               <span class="fenster-bild">
                 <picture>
                   <source media="(max-width: 700px)" srcset="/assets/img/beispiel-cafe-handy-lang.webp 780w" sizes="min(100vw - 2rem, 26rem)" width="780" height="5200">
-                  <img src="/assets/img/beispiel-cafe-lang-1344.webp" srcset="/assets/img/beispiel-cafe-lang-1344.webp 1344w, /assets/img/beispiel-cafe-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" fetchpriority="low" decoding="async"
+                  <img src="/assets/img/beispiel-cafe-lang-1344.webp" srcset="/assets/img/beispiel-cafe-lang-1344.webp 1344w, /assets/img/beispiel-cafe-lang-2016.webp 2016w, /assets/img/beispiel-cafe-lang-2688.webp 2688w" sizes="min(93vw, 84rem)" width="1344" height="3000" loading="lazy" decoding="async"
                        alt="Beispielseite eines Cafés, von oben nach unten: Name, Adresse und Öffnungszeiten, dann die Karte mit Preisen und der Abschnitt Gut zu wissen">
                 </picture>
               </span>

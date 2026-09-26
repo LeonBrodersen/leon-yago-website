@@ -269,15 +269,18 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
 .pille-bild picture { display: block; width: 100%; height: 100%; }
 .pille-bild img { width: 100%; height: 100%; object-fit: cover; object-position: left top; }
 /* Eine Haarlinie innen, sonst verschwimmt die weiße Seite im Papier (1,08:1). */
-.pille::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, 0.16); pointer-events: none; }
-.pille.blendet-ein .pille-bild.ist-da { animation: pille-ein 0.55s ease-out both; }
-@keyframes pille-ein { from { opacity: 0; } }
-.bewegt .pille { transform-origin: left center; }
-.bewegt .held-titel:not(.ist-da) .pille { clip-path: inset(0 100% 0 0 round 0.07em); }
-.bewegt .held-titel .pille { transition: clip-path 1.3s var(--inaus) 0.15s; clip-path: inset(0 0 0 0 round 0.07em); }
+.pille::after { content: ""; position: absolute; inset: 0; z-index: 5; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(20, 26, 23, 0.16); pointer-events: none; }
+/* Das erste Bild ist von Anfang an gemalt; verdeckt wird es von einer Fläche
+   in Tinte darüber, die wegzieht. So zählt es als größtes Bild (LCP) gleich
+   beim ersten Malen, statt dass nach drei Sekunden das zweite gewertet wird. */
+.pille::before { content: ""; position: absolute; inset: 0; z-index: 4; background: var(--ink); opacity: 0; pointer-events: none; }
+.bewegt .held-titel .pille::before { opacity: 1; transform-origin: right center; transform: scaleX(0); transition: transform 1.3s var(--inaus) 0.15s; }
+.bewegt .held-titel:not(.ist-da) .pille::before { transform: none; }
+/* Nach dem Auftakt blendet die Fläche aus, statt wegzuziehen. */
+.bewegt .held-titel .pille.blendet-ein::before { transform: none; opacity: 0; transition: opacity 0.55s ease-out; }
 
-/* Der Auftakt beim ersten Besuch: ein bildschirmfüllendes Fenster, das in die
-   Zeile schrumpft (buehne.js animiert Lage und Größe, Bild bleibt „cover“). */
+/* Der Auftakt beim ersten Besuch: eine bildschirmfüllende Fläche in Tinte, die
+   per clip-path auf das Fenster in der Zeile zugeschnitten wird (buehne.js). */
 .auftakt {
   position: fixed;
   z-index: 70;
@@ -286,7 +289,7 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   background: var(--ink);
   pointer-events: none;
 }
-.auftakt-laeuft .pille { visibility: hidden; clip-path: none !important; transition: none !important; }
+.auftakt-laeuft .held-titel .pille::before { transform: none !important; opacity: 1 !important; transition: none !important; }
 .auftakt img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
 
 .held-fuss {
@@ -322,8 +325,6 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   .held-titel .z-1 { grid-row: 1; }
   .held-titel .z-2 { grid-row: 2; justify-self: start; }
   .held-titel .pille { grid-column: 1; grid-row: 3; width: 100%; height: auto; aspect-ratio: 16 / 10; margin-top: 0.24em; border-radius: 10px; }
-  .bewegt .held-titel:not(.ist-da) .pille { clip-path: inset(0 100% 0 0 round 10px); }
-  .bewegt .held-titel .pille { clip-path: inset(0 0 0 0 round 10px); }
   .held-fuss { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding-top: 0; border-top: 0; }
   .unter { order: -2; font-size: 1.0625rem; }
   .tun { order: -1; }
@@ -442,7 +443,6 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   background: #fff;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.18);
   transform-origin: 50% 100%;
-  will-change: transform;
   text-decoration: none;
 }
 .fenster::after {
@@ -464,7 +464,10 @@ html.lenis.lenis-smooth { scroll-behavior: auto !important; }
   font-size: 13px; font-weight: 400; letter-spacing: 0;
 }
 .fenster-bild { position: relative; flex: 1 1 0; min-height: 0; overflow: hidden; background: #fff; }
-.fenster-bild img { width: 100%; height: auto; transform: translate3d(0, var(--y, 0px), 0); will-change: transform; }
+.fenster-bild img { width: 100%; height: auto; transform: translate3d(0, var(--y, 0px), 0); }
+/* Eigene Ebenen nur, solange die Bühne in der Nähe ist (buehne.js, ist-nah):
+   entpackt sind die großen Aufnahmen bis 64 MB groß. */
+.werk.ist-nah .fenster, .werk.ist-nah .fenster-bild img { will-change: transform; }
 
 .werk-text {
   width: min(100%, 84rem);

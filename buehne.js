@@ -21,8 +21,8 @@
    Regeln, an denen die Ruhe hängt:
    - Bewegt wird nur über transform, opacity und clip-path. Nichts davon ändert
      das Layout; gemessen wird deshalb nur beim Laden und bei Größenänderung,
-     beim Scrollen wird nur gerechnet und geschrieben. Ausnahme ist der
-     Auftakt: ein festes Element über allem, das Lage und Größe animiert.
+     beim Scrollen wird nur gerechnet und geschrieben. Auch der Auftakt schneidet
+     nur zu (clip-path), er verschiebt nichts.
    - Ein Takt pro Bild. Mit Lenis (weiches Scrollen, nur mit Maus) hängt er an
      dessen Scroll-Ereignis, sonst am nativen Scrollen per requestAnimationFrame.
    - Ohne „bewegt“ (reduzierte Bewegung) tut das Skript fast nichts: Die Seite
@@ -84,6 +84,10 @@
     window.addEventListener('resize', wortmarkeEinpassen, { passive: true });
     return;
   }
+  /* Angekommen: die Notbremse im Kopf der Seite (ruhige Fassung nach 2,5 s)
+     wird nicht mehr gebraucht. */
+  wurzel.classList.add('buehne-an');
+  if (window.lyNotbremse) clearTimeout(window.lyNotbremse);
 
   /* ---------------------------------------------------------------- Lenis */
   var lenis = null;
@@ -255,12 +259,16 @@
       wurzel.classList.remove('auftakt-laeuft');
       if (huelle.parentNode) huelle.parentNode.removeChild(huelle);
       window.removeEventListener('scroll', abbrechen);
+      window.removeEventListener('resize', abbrechen);
       pille.classList.add('blendet-ein');
       setTimeout(pilleStarten, 250);
     }
     var lauf = null;
     function abbrechen() { if (lauf) lauf.finish(); else ende(); kopfZeigen(0); }
+    /* Scrollen, Drehen oder eine neue Fenstergröße: Das Ziel stimmt nicht mehr,
+       der Auftakt springt ans Ende. */
     window.addEventListener('scroll', abbrechen, { passive: true });
+    window.addEventListener('resize', abbrechen, { passive: true });
 
     /* Erst wenn die Schrift da ist, steht die Zeile an ihrem Platz. */
     var warten = [];
@@ -268,11 +276,15 @@
     var zeitlimit = new Promise(function (r) { setTimeout(r, 700); });
     Promise.race([Promise.all(warten), zeitlimit]).then(function () {
       if (fertig) return;
+      /* Zugeschnitten per clip-path statt Lage und Größe zu animieren: Das
+         verschiebt kein Layout (vorher CLS 0,22 beim ersten Besuch). */
       var r = pille.getBoundingClientRect();
       var rund = getComputedStyle(pille).borderTopLeftRadius;
+      var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      var ziel = 'inset(' + r.top.toFixed(1) + 'px ' + (vw - r.right).toFixed(1) + 'px ' + (vh - r.bottom).toFixed(1) + 'px ' + r.left.toFixed(1) + 'px round ' + rund + ')';
       lauf = huelle.animate([
-        { top: '0px', left: '0px', width: window.innerWidth + 'px', height: window.innerHeight + 'px', borderRadius: '0px' },
-        { top: r.top + 'px', left: r.left + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: rund }
+        { clipPath: 'inset(0px 0px 0px 0px round 0px)' },
+        { clipPath: ziel }
       ], { duration: 1200, delay: 120, easing: 'cubic-bezier(0.76, 0, 0.24, 1)', fill: 'forwards' });
       lauf.onfinish = ende;
       kopfZeigen(120 + 600);
@@ -333,10 +345,20 @@
         rand = probe.offsetWidth;
         document.body.removeChild(probe);
         spuren.forEach(function (s) {
-          s.gruppe = s.spur.scrollWidth / 3;
+          var stuecke = s.spur.querySelectorAll('span');
+          /* Abstand zweier Kopien, gemessen statt geschätzt. */
+          s.gruppe = stuecke.length > 1 ? stuecke[1].offsetLeft - stuecke[0].offsetLeft : s.spur.scrollWidth;
           /* So weit, dass die Aussage einmal ganz durchläuft, mindestens aber
              ein halber Bildschirm Bewegung. */
           s.weg = Math.max(breiteFenster * 0.5, s.gruppe - breiteFenster + 2 * rand);
+          /* Genug Kopien für sehr breite Bildschirme: Die Spur muss vom am
+             weitesten links stehenden Punkt bis an den rechten Rand reichen. */
+          var noetig = Math.ceil((breiteFenster + s.gruppe + s.weg) / Math.max(1, s.gruppe)) + 1;
+          var vorlage = [stuecke[0], stuecke[0] && stuecke[0].nextElementSibling];
+          for (var n = stuecke.length; n < noetig && vorlage[0] && vorlage[1]; n++) {
+            s.spur.appendChild(vorlage[0].cloneNode(true));
+            s.spur.appendChild(vorlage[1].cloneNode(true));
+          }
         });
       },
       stellen: function (y, h) {
@@ -370,7 +392,7 @@
       };
     });
     var streckeOben = 0, fahrweg = 1, buehneHoehe = 1;
-    var aktiv = -1;
+    var aktiv = -1, werkNah = null;
     var naechstes = werk.nextElementSibling;
 
     karten.forEach(function (k) { if (k.bild) k.bild.addEventListener('load', neuMessen); });
@@ -396,9 +418,14 @@
           k.weg = Math.max(0, (k.bild ? k.bild.offsetHeight : 0) - k.bildRahmen.clientHeight);
         });
       },
-      stellen: function (y, h) {
+      stellen: function (y) {
+        /* Mit der Bühnenhöhe rechnen (100svh, fest), nicht mit innerHeight:
+           Die klappt am iPhone mit der Adressleiste um 80 px auf und zu. */
+        var h = buehneHoehe;
         var p = (y - streckeOben) / fahrweg;
-        if (p < -0.6 || p > 1.3) return;
+        var nah = !(p < -0.6 || p > 1.3);
+        if (nah !== werkNah) { werkNah = nah; werk.classList.toggle('ist-nah', nah); }
+        if (!nah) return;
         p = klemmen(p, 0, 1);
         /* Beim Hineinscrollen (vor p = 0) wächst das erste Fenster schon ein
            Stück, damit die Bühne nicht leer ankommt: der Anfang zählt ab dem
@@ -586,6 +613,18 @@
       el.addEventListener('pointerleave', function () { el.style.transform = ''; });
     });
   }
+
+  /* ----------------------------------------------------- Zurück-Cache */
+  /* Kommt die Seite aus dem Zurück-Cache, steht alles wie beim Verlassen: die
+     Blase „Ansehen“ noch groß (man hatte ja darauf geklickt), die Leiste
+     vielleicht weggeschoben. Zurücksetzen und neu messen. */
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    if (zeiger) { zeigerPruefen(null); zeiger.classList.remove('ist-an'); mx = -1; }
+    wurzel.classList.remove('leiste-weg');
+    letzteY = window.scrollY;
+    neuMessen();
+  });
 
   /* ------------------------------------------------------------ Anwerfen */
   if (lenis) lenis.on('scroll', takt);
