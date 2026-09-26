@@ -724,11 +724,11 @@
 /* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
 /* Das Standbild ist die Rezeptseite bei den Zutaten, nicht das Ende des
    Kochmodus: Sie zeigt am meisten von der App. */
-.no-js .sim-rezept .sim-strecke { height: auto; }
-.no-js .rz-kochen .rb-kochen { display: none; }
-.no-js .rz-kochen .rb-rezept { display: block; }
-.no-js .rb-fenster { transform: none; }
-.no-js .rb-kamera { transition: none; }
+:is(.no-js, .ruhig) .sim-rezept .sim-strecke { height: auto; }
+:is(.no-js, .ruhig) .rz-kochen .rb-kochen { display: none; }
+:is(.no-js, .ruhig) .rz-kochen .rb-rezept { display: block; }
+:is(.no-js, .ruhig) .rb-fenster { transform: none; }
+:is(.no-js, .ruhig) .rb-kamera { transition: none; }
 @media (prefers-reduced-motion: reduce) {
   .sim-rezept .sim-strecke { height: auto; }
   .rz-kochen .rb-kochen { display: none; }
@@ -737,9 +737,9 @@
   .rb-kamera { transition: none; }
   .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
 }
-.no-js .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
+:is(.no-js, .ruhig) .rb-schirm.rz-kochen { --kz: 1.17; --kx: 70; --ky: 432; }
 @media (max-width: 860px) {
-  .no-js .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
+  :is(.no-js, .ruhig) .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }
 }
 @media (max-width: 860px) and (prefers-reduced-motion: reduce) {
   .rb-schirm.rz-kochen { --kz: 2.1; --kx: 80; --ky: 440; }

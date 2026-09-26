@@ -165,7 +165,9 @@
   if (ruhig.addEventListener) {
     ruhig.addEventListener('change', function () { location.reload(); });
   }
-  if (ruhig.matches) return; // CSS zeigt dann den Endzustand.
+  /* CSS zeigt dann den Endzustand; ebenso in der ruhigen Fassung bei wenig
+     Höhe (Klasse im Kopf der Seite). */
+  if (ruhig.matches || !wurzel.classList.contains('bewegt')) return;
 
   var schmutzig = false;
   var bestellt = false;

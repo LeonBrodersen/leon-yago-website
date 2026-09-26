@@ -172,6 +172,12 @@
     if (sichtbar) sichtbar.observe(el);
     else el.classList.add('ist-da');
   }
+  /* Ist eine Zeile gestiegen, öffnet sich ihre Maske (styles.css .fertig). */
+  document.addEventListener('transitionend', function (e) {
+    if (e.propertyName !== 'transform' || !e.target.classList || !e.target.classList.contains('z-in')) return;
+    var titel = e.target.closest('[data-enthuellen]');
+    if (titel && titel.classList.contains('ist-da')) titel.classList.add('fertig');
+  });
   [].forEach.call(document.querySelectorAll('[data-enthuellen], [data-auftauchen], .wortmarke'), function (el) {
     if (el.closest('.held')) return; // Der Kopf startet über den Auftakt.
     beobachten(el);
@@ -204,11 +210,21 @@
     if (bilder.length < 2) return;
     var jetzt = 0;
     var imBild = true;
+    /* Ein Durchgang durch die drei Arbeiten, dann steht das Fenster: Bewegung,
+       die länger als fünf Sekunden läuft, müsste man anhalten können (WCAG
+       2.2.2). Kommt der Kopf nach dem Wegscrollen wieder ins Bild, läuft es noch
+       einmal; das hat dann der Besucher ausgelöst. */
+    var wechsel = 0;
     if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (e) { imBild = e[0].isIntersecting; }).observe(pille);
+      new IntersectionObserver(function (e) {
+        var vorher = imBild;
+        imBild = e[0].isIntersecting;
+        if (imBild && !vorher) wechsel = 0;
+      }).observe(pille);
     }
     pillenLauf = setInterval(function () {
-      if (!imBild || document.hidden) return;
+      if (!imBild || document.hidden || wechsel >= bilder.length - 1) return;
+      wechsel++;
       var alt = bilder[jetzt];
       jetzt = (jetzt + 1) % bilder.length;
       var neu = bilder[jetzt];
@@ -219,8 +235,8 @@
         alt.classList.remove('ist-da');
         neu.classList.add('ist-da');
         neu.classList.remove('kommt');
-      }, 1150);
-    }, 2800);
+      }, 950);
+    }, 1500);
   }
 
   function auftakt() {
@@ -240,7 +256,7 @@
       if (huelle.parentNode) huelle.parentNode.removeChild(huelle);
       window.removeEventListener('scroll', abbrechen);
       pille.classList.add('blendet-ein');
-      setTimeout(pilleStarten, 900);
+      setTimeout(pilleStarten, 250);
     }
     var lauf = null;
     function abbrechen() { if (lauf) lauf.finish(); else ende(); kopfZeigen(0); }
@@ -277,7 +293,7 @@
     auftakt();
   } else {
     kopfZeigen(60);
-    setTimeout(pilleStarten, 1400);
+    setTimeout(pilleStarten, 900);
   }
 
   /* ------------------------------------------------------ Kopf beim Gehen */
@@ -358,6 +374,18 @@
     var naechstes = werk.nextElementSibling;
 
     karten.forEach(function (k) { if (k.bild) k.bild.addEventListener('load', neuMessen); });
+
+    /* Per Tab auf „Ansehen“: Beide Links liegen in der stehenden Bühne an
+       derselben Stelle, der Browser scrollt also nicht. Dann an die Stelle
+       springen, an der diese Karte offen steht. */
+    karten.forEach(function (k, i) {
+      k.text.addEventListener('focusin', function () {
+        var ziel = streckeOben + fahrweg * (i === 0 ? 0.34 : 0.76);
+        if (Math.abs(window.scrollY - ziel) < fahrweg * 0.1) return;
+        if (lenis) lenis.scrollTo(ziel, { immediate: true });
+        else window.scrollTo(0, ziel);
+      });
+    });
 
     teile.push({
       messen: function () {
@@ -465,7 +493,7 @@
   });
   var letzteY = window.scrollY;
   var tonJetzt = null;
-  var knopfJetzt = null, knopfAb = 0, kontaktOben = 0;
+  var knopfJetzt = null, knopfAb = 0, kontaktOben = 0, flaecheJetzt = null;
   var kontakt = document.querySelector('.kontakt');
   teile.push({
     messen: function () {
@@ -489,8 +517,11 @@
       if (treffer && treffer !== tonJetzt) {
         tonJetzt = treffer;
         wurzel.classList.toggle('leiste-dunkel', treffer.dunkel);
+        if (treffer.grund) wurzel.style.setProperty('--leiste-grund', treffer.grund);
         if (farbe && treffer.grund) farbe.setAttribute('content', treffer.grund);
       }
+      var flaeche = y > 12;
+      if (flaeche !== flaecheJetzt) { flaecheJetzt = flaeche; wurzel.classList.toggle('leiste-flaeche', flaeche); }
       var knopfAn = y > knopfAb && !(kontaktOben && y + h * 0.5 > kontaktOben);
       if (knopfAn !== knopfJetzt) { knopfJetzt = knopfAn; wurzel.classList.toggle('knopf-an', knopfAn); }
       var d = y - letzteY;

@@ -43,12 +43,16 @@
     <link rel="stylesheet" href="/sim.css?v=20260926-2">
     <link rel="stylesheet" href="/rezept.css?v=20260926-2">
     <!-- Vor dem ersten Bild: Klassen für Bewegung setzen, damit nichts erst
-         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js. -->
+         sichtbar steht und dann verschwindet. Ohne JavaScript bleibt no-js.
+         Ruhig (ohne Bühnen, alles untereinander) bei „Bewegung reduzieren“ und
+         bei weniger als 500 px Höhe: stark gezoomt oder das Handy quer, dort
+         schrumpften Telefon und Fenster auf Streifen. -->
     <script>
       (function (r) {
         r.classList.remove('no-js');
         r.classList.add('js');
-        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) r.classList.add('bewegt');
+        var ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches || window.innerHeight < 500;
+        r.classList.add(ruhig ? 'ruhig' : 'bewegt');
       })(document.documentElement);
     </script>
 </head>
@@ -142,7 +146,7 @@
 
         <ol class="werk-liste">
           <li class="werk-karte">
-            <a class="fenster" href="/beispiel-zahnarzt/" hreflang="de" tabindex="-1" data-zeiger="Open">
+            <a class="fenster" aria-hidden="true" href="/beispiel-zahnarzt/" hreflang="de" tabindex="-1" data-zeiger="Open">
               <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-zahnarzt</span></span>
               <span class="fenster-bild">
                 <picture>
@@ -155,11 +159,11 @@
             <div class="werk-text">
               <h3>Zahnarztpraxis am Kastanienplatz</h3>
               <p>An invented practice, built end to end: opening hours, treatments, directions. In German.
-                <a class="offen" href="/beispiel-zahnarzt/" hreflang="de">Open it</a></p>
+                <a class="offen" href="/beispiel-zahnarzt/" hreflang="de">Open it<span class="vh">: dental practice</span></a></p>
             </div>
           </li>
           <li class="werk-karte">
-            <a class="fenster" href="/beispiel-cafe/" hreflang="de" tabindex="-1" data-zeiger="Open">
+            <a class="fenster" aria-hidden="true" href="/beispiel-cafe/" hreflang="de" tabindex="-1" data-zeiger="Open">
               <span class="fenster-leiste" aria-hidden="true"><span class="fenster-ampel"><i></i><i></i><i></i></span><span class="fenster-adresse">ly-webstudio.de/beispiel-cafe</span></span>
               <span class="fenster-bild">
                 <picture>
@@ -172,7 +176,7 @@
             <div class="werk-text">
               <h3>Café Mühlenstein</h3>
               <p>A second example, also in German. The menu is on the page with prices, not as a PDF.
-                <a class="offen" href="/beispiel-cafe/" hreflang="de">Open it</a></p>
+                <a class="offen" href="/beispiel-cafe/" hreflang="de">Open it<span class="vh">: café</span></a></p>
             </div>
           </li>
         </ol>
@@ -546,7 +550,7 @@
       <div class="preise-fuss" data-auftauchen>
         <p class="fein">The large figure is the introductory price for my first five projects, if I may show them as references. After that, the small one applies.
         Final prices without VAT: I am a small business under §&nbsp;19 of the German VAT Act.</p>
-        <a class="mehr" href="/angebot/" hreflang="de" lang="de">What each package includes, process and terms (German)</a>
+        <a class="mehr" href="/angebot/" hreflang="de">What each package includes, process and terms (German)</a>
       </div>
     </div>
   </section>
@@ -592,7 +596,7 @@
           <a href="mailto:support@ly-webstudio.de">support@ly-webstudio.de</a> or by phone at
           <a href="tel:+491794904546">+49&nbsp;179&nbsp;4904546</a>.</p>
           <p class="form-hinweis">Your message goes straight to me. What happens to your details is in the
-          <a href="/datenschutz.html" hreflang="de" lang="de">privacy policy (German)</a>.</p>
+          <a href="/datenschutz.html" hreflang="de">privacy policy (German)</a>.</p>
           <p class="form-stand" id="form-stand" role="status"
            data-sendet="Sending …"
            data-gut="Thank you, your message reached me. I usually reply the same day."
