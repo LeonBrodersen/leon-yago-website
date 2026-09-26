@@ -114,7 +114,12 @@
 }
 
 /* Alles im Fenster ist in App-Pixeln gebaut und wird hier auf die Breite
-   gebracht. tan(atan2(a, b)) ist a/b als reine Zahl (Länge durch Länge). */
+   gebracht. tan(atan2(a, b)) ist a/b als reine Zahl (Länge durch Länge).
+   Safari rechnet tan() über cqw/vw falsch (Grad als Bogenmaß: −0,14 statt
+   0,40, der Inhalt landet gespiegelt außerhalb, das Fenster bleibt leer).
+   Deshalb danach die direkte Division, wo der Browser sie kann (Safari 26
+   ja, sonst wird die Zeile verworfen), und sim.js setzt den Maßstab ohnehin
+   selbst. Diese Zeilen gelten nur ohne JavaScript. */
 .rb-innen {
   position: absolute;
   left: 0;
@@ -123,6 +128,7 @@
   height: calc(var(--rb-hoch) * 1px);
   transform-origin: 0 0;
   transform: scale(tan(atan2(100cqw, 960px)));
+  transform: scale(calc(100cqw / 960px));
   display: flex;
   flex-direction: column;
 }
