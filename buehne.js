@@ -424,7 +424,7 @@
           b.bild.style.transform = 'translate3d(0,' + (-b.weg * rollenB).toFixed(1) + 'px,0)';
         }
         if (titel) {
-          titel.style.opacity = (1 - anteil(p, 0, 0.08)).toFixed(3);
+          titel.style.opacity = (1 - anteil(p, 0.03, 0.1)).toFixed(3);
           titel.style.transform = 'translate3d(0,' + (-p * h * 0.25).toFixed(1) + 'px,0)';
         }
         /* Beschriftung erst, wenn das Fenster ausgewachsen ist; vorher läge sie
