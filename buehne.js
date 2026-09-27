@@ -4,7 +4,7 @@
      Auftakt     Wer von außen kommt, sieht eine dunkle Fläche, die in das
                  kleine Fenster der Überschrift schrumpft; dann blendet das
                  erste Bild darin auf.
-     Pille       Darin wechseln danach drei Web-Arbeiten.
+     Pille       Darin wechseln danach zwei Web-Arbeiten, je am Computer und am Handy.
      Band        Drei Zeilen großer Schrift laufen beim Scrollen gegeneinander;
                  jede zeigt eine ganze Aussage, von Anfang bis Ende.
      Werk        Die Bühne mit den Beispiel-Websites: wachsen, durchscrollen,
@@ -214,16 +214,20 @@
     if (bilder.length < 2) return;
     var jetzt = 0;
     var imBild = true;
-    /* Ein Durchgang durch die drei Arbeiten, dann steht das Fenster: Bewegung,
-       die länger als fünf Sekunden läuft, müsste man anhalten können (WCAG
-       2.2.2). Kommt der Kopf nach dem Wegscrollen wieder ins Bild, läuft es noch
-       einmal; das hat dann der Besucher ausgelöst. */
+    /* Ein Durchgang durch die Arbeiten, dann steht das Fenster auf der letzten:
+       Bewegung, die länger als fünf Sekunden läuft, müsste man anhalten können
+       (WCAG 2.2.2). Kommt der Kopf nach dem Wegscrollen wieder ins Bild, läuft
+       es noch einmal bis zur letzten (steht sie schon, einmal ganz herum, bei
+       zwei Bildern 3 s); das hat dann der Besucher ausgelöst. */
     var wechsel = 0;
     if ('IntersectionObserver' in window) {
       new IntersectionObserver(function (e) {
         var vorher = imBild;
         imBild = e[0].isIntersecting;
-        if (imBild && !vorher) wechsel = 0;
+        if (imBild && !vorher) {
+          var bis = (bilder.length - 1 - jetzt) || bilder.length;
+          wechsel = bilder.length - 1 - bis;
+        }
       }).observe(pille);
     }
     pillenLauf = setInterval(function () {
