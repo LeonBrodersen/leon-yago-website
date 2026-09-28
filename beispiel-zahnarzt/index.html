@@ -33,7 +33,7 @@ a:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; }
 .strip { background: var(--ink); color: #E6ECED; font-size: 13px; line-height: 1.45; }
 .strip .wrap { display: flex; justify-content: space-between; gap: 24px; padding-top: 9px; padding-bottom: 9px; }
 .strip p { margin: 0; }
-.strip a { color: #fff; }
+.strip a { color: #fff; white-space: nowrap; }
 
 .site-head { border-bottom: 1px solid var(--line); }
 .site-head .wrap { display: flex; align-items: center; gap: 40px; min-height: 92px; }
@@ -109,7 +109,10 @@ tbody tr:last-child > * { border-bottom: 1px solid var(--line); }
 .site-foot ul { display: flex; gap: 24px; margin: 0; padding: 0; list-style: none; }
 
 @media (max-width: 1000px) {
-  .main-nav ul { gap: 22px; }
+  /* Menü in eine eigene Zeile: nebeneinander passten Name, Menü und Knopf erst ab 850 px. */
+  .site-head .wrap { flex-wrap: wrap; row-gap: 0; min-height: 0; padding-top: 20px; }
+  .main-nav { order: 4; width: 100%; }
+  .main-nav ul { gap: 28px; padding: 16px 0 17px; }
   .hero .wrap, .two, .book { gap: 48px; }
   h1 { font-size: 48px; }
 }
