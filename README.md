@@ -29,12 +29,12 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
 | `sim.css` | GingR im Telefon, in den Farben der App; dazu das gemeinsame Gerüst beider Simulationen |
 | `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
-| `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex` |
+| `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex`. Die englischen Fassungen für `/en/` liegen unter `en/example-dentist/` und `en/example-cafe/`, mit demselben CSS; wer eine Fassung ändert, ändert die andere mit und nimmt die Bilder neu auf |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
 | `og-vorlage.html` | Quelle des Teilen-Bildes `og-image.jpg`, `noindex`, nirgends verlinkt |
 | `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Inter Display 700 (der Schnitt für große Größen) für alle Titel, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
-| `assets/img/` | Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy |
+| `assets/img/` | Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy; die Bilder mit `-en-` im Namen zeigen die englischen Beispielseiten und stehen nur in `en/index.html` |
 | `favicon/` | Symbole und `site.webmanifest` |
 
 ## Zwei Regeln, die die Seite überall einhält
@@ -93,6 +93,16 @@ Schriften oder Abschnitte ändert, rechnet sie neu**, sonst steht dort eine Unwa
 * **Symbole:** `favicon/favicon.svg` ist die Quelle. Daraus entstehen `favicon-96x96.png` und
   `apple-touch-icon.png`; die beiden `web-app-manifest-*.png` kommen aus einer randlosen Fassung ohne
   abgerundete Ecken, weil sie im Manifest als `maskable` eingetragen sind.
+* **Bildschirmfotos der Beispielseiten** (kopfloses Chrome, WebP mit `cwebp -q 75 -m 6 -metadata icc`):
+  * Website-Bühne: Fenster 1344 × 900, die oberen 3000 px mit Pixeldichte 1, 1,5 und 2
+    (`-lang-1344/2016/2688`); Handy 390 breit, Dichte 2, die oberen 2600 px (`-handy-lang`, 780 × 5200).
+  * Kopffenster: Grund in der Markenfarbe der Seite (Praxis `#0B5561`, Café `#7A2A14`), darauf der
+    obere Teil der Seite am Computer und am Handy, unten angeschnitten, oben runde Ecken (8 px am
+    Computer, 44 px am Handy, in Seitenpixeln, mitverkleinert). `pille-*-geraete` ist 1320 × 400:
+    Computer bei (46, 46) 980 px breit, Handy bei (1070, 46) 206 px breit. `pille-*-geraete-handy` ist
+    1040 × 650: Computer bei (40, 40) 676 breit, Handy bei (756, 40) 244 breit. Aufgenommen mit diesen
+    Fensterbreiten (aus den ersten Bildern zurückgerechnet): Praxis 1430 und 395, am Handy-Bild 1212
+    und 388; Café 1270 und 392, am Handy-Bild 1430 und 391.
 
 ## Werkzeuge zum Prüfen
 
