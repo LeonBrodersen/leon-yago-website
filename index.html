@@ -67,7 +67,7 @@
          sonst erst entdeckt, wenn der Rest schon lädt (bei 3G nach 1,5 s). -->
     <link rel="preload" href="/assets/vendor/lenis.min.js?v=20260926-2" as="script">
     <link rel="preload" href="/buehne.js?v=20260927-1" as="script">
-    <link rel="stylesheet" href="/styles.css?v=20260927-1">
+    <link rel="stylesheet" href="/styles.css?v=20261004">
     <link rel="stylesheet" href="/sim.css?v=20261004">
     <link rel="stylesheet" href="/rezept.css?v=20260926-2">
 </head>
@@ -202,8 +202,8 @@
   <section class="sim" id="gingr" data-sim="gingr" data-ton="dunkel" aria-labelledby="sim-titel">
     <!-- GingR-Simulation. Die Mechanik steht in sim.js und sim.css. Im Telefon
          steht der ENDZUSTAND fest im HTML (ohne JavaScript und bei reduzierter
-         Bewegung bleibt er so stehen); sim.js nimmt die Klassen am .app-schirm
-         für frühere Takte weg. Texte der App wörtlich aus GymApp
+         Bewegung bleibt er so stehen); sim.js nimmt die Klassen an der Figur
+         (.sim-stand) für frühere Takte weg. Texte der App wörtlich aus GymApp
          src/i18n/locales/de/common.json. -->
     <div class="kapitel">
       <h2 class="gross-titel" id="sim-titel" data-enthuellen><span class="z"><span class="z-in">GingR</span></span></h2>
@@ -213,27 +213,106 @@
       <div class="sim-buehne">
 
         <div class="sim-text">
-          <p class="sim-vorsatz">Weiterscrollen, dann läuft ein Satz durch.</p>
+          <p class="sim-vorsatz">Weiterscrollen: erst Home, dann ein Satz im Workout, dann die Analyse.</p>
           <ol class="sim-takte">
               <li class="ist-da"><span class="sim-nr" aria-hidden="true">01</span>
-                <span>Das letzte Training steht schon da<small>Grau: 72,5&nbsp;kg × 10 vom letzten Mal.</small></span></li>
+                <span>Heute auf einen Blick<small>Die Serie, die Woche am Körper und das Volumen der letzten acht Wochen.</small></span></li>
               <li><span class="sim-nr" aria-hidden="true">02</span>
-                <span>75&nbsp;kg eintippen<small>Die App rechnet mit, welche Scheiben auf die Stange gehören.</small></span></li>
+                <span>Das letzte Training steht schon da<small>Grau: 72,5&nbsp;kg × 10 vom letzten Mal.</small></span></li>
               <li><span class="sim-nr" aria-hidden="true">03</span>
-                <span>1×25 + 1×2,5 pro Seite<small>Bei jedem Tastendruck neu, mit der Stange aus diesem Studio.</small></span></li>
+                <span>75&nbsp;kg eintippen<small>Die App rechnet mit, welche Scheiben auf die Stange gehören.</small></span></li>
               <li><span class="sim-nr" aria-hidden="true">04</span>
-                <span>Abhaken<small>Die 10 Wiederholungen übernimmt die App. 75&nbsp;kg sind ein neuer Rekord.</small></span></li>
+                <span>1×25 + 1×2,5 pro Seite<small>Bei jedem Tastendruck neu, mit der Stange aus diesem Studio.</small></span></li>
               <li><span class="sim-nr" aria-hidden="true">05</span>
-                <span>Pause läuft<small>90 Sekunden, dann meldet sich das Handy.</small></span></li>
+                <span>Abhaken<small>Die 10 Wiederholungen übernimmt die App. 75&nbsp;kg sind ein neuer Rekord.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">06</span>
+                <span>Pause läuft<small>90&nbsp;Sekunden, dann meldet sich das Handy.</small></span></li>
+              <li><span class="sim-nr" aria-hidden="true">07</span>
+                <span>Die Auswertung<small>Wohin das Training geht: die Verteilung als Netz, darunter die Muskeln der letzten 90&nbsp;Tage.</small></span></li>
           </ol>
           <div class="sim-balken" aria-hidden="true"></div>
           <p class="sim-fussnote">Nachgebaut nach dem Code der App, keine Bildschirmaufnahme.</p>
         </div>
 
-        <figure class="sim-geraet">
-          <div class="sim-telefon">
-            <div class="app-schirm sim-offen sim-7 sim-5 sim-uebernommen sim-bestaetigt sim-pause" aria-hidden="true">
+        <figure class="sim-geraet sim-drei sim-stand sim-training sim-offen sim-7 sim-5 sim-uebernommen sim-bestaetigt sim-pause sim-zurueck sim-analyse">
+          <div class="sim-telefon sim-tel-heim">
+            <div class="app-schirm app-schirm-heim" aria-hidden="true">
+              <div class="app-status">
+                <span class="app-uhr">21:08</span>
+                <span class="app-insel"></span>
+                <svg class="app-symbole" viewBox="0 0 80 13" aria-hidden="true">
+                      <rect x="1.8" y="8.1" width="3" height="4.2" rx="0.9"/>
+                      <rect x="6.6" y="5.9" width="3" height="6.4" rx="0.9"/>
+                      <rect x="11.4" y="3.6" width="3" height="8.7" rx="0.9"/>
+                      <rect x="16.2" y="1.2" width="3" height="11.1" rx="0.9"/>
+                      <path d="M35.6 12.4 32.9 9.3a4.1 4.1 0 0 1 5.4 0Z"/>
+                      <path class="app-wlan" d="M30.4 7.2a7.5 7.5 0 0 1 10.4 0M27.8 4.3a11.4 11.4 0 0 1 15.6 0"/>
+                      <rect class="app-akku-rand" x="51.8" y="1" width="23.6" height="11" rx="3.4"/>
+                      <rect x="53.6" y="2.8" width="20" height="7.4" rx="1.9"/>
+                      <path class="app-akku-nase" d="M77 4.6v3.8a2 2 0 0 0 0-3.8Z"/>
+                    </svg>
+              </div>
 
+              <div class="app-liste">
+                <div class="app-lauf app-lauf-heim">
+
+                  <div class="app-titelzeile">
+                    <span class="app-titel-links"><span class="app-datum">Sonntag, 4. Oktober</span><span class="app-gross">Heute</span></span>
+                    <span class="app-serie"><svg class="app-z app-z-18 app-z-voll" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.5 2c.8 4 6 6.3 6 12.3a6.5 6.5 0 0 1-13 0c0-2.4 1-4 2.3-5.3.1 1.8.9 2.9 2.2 3.3C9.6 9 10.6 5 12.5 2z"/></svg><b>13</b><span>Wochen</span></span>
+                  </div>
+
+                  <div class="app-block">
+                    <div class="app-held">
+                      <span class="app-held-kopf">Läuft gerade</span>
+                      <span class="app-held-titel">Freies Workout</span>
+                      <span class="app-held-knopf"><svg class="app-z app-z-16 app-z-voll" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg>Workout fortsetzen</span>
+                    </div>
+                    <div class="app-kachel"><svg class="app-z app-z-18" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>Routinen</div>
+                  </div>
+
+                  <div class="app-block app-woche">
+                    <div class="app-abschnitt"><span>Diese Woche</span></div>
+                    <div class="app-wochenkoerper">
+                      <span class="app-figuren"><span class="app-koerper"><img src="/assets/img/gingr-koerper-vorn.svg" width="326" height="634" alt="" decoding="async"><img class="app-koerper-licht" src="/assets/img/gingr-woche-vorn.svg" width="326" height="634" alt="" decoding="async"></span><span class="app-koerper"><img src="/assets/img/gingr-koerper-hinten.svg" width="326" height="634" alt="" decoding="async"><img class="app-koerper-licht" src="/assets/img/gingr-woche-hinten.svg" width="326" height="634" alt="" decoding="async"></span></span>
+                      <span class="app-wochenseite">
+                        <span class="app-tage"><span class="app-tag ist-trainiert"><span>Mo</span><i></i></span><span class="app-tag ist-trainiert"><span>Di</span><i></i></span><span class="app-tag"><span>Mi</span><i></i></span><span class="app-tag ist-trainiert"><span>Do</span><i></i></span><span class="app-tag"><span>Fr</span><i></i></span><span class="app-tag ist-trainiert"><span>Sa</span><i></i></span><span class="app-tag ist-heute ist-trainiert"><span>So</span><i></i></span></span>
+                        <span class="app-gruppen">
+                        <span class="app-gruppe"><span class="app-gruppe-name">Brust</span><span class="app-gruppe-spur"><i style="--anteil:0.7143"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="10" data-achse="a" data-ab="0.68" data-ueber="0.32">10</span></span>
+                        <span class="app-gruppe"><span class="app-gruppe-name">Rücken</span><span class="app-gruppe-spur"><i style="--anteil:1.0000"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="14" data-achse="a" data-ab="0.68" data-ueber="0.32">14</span></span>
+                        <span class="app-gruppe"><span class="app-gruppe-name">Schultern</span><span class="app-gruppe-spur"><i style="--anteil:0.7857"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="11" data-achse="a" data-ab="0.68" data-ueber="0.32">11</span></span>
+                        <span class="app-gruppe"><span class="app-gruppe-name">Arme</span><span class="app-gruppe-spur"><i style="--anteil:0.9286"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="13" data-achse="a" data-ab="0.68" data-ueber="0.32">13</span></span>
+                        <span class="app-gruppe"><span class="app-gruppe-name">Beine</span><span class="app-gruppe-spur"><i style="--anteil:1.0000"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="14" data-achse="a" data-ab="0.68" data-ueber="0.32">14</span></span>
+                        <span class="app-gruppe"><span class="app-gruppe-name">Core</span><span class="app-gruppe-spur"><i style="--anteil:0.7143"></i></span><span class="app-gruppe-zahl app-zaehl" data-von="0" data-bis="10" data-achse="a" data-ab="0.68" data-ueber="0.32">10</span></span>
+                        </span>
+                      </span>
+                    </div>
+                    <span class="app-zeile-grau">Noch 5 Sätze Waden diese Woche</span>
+                  </div>
+
+                  <div class="app-block app-fort">
+                    <div class="app-abschnitt"><span>Fortschritt</span><span>Volumen, 8 Wochen</span></div>
+                    <div class="app-karte app-fortkarte">
+                      <div class="app-fort-kopf"><span class="app-fort-zahl"><span class="app-zaehl" data-von="0" data-bis="32327" data-ab="0.075" data-ueber="0.055" data-tausender=".">32.327</span> kg</span><span class="app-fort-vor">Letzte Woche 35.705 kg</span></div>
+                      <div class="app-diagramm">
+                        <div class="app-balkenreihe"><span class="app-balken"><i style="--hoehe:0.909"></i></span><span class="app-balken"><i style="--hoehe:0.834"></i></span><span class="app-balken"><i style="--hoehe:0.936"></i></span><span class="app-balken"><i style="--hoehe:0.690"></i></span><span class="app-balken"><i style="--hoehe:0.961"></i></span><span class="app-balken"><i style="--hoehe:0.620"></i></span><span class="app-balken"><i style="--hoehe:1.000"></i></span><span class="app-balken"><i style="--hoehe:0.905"></i></span></div>
+                        <div class="app-wochennummern"><span>33</span><span>34</span><span>35</span><span>36</span><span>37</span><span>38</span><span>39</span><span>40</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="app-mini">
+                <span class="app-mini-punkt"></span><span class="app-mini-name">Workout</span><span class="app-mini-uhr app-dauer">19:12</span><span class="app-mini-pause">Pause <span class="app-pause-zeit">1:00</span></span><svg class="app-z app-z-18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg>
+              </div>
+              <div class="app-tabs"><span class="app-tab ist-aktiv"><svg class="app-z app-z-voll" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v9h-5.5v-5.5h-5V20H4z"/></svg><span>Home</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 12h9M7.5 6v12M16.5 6v12M4 8.5v7M20 8.5v7M2 12h2M20 12h2"/></svg><span>Workout</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-8M12 20V4M19 20v-5"/></svg><span>Analyse</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.4a3.5 3.5 0 0 1 0 6.2M18.2 14.9c1.8.9 3 2.7 3.3 5.1"/></svg><span>Freunde</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Mehr</span></span></div>
+
+              <span class="app-home"></span>
+            </div>
+          </div>
+          <div class="sim-telefon sim-tel-training">
+            <div class="app-schirm app-schirm-training" aria-hidden="true">
               <div class="app-kopf">
                 <span class="app-uhr">21:08</span>
                 <span class="app-insel"></span>
@@ -254,8 +333,8 @@
               </div>
 
               <div class="app-leiste">
-                <span class="app-zahl"><span class="app-zahl-kopf">Dauer</span><span class="app-zahl-wert app-dauer">19:00</span></span>
-                <span class="app-zahl app-zahl-weit"><span class="app-zahl-kopf">Volumen</span><span class="app-zahl-wert"><span class="app-volumen" data-tausender=".">1.350</span> kg</span></span>
+                <span class="app-zahl"><span class="app-zahl-kopf">Dauer</span><span class="app-zahl-wert app-dauer">19:12</span></span>
+                <span class="app-zahl app-zahl-weit"><span class="app-zahl-kopf">Volumen</span><span class="app-zahl-wert"><span class="app-zaehl" data-von="600" data-bis="1350" data-ab="0.519" data-ueber="0.032" data-tausender=".">1.350</span> kg</span></span>
                 <span class="app-zahl"><span class="app-zahl-kopf">Sätze</span><span class="app-zahl-wert"><span class="app-s1">1</span><span class="app-s2">2</span></span></span>
                 <img class="app-figur" src="/assets/img/gingr-figur.svg" width="273" height="254" alt="" decoding="async">
                 <svg class="app-z app-z-16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
@@ -308,7 +387,7 @@
               <div class="app-pause">
                 <div class="app-pause-spur"><span class="app-pause-rest"></span></div>
                 <div class="app-pause-zeile">
-                  <span class="app-pause-uhr"><span class="app-pause-kopf">Pause</span><span class="app-pause-zeit">1:12</span></span>
+                  <span class="app-pause-uhr"><span class="app-pause-kopf">Pause</span><span class="app-pause-zahl app-pause-zeit">1:00</span></span>
                   <span class="app-pause-schnell"><span class="app-chip app-chip-eckig">−10 s</span><span class="app-chip app-chip-eckig">+10 s</span><span class="app-pause-weiter">Überspringen</span></span>
                 </div>
                 <div class="app-pause-chips">
@@ -341,7 +420,72 @@
               <span class="app-home"></span>
             </div>
           </div>
-          <figcaption class="sim-unsichtbar">GingR beim Training: Satz 2 Bankdrücken mit 75&nbsp;kg × 10 ist abgehakt und als neuer Rekord golden umrandet, die Pause läuft noch 1:12.</figcaption>
+          <div class="sim-telefon sim-tel-analyse">
+            <div class="app-schirm app-schirm-analyse" aria-hidden="true">
+              <div class="app-status">
+                <span class="app-uhr">21:08</span>
+                <span class="app-insel"></span>
+                <svg class="app-symbole" viewBox="0 0 80 13" aria-hidden="true">
+                      <rect x="1.8" y="8.1" width="3" height="4.2" rx="0.9"/>
+                      <rect x="6.6" y="5.9" width="3" height="6.4" rx="0.9"/>
+                      <rect x="11.4" y="3.6" width="3" height="8.7" rx="0.9"/>
+                      <rect x="16.2" y="1.2" width="3" height="11.1" rx="0.9"/>
+                      <path d="M35.6 12.4 32.9 9.3a4.1 4.1 0 0 1 5.4 0Z"/>
+                      <path class="app-wlan" d="M30.4 7.2a7.5 7.5 0 0 1 10.4 0M27.8 4.3a11.4 11.4 0 0 1 15.6 0"/>
+                      <rect class="app-akku-rand" x="51.8" y="1" width="23.6" height="11" rx="3.4"/>
+                      <rect x="53.6" y="2.8" width="20" height="7.4" rx="1.9"/>
+                      <path class="app-akku-nase" d="M77 4.6v3.8a2 2 0 0 0 0-3.8Z"/>
+                    </svg>
+              </div>
+
+              <div class="app-liste">
+                <div class="app-lauf app-lauf-analyse">
+
+                  <div class="app-karte app-wkarte">
+                    <span class="app-karte-titel">Muskelverteilung</span>
+                    <div class="app-zeitraum"><span>Zeitraum</span><span>Letzte 90 Tage<svg class="app-z app-z-18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></span></div>
+                    <div class="app-widget">
+                      <div class="app-netzfeld">
+                        <svg class="app-netz" viewBox="0 0 300 300" aria-hidden="true">
+                          <g class="app-netz-raster"><polygon points="139.4,131.64 160.6,131.64 171.2,150 160.6,168.36 139.4,168.36 128.8,150"/><polygon points="128.8,113.28 171.2,113.28 192.4,150 171.2,186.72 128.8,186.72 107.6,150"/><polygon points="118.2,94.92 181.8,94.92 213.6,150 181.8,205.08 118.2,205.08 86.4,150"/><polygon points="107.6,76.56 192.4,76.56 234.8,150 192.4,223.44 107.6,223.44 65.2,150"/><polygon points="97,58.2 203,58.2 256,150 203,241.8 97,241.8 44,150"/><path d="M150 150 97 58.2M150 150 203 58.2M150 150H256M150 150 203 241.8M150 150 97 241.8M150 150H44"/></g>
+                          <g class="app-netz-form"><polygon class="app-netz-vorher" points="150,150 150.64,148.9 150,150 151.01,151.74 149.15,151.47 150,150"/><polygon class="app-netz-jetzt" points="117.35,93.45 162.93,127.6 189.54,150 178.99,200.21 110.14,219.03 44,150"/></g>
+                        </svg>
+                        <span style="left:calc(42 * var(--app-pt));top:calc(30.15 * var(--app-pt))">Rücken</span><span style="left:calc(170 * var(--app-pt));top:calc(30.15 * var(--app-pt))">Brust</span><span style="left:calc(234 * var(--app-pt));top:calc(141 * var(--app-pt))">Core</span><span style="left:calc(170 * var(--app-pt));top:calc(251.85000000000002 * var(--app-pt))">Schultern</span><span style="left:calc(42 * var(--app-pt));top:calc(251.85000000000002 * var(--app-pt))">Arme</span><span style="left:calc(-22 * var(--app-pt));top:calc(141 * var(--app-pt))">Beine</span>
+                      </div>
+                      <div class="app-legende">
+                        <span><i></i><span>Aktuell<br><span class="app-tab-ziffern">07.07.–04.10.</span></span></span>
+                        <span><i class="app-legende-grau"></i><span>Vorherig<br><span class="app-tab-ziffern">08.04.–06.07.</span></span></span>
+                      </div>
+                      <div class="app-kennzahlen">
+                        <span class="app-kennzahl"><b><span class="app-zaehl" data-von="0" data-bis="48" data-ab="0.76" data-ueber="0.06">48</span></b><span>Workouts</span><span class="app-kennzahl-delta">↑ 47</span></span><span class="app-kennzahl"><b><span class="app-zaehl" data-von="0" data-bis="3275" data-ab="0.76" data-ueber="0.06" data-form="dauer">54 h 35 min</span></b><span>Dauer</span><span class="app-kennzahl-delta">↑ 53 h 25 min</span></span>
+                        <span class="app-kennzahl"><b><span class="app-zaehl" data-von="0" data-bis="363423" data-ab="0.76" data-ueber="0.06" data-tausender=".">363.423</span> kg</b><span>Volumen</span><span class="app-kennzahl-delta">↑ 359.265 kg</span></span><span class="app-kennzahl"><b><span class="app-zaehl" data-von="0" data-bis="775" data-ab="0.76" data-ueber="0.06">775</span></b><span>Sätze</span><span class="app-kennzahl-delta">↑ 759</span></span>
+                      </div>
+                      <span class="app-info"><i>i</i>Was zeigt das?</span>
+                    </div>
+                  </div>
+
+                  <div class="app-karte app-wkarte app-heat">
+                    <span class="app-karte-titel">Muskel-Heatmap</span>
+                    <div class="app-zeitraum"><span>Zeitraum</span><span>Letzte 90 Tage<svg class="app-z app-z-18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg></span></div>
+                    <div class="app-segmente"><span class="ist-gewaehlt">Vorne</span><span>Hinten</span></div>
+                    <span class="app-koerper app-koerper-gross"><img src="/assets/img/gingr-koerper-vorn.svg" width="326" height="634" alt="" decoding="async"><img class="app-koerper-licht" src="/assets/img/gingr-90-tage-vorn.svg" width="326" height="634" alt="" decoding="async"></span>
+                    <div class="app-skala"><span>wenig</span><span class="app-skala-stufen"><i></i><i></i><i></i><i></i><i></i></span><span>viel</span></div>
+                    <div class="app-chips"><span class="app-chip">Quadrizeps</span><span class="app-chip">Lat</span><span class="app-chip">Trizeps</span><span class="app-chip">Bizeps</span><span class="app-chip">Oberer Rücken &amp; Trapez</span><span class="app-chip">Gesäß</span><span class="app-chip">Brust</span><span class="app-chip">Hintere Oberschenkel</span></div>
+                    <span class="app-info"><i>i</i>Was zeigt das?</span>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="app-mini">
+                <span class="app-mini-punkt"></span><span class="app-mini-name">Workout</span><span class="app-mini-uhr app-dauer">19:12</span><span class="app-mini-pause">Pause <span class="app-pause-zeit">1:00</span></span><svg class="app-z app-z-18" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 15l7-7 7 7"/></svg>
+              </div>
+              <div class="app-tabs"><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11 12 4l8 7v9h-5.5v-5.5h-5V20H4z"/></svg><span>Home</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 12h9M7.5 6v12M16.5 6v12M4 8.5v7M20 8.5v7M2 12h2M20 12h2"/></svg><span>Workout</span></span><span class="app-tab ist-aktiv"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20v-8M12 20V4M19 20v-5"/></svg><span>Analyse</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M16 4.4a3.5 3.5 0 0 1 0 6.2M18.2 14.9c1.8.9 3 2.7 3.3 5.1"/></svg><span>Freunde</span></span><span class="app-tab"><svg class="app-z" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h10"/></svg><span>Mehr</span></span></div>
+
+              <span class="app-home"></span>
+            </div>
+          </div>
+          <figcaption class="sim-unsichtbar">GingR in drei Ansichten. Home zeigt die Serie und die Woche am Körper, weiter unten das Volumen der letzten acht Wochen. Im laufenden Workout ist Satz 2 Bankdrücken mit 75&nbsp;kg × 10 abgehakt und als neuer Rekord golden umrandet, die Pause läuft noch 1:00. Die Analyse zeigt die Verteilung des Trainings als Netz, weiter unten die Muskel-Heatmap.</figcaption>
         </figure>
 
       </div>
