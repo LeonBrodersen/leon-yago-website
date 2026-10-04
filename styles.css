@@ -556,10 +556,13 @@ html:not(.bewegt) .fenster { height: auto; aspect-ratio: 16 / 10; }
 .bewegt #gingr { z-index: 1; }
 .bewegt #rezeptbuch { z-index: 2; }
 .bewegt .preise { z-index: 3; }
-.bewegt #gingr .sim-strecke { height: 300vh; }
+/* GingR zeigt drei Screens (Home, Workout, Analyse): 190 vh Fahrweg, davon
+   100 vh für das Workout wie zuvor (am Handy 235 und 125). Die übrigen 200 vh
+   sind die Bühne selbst und das Stück, das das nächste Kapitel überdeckt. */
+.bewegt #gingr .sim-strecke { height: 390vh; }
 .bewegt .sim-rezept .sim-strecke { height: 330vh; }
 @media (max-width: 760px) {
-  .bewegt #gingr .sim-strecke { height: 325vh; }
+  .bewegt #gingr .sim-strecke { height: 435vh; }
   .bewegt .sim-rezept .sim-strecke { height: 350vh; }
 }
 

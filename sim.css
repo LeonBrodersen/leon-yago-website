@@ -1,17 +1,25 @@
 /* Die Simulation: ein Telefon, das sich beim Scrollen zum Leser dreht, und
-   darin GingR, wie es wirklich aussieht, während ein Satz eingetragen wird.
+   darin GingR, wie es wirklich aussieht: erst Home, dann das laufende Workout,
+   in dem ein Satz eingetragen wird, zuletzt die Analyse.
 
    Drei Regeln, an denen der Eindruck hängt:
    1. Den Fortschritt schreibt sim.js als eine Zahl --p (0 bis 1) an die Section.
-      Drehung, Balken und Goldlicht rechnet CSS daraus; die Schritte im Telefon
-      sind Klassen am .app-schirm. Zurückscrollen spult deshalb wirklich zurück.
+      Drehung, Balken, Goldlicht und das Rollen im Telefon rechnet CSS daraus;
+      die Schritte sind Klassen an der Figur um die Telefone (.sim-stand).
+      Zurückscrollen spult deshalb wirklich zurück.
    2. Bewegt wird nur über transform und opacity. Zustände wechseln hart per
-      Klasse, ohne Farbübergänge — so macht es auch die App (Keypad und
-      Pausenkarte erscheinen dort ohne Animation).
+      Klasse, ohne Farbübergänge — so macht es auch die App (Keypad, Pausenkarte
+      und ein anderer Tab erscheinen dort ohne Animation). Eine Zugabe dieser
+      Seite ist das Aufleben auf Home und Analyse (siehe dort): in der App
+      stehen diese beiden Tabs still.
    3. Im Telefon zählt der Maßstab der App. Der Bildschirm ist ein Container,
       --app-pt ist ein iOS-Punkt bei 402 pt Breite; jedes Maß unten ist ein
-      pt-Wert aus GymApp (src/theme/tokens.ts, gemessen am Store-Bild
-      01-workout.png). So stimmt das Verhältnis bei jeder Telefongröße.
+      pt-Wert aus GymApp (src/theme/tokens.ts und die Komponenten der drei
+      Screens, gegengemessen an den Store-Bildern 01-workout.png, 02-home.png
+      und 04-analyse.png in assets/store/screenshots-de-2026-10/, 3,28 px je
+      pt). So stimmt das Verhältnis bei jeder Telefongröße.
+
+   Stand: das Neudesign der App vom 04.10.2026.
 
    Farben: nur die Dunkel-Tokens der App (tokens.ts palette.dark) plus die am
    Store-Bild gemessenen iOS-Werte für Glasknöpfe und Kopflinie. Auf dem Grund
@@ -28,6 +36,8 @@
 
   /* Fortschritt 0 bis 1. Ohne Skript bleibt 1 stehen, also der Endzustand. */
   --p: 1;
+  /* Anfahrt 0 bis 1: wie weit die Bühne schon hereingekommen ist (nur GingR). */
+  --a: 1;
 
   position: relative;
   background: var(--sim-grund);
@@ -202,6 +212,13 @@
   will-change: transform;
 }
 
+/* Drei Telefone, eines je Ort in der App: Home, das laufende Workout, Analyse.
+   Bewegt liegen sie deckungsgleich in derselben Rasterzelle und drehen sich
+   gemeinsam; zu sehen ist nur das, in dem die Geschichte gerade spielt (die
+   Regeln dazu stehen unten bei „Zustände“). Es sieht aus wie ein Telefon, in
+   dem der Bildschirm wechselt. Ohne Bewegung stehen die drei nebeneinander. */
+.bewegt .sim-drei > .sim-telefon { grid-area: 1 / 1; }
+
 /* ================================================================ Die App */
 
 .app-schirm {
@@ -253,21 +270,25 @@
 /* An den Kindern gesetzt, weil cqw erst dort den Bildschirm meint. */
 .app-schirm > * { letter-spacing: var(--app-spur); }
 
-/* Haarlinien liegen als Überlagerung über der Fläche, damit ihre Rundung auf
-   ganze Pixel die Maße innen nicht verschiebt (Karteninhalt ab 32,3 pt). */
-.app-karte,
-.app-pause,
-.app-tastatur { position: relative; }
-.app-karte::after,
-.app-pause::after,
-.app-tastatur::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: var(--app-haar) solid var(--app-rand);
-  border-radius: inherit;
-  pointer-events: none;
+/* Die Zeichen der App (icon.tsx): 24er-Raster, ein Strich von 1,8, runde Enden
+   und Ecken, gefärbt wie die Schrift daneben. Die Größe in pt steht in --z. */
+.app-z {
+  flex: none;
+  width: calc(var(--z, 24) * var(--app-pt));
+  height: calc(var(--z, 24) * var(--app-pt));
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
+.app-z-14 { --z: 14; }
+.app-z-16 { --z: 16; }
+.app-z-20 { --z: 20; }
+.app-z-22 { --z: 22; }
+.app-z-26 { --z: 26; }
+/* Das Löschzeichen ist auf 28 gezeichnet; der Strich wächst mit (1,8 · 28/24). */
+.app-z-28er { stroke-width: 2.1; }
 
 /* ------------------------------------------------ Statusleiste und Kopfzeile */
 /* Hintergrund #1D1C19 von 0 bis 116 pt, Haarlinie #4B4944 bei 116. */
@@ -285,7 +306,6 @@
   bottom: 0;
   border-bottom: var(--app-haar) solid var(--app-kopf-linie);
 }
-/* Uhr hell: die schwarze Uhr im Store-Bild ist ein Fehler der App. */
 .app-uhr {
   position: absolute;
   left: calc(51 * var(--app-pt));
@@ -342,12 +362,25 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+/* „Fertig" ist seit dem Neudesign ein gefüllter Knopf (active.tsx: Button sm,
+   pill={false}; 32 hoch, Radius 10, 12 seitlich, caption 13/600). iOS 26 legt
+   um jedes Element der Kopfzeile weiter seine Glaskapsel: am Store-Bild
+   gemessen 69 × 44,2 pt, der Knopf darin 61 × 32. */
 .app-fertig {
   right: calc(15.8 * var(--app-pt));
-  min-width: calc(44.2 * var(--app-pt));
-  padding: 0 calc(3.2 * var(--app-pt));
-  font-size: calc(17 * var(--app-pt));
-  color: var(--app-akzent);
+  padding: 0 calc(3 * var(--app-pt));
+}
+.app-fertig-knopf {
+  height: calc(32 * var(--app-pt));
+  padding: 0 calc(12 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  border-radius: calc(10 * var(--app-pt));
+  background: var(--app-akzent);
+  color: var(--app-auf-akzent);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
 }
 .app-titel {
   position: absolute;
@@ -362,6 +395,52 @@
   font-weight: 600;
 }
 
+/* ------------------------------------------------------------------ Leiste */
+/* workout-summary-bar.tsx: drei Zahlen mit Beschriftung darüber, zwei Figuren,
+   ein Pfeil. Abstand 12, 16 seitlich, 8 oben und unten, Haarlinie darunter; die
+   Leiste steht über der Liste und rollt nicht mit. Am Store-Bild 58,5 pt hoch. */
+.app-leiste {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--app-pt));
+  padding: calc(8 * var(--app-pt)) calc(16 * var(--app-pt));
+  color: var(--app-grau);
+}
+.app-leiste::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom: var(--app-haar) solid var(--app-rand);
+}
+/* Dauer und Sätze nehmen, was ihre Zahl braucht (mindestens 56), das Volumen
+   den Rest. */
+.app-zahl { flex: none; min-width: calc(56 * var(--app-pt)); display: flex; flex-direction: column; }
+.app-zahl-weit { flex: 1 1 0; min-width: 0; }
+.app-zahl-kopf {
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 500;
+}
+/* typeScale.stat: 20/24, 800, Laufweite −0,4 pt. */
+.app-zahl-wert {
+  color: var(--app-text);
+  font-size: calc(20 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.4 * var(--app-pt));
+}
+/* Zwei Figuren je 22 pt breit mit 2 pt Abstand, in einem Bild (273 : 254). */
+.app-figur {
+  flex: none;
+  display: block;
+  width: calc(46 * var(--app-pt));
+  height: calc(42.75 * var(--app-pt));
+}
+
 /* ---------------------------------------------------------------- Liste */
 .app-liste {
   position: relative;
@@ -370,50 +449,44 @@
   overflow: hidden;
 }
 /* Die App zieht die Karte beim Öffnen des Keypads animiert nach oben
-   (scrollToIndex). Hier dasselbe als transform. */
+   (scrollToIndex). Hier dasselbe als transform. Oben 16 pt Rand der Liste und
+   12 pt leerer Listenkopf: die erste Karte beginnt bei 28 pt. */
 .app-rolle {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  padding: calc(16 * var(--app-pt));
+  padding: calc(28 * var(--app-pt)) calc(16 * var(--app-pt)) calc(16 * var(--app-pt));
   transition: transform 320ms cubic-bezier(0.25, 0.8, 0.3, 1);
 }
 
-/* Laufzeit-Pille: pill, 12/4 pt Innenabstand, caption 13/18. */
-.app-lauf {
-  align-self: flex-start;
-  margin-bottom: calc(12 * var(--app-pt));
-  padding: calc(4 * var(--app-pt)) calc(12 * var(--app-pt));
-  border-radius: 999px;
-  background: var(--app-feld);
-  color: var(--app-grau);
-  font-size: calc(13 * var(--app-pt));
-  line-height: calc(18 * var(--app-pt));
-}
-
-/* Karte: Fläche, Haarlinie, Radius 16, Innenabstand 16, Kinderabstand 8. */
+/* Karte (card.tsx): im dunklen Schema nur Fläche, kein Rand; Radius 20,
+   Innenabstand 16, Kinderabstand 8. */
 .app-karte {
   display: flex;
   flex-direction: column;
   gap: calc(8 * var(--app-pt));
-  padding: calc(16.33 * var(--app-pt));
-  border-radius: calc(16 * var(--app-pt));
+  padding: calc(16 * var(--app-pt));
+  border-radius: calc(20 * var(--app-pt));
   background: var(--app-flaeche);
 }
-.app-karte + .app-karte { margin-top: calc(12 * var(--app-pt)); }
+/* Im Workout stehen die Karten 12 auseinander (Rand je Karte, damit ein
+   Supersatz enger rücken kann). */
+.app-rolle .app-karte + .app-karte { margin-top: calc(12 * var(--app-pt)); }
 
 .app-karte-kopf {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: calc(12 * var(--app-pt));
+  color: var(--app-grau);
   font-size: calc(17 * var(--app-pt));
   line-height: calc(24 * var(--app-pt));
 }
-.app-uebung { font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
-.app-chevron { color: var(--app-grau); }
+.app-uebung { color: var(--app-text); font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
 
-/* Chips: 32 hoch, pill, 12 pt seitlich, caption 13. „+ Supersatz" mit 1-pt-Rand. */
+/* Chips (button.tsx, sm): 32 hoch, 12 seitlich, caption 13, Fläche #26241F,
+   alle gleich leise. Text und Zeichen 8 auseinander. Pille; in der Pausenkarte
+   mit Radius 10 (pill={false}). */
 .app-chips,
 .app-pause-chips {
   display: flex;
@@ -423,6 +496,7 @@
 .app-chip {
   display: inline-flex;
   align-items: center;
+  gap: calc(8 * var(--app-pt));
   height: calc(32 * var(--app-pt));
   padding: 0 calc(12 * var(--app-pt));
   border-radius: 999px;
@@ -431,15 +505,13 @@
   font-size: calc(13 * var(--app-pt));
   line-height: calc(18 * var(--app-pt));
 }
-.app-chip-rand {
-  background: none;
-  border: calc(1 * var(--app-pt)) solid var(--app-akzent);
-  color: var(--app-akzent);
-}
+.app-chip-eckig { border-radius: calc(10 * var(--app-pt)); }
 
-/* Spaltenköpfe: „Satz" links in 44 pt, „kg"/„Wdh." mittig über den Feldern. */
+/* Satztabelle: Satz 44 | Zuletzt 68 | kg | Wdh. | Haken 44, Abstand 8. Bei
+   338 pt Karteninhalt bleiben für kg und Wdh. je 75 pt. */
 .app-spalten {
   display: flex;
+  align-items: center;
   gap: calc(8 * var(--app-pt));
   color: var(--app-grau);
   font-size: calc(13 * var(--app-pt));
@@ -448,8 +520,8 @@
 .app-spalten > span { flex: 1 1 0; text-align: center; }
 .app-spalten > span:first-child,
 .app-spalten > span:last-child { flex: none; width: calc(44 * var(--app-pt)); text-align: left; }
+.app-spalten > span:nth-child(2) { flex: none; width: calc(68 * var(--app-pt)); }
 
-/* Satzzeile: 44 | Feld | Feld | 44, Abstand 8. */
 .app-satz {
   display: flex;
   align-items: center;
@@ -459,69 +531,80 @@
 .app-feld,
 .app-ende,
 .app-haken {
-  height: calc(44 * var(--app-pt));
   display: flex;
   align-items: center;
   justify-content: center;
 }
+/* Die Satznummer steht ohne Kachel da; eine Kachel trägt nur ein Satz, der
+   etwas anderes ist als ein gewöhnlicher (Aufwärmen, Drop). */
 .app-nr {
   flex: none;
   width: calc(44 * var(--app-pt));
-  border-radius: calc(10 * var(--app-pt));
-  background: var(--app-feld);
+  height: calc(44 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 700;
+}
+/* „Zuletzt": der Wert der letzten Einheit als eine leise Zelle. */
+.app-zuletzt {
+  flex: none;
+  width: calc(68 * var(--app-pt));
+  text-align: center;
   color: var(--app-grau);
   font-size: calc(13 * var(--app-pt));
   line-height: calc(18 * var(--app-pt));
 }
-/* Feld: immer 2 pt Rand, sonst durchsichtig — so verrutscht nichts, wenn das
-   Keypad (orange) oder ein Rekord (gold) ihn färbt. Grau = Vorschlag. */
+/* Wert: bestätigt fette Schrift ohne Kasten, als Entwurf ein gefüllter Kasten
+   mit dem grauen Vorschlag. Immer 2 pt Rand, sonst durchsichtig: so verrutscht
+   nichts, wenn das Keypad (orange) oder ein Rekord (gold) ihn färbt. */
 .app-feld {
   position: relative;
   flex: 1 1 0;
   min-width: 0;
+  height: calc(44 * var(--app-pt));
   border: calc(2 * var(--app-pt)) solid transparent;
   border-radius: calc(10 * var(--app-pt));
-  background: var(--app-feld);
-  color: var(--app-grau);
+  color: var(--app-text);
   font-size: calc(17 * var(--app-pt));
   line-height: calc(24 * var(--app-pt));
+  font-weight: 700;
 }
-.app-feld.ist-eingetragen { color: var(--app-text); }
+.app-feld.ist-entwurf { background: var(--app-feld); color: var(--app-grau); font-weight: 400; }
+/* Der Haken: Kachel 38 × 38 im 44er-Platz, Radius 10, Zeichen 20. Offen leise
+   (Fläche #26241F, helles Zeichen), bestätigt orange gefüllt, beim Rekord gold. */
 .app-ende { flex: none; width: calc(44 * var(--app-pt)); }
-/* Offen: orange gefüllter Kasten, ✓ 17/600 in #1C1206. Bestätigt: nur graue Glyphe. */
 .app-haken {
-  width: calc(44 * var(--app-pt));
+  width: calc(38 * var(--app-pt));
+  height: calc(38 * var(--app-pt));
   border-radius: calc(10 * var(--app-pt));
-  background: var(--app-akzent);
-  color: var(--app-auf-akzent);
-  font-size: calc(17 * var(--app-pt));
-  font-weight: 600;
+  background: var(--app-feld);
+  color: var(--app-text);
 }
-.app-ok {
-  color: var(--app-grau);
-  font-size: calc(17 * var(--app-pt));
-  line-height: calc(24 * var(--app-pt));
-}
+.app-haken.ist-bestaetigt { background: var(--app-akzent); color: var(--app-auf-akzent); }
 
-/* „+ Satz": umrandet, 44 hoch, Radius 10, 17 Regular; 12 pt unter dem letzten Satz. */
+/* „+ Satz": ein leiser Knopf (chip, md, pill={false}): 44 hoch, Radius 14,
+   17 Regular in Grau; 12 pt unter dem letzten Satz. */
 .app-knopf {
   height: calc(44 * var(--app-pt));
   margin-top: calc(4 * var(--app-pt));
   display: flex;
   align-items: center;
   justify-content: center;
-  border: calc(1 * var(--app-pt)) solid var(--app-akzent);
-  border-radius: calc(10 * var(--app-pt));
-  color: var(--app-akzent);
+  border-radius: calc(14 * var(--app-pt));
+  background: var(--app-feld);
+  color: var(--app-grau);
   font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
 }
 
 /* Goldlicht über der Rekordzelle (pr-sweep.tsx): ein Streifen, 75 % der Zelle
-   breit, Mitte 75 %, Rand 25 % Deckkraft, einmal quer; die Ziffern glimmen
-   dabei golden. Hier läuft er am Scrollweg statt an der Uhr.
-   Fenster: ab --p 0,62 über 0,09 — muss zu „sim-bestaetigt" in sim.js passen. */
+   breit und mindestens 56 pt, Mitte 75 %, Rand 25 % Deckkraft, einmal quer; die
+   Ziffern glimmen dabei golden. Die Zelle ist innen 71 pt breit, der Streifen
+   also 56 und sein Weg 127 pt. Hier läuft er am Scrollweg statt an der Uhr.
+   Fenster: ab --p 0,519 über 0,048 — muss zu „sim-bestaetigt" in sim.js passen. */
 .app-licht {
-  --app-t: clamp(0, calc((var(--p) - 0.62) / 0.09), 1);
+  --app-t: clamp(0, calc((var(--p) - 0.519) / 0.048), 1);
   position: absolute;
   inset: 0;
   border-radius: calc(8 * var(--app-pt));
@@ -536,7 +619,7 @@
   top: 0;
   bottom: 0;
   left: 0;
-  width: calc(81.75 * var(--app-pt));
+  width: calc(56 * var(--app-pt));
   background: linear-gradient(90deg,
     rgba(243, 206, 107, 0) 0%,
     rgba(243, 206, 107, 0.25) 30%,
@@ -544,16 +627,17 @@
     rgba(243, 206, 107, 0.25) 70%,
     rgba(243, 206, 107, 0) 100%);
   /* inOut-Kurve wie motion.ts, als Smoothstep: t² · (3 − 2t). */
-  transform: translate3d(calc((-81.75 + var(--app-t) * var(--app-t) * (3 - 2 * var(--app-t)) * 190.75) * var(--app-pt)), 0, 0);
+  transform: translate3d(calc((-56 + var(--app-t) * var(--app-t) * (3 - 2 * var(--app-t)) * 127) * var(--app-pt)), 0, 0);
 }
 .app-licht-ziffern {
   position: relative;
   color: var(--app-gold);
+  font-weight: 400;
   opacity: calc(4 * var(--app-t) * (1 - var(--app-t)));
 }
 
 /* ------------------------------------------------------- unten: Pause, Keypad */
-/* „Pause starten": plain, 44 hoch, mittig, 34 pt über der Unterkante. */
+/* „Pause starten": plain, 44 hoch, 17/600, mittig, 34 pt über der Unterkante. */
 .app-ruhe {
   flex: none;
   height: calc(44 * var(--app-pt));
@@ -563,29 +647,67 @@
   justify-content: center;
   color: var(--app-akzent);
   font-size: calc(17 * var(--app-pt));
+  font-weight: 600;
 }
 
-/* Laufende Pause: Karte, Radius 10, Haarlinie, 16 pt seitlich (rest-timer-bar.tsx). */
+/* Laufende Pause (rest-timer-bar.tsx): eine Karte, Radius 20, 12 pt vom Rand,
+   16 innen, ohne Linie. Oben über die ganze Breite die Spur (4 pt), die mit der
+   Pause leerläuft. */
 .app-pause {
   flex: none;
-  margin: 0 calc(16 * var(--app-pt)) calc(34 * var(--app-pt));
-  padding: 0 calc(16.33 * var(--app-pt));
-  border-radius: calc(10 * var(--app-pt));
+  margin: 0 calc(12 * var(--app-pt)) calc(34 * var(--app-pt));
+  padding: 0 calc(16 * var(--app-pt));
+  border-radius: calc(20 * var(--app-pt));
+  overflow: hidden;
   background: var(--app-flaeche);
   font-size: calc(17 * var(--app-pt));
   line-height: calc(24 * var(--app-pt));
 }
+.app-pause-spur {
+  height: calc(4 * var(--app-pt));
+  margin: 0 calc(-16 * var(--app-pt));
+  background: var(--app-rand);
+}
+/* Rest geteilt durch geplant. Die Pause läuft ab --p 0,582 und steht am Ende
+   der Strecke bei 60 von 90 Sekunden, also bei zwei Dritteln — dieselben
+   Zahlen wie in sim.js. */
+.app-pause-rest {
+  display: block;
+  height: 100%;
+  background: var(--app-akzent);
+  transform-origin: left center;
+  transform: scaleX(calc(1 - 0.3333 * clamp(0, (var(--p) - 0.582) / 0.418, 1)));
+}
 .app-pause-zeile {
   min-height: calc(44 * var(--app-pt));
+  padding: calc(8 * var(--app-pt)) 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.app-akzent { color: var(--app-akzent); }
-.app-pause-chips {
-  padding: calc(12 * var(--app-pt)) 0;
-  border-top: var(--app-haar) solid var(--app-rand);
+.app-pause-uhr { display: flex; flex-direction: column; }
+.app-pause-kopf {
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 500;
 }
+/* Der Countdown als Zahl: title 28/34, 800, Laufweite −0,8 pt. */
+.app-pause-zahl {
+  font-size: calc(28 * var(--app-pt));
+  line-height: calc(34 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.8 * var(--app-pt));
+}
+.app-pause-schnell { display: flex; align-items: center; gap: calc(4 * var(--app-pt)); }
+.app-pause-weiter {
+  min-height: calc(44 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  color: var(--app-akzent);
+  font-weight: 600;
+}
+.app-pause-chips { padding-bottom: calc(12 * var(--app-pt)); }
 .app-fakt {
   display: flex;
   flex-direction: column;
@@ -608,12 +730,16 @@
   color: var(--app-akzent);
   font-size: calc(13 * var(--app-pt));
   line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
 }
 
-/* Keypad (keypad.tsx): oben Radius 16, Haarlinie, 12 Innenabstand, 8 Abstand;
-   Tasten 48 hoch, Radius 10, heading 22/600; ✓ doppelt so breit. Reicht wie in
-   der App bis an die Unterkante, der Home-Indikator liegt darüber. */
+/* Keypad (keypad.tsx): oben Radius 16, Haarlinie, 12 Innenabstand, 8 Abstand.
+   Von oben: Zelle und Zahl (title 28/800), die Scheiben-Zeile (36 hoch), zwei
+   Schritt-Tasten (44 hoch, Fläche #26241F, 17/600 grau), die Ziffern (48 hoch,
+   heading 22/600), unten Abbrechen und doppelt so breit Übernehmen. Reicht wie
+   in der App bis an die Unterkante, der Home-Indikator liegt darüber. */
 .app-tastatur {
+  position: relative;
   flex: none;
   display: flex;
   flex-direction: column;
@@ -621,6 +747,16 @@
   padding: calc(12.33 * var(--app-pt));
   border-radius: calc(16 * var(--app-pt)) calc(16 * var(--app-pt)) 0 0;
   background: var(--app-flaeche);
+}
+/* Die Haarlinie liegt als Überlagerung über der Fläche, damit ihre Rundung auf
+   ganze Pixel die Maße innen nicht verschiebt. */
+.app-tastatur::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--app-haar) solid var(--app-rand);
+  border-radius: inherit;
+  pointer-events: none;
 }
 .app-tast-kopf {
   display: flex;
@@ -642,13 +778,55 @@
   font-size: calc(13 * var(--app-pt));
   line-height: calc(18 * var(--app-pt));
 }
-.app-hinweis { text-align: right; overflow: hidden; }
-.app-anzeige,
-.app-taste {
-  font-size: calc(22 * var(--app-pt));
-  line-height: calc(28 * var(--app-pt));
-  font-weight: 600;
-  letter-spacing: 0;
+.app-anzeige {
+  font-size: calc(28 * var(--app-pt));
+  line-height: calc(34 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.8 * var(--app-pt));
+}
+/* Die Scheiben-Zeile: links das eine Ende der Stange, gezeichnet, rechts der
+   Satz dazu. Immer 36 pt hoch, damit die Tasten beim Tippen nicht springen. */
+.app-scheiben {
+  height: calc(36 * var(--app-pt));
+  padding: 0 calc(8 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  gap: calc(12 * var(--app-pt));
+}
+.app-hinweis { flex: 1 1 0; min-width: 0; text-align: right; overflow: hidden; }
+/* plate-stack.tsx: Stange 22 × 5, Bund 5 × 14, dann die Scheiben vom Bund nach
+   außen, die schwerste zuerst, 2 pt auseinander, zuletzt die Hülse 12 × 7.
+   Höhe einer Scheibe 12 + √(kg / 25) · 22 pt: 25 kg sind 34, 2,5 kg sind 19.
+   Ab 10 kg 9 pt breit und hell, darunter 6 pt und grau. */
+.app-stapel { flex: none; height: calc(34 * var(--app-pt)); display: flex; align-items: center; }
+.app-stapel > span { flex: none; background: var(--app-rand); }
+.app-st-stange {
+  width: calc(22 * var(--app-pt));
+  height: calc(5 * var(--app-pt));
+  border-radius: calc(2 * var(--app-pt)) 0 0 calc(2 * var(--app-pt));
+}
+.app-st-bund {
+  width: calc(5 * var(--app-pt));
+  height: calc(14 * var(--app-pt));
+  margin-right: calc(2 * var(--app-pt));
+  border-radius: calc(1 * var(--app-pt));
+}
+.app-stapel > .app-st-scheibe {
+  width: calc(9 * var(--app-pt));
+  height: calc(34 * var(--app-pt));
+  margin-right: calc(2 * var(--app-pt));
+  border-radius: calc(2 * var(--app-pt));
+  background: var(--app-text);
+}
+.app-stapel > .app-st-klein {
+  width: calc(6 * var(--app-pt));
+  height: calc(19 * var(--app-pt));
+  background: var(--app-grau);
+}
+.app-st-ende {
+  width: calc(12 * var(--app-pt));
+  height: calc(7 * var(--app-pt));
+  border-radius: 0 calc(2 * var(--app-pt)) calc(2 * var(--app-pt)) 0;
 }
 .app-tast-reihe { display: flex; gap: calc(8 * var(--app-pt)); }
 .app-taste {
@@ -659,13 +837,20 @@
   justify-content: center;
   border-radius: calc(10 * var(--app-pt));
   background: var(--app-grund);
+  font-size: calc(22 * var(--app-pt));
+  line-height: calc(28 * var(--app-pt));
+  font-weight: 600;
+  letter-spacing: 0;
 }
-.app-taste-weg {
+.app-taste-schritt {
+  min-height: calc(44 * var(--app-pt));
+  background: var(--app-feld);
   color: var(--app-grau);
   font-size: calc(17 * var(--app-pt));
   line-height: calc(24 * var(--app-pt));
-  font-weight: 400;
+  letter-spacing: var(--app-spur);
 }
+.app-taste-weg { color: var(--app-grau); }
 .app-taste-ok { flex-grow: 2; background: var(--app-akzent); color: var(--app-auf-akzent); }
 
 .app-home {
@@ -679,58 +864,627 @@
   background: var(--app-text);
 }
 
+/* ================================================= Home und Analyse: Gerüst */
+/* Die Tabs der App haben keinen Navigationskopf: oben 62 pt Statusleiste in
+   der Farbe der Seite, darunter rollt der Inhalt, und er endet über der Leiste
+   des laufenden Workouts und der Tab-Leiste. */
+.app-status { position: relative; flex: none; height: calc(62 * var(--app-pt)); }
+.app-lauf { display: flex; flex-direction: column; will-change: transform; }
+
+/* Abschnitt: ein Block mit Titel (sectionTitle 19/24, 700, −0,3) und rechts
+   daneben, auf derselben Grundlinie, ein leiser Zusatz. */
+.app-block { display: flex; flex-direction: column; gap: calc(12 * var(--app-pt)); }
+.app-abschnitt {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(12 * var(--app-pt));
+}
+.app-abschnitt > span:first-child {
+  font-size: calc(19 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 700;
+  letter-spacing: calc(var(--app-spur) - 0.3 * var(--app-pt));
+}
+.app-abschnitt > span + span,
+.app-zeile-grau {
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-abschnitt > span + span { font-weight: 500; }
+.app-z-18 { --z: 18; }
+/* Zeichen, die die App füllt und streicht (flame, play, das Haus im aktiven Tab). */
+.app-z-voll { fill: currentColor; }
+
+/* Die Leiste des laufenden Workouts (active-workout-bar.tsx): 50 hoch, Fläche
+   #1D1C19, Haarlinie oben. Punkt 8, „Workout" 17/700, die Uhr 17/500 grau,
+   rechts die Pause in Orange (nur solange eine läuft) und ein Pfeil. */
+.app-mini {
+  position: relative;
+  flex: none;
+  min-height: calc(50 * var(--app-pt));
+  padding: 0 calc(16 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--app-pt));
+  background: var(--app-flaeche);
+  color: var(--app-grau);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-mini::before,
+.app-tabs::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  border-top: var(--app-haar) solid var(--app-rand);
+}
+.app-mini-punkt {
+  flex: none;
+  width: calc(8 * var(--app-pt));
+  height: calc(8 * var(--app-pt));
+  border-radius: 50%;
+  background: var(--app-akzent);
+}
+.app-mini-name { color: var(--app-text); font-weight: 700; }
+.app-mini-uhr { flex: 1 1 0; font-weight: 500; }
+.app-mini-pause { color: var(--app-akzent); font-weight: 700; }
+
+/* Tab-Leiste ((tabs)/_layout.tsx): Haarlinie, 49 hoch, darunter 34 für den
+   Home-Indikator. Zeichen 24, Beschriftung 10/18, 600; aktiv orange mit
+   kräftigerem Strich (2,2 statt 1,8). */
+.app-tabs {
+  position: relative;
+  flex: none;
+  display: flex;
+  padding-bottom: calc(34 * var(--app-pt));
+  background: var(--app-grund);
+}
+.app-tab {
+  flex: 1 1 0;
+  min-height: calc(49 * var(--app-pt));
+  padding-top: calc(4 * var(--app-pt));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: calc(2 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(10 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
+}
+.app-tab.ist-aktiv { color: var(--app-akzent); }
+.app-tab.ist-aktiv .app-z { stroke-width: 2.2; }
+
+/* ============================================================ Home („Heute") */
+/* (tabs)/index.tsx, während ein Workout läuft. 16 seitlich, 8 oben, Blöcke 24
+   auseinander. Im Telefon rollt der Inhalt um 166 pt, bis die Karte
+   „Fortschritt" ganz über der Leiste steht (--heim-roll, siehe „Zustände"). */
+.app-lauf-heim {
+  gap: calc(24 * var(--app-pt));
+  padding: calc(8 * var(--app-pt)) calc(16 * var(--app-pt)) calc(32 * var(--app-pt));
+  transform: translate3d(0, calc(var(--heim-roll) * -166 * var(--app-pt)), 0);
+}
+
+/* Datum und großer Titel (largeTitle 32/36, 800, −1), rechts die Serie. */
+.app-titelzeile {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(12 * var(--app-pt));
+}
+.app-titel-links { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.app-datum {
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 500;
+}
+.app-gross {
+  font-size: calc(32 * var(--app-pt));
+  line-height: calc(36 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 1 * var(--app-pt));
+}
+.app-serie {
+  flex: none;
+  min-height: calc(44 * var(--app-pt));
+  padding: 0 calc(12 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt));
+  background: var(--app-flaeche);
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-serie .app-z { color: var(--app-akzent); }
+.app-serie b {
+  color: var(--app-text);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 800;
+}
+
+/* Die Karte oben (next-workout.tsx): ganz in Orange, die einzige farbige
+   Fläche des Screens. Zeile 13/600, Titel 28/34, 800, −0,8, darunter der
+   dunkle Knopf (52 hoch, Radius 16, 17/700). */
+.app-held {
+  display: flex;
+  flex-direction: column;
+  padding: calc(16 * var(--app-pt));
+  border-radius: calc(20 * var(--app-pt));
+  background: var(--app-akzent);
+  color: var(--app-auf-akzent);
+}
+.app-held-kopf {
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
+}
+.app-held-titel {
+  margin-top: calc(2 * var(--app-pt));
+  font-size: calc(28 * var(--app-pt));
+  line-height: calc(34 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.8 * var(--app-pt));
+}
+.app-held-knopf {
+  min-height: calc(52 * var(--app-pt));
+  margin-top: calc(16 * var(--app-pt));
+  padding: 0 calc(16 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt));
+  background: var(--app-auf-akzent);
+  color: var(--app-text);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 700;
+}
+/* „Routinen": eine Kachel, 46 hoch, Radius 16, Zeichen 18 grau, 17/600. */
+.app-kachel {
+  min-height: calc(46 * var(--app-pt));
+  padding: 0 calc(12 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt));
+  background: var(--app-flaeche);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 600;
+}
+.app-kachel .app-z { color: var(--app-grau); }
+
+/* „Diese Woche" (week-body.tsx): links zwei Figuren je 70 breit, rechts die
+   sieben Tage und sechs Muskelgruppen. */
+.app-wochenkoerper {
+  display: flex;
+  align-items: center;
+  gap: calc(16 * var(--app-pt));
+}
+.app-figuren { flex: none; display: flex; gap: calc(4 * var(--app-pt)); }
+/* Eine Figur in zwei Schichten: unten alle Muskeln in Ruhe, darüber die
+   trainierten in ihrer Farbe. Die obere blendet ein, wenn die Zahlen aufleben. */
+.app-koerper {
+  position: relative;
+  display: block;
+  width: calc(70 * var(--app-pt));
+  height: calc(136.02 * var(--app-pt));
+}
+.app-koerper img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.app-wochenseite {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(12 * var(--app-pt));
+}
+/* Tage: zwei Buchstaben (11/18, 600), darunter ein Punkt von 10. Trainiert
+   orange, sonst Fläche #26241F; heute steht der Tag in heller Schrift. */
+.app-tage { display: flex; justify-content: space-between; }
+.app-tag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(4 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(11 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
+}
+.app-tag.ist-heute { color: var(--app-text); }
+.app-tag i {
+  width: calc(10 * var(--app-pt));
+  height: calc(10 * var(--app-pt));
+  border-radius: 50%;
+  background: var(--app-feld);
+}
+.app-tag.ist-trainiert i { background: var(--app-akzent); }
+/* Gruppen: Name (76 breit, 13/500), Spur 5 hoch, Zahl (13/700, rechts). Die
+   Füllung ist Sätze geteilt durch die meisten Sätze der Woche. */
+.app-gruppen { display: flex; flex-direction: column; gap: calc(4 * var(--app-pt)); }
+.app-gruppe {
+  min-height: calc(22 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--app-pt));
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-gruppe-name { flex: none; width: calc(76 * var(--app-pt)); font-weight: 500; }
+.app-gruppe-spur {
+  flex: 1 1 0;
+  height: calc(5 * var(--app-pt));
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--app-feld);
+}
+.app-gruppe-spur i {
+  display: block;
+  width: calc(var(--anteil) * 100%);
+  height: 100%;
+  border-radius: 999px;
+  background: var(--app-text);
+}
+.app-gruppe-zahl { flex: none; min-width: calc(26 * var(--app-pt)); text-align: right; font-weight: 700; }
+
+/* „Fortschritt" (progress-card.tsx): die Zahl der laufenden Woche (28/34,
+   800), daneben die letzte, darunter acht Balken. Ein Balken ist Wert durch
+   den größten mal 84 pt; der letzte, die laufende Woche, ist orange. */
+.app-fortkarte { gap: calc(12 * var(--app-pt)); }
+.app-fort-kopf {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: calc(12 * var(--app-pt));
+}
+.app-fort-zahl {
+  font-size: calc(28 * var(--app-pt));
+  line-height: calc(34 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.8 * var(--app-pt));
+}
+.app-fort-vor {
+  flex-shrink: 1;
+  text-align: right;
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 500;
+}
+.app-balkenreihe {
+  height: calc(84 * var(--app-pt));
+  display: flex;
+  align-items: flex-end;
+  gap: calc(8 * var(--app-pt));
+}
+.app-balken { flex: 1 1 0; height: 100%; display: flex; align-items: flex-end; overflow: hidden; }
+.app-balken i {
+  display: block;
+  width: 100%;
+  height: calc(var(--hoehe) * 100%);
+  border-radius: calc(6 * var(--app-pt)) calc(6 * var(--app-pt)) calc(2 * var(--app-pt)) calc(2 * var(--app-pt));
+  background: var(--app-rand);
+}
+.app-balken:last-child i { background: var(--app-akzent); }
+.app-wochennummern {
+  margin-top: calc(4 * var(--app-pt));
+  display: flex;
+  gap: calc(8 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(11 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+  font-weight: 600;
+  text-align: center;
+}
+.app-wochennummern span { flex: 1 1 0; }
+.app-wochennummern span:last-child { color: var(--app-text); }
+
+/* ---- Aufleben. In der App stehen Home und Analyse still; hochzählende Zahlen
+   und eine Figur, die aufleuchtet, kennt sie vom Abschluss-Screen (900 ms,
+   easeOutCubic). Hier lebt die Woche auf, während das Telefon hereinkommt, und
+   der Fortschritt, wenn seine Karte hereinrollt: Füllungen und Balken fahren
+   herein, die trainierten Muskeln blenden ein, die Zahlen zählt sim.js. */
+.app-woche .app-koerper-licht { opacity: var(--heim-woche); }
+.app-woche .app-gruppe-spur i { transform: translate3d(calc((var(--heim-woche) - 1) * 100%), 0, 0); }
+.app-fort .app-balken i { transform: translate3d(0, calc((1 - var(--heim-fort)) * 100%), 0); }
+
+/* ================================================================== Analyse */
+/* (tabs)/analytics.tsx: Karten 16 auseinander, 16 seitlich. Der Tab beginnt in
+   der App mit Titel, Serie und Kalender; hier steht er schon gerollt da, die
+   Karte „Muskelverteilung" oben (so zeigt ihn auch das Store-Bild). Sie ist
+   662 pt hoch und füllt den Platz zwischen Statusleiste und Workout-Leiste.
+   Dann rollt der Inhalt um 678 pt zur „Muskel-Heatmap" (--ana-roll). */
+.app-lauf-analyse {
+  gap: calc(16 * var(--app-pt));
+  padding: calc(8 * var(--app-pt)) calc(16 * var(--app-pt)) calc(64 * var(--app-pt));
+  transform: translate3d(0, calc(var(--ana-roll) * -678 * var(--app-pt)), 0);
+}
+/* Karte eines Widgets (card.tsx): Kinderabstand 12, Titel 17/24, 700. */
+.app-wkarte { gap: calc(12 * var(--app-pt)); }
+.app-karte-titel {
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 700;
+}
+/* Zeitraum (range-picker.tsx): 44 hoch, links leise das Wort, rechts der
+   gewählte Zeitraum in Orange und ein Pfeil. */
+.app-zeitraum {
+  min-height: calc(44 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(12 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-zeitraum > span + span {
+  display: flex;
+  align-items: center;
+  gap: calc(8 * var(--app-pt));
+  color: var(--app-akzent);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-zeitraum .app-z { color: var(--app-grau); }
+.app-widget { display: flex; flex-direction: column; gap: calc(8 * var(--app-pt)); }
+
+/* Netz (radar-chart.tsx): 300 × 300 mittig, 4 pt Rand oben und unten. Raster
+   #33302A, Strich zwei Haarlinien. Die Fläche des Zeitraums orange (Strich
+   2,5, Füllung 28 %), die des Zeitraums davor grau (Strich 2, Füllung 18 %):
+   im Beispiel fast nichts, ein Punkt in der Mitte. Achsen 13/18 grau. */
+.app-netzfeld {
+  position: relative;
+  align-self: center;
+  width: calc(300 * var(--app-pt));
+  height: calc(300 * var(--app-pt));
+  margin: calc(4 * var(--app-pt)) 0;
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-netz { position: absolute; inset: 0; display: block; width: 100%; height: 100%; overflow: visible; }
+.app-netz-raster { fill: none; stroke: var(--app-rand); stroke-width: 0.667; }
+.app-netz-vorher { fill: rgba(162, 157, 146, 0.18); stroke: var(--app-grau); stroke-width: 2; stroke-linejoin: round; }
+.app-netz-jetzt { fill: rgba(240, 148, 46, 0.28); stroke: var(--app-akzent); stroke-width: 2.5; stroke-linejoin: round; }
+.app-netzfeld > span { position: absolute; width: calc(88 * var(--app-pt)); text-align: center; }
+
+/* Legende: zwei Einträge 16 auseinander, Punkt 10, zwei Zeilen 13/18. */
+.app-legende {
+  display: flex;
+  justify-content: center;
+  gap: calc(16 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-legende > span { display: flex; align-items: center; gap: calc(4 * var(--app-pt)); }
+.app-legende i,
+.app-tag i { flex: none; }
+.app-legende i {
+  width: calc(10 * var(--app-pt));
+  height: calc(10 * var(--app-pt));
+  border-radius: 50%;
+  background: var(--app-akzent);
+}
+.app-legende i.app-legende-grau { background: var(--app-grau); }
+/* Die Systemschrift setzt Tabellenziffern weiter als die proportionalen. */
+.app-schirm-analyse .app-legende > span > span { font-variant-numeric: normal; }
+.app-schirm-analyse .app-tab-ziffern { font-variant-numeric: tabular-nums; }
+
+/* Die vier Kennzahlen (stat-widgets.tsx): zwei je Zeile, 8 auseinander, links
+   eine Linie von 2 pt. Zahl 20/24, 800; Name 13/18 grau; darunter die
+   Veränderung zum Zeitraum davor, grün, wenn es mehr ist. */
+.app-kennzahlen { display: flex; flex-wrap: wrap; gap: calc(8 * var(--app-pt)); }
+.app-kennzahl {
+  flex: 1 1 48%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--app-pt));
+  padding: calc(4 * var(--app-pt)) 0 calc(4 * var(--app-pt)) calc(12 * var(--app-pt));
+  border-left: calc(2 * var(--app-pt)) solid var(--app-rand);
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-kennzahl b {
+  color: var(--app-text);
+  font-size: calc(20 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+  font-weight: 800;
+  letter-spacing: calc(var(--app-spur) - 0.4 * var(--app-pt));
+}
+.app-kennzahl-delta { color: #66B36E; }
+
+/* „Was zeigt das?" (info-button.tsx): Kreis 18 mit dem Buchstaben i, 13/18 orange. */
+.app-info {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--app-pt));
+  color: var(--app-akzent);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-info i {
+  width: calc(18 * var(--app-pt));
+  height: calc(18 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: calc(1 * var(--app-pt)) solid var(--app-akzent);
+  border-radius: 50%;
+  font-style: normal;
+  font-size: calc(11 * var(--app-pt));
+  line-height: calc(13 * var(--app-pt));
+  font-weight: 600;
+}
+
+/* Umschalter (segmented.tsx): Spur #26241F, Radius 16, innen 3; das gewählte
+   Feld #33302A, Radius 12, 17/600. */
+.app-segmente {
+  display: flex;
+  gap: calc(2 * var(--app-pt));
+  padding: calc(3 * var(--app-pt));
+  border-radius: calc(16 * var(--app-pt));
+  background: var(--app-feld);
+  color: var(--app-grau);
+  font-size: calc(17 * var(--app-pt));
+  line-height: calc(24 * var(--app-pt));
+}
+.app-segmente span {
+  flex: 1 1 0;
+  min-height: calc(38 * var(--app-pt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: calc(12 * var(--app-pt));
+}
+.app-segmente .ist-gewaehlt { background: var(--app-rand); color: var(--app-text); font-weight: 600; }
+
+/* Die Figur der Heatmap: eine, 190 breit, mittig. */
+.app-koerper-gross {
+  align-self: center;
+  width: calc(190 * var(--app-pt));
+  height: calc(369.21 * var(--app-pt));
+}
+/* Skala: fünf Stufen der Wärme (heatColor bei 0, 0,25, 0,5, 0,75, 1). */
+.app-skala {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(8 * var(--app-pt));
+  color: var(--app-grau);
+  font-size: calc(13 * var(--app-pt));
+  line-height: calc(18 * var(--app-pt));
+}
+.app-skala-stufen { display: flex; gap: calc(2 * var(--app-pt)); }
+.app-skala-stufen i {
+  width: calc(22 * var(--app-pt));
+  height: calc(10 * var(--app-pt));
+  border-radius: calc(2 * var(--app-pt));
+  background: #33302A;
+}
+.app-skala-stufen i:nth-child(2) { background: #6F5133; }
+.app-skala-stufen i:nth-child(3) { background: #986735; }
+.app-skala-stufen i:nth-child(4) { background: #C37D34; }
+.app-skala-stufen i:nth-child(5) { background: #F0942E; }
+
+/* ---- Aufleben, wie auf Home eine Zugabe dieser Seite: das Netz wächst aus
+   der Mitte, wenn der Tab aufgeht, die Figur leuchtet auf, wenn ihre Karte
+   hereingerollt ist. */
+.app-netz-form { transform-origin: 150px 150px; transform: scale(var(--ana-netz)); }
+.app-heat .app-koerper-licht { opacity: var(--ana-heat); }
+
 /* ---------------------------------------------------------------- Zustände */
 /* Das HTML trägt alle Schritt-Klassen, also den Endzustand. sim.js nimmt sie für
    frühere Takte weg; jede Regel hier beschreibt ein „noch nicht".
+     sim-training     das laufende Workout ist offen (vorher: Home)
      sim-offen        Keypad auf dem kg-Feld von Satz 2
      sim-7, sim-5     die getippten Ziffern
-     sim-uebernommen  Keypad-✓: 75 steht weiß im Feld
-     sim-bestaetigt   Zeilen-✓: Satz bestätigt, Rekord
-     sim-pause        Pausenkarte läuft
-   Kurz gedrückt: sim-druck-7, sim-druck-5, sim-druck-haken. */
+     sim-uebernommen  Keypad-Haken: 75 steht fett im Feld
+     sim-bestaetigt   Zeilen-Haken: Satz bestätigt, Rekord
+     sim-pause        die Pause läuft (Karte im Workout, Leiste in den Tabs)
+     sim-zurueck      zurück in den Tabs: wieder Home
+     sim-analyse      der Tab Analyse
+   Kurz gedrückt: sim-druck-leiste, sim-druck-7, sim-druck-5, sim-druck-haken,
+   sim-druck-zurueck. Ein Tab hat in der App keinen gedrückten Zustand. */
+
+/* Fenster für das, was auf Home und Analyse rollt und auflebt. Die Zähler in
+   sim.js nehmen dieselben Fenster aus dem HTML (data-ab, data-ueber).
+   Kurven: easeOutCubic wie in der App, fürs Rollen ein Smoothstep.
+   Home: die Woche lebt während der Anfahrt auf (--a ab 0,68), damit das
+   Telefon nicht mit leeren Balken hereinkommt; gerollt wird ab --p 0,04, der
+   Fortschritt lebt ab 0,075 auf. */
+.sim-stand {
+  --hw: clamp(0, calc((var(--a) - 0.68) / 0.32), 1);
+  --heim-woche: calc(1 - (1 - var(--hw)) * (1 - var(--hw)) * (1 - var(--hw)));
+  --hr: clamp(0, calc((var(--p) - 0.04) / 0.08), 1);
+  --heim-roll: calc(var(--hr) * var(--hr) * (3 - 2 * var(--hr)));
+  --hf: clamp(0, calc((var(--p) - 0.075) / 0.055), 1);
+  --heim-fort: calc(1 - (1 - var(--hf)) * (1 - var(--hf)) * (1 - var(--hf)));
+  /* Analyse: das Netz ab 0,76, das Rollen ab 0,84, die Figur ab 0,91. */
+  --an: clamp(0, calc((var(--p) - 0.76) / 0.06), 1);
+  --ana-netz: calc(1 - (1 - var(--an)) * (1 - var(--an)) * (1 - var(--an)));
+  --ar: clamp(0, calc((var(--p) - 0.84) / 0.1), 1);
+  --ana-roll: calc(var(--ar) * var(--ar) * (3 - 2 * var(--ar)));
+  --ah: clamp(0, calc((var(--p) - 0.91) / 0.07), 1);
+  --ana-heat: calc(1 - (1 - var(--ah)) * (1 - var(--ah)) * (1 - var(--ah)));
+}
+
+/* Welches der drei Telefone zu sehen ist. Nur bewegt: ohne Bewegung stehen
+   alle drei nebeneinander. Unsichtbar statt entfernt, damit beim Wechsel
+   nichts neu ausgelegt werden muss. */
+.bewegt .sim-stand.sim-training:not(.sim-zurueck) .sim-tel-heim,
+.bewegt .sim-stand.sim-analyse .sim-tel-heim,
+.bewegt .sim-stand:not(.sim-training) .sim-tel-training,
+.bewegt .sim-stand.sim-zurueck .sim-tel-training,
+.bewegt .sim-stand:not(.sim-analyse) .sim-tel-analyse { visibility: hidden; }
 
 .app-tastatur,
 .app-ruhe,
-.app-satz-2 .app-haken,
 .app-wert-vorschlag,
+.app-s1,
 .app-a0, .app-a1,
 .app-h0, .app-h1 { display: none; }
 
-.app-wert-vorschlag { color: var(--app-grau); }
-.app-wert-neu { color: var(--app-text); }
+/* Endzustand von Satz 2: beide Werte fett ohne Kasten, das Rekordfeld mit
+   Goldrand, der Haken gold gefüllt. */
+.app-wert-vorschlag { color: var(--app-grau); font-weight: 400; }
 .app-feld-kg { border-color: var(--app-gold); }
-.app-feld-wdh { color: var(--app-text); }
+.app-satz-2 .app-haken { background: var(--app-gold); color: var(--app-auf-akzent); }
 
-/* Vor dem Keypad-✓: grauer Vorschlag im Feld. */
-.app-schirm:not(.sim-uebernommen) .app-wert-vorschlag { display: inline; }
-.app-schirm:not(.sim-uebernommen) .app-wert-neu { display: none; }
+/* Vor dem Keypad-Haken: grauer Vorschlag im Feld. */
+.sim-stand:not(.sim-uebernommen) .app-wert-vorschlag { display: inline; }
+.sim-stand:not(.sim-uebernommen) .app-wert-neu { display: none; }
 
-/* Vor dem Zeilen-✓: Wdh. grau, oranger Kasten, kein Goldrand. */
-.app-schirm:not(.sim-bestaetigt) .app-feld-kg { border-color: transparent; }
-.app-schirm:not(.sim-bestaetigt) .app-feld-wdh { color: var(--app-grau); }
-.app-schirm:not(.sim-bestaetigt) .app-satz-2 .app-haken { display: flex; }
-.app-schirm:not(.sim-bestaetigt) .app-satz-2 .app-ok { display: none; }
-.app-schirm.sim-druck-haken .app-haken { opacity: 0.7; }
+/* Vor dem Zeilen-Haken: Satz 2 ist ein Entwurf. Beide Felder im Kasten, Wdh.
+   grau, der Haken leise, kein Goldrand; in der Leiste steht erst ein Satz. */
+.sim-stand:not(.sim-bestaetigt) .app-satz-2 .app-feld { background: var(--app-feld); }
+.sim-stand:not(.sim-bestaetigt) .app-feld-kg { border-color: transparent; }
+.sim-stand:not(.sim-bestaetigt) .app-feld-wdh { color: var(--app-grau); font-weight: 400; }
+.sim-stand:not(.sim-bestaetigt) .app-satz-2 .app-haken { background: var(--app-feld); color: var(--app-text); }
+.sim-stand.sim-druck-haken .app-satz-2 .app-haken { opacity: 0.7; }
+.sim-stand.sim-druck-zurueck .sim-tel-training .app-zurueck { background: var(--app-glas-ring); }
+.sim-stand:not(.sim-bestaetigt) .app-s1 { display: inline; }
+.sim-stand:not(.sim-bestaetigt) .app-s2 { display: none; }
 
 /* Ohne laufende Pause: „Pause starten" statt der Karte. */
-.app-schirm:not(.sim-pause) .app-pause { display: none; }
-.app-schirm:not(.sim-pause) .app-ruhe { display: flex; }
+.sim-stand:not(.sim-pause) .app-pause,
+.sim-stand:not(.sim-pause) .app-mini-pause { display: none; }
+.sim-stand.sim-druck-leiste .sim-tel-heim .app-mini { background: var(--app-feld); }
+.sim-stand:not(.sim-pause) .app-ruhe { display: flex; }
 
-/* Keypad offen: Rand orange, Liste hoch, unten nur das Keypad. */
-.app-schirm.sim-offen:not(.sim-uebernommen) .app-tastatur { display: flex; }
-.app-schirm.sim-offen:not(.sim-uebernommen) .app-ruhe { display: none; }
-.app-schirm.sim-offen:not(.sim-uebernommen) .app-feld-kg { border-color: var(--app-akzent); }
-.app-schirm.sim-offen:not(.sim-uebernommen) .app-rolle { transform: translate3d(0, calc(-54 * var(--app-pt)), 0); }
+/* Keypad offen: Rand orange, die Karte an die Oberkante der Liste, unten nur
+   das Keypad. */
+.sim-stand.sim-offen:not(.sim-uebernommen) .app-tastatur { display: flex; }
+.sim-stand.sim-offen:not(.sim-uebernommen) .app-ruhe { display: none; }
+.sim-stand.sim-offen:not(.sim-uebernommen) .app-feld-kg { border-color: var(--app-akzent); }
+.sim-stand.sim-offen:not(.sim-uebernommen) .app-rolle { transform: translate3d(0, calc(-28 * var(--app-pt)), 0); }
 
-/* Anzeige und Scheiben-Zeile: „–" und Leerzeile, dann „7", dann „75". */
-.app-schirm:not(.sim-7) .app-a0,
-.app-schirm:not(.sim-7) .app-h0 { display: inline; }
-.app-schirm.sim-7:not(.sim-5) .app-a1,
-.app-schirm.sim-7:not(.sim-5) .app-h1 { display: inline; }
-.app-schirm:not(.sim-5) .app-a2,
-.app-schirm:not(.sim-5) .app-h2 { display: none; }
-.app-schirm.sim-druck-7 .app-taste-7,
-.app-schirm.sim-druck-5 .app-taste-5 { background: var(--app-feld); }
+/* Anzeige und Scheiben-Zeile: „–" und nur die Stange, dann „7" (weniger als
+   die Stange, noch keine Scheibe), dann „75" mit 25 und 2,5. */
+.sim-stand:not(.sim-7) .app-a0,
+.sim-stand:not(.sim-7) .app-h0 { display: inline; }
+.sim-stand.sim-7:not(.sim-5) .app-a1,
+.sim-stand.sim-7:not(.sim-5) .app-h1 { display: inline; }
+.sim-stand:not(.sim-5) .app-a2,
+.sim-stand:not(.sim-5) .app-h2,
+.sim-stand:not(.sim-5) .app-st-scheibe { display: none; }
+.sim-stand.sim-druck-7 .app-taste-7,
+.sim-stand.sim-druck-5 .app-taste-5 { background: var(--app-feld); }
 
 /* ---------------------------------------------------- Ohne Skript, ohne Bewegung */
 /* Ohne Skript steht --p auf 1 und alle Schritt-Klassen stehen im HTML: das
@@ -744,6 +1498,41 @@
 :is(.no-js, .ruhig) .sim-balken,
 :is(.no-js, .ruhig) .sim-vorsatz { display: none; }
 :is(.no-js, .ruhig) .sim-fussnote { display: block; }
+/* GingR ohne Bewegung: die drei Telefone nebeneinander, links daneben die
+   Takte als Liste. Jeder Screen steht an seinem Anfang, nicht gerollt. Unter
+   1100 px einspaltig: erst der Text, darunter die drei in einer Reihe; unter
+   701 px wird daraus eine Reihe zum Wischen. */
+:is(.no-js, .ruhig) .sim-drei {
+  --sim-w: min(246px, calc((100vw - 2 * var(--pad, 40px) - 22rem - 88px) / 3));
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  perspective: none;
+}
+:is(.no-js, .ruhig) .sim-drei > .sim-telefon { flex: none; }
+:is(.no-js, .ruhig) #gingr .sim-buehne { grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); }
+:is(.no-js, .ruhig) .sim-drei :is(.app-lauf-heim, .app-lauf-analyse) { transform: none; }
+@media (max-width: 1099px) {
+  :is(.no-js, .ruhig) #gingr .sim-buehne { grid-template-columns: minmax(0, 1fr); }
+  :is(.no-js, .ruhig) .sim-drei {
+    --sim-w: min(300px, calc((100vw - 2 * var(--pad, 40px) - 40px) / 3));
+    justify-content: center;
+  }
+}
+@media (max-width: 700px) {
+  :is(.no-js, .ruhig) .sim-drei {
+    --sim-w: min(300px, 72vw);
+    justify-content: flex-start;
+    gap: 16px;
+    margin-inline: calc(-1 * var(--pad, 20px));
+    padding-inline: var(--pad, 20px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad, 20px);
+    scrollbar-width: none;
+  }
+  :is(.no-js, .ruhig) .sim-drei > .sim-telefon { scroll-snap-align: start; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   /* Kein Drehen, kein Ein- und Ausblenden: der Endzustand steht sofort da.
@@ -758,6 +1547,38 @@
   .sim-vorsatz { display: none; }
   .sim-fussnote { display: block; }
   .app-rolle { transition: none; }
+  /* GingR: dieselben Regeln wie oben unter .ruhig. */
+  .sim-drei {
+    --sim-w: min(246px, calc((100vw - 2 * var(--pad, 40px) - 22rem - 88px) / 3));
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    perspective: none;
+  }
+  .sim-drei > .sim-telefon { flex: none; grid-area: auto; visibility: visible; }
+  #gingr .sim-buehne { grid-template-columns: minmax(0, 22rem) minmax(0, 1fr); }
+  .sim-drei :is(.app-lauf-heim, .app-lauf-analyse) { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 1099px) {
+  #gingr .sim-buehne { grid-template-columns: minmax(0, 1fr); }
+  .sim-drei {
+    --sim-w: min(300px, calc((100vw - 2 * var(--pad, 40px) - 40px) / 3));
+    justify-content: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 700px) {
+  .sim-drei {
+    --sim-w: min(300px, 72vw);
+    justify-content: flex-start;
+    gap: 16px;
+    margin-inline: calc(-1 * var(--pad, 20px));
+    padding-inline: var(--pad, 20px);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--pad, 20px);
+    scrollbar-width: none;
+  }
+  .sim-drei > .sim-telefon { scroll-snap-align: start; }
 }
 
 /* ------------------------------------------------------------- Handy quer */
@@ -773,5 +1594,7 @@
     gap: 24px;
     padding-block: 12px;
   }
-  .sim-takte small { display: none; }
+  /* Nur beim Rezeptbuch: GingR steht in der ruhigen Fassung einspaltig (Text,
+     darunter die drei Telefone zum Wischen) und behält seine Unterzeilen. */
+  .sim-rezept .sim-takte small { display: none; }
 }

@@ -2,8 +2,8 @@
 
    Das Skript tut absichtlich wenig: Es rechnet für jede Simulation aus der
    Scrollposition eine Zahl zwischen 0 und 1, schreibt sie als --p an die
-   Section, schaltet Klassen und zählt bei GingR zwei Uhren. Alles Sichtbare
-   macht CSS. Gründe:
+   Section, schaltet Klassen und zählt bei GingR zwei Uhren und ein paar Zahlen.
+   Alles Sichtbare macht CSS. Gründe:
    - Es gibt keinen zweiten Zustand, der mit dem Scrollen auseinanderlaufen kann:
      Zurückscrollen spult zurück, weil alles aus p folgt.
    - Kein Timer. Die Pause zählt am Scrollweg herunter, nicht an einer Uhr —
@@ -26,47 +26,123 @@
     return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
   }
 
-  var ABLAEUFE = {
-    /* GingR. Ab welchem p die fünf Takte links dran sind. */
-    gingr: {
-      takte: [0, 0.12, 0.38, 0.52, 0.74],
+  /** 1350 → „1.350" oder „1,350": das Tausenderzeichen der Sprache steht im HTML. */
+  function gruppiert(n, zeichen) {
+    return String(n).replace(/\B(?=(\d{3})+$)/g, zeichen);
+  }
 
-      /* Was im Telefon passiert, in der Reihenfolge der App (keypad.tsx,
-         exercise-card.tsx, rest-timer-bar.tsx). Eine Klasse gilt von … bis unter …;
-         die Bedeutung jeder Klasse steht in sim.css unter „Zustände".
-         Takt 02 tippt „7" und „5", jede Taste leuchtet kurz; Takt 04 schließt das
-         Keypad und hakt dann die Zeile ab. Das Goldlicht läuft ab 0,62 über 0,09
-         (sim.css, .app-licht) — beide Stellen zusammen ändern. */
+  /** 3275 → „54 h 35 min", 45 → „45 min", 120 → „2 h" (formatSessionLength der App). */
+  function dauerText(minuten) {
+    var h = Math.floor(minuten / 60);
+    var m = minuten % 60;
+    if (h === 0) return m + ' min';
+    return m === 0 ? h + ' h' : h + ' h ' + m + ' min';
+  }
+
+  var ABLAEUFE = {
+    /* GingR. Drei Akte in drei Telefonen, die deckungsgleich übereinanderliegen:
+       Home („Heute“), das laufende Workout, Analyse. Ab welchem p die sieben
+       Takte links dran sind. */
+    gingr: {
+      /* Die Klassen hängen an der Figur um die drei Telefone, nicht an einem Bildschirm. */
+      ziel: '.sim-stand',
+      /* Die Woche auf Home lebt auf, während das Telefon hereinkommt (--a). */
+      anfahrt: true,
+      takte: [0, 0.19, 0.254, 0.391, 0.466, 0.582, 0.76],
+
+      /* Was im Telefon passiert, in der Reihenfolge der App. Eine Klasse gilt von …
+         bis unter …; die Bedeutung jeder Klasse steht in sim.css unter „Zustände".
+           davor         Home. Die Woche lebt auf, während das Telefon hereinkommt
+                         (sim.css rechnet das aus --a).
+           0 bis 0,19    Der Screen rollt im Telefon bis zum Fortschritt (sim.css,
+                         aus --p); dann ein Tipp auf die Leiste „Workout“ über
+                         der Tab-Leiste.
+           0,19 bis 0,72 Das laufende Workout (keypad.tsx, exercise-card.tsx,
+                         rest-timer-bar.tsx): Keypad auf, „7" und „5", jede Taste
+                         leuchtet kurz, übernehmen, Zeile abhaken, Pause.
+           ab 0,72       Zurück: wieder Home, jetzt mit der Pause in der Leiste.
+           ab 0,76       Der Tab Analyse: das Netz, dann rollt der Screen bis zur
+                         Muskel-Heatmap.
+         Das Goldlicht läuft ab 0,519 über 0,048 (sim.css, .app-licht) — beide
+         Stellen zusammen ändern. */
       schritte: [
-        ['sim-offen', 0.12, 2],
-        ['sim-7', 0.19, 2],
-        ['sim-druck-7', 0.19, 0.22],
-        ['sim-5', 0.27, 2],
-        ['sim-druck-5', 0.27, 0.30],
-        ['sim-uebernommen', 0.53, 2],
-        ['sim-druck-haken', 0.60, 0.62],
-        ['sim-bestaetigt', 0.62, 2],
-        ['sim-pause', 0.74, 2]
+        ['sim-druck-leiste', 0.165, 0.19],
+        ['sim-training', 0.19, 2],
+        ['sim-offen', 0.254, 2],
+        ['sim-7', 0.291, 2],
+        ['sim-druck-7', 0.291, 0.307],
+        ['sim-5', 0.333, 2],
+        ['sim-druck-5', 0.333, 0.349],
+        ['sim-uebernommen', 0.471, 2],
+        ['sim-druck-haken', 0.508, 0.519],
+        ['sim-bestaetigt', 0.519, 2],
+        ['sim-pause', 0.582, 2],
+        ['sim-druck-zurueck', 0.7, 0.72],
+        ['sim-zurueck', 0.72, 2],
+        ['sim-analyse', 0.76, 2]
       ],
 
-      /* Die Pause beginnt bei 90 s (REST_SECONDS_DEFAULT) und bleibt am Ende der
-         Strecke bei 1:12 stehen: ein Standbild mit 0:00 läse sich wie abgelaufen.
-         Die Laufzeit oben zählt dieselben 18 Sekunden mit, von 18:42 bis 19:00. */
+      /* Die Pause beginnt bei 90 s (REST_SECONDS_DEFAULT) und läuft weiter, auch
+         nachdem das Workout verlassen ist: die Leiste über der Tab-Leiste zeigt
+         sie in Home und Analyse. Am Ende der Strecke steht sie bei 1:00; ein
+         Standbild mit 0:00 läse sich wie abgelaufen. Die Dauer zählt dieselben
+         30 Sekunden mit, von 18:42 bis 19:12. Beide Uhren stehen in allen drei
+         Telefonen. Die Spur über der Pausenkarte rechnet sim.css aus denselben
+         Zahlen (.app-pause-rest) — beide Stellen zusammen ändern.
+
+         Zahlen, die hochzählen, tragen die Klasse .app-zaehl und ihre Angaben am
+         Element: data-von, data-bis, data-ab und data-ueber (Fenster auf p),
+         data-achse="a" (Fenster auf der Anfahrt statt auf p),
+         data-tausender (das Zeichen der Sprache), data-form="dauer" für Minuten
+         als „54 h 35 min“ (formatSessionLength der App, in beiden Sprachen
+         gleich). Kurve wie in der App (easeOutCubic). So zählt das Volumen der
+         Leiste mit dem Zeilen-Haken von 600 kg (Satz 1: 60 × 10) auf 1.350 kg
+         (dazu Satz 2: 75 × 10). In der App zählen Zahlen auf dem
+         Abschluss-Screen (900 ms) und in der Leiste des laufenden Workouts
+         (400 ms) hoch; auf Home und Analyse ist das eine Zugabe dieser Seite,
+         mit derselben Kurve. */
       einrichten: function (sim) {
-        var pauseZeit = sim.querySelector('.app-pause-zeit');
-        var laufZeit = sim.querySelector('.app-lauf-zeit');
-        var PAUSE_AB = 0.74;
+        var pausen = [].slice.call(sim.querySelectorAll('.app-pause-zeit'));
+        var dauern = [].slice.call(sim.querySelectorAll('.app-dauer'));
+        var zaehler = [].map.call(sim.querySelectorAll('.app-zaehl'), function (el) {
+          return {
+            el: el,
+            von: +el.getAttribute('data-von') || 0,
+            bis: +el.getAttribute('data-bis') || 0,
+            ab: +el.getAttribute('data-ab') || 0,
+            ueber: +el.getAttribute('data-ueber') || 0.01,
+            zeichen: el.getAttribute('data-tausender') || '',
+            dauer: el.getAttribute('data-form') === 'dauer',
+            anfahrt: el.getAttribute('data-achse') === 'a',
+            letzter: null
+          };
+        });
+        var PAUSE_AB = 0.582;
         var PAUSE_S = 90;
-        var GELAUFEN_S = 18;
-        var LAUF_START_S = 18 * 60 + 42;
+        var GELAUFEN_S = 30;
+        var DAUER_START_S = 18 * 60 + 42;
         var letzteSekunde = -1;
-        return function (p) {
+        return function (p, a) {
+          for (var i = 0; i < zaehler.length; i++) {
+            var z = zaehler[i];
+            var t = ((z.anfahrt ? a : p) - z.ab) / z.ueber;
+            if (t < 0) t = 0;
+            if (t > 1) t = 1;
+            var wert = Math.round(z.von + (z.bis - z.von) * (1 - Math.pow(1 - t, 3)));
+            if (wert !== z.letzter) {
+              z.letzter = wert;
+              z.el.textContent = z.dauer ? dauerText(wert) : gruppiert(wert, z.zeichen);
+            }
+          }
+
           var anteil = p <= PAUSE_AB ? 0 : (p - PAUSE_AB) / (1 - PAUSE_AB);
           var sekunde = Math.min(GELAUFEN_S, Math.floor(anteil * GELAUFEN_S));
           if (sekunde === letzteSekunde) return;
           letzteSekunde = sekunde;
-          if (pauseZeit) pauseZeit.textContent = uhr(PAUSE_S - sekunde);
-          if (laufZeit) laufZeit.textContent = uhr(LAUF_START_S + sekunde);
+          var rest = uhr(PAUSE_S - sekunde);
+          var lauf = uhr(DAUER_START_S + sekunde);
+          for (var j = 0; j < pausen.length; j++) pausen[j].textContent = rest;
+          for (var k = 0; k < dauern.length; k++) dauern[k].textContent = lauf;
         };
       }
     },
@@ -143,8 +219,9 @@
     var ablauf = ABLAEUFE[sim.getAttribute('data-sim')];
     var strecke = sim.querySelector('.sim-strecke');
     var buehne = sim.querySelector('.sim-buehne');
-    var schirm = sim.querySelector('.app-schirm, .rb-schirm');
-    if (!ablauf || !strecke || !buehne || !schirm) return;
+    if (!ablauf) return;
+    var schirm = sim.querySelector(ablauf.ziel || '.rb-schirm');
+    if (!strecke || !buehne || !schirm) return;
     sims.push({
       sim: sim,
       ablauf: ablauf,
@@ -209,6 +286,16 @@
 
     s.sim.style.setProperty('--p', p.toFixed(4));
 
+    /* Die Anfahrt: 0, wenn die Bühne unten in den Bildschirm kommt, 1, wenn sie
+       steht. Was sich daran hängt, ist fertig, bevor der Ablauf beginnt. */
+    var a = 1;
+    if (s.ablauf.anfahrt) {
+      a = 1 - kasten.top / window.innerHeight;
+      if (a < 0) a = 0;
+      if (a > 1) a = 1;
+      s.sim.style.setProperty('--a', a.toFixed(4));
+    }
+
     /* Welcher Takt ist dran? Der letzte, dessen Schwelle überschritten ist. */
     var takte = s.ablauf.takte;
     var takt = 0;
@@ -235,7 +322,7 @@
       }
     }
 
-    if (s.extra) s.extra(p);
+    if (s.extra) s.extra(p, a);
   }
 
   /* Einmal sofort, damit vor dem ersten Scrollen nicht kurz der Endzustand steht. */
