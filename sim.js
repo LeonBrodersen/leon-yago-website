@@ -2,8 +2,8 @@
 
    Das Skript tut absichtlich wenig: Es rechnet für jede Simulation aus der
    Scrollposition eine Zahl zwischen 0 und 1, schreibt sie als --p an die
-   Section, schaltet Klassen und zählt bei GingR zwei Uhren. Alles Sichtbare
-   macht CSS. Gründe:
+   Section, schaltet Klassen und zählt bei GingR zwei Uhren und das Volumen.
+   Alles Sichtbare macht CSS. Gründe:
    - Es gibt keinen zweiten Zustand, der mit dem Scrollen auseinanderlaufen kann:
      Zurückscrollen spult zurück, weil alles aus p folgt.
    - Kein Timer. Die Pause zählt am Scrollweg herunter, nicht an einer Uhr —
@@ -24,6 +24,11 @@
   /** 90 → „1:30", 1122 → „18:42" (formatDuration/formatClock der App unter einer Stunde). */
   function uhr(s) {
     return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+  }
+
+  /** 1350 → „1.350" oder „1,350": das Tausenderzeichen der Sprache steht im HTML. */
+  function gruppiert(n, zeichen) {
+    return String(n).replace(/\B(?=(\d{3})+$)/g, zeichen);
   }
 
   var ABLAEUFE = {
@@ -51,22 +56,45 @@
 
       /* Die Pause beginnt bei 90 s (REST_SECONDS_DEFAULT) und bleibt am Ende der
          Strecke bei 1:12 stehen: ein Standbild mit 0:00 läse sich wie abgelaufen.
-         Die Laufzeit oben zählt dieselben 18 Sekunden mit, von 18:42 bis 19:00. */
+         Die Dauer in der Leiste zählt dieselben 18 Sekunden mit, von 18:42 bis
+         19:00. Die Spur über der Pausenkarte rechnet sim.css aus denselben
+         Zahlen (.app-pause-rest) — beide Stellen zusammen ändern.
+
+         Das Volumen fährt mit dem Zeilen-Haken von 600 kg (Satz 1: 60 × 10) auf
+         1.350 kg (dazu Satz 2: 75 × 10), mit der Kurve der App
+         (workout-summary-bar.tsx, easeOutCubic). Dort dauert das 400 ms, hier
+         ein Stück Scrollweg ab 0,62 wie „sim-bestaetigt“. */
       einrichten: function (sim) {
         var pauseZeit = sim.querySelector('.app-pause-zeit');
-        var laufZeit = sim.querySelector('.app-lauf-zeit');
+        var dauer = sim.querySelector('.app-dauer');
+        var volumen = sim.querySelector('.app-volumen');
+        var tausender = volumen ? volumen.getAttribute('data-tausender') || '' : '';
         var PAUSE_AB = 0.74;
         var PAUSE_S = 90;
         var GELAUFEN_S = 18;
-        var LAUF_START_S = 18 * 60 + 42;
+        var DAUER_START_S = 18 * 60 + 42;
+        var VOLUMEN_AB = 0.62;
+        var VOLUMEN_UEBER = 0.06;
+        var VOLUMEN_VORHER = 600;
+        var VOLUMEN_DAZU = 750;
         var letzteSekunde = -1;
+        var letztesVolumen = -1;
         return function (p) {
+          var t = (p - VOLUMEN_AB) / VOLUMEN_UEBER;
+          if (t < 0) t = 0;
+          if (t > 1) t = 1;
+          var kg = Math.round(VOLUMEN_VORHER + VOLUMEN_DAZU * (1 - Math.pow(1 - t, 3)));
+          if (kg !== letztesVolumen) {
+            letztesVolumen = kg;
+            if (volumen) volumen.textContent = gruppiert(kg, tausender);
+          }
+
           var anteil = p <= PAUSE_AB ? 0 : (p - PAUSE_AB) / (1 - PAUSE_AB);
           var sekunde = Math.min(GELAUFEN_S, Math.floor(anteil * GELAUFEN_S));
           if (sekunde === letzteSekunde) return;
           letzteSekunde = sekunde;
           if (pauseZeit) pauseZeit.textContent = uhr(PAUSE_S - sekunde);
-          if (laufZeit) laufZeit.textContent = uhr(LAUF_START_S + sekunde);
+          if (dauer) dauer.textContent = uhr(DAUER_START_S + sekunde);
         };
       }
     },

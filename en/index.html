@@ -68,7 +68,7 @@
     <link rel="preload" href="/assets/vendor/lenis.min.js?v=20260926-2" as="script">
     <link rel="preload" href="/buehne.js?v=20260927-1" as="script">
     <link rel="stylesheet" href="/styles.css?v=20260927-1">
-    <link rel="stylesheet" href="/sim.css?v=20260926-2">
+    <link rel="stylesheet" href="/sim.css?v=20261004">
     <link rel="stylesheet" href="/rezept.css?v=20260926-2">
 </head>
 
@@ -249,57 +249,69 @@
                     </svg>
                 <span class="app-glas app-zurueck"><svg viewBox="0 0 11 19" aria-hidden="true"><path d="M9.6 1.4 1.5 9.5l8.1 8.1"/></svg></span>
                 <span class="app-titel">Active workout</span>
-                <span class="app-glas app-fertig">Finish</span>
+                <span class="app-glas app-fertig"><span class="app-fertig-knopf">Finish</span></span>
+              </div>
+
+              <div class="app-leiste">
+                <span class="app-zahl"><span class="app-zahl-kopf">Duration</span><span class="app-zahl-wert app-dauer">19:00</span></span>
+                <span class="app-zahl app-zahl-weit"><span class="app-zahl-kopf">Volume</span><span class="app-zahl-wert"><span class="app-volumen" data-tausender=",">1,350</span> kg</span></span>
+                <span class="app-zahl"><span class="app-zahl-kopf">Sets</span><span class="app-zahl-wert"><span class="app-s1">1</span><span class="app-s2">2</span></span></span>
+                <img class="app-figur" src="/assets/img/gingr-figur.svg" width="273" height="254" alt="" decoding="async">
+                <svg class="app-z app-z-16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
               </div>
 
               <div class="app-liste">
                 <div class="app-rolle">
-                  <span class="app-lauf">Running · <span class="app-lauf-zeit">19:00</span></span>
 
                   <div class="app-karte">
-                    <div class="app-karte-kopf"><span class="app-uebung">Bench Press</span><span class="app-chevron">›</span></div>
+                    <div class="app-karte-kopf"><span class="app-uebung">Bench Press</span><svg class="app-z app-z-16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></div>
                     <div class="app-chips">
-                      <span class="app-chip">Olympic ›</span><span class="app-chip">L/R</span><span class="app-chip">Time</span><span class="app-chip app-chip-rand">+ Superset</span>
+                      <span class="app-chip">Olympic<svg class="app-z app-z-14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span><span class="app-chip">L/R</span><span class="app-chip">Time</span><span class="app-chip">+ Superset</span>
                     </div>
-                    <div class="app-spalten"><span>Set</span><span>kg</span><span>Reps</span><span></span></div>
+                    <div class="app-spalten"><span>Set</span><span>Last</span><span>kg</span><span>Reps</span><span></span></div>
                     <div class="app-satz">
-                      <span class="app-nr">1</span><span class="app-feld ist-eingetragen">60</span><span class="app-feld ist-eingetragen">10</span><span class="app-ende"><span class="app-ok">✓</span></span>
+                      <span class="app-nr">1</span><span class="app-zuletzt">60 × 10</span><span class="app-feld">60</span><span class="app-feld">10</span><span class="app-ende"><span class="app-haken ist-bestaetigt"><svg class="app-z app-z-20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
                     </div>
                     <div class="app-satz app-satz-2">
-                      <span class="app-nr">2</span>
+                      <span class="app-nr">2</span><span class="app-zuletzt">72.5 × 10</span>
                       <span class="app-feld app-feld-kg"><span class="app-wert-vorschlag">72.5</span><span class="app-wert-neu">75</span><span class="app-licht"><span class="app-licht-band"></span><span class="app-licht-ziffern">75</span></span></span>
                       <span class="app-feld app-feld-wdh">10</span>
-                      <span class="app-ende"><span class="app-haken">✓</span><span class="app-ok">✓</span></span>
+                      <span class="app-ende"><span class="app-haken"><svg class="app-z app-z-20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
                     </div>
                     <div class="app-knopf">+ Set</div>
                   </div>
 
-                      <div class="app-karte">
-                        <div class="app-karte-kopf"><span class="app-uebung">Seated Cable Row</span><span class="app-chevron">›</span></div>
-                        <div class="app-chips">
-                          <span class="app-chip">Cable tower ›</span><span class="app-chip">L/R</span><span class="app-chip">Time</span><span class="app-chip app-chip-rand">+ Superset</span>
-                        </div>
-                        <div class="app-spalten"><span>Set</span><span>kg</span><span>Reps</span><span></span></div>
-                        <div class="app-satz">
-                          <span class="app-nr">1</span><span class="app-feld">75</span><span class="app-feld">11</span><span class="app-ende"><span class="app-haken">✓</span></span>
-                        </div>
-                        <div class="app-satz">
-                          <span class="app-nr">2</span><span class="app-feld">75</span><span class="app-feld">9</span><span class="app-ende"><span class="app-haken">✓</span></span>
-                        </div>
-                        <div class="app-satz">
-                          <span class="app-nr">3</span><span class="app-feld">70</span><span class="app-feld">11</span><span class="app-ende"><span class="app-haken">✓</span></span>
-                        </div>
-                        <div class="app-knopf">+ Set</div>
-                      </div>
+                  <div class="app-karte">
+                    <div class="app-karte-kopf"><span class="app-uebung">Seated Cable Row</span><svg class="app-z app-z-16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></div>
+                    <div class="app-chips">
+                      <span class="app-chip">Cable tower<svg class="app-z app-z-14" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></span><span class="app-chip">L/R</span><span class="app-chip">Time</span><span class="app-chip">+ Superset</span>
+                    </div>
+                    <div class="app-spalten"><span>Set</span><span>Last</span><span>kg</span><span>Reps</span><span></span></div>
+                    <div class="app-satz">
+                      <span class="app-nr">1</span><span class="app-zuletzt">75 × 11</span><span class="app-feld ist-entwurf">75</span><span class="app-feld ist-entwurf">11</span><span class="app-ende"><span class="app-haken"><svg class="app-z app-z-20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
+                    </div>
+                    <div class="app-satz">
+                      <span class="app-nr">2</span><span class="app-zuletzt">75 × 9</span><span class="app-feld ist-entwurf">75</span><span class="app-feld ist-entwurf">9</span><span class="app-ende"><span class="app-haken"><svg class="app-z app-z-20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
+                    </div>
+                    <div class="app-satz">
+                      <span class="app-nr">3</span><span class="app-zuletzt">70 × 11</span><span class="app-feld ist-entwurf">70</span><span class="app-feld ist-entwurf">11</span><span class="app-ende"><span class="app-haken"><svg class="app-z app-z-20" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></span>
+                    </div>
+                    <div class="app-knopf">+ Set</div>
+                  </div>
+
                 </div>
               </div>
 
               <div class="app-ruhe">Start a rest</div>
 
               <div class="app-pause">
-                <div class="app-pause-zeile"><span>Rest · <span class="app-pause-zeit">1:12</span></span><span class="app-akzent">Skip</span></div>
+                <div class="app-pause-spur"><span class="app-pause-rest"></span></div>
+                <div class="app-pause-zeile">
+                  <span class="app-pause-uhr"><span class="app-pause-kopf">Rest</span><span class="app-pause-zeit">1:12</span></span>
+                  <span class="app-pause-schnell"><span class="app-chip app-chip-eckig">−10 s</span><span class="app-chip app-chip-eckig">+10 s</span><span class="app-pause-weiter">Skip</span></span>
+                </div>
                 <div class="app-pause-chips">
-                  <span class="app-chip">−10 s</span><span class="app-chip">+10 s</span><span class="app-chip">Hold</span><span class="app-chip">Restart</span>
+                  <span class="app-chip app-chip-eckig">Hold</span><span class="app-chip app-chip-eckig">Restart</span>
                 </div>
                 <div class="app-fakt">
                   <span class="app-fakt-kopf">Did you know?</span>
@@ -313,12 +325,16 @@
                   <span class="app-tast-text"><span class="app-tast-kontext">Bench Press · Set 2</span><span class="app-tast-einheit">kg</span></span>
                   <span class="app-anzeige"><span class="app-a0">–</span><span class="app-a1">7</span><span class="app-a2">75</span></span>
                 </div>
-                <div class="app-hinweis"><span class="app-h0">&nbsp;</span><span class="app-h1">Less than the bar (20 kg)</span><span class="app-h2">1×25 + 1×2.5 per side · bar 20 kg</span></div>
+                <div class="app-scheiben">
+                  <span class="app-stapel"><span class="app-st-stange"></span><span class="app-st-bund"></span><span class="app-st-scheibe"></span><span class="app-st-scheibe app-st-klein"></span><span class="app-st-ende"></span></span>
+                  <span class="app-hinweis"><span class="app-h0">&nbsp;</span><span class="app-h1">Less than the bar (20 kg)</span><span class="app-h2">1×25 + 1×2.5 per side · bar 20 kg</span></span>
+                </div>
+                <div class="app-tast-reihe"><span class="app-taste app-taste-schritt">−2.5</span><span class="app-taste app-taste-schritt">+2.5</span></div>
                 <div class="app-tast-reihe"><span class="app-taste">1</span><span class="app-taste">2</span><span class="app-taste">3</span></div>
                 <div class="app-tast-reihe"><span class="app-taste">4</span><span class="app-taste app-taste-5">5</span><span class="app-taste">6</span></div>
                 <div class="app-tast-reihe"><span class="app-taste app-taste-7">7</span><span class="app-taste">8</span><span class="app-taste">9</span></div>
-                <div class="app-tast-reihe"><span class="app-taste">,</span><span class="app-taste">0</span><span class="app-taste">⌫</span></div>
-                <div class="app-tast-reihe"><span class="app-taste app-taste-weg">✕</span><span class="app-taste app-taste-ok">✓</span></div>
+                <div class="app-tast-reihe"><span class="app-taste">.</span><span class="app-taste">0</span><span class="app-taste"><svg class="app-z app-z-28er" viewBox="0 0 28 28" aria-hidden="true"><path d="M10 6h14v16H10l-7-8zM14 11l6 6M20 11l-6 6"/></svg></span></div>
+                <div class="app-tast-reihe"><span class="app-taste app-taste-weg"><svg class="app-z app-z-22" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span><span class="app-taste app-taste-ok"><svg class="app-z app-z-26" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></div>
               </div>
 
               <span class="app-home"></span>
@@ -636,7 +652,7 @@
 
 <script src="/assets/vendor/lenis.min.js?v=20260926-2" defer></script>
 <script src="/buehne.js?v=20260927-1" defer></script>
-<script src="/sim.js?v=20260926-2" defer></script>
+<script src="/sim.js?v=20261004" defer></script>
 <script src="/script.js?v=20260926-2" defer></script>
 <script type="application/ld+json">
 {

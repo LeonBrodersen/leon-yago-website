@@ -27,14 +27,14 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `assets/vendor/lenis.min.js` | [Lenis](https://github.com/darkroomengineering/lenis) 1.3.26 (weiches Scrollen, nur mit Maus), MIT, Lizenztext in `assets/vendor/LICENSE-lenis.txt` |
 | `script.js` | das Kontaktformular. Die Seite ist ohne JavaScript vollständig lesbar |
 | `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
-| `sim.css` | GingR im Telefon, in den Farben der App; dazu das gemeinsame Gerüst beider Simulationen |
+| `sim.css` | GingR im Telefon, in den Farben und Maßen der App (Stand: ihr Neudesign vom 04.10.2026); dazu das gemeinsame Gerüst beider Simulationen. Siehe unten „Das GingR-Telefon“ |
 | `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
 | `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex`. Die englischen Fassungen für `/en/` liegen unter `en/example-dentist/` und `en/example-cafe/`, mit demselben CSS; wer eine Fassung ändert, ändert die andere mit und nimmt die Bilder neu auf |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
 | `og-vorlage.html` | Quelle des Teilen-Bildes `og-image.jpg`, `noindex`, nirgends verlinkt |
 | `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Inter Display 700 (der Schnitt für große Größen) für alle Titel, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
-| `assets/img/` | Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy; die Bilder mit `-en-` im Namen zeigen die englischen Beispielseiten und stehen nur in `en/index.html` |
+| `assets/img/` | `gingr-figur.svg` (die zwei Körperfiguren in der Leiste des GingR-Telefons), dazu Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy; die Bilder mit `-en-` im Namen zeigen die englischen Beispielseiten und stehen nur in `en/index.html` |
 | `favicon/` | Symbole und `site.webmanifest` |
 
 ## Zwei Regeln, die die Seite überall einhält
@@ -85,6 +85,32 @@ grep -rl '?v=' --include='*.html' . | xargs sed -i '' -E 's/\?v=[0-9]+(-[0-9]+)?
 
 Kommentare nennen gemessene oder gerechnete Werte (Kontraste in `styles.css`, Größen). **Wer Farben,
 Schriften oder Abschnitte ändert, rechnet sie neu**, sonst steht dort eine Unwahrheit.
+
+## Das GingR-Telefon
+
+Das Telefon im Abschnitt `#gingr` ist kein Bildschirmfoto, sondern der Workout-Screen der App, von Hand
+nachgebaut: Markup in `index.html` und `en/index.html`, Maße und Farben in `sim.css`, Ablauf in `sim.js`.
+**Ändert sich die App, stimmt es nicht mehr und muss nachgezogen werden.** Stand ist das Neudesign der
+App vom 04.10.2026.
+
+* **Quelle** ist das Repo GymApp: `src/app/workout/active.tsx`, unter `src/components/workout/` die Dateien
+  `workout-summary-bar.tsx`, `exercise-card.tsx`, `rest-timer-bar.tsx`, `keypad.tsx`, `plate-stack.tsx`,
+  die Zeichen in `src/components/ui/icon.tsx`, die Farben und Größen in `src/theme/tokens.ts`. Gegengemessen
+  am Store-Bild `assets/store/screenshots-de-2026-10/01-workout.png` (3,28 px je Punkt).
+* **Jedes Maß in `sim.css` ist ein Punktwert der App**, gerechnet über `--app-pt`. Wer etwas ändert, ändert
+  die Zahl, nicht das Verhältnis.
+* **Die Texte im Telefon stehen wörtlich in der App:** `src/i18n/locales/de/common.json` und
+  `en/common.json`, die Übungsnamen in `exercises.json`, der Fakt in `src/domain/facts/facts.json`.
+  Beide Sprachfassungen haben dasselbe Markup, nur die Wörter und das Dezimalzeichen unterscheiden sich.
+* **Der Endzustand steht fest im HTML**, `sim.js` nimmt für frühere Schritte Klassen weg. Die Schwellen
+  stehen an drei Stellen und gehören zusammen: `schritte` und `einrichten` in `sim.js`, dazu in `sim.css`
+  das Goldlicht (`.app-licht`, ab 0,62) und die Spur der Pause (`.app-pause-rest`, ab 0,74).
+* **`assets/img/gingr-figur.svg`** sind die zwei Figuren aus `src/components/charts/body-paths.ts`
+  (männliche Figur, vorn und hinten, 2 von 22 Punkten Abstand), auf ein Fünftel verkleinert und auf ganze
+  Zahlen gerundet, damit die Datei 15 KB statt 53 KB wiegt. Gefärbt wie in der App nach einem Satz
+  Bankdrücken: Umriss `#26241F`, Muskeln `#33302A`, Brust `#F0942E`, vordere Schulter und Trizeps `#986735`
+  (`heatColor` mit 0,5 aus `heat-scale.ts`). Das Artwork stammt aus react-native-body-highlighter (MIT),
+  der Vermerk steht in der Datei.
 
 ## Bilder und Symbole neu erzeugen
 
