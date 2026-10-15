@@ -16,6 +16,20 @@
         <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ly-webstudio.de/"/>
     </url>
     <url>
+        <loc>https://www.ly-webstudio.de/gingr/</loc>
+        <lastmod>2026-10-15</lastmod>
+        <xhtml:link rel="alternate" hreflang="de" href="https://www.ly-webstudio.de/gingr/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.ly-webstudio.de/en/gingr/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ly-webstudio.de/gingr/"/>
+    </url>
+    <url>
+        <loc>https://www.ly-webstudio.de/en/gingr/</loc>
+        <lastmod>2026-10-15</lastmod>
+        <xhtml:link rel="alternate" hreflang="de" href="https://www.ly-webstudio.de/gingr/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://www.ly-webstudio.de/en/gingr/"/>
+        <xhtml:link rel="alternate" hreflang="x-default" href="https://www.ly-webstudio.de/gingr/"/>
+    </url>
+    <url>
         <loc>https://www.ly-webstudio.de/angebot/</loc>
         <lastmod>2026-09-26</lastmod>
     </url>

@@ -1,0 +1,250 @@
+/* GingR-Produktseite: /gingr/ und /en/gingr/ (15.10.2026).
+
+   Eigenständig, ohne styles.css und ohne JavaScript. Die Seite steht in den
+   Farben der App (dieselben Werte wie sim.css und GymApp src/theme/tokens.ts,
+   dunkles Schema), der Fuß in der Nacht der Startseite: Ab dort spricht die
+   Firma, nicht mehr die App.
+
+   Gerechnete Kontraste (WCAG 2):
+     text  #F2F0EB auf grund #131311  16,3:1    grau   #A29D92 auf grund   6,9:1
+     akzent #F0942E auf grund          8,0:1    rand   #5F5A51 auf grund   2,7:1 (Umriss der Läden, kein Bedienelement)
+     nacht-text #EEF1EE auf nacht     16,5:1    nacht-2 #9DA7A2 auf nacht  7,6:1
+
+   Bewegung: am Computer fächern die vier Telefone beim Laden aus einem Stapel
+   auf (1,1 s, dieselbe Kurve wie die Startseite). Am Handy stehen sie in einer
+   wischbaren Reihe, und das Telefon in der Mitte ist groß, die Nachbarn treten
+   zurück (scroll-gesteuert, nur wo der Browser animation-timeline kennt).
+   Bei „Bewegung reduzieren“ steht alles fertig da. */
+
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Inter Display"; src: url("/fonts/inter-display-latin-700.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
+:root {
+  --grund: #131311;
+  --flaeche: #1D1C19;
+  --rand: #33302A;
+  --rand-hell: #5F5A51;
+  --text: #F2F0EB;
+  --grau: #A29D92;
+  --akzent: #F0942E;
+  --nacht: #0E1311;
+  --nacht-text: #EEF1EE;
+  --nacht-2: #9DA7A2;
+  --nacht-linie: rgba(238, 241, 238, 0.16);
+
+  --pad: clamp(1rem, 3.4vw, 3.25rem);
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --display: "Inter Display", "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --aus: cubic-bezier(0.19, 1, 0.22, 1);
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--grund);
+  color: var(--text);
+  font: 400 1.0625rem/1.55 var(--sans);
+  font-feature-settings: "cv05" 1, "ss03" 1;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--akzent); outline-offset: 3px; }
+h1, h2, h3 { text-wrap: balance; }
+p { text-wrap: pretty; }
+::selection { background: var(--akzent); color: #1C1206; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; padding: 0; }
+.skip { position: absolute; left: -9999px; top: 0.5rem; z-index: 10; padding: 0.625rem 0.875rem; background: var(--text); color: var(--grund); }
+.skip:focus { left: var(--pad); }
+
+/* ---------------------------------------------------------------- Leiste */
+.leiste { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.5rem var(--pad); }
+.leiste a { text-decoration: none; display: inline-flex; align-items: center; min-height: 2.75rem; }
+.marke { font-size: 1.125rem; font-weight: 700; letter-spacing: -0.035em; }
+.leiste nav { display: flex; gap: 1.5rem; font-size: 0.9375rem; font-weight: 600; color: var(--grau); }
+.leiste nav a { min-width: 2.75rem; justify-content: center; }
+@media (hover: hover) { .leiste nav a:hover, .marke:hover { color: var(--text); text-decoration: underline; text-underline-offset: 0.25em; } }
+@media (max-width: 420px) { .leiste .zurueck { display: none; } }
+
+/* ------------------------------------------------------------------ Kopf */
+.held {
+  padding: clamp(1.5rem, 5vh, 3.5rem) var(--pad) 0;
+  text-align: center;
+}
+.held-symbol {
+  width: clamp(4.5rem, 7vw, 5.5rem); height: auto; aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 22.4%;
+  background: #fff;
+}
+.held h1 {
+  margin: 0.1em 0 0.24em;
+  font-family: var(--display);
+  font-size: clamp(5.5rem, 24vw, 10rem);
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  /* Die negative Laufweite nach dem R schöbe das Wort nach links. */
+  padding-left: 0.05em;
+}
+.held-satz {
+  margin: 0 auto;
+  max-width: 22ch;
+  font-size: clamp(1.375rem, 3.4vw, 2.25rem);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+}
+.held-info { margin: 0.875rem auto 0; max-width: 34rem; color: var(--grau); }
+
+/* Die Läden: bis zum Start keine Links, nur der Platz dafür. Zum Start werden
+   aus den span-Elementen Links mit den offiziellen Abzeichen (Apple und Google
+   erlauben ihre Abzeichen nur als Link auf den echten Eintrag). */
+.laeden { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin: 1.75rem 0 0; padding: 0; list-style: none; }
+.laden {
+  display: inline-flex; align-items: baseline; gap: 0.5rem;
+  min-height: 3.25rem; padding: 0.9rem 1.375rem;
+  border: 1px solid var(--rand-hell); border-radius: 0.875rem;
+  font-weight: 600; line-height: 1.2;
+}
+.laden small { font-size: 0.8125rem; font-weight: 600; color: var(--akzent); }
+.held-von { margin: 1.25rem 0 0; font-size: 0.9375rem; color: var(--grau); }
+.held-von a { color: var(--text); text-underline-offset: 0.2em; text-decoration-color: var(--rand-hell); }
+@media (hover: hover) { .held-von a:hover { text-decoration-color: currentColor; } }
+
+/* --------------------------------------------------------------- Galerie */
+/* Vier echte Bildschirme der App (Store-Bilder vom 04.10.2026, Beispieldaten),
+   je mit einer Zeile darunter. Die Ecken folgen dem Bildschirm des iPhone:
+   13 % der Breite waagrecht, 6 % der Höhe senkrecht, bei 1320 × 2868 also
+   gleich rund. */
+.galerie { margin: clamp(2.5rem, 7vh, 4.5rem) 0 0; padding: 0; list-style: none; }
+.tafel { margin: 0; }
+.tafel img {
+  width: 100%;
+  aspect-ratio: 1320 / 2868;
+  border-radius: 13% / 6%;
+  background: var(--flaeche);
+  box-shadow: 0 0 0 1px var(--rand);
+}
+.tafel h3 { margin: 1.25rem 0 0; font-size: 1.1875rem; font-weight: 700; letter-spacing: -0.015em; line-height: 1.25; }
+.tafel p { margin: 0.375rem 0 0; color: var(--grau); font-size: 0.9375rem; line-height: 1.5; }
+
+@media (min-width: 900px) {
+  .galerie {
+    --luecke: clamp(1.25rem, 2.4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--luecke);
+    width: min(100% - 2 * var(--pad), 74rem);
+    margin-inline: auto;
+  }
+  /* Zweite und vierte etwas tiefer: Rhythmus statt Raster. */
+  .galerie > li:nth-child(even) { --tief: 3.5rem; margin-top: var(--tief); }
+  .galerie > li:nth-child(1) { --i: 0; z-index: 4; }
+  .galerie > li:nth-child(2) { --i: 1; z-index: 3; }
+  .galerie > li:nth-child(3) { --i: 2; z-index: 2; }
+  .galerie > li:nth-child(4) { --i: 3; z-index: 1; }
+  .galerie > li { position: relative; }
+}
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  /* Aus dem Stapel in der Mitte in die Reihe: jedes Telefon fährt um seinen
+     Abstand zur Mitte (1,5 − i Plätze), leicht gedreht, und richtet sich auf. */
+  .tafel img { animation: auffaechern 1.1s var(--aus) 0.25s both; }
+  .tafel figcaption { animation: einblenden 0.8s ease 0.95s both; }
+}
+@keyframes auffaechern {
+  from {
+    translate: calc((1.5 - var(--i)) * (100% + var(--luecke))) calc(5rem - var(--tief, 0rem));
+    rotate: calc((var(--i) - 1.5) * 4deg);
+  }
+}
+@keyframes einblenden { from { opacity: 0; translate: 0 0.5rem; } }
+
+/* Am Handy: eine Reihe zum Wischen, das erste Telefon mittig, die Nachbarn
+   schauen herein. Der Querlauf bleibt in der Reihe, nie auf der Seite. */
+@media (max-width: 899.98px) {
+  .galerie {
+    --breite: min(68vw, 17.5rem);
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    padding: 0 calc((100% - var(--breite)) / 2) 1.25rem;
+    scrollbar-width: none;
+  }
+  .galerie::-webkit-scrollbar { display: none; }
+  .galerie > li { flex: 0 0 var(--breite); scroll-snap-align: center; }
+}
+@supports (animation-timeline: view(inline)) {
+  @media (max-width: 899.98px) and (prefers-reduced-motion: no-preference) {
+    .galerie > li { animation: mitte linear both; animation-timeline: view(inline); }
+  }
+}
+@keyframes mitte {
+  0%, 100% { scale: 0.88; opacity: 0.45; }
+  50% { scale: 1; opacity: 1; }
+}
+
+/* ------------------------------------------------------------------ Satz */
+.satz {
+  padding: clamp(5rem, 16vh, 10rem) var(--pad);
+  text-align: center;
+}
+.satz h2 {
+  margin: 0 auto;
+  max-width: 16ch;
+  font-family: var(--display);
+  font-size: clamp(2.25rem, 6.4vw, 5rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+.satz p { margin: 1.25rem auto 0; max-width: 32rem; color: var(--grau); font-size: 1.0625rem; }
+
+/* ----------------------------------------------------------- Herausgeber */
+.firma {
+  width: min(100% - 2 * var(--pad), 74rem);
+  margin: 0 auto;
+  padding: 2rem 0 clamp(3rem, 8vh, 5rem);
+  border-top: 1px solid var(--rand);
+  display: grid;
+  gap: 1rem 3rem;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+}
+.firma p { margin: 0; max-width: 34rem; }
+.firma ul { margin: 0; padding: 0; list-style: none; }
+.firma li a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--text); text-underline-offset: 0.2em; text-decoration-color: var(--rand-hell); }
+@media (hover: hover) { .firma li a:hover { text-decoration-color: currentColor; } }
+@media (max-width: 700px) { .firma { grid-template-columns: minmax(0, 1fr); } }
+
+/* ------------------------------------------------------------------- Fuß */
+/* Wie auf der Startseite, ohne die steigenden Buchstaben. */
+.fuss { background: var(--nacht); color: var(--nacht-2); font-size: 0.875rem; overflow: hidden; padding-bottom: 1.25rem; }
+.fuss .wortmarke {
+  margin: 0 0 -0.12em;
+  padding: 0.04em var(--pad) 0.22em;
+  color: var(--nacht-text);
+  font-family: var(--display);
+  font-size: 17.4vw;
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.058em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.fuss-in {
+  width: min(100% - 2 * var(--pad), 88rem); margin: clamp(1.25rem, 3vh, 2rem) auto 0;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.25rem 2rem;
+  padding-top: 0.75rem; border-top: 1px solid var(--nacht-linie);
+}
+.fuss-in p { margin: 0; padding: 0.5rem 0; }
+.fuss ul { display: flex; flex-wrap: wrap; gap: 0 1.375rem; margin: 0; padding: 0; list-style: none; }
+.fuss a { display: inline-flex; align-items: center; min-height: 2.75rem; color: var(--nacht-text); }
+.fuss :focus-visible { outline-color: var(--nacht-text); }
+@media (hover: hover) { .fuss a:hover { color: #fff; } }
