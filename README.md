@@ -29,6 +29,7 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `sim.js` | treibt beide Scroll-Simulationen: rechnet aus der Scrollposition eine Zahl `--p` und schaltet Klassen. Welcher Ablauf, sagt `data-sim` an der Section (`gingr`, `rezept`) |
 | `sim.css` | GingR im Telefon, in den Farben und Maßen der App (Stand: ihr Neudesign vom 04.10.2026); dazu das gemeinsame Gerüst beider Simulationen. Siehe unten „Das GingR-Telefon“ |
 | `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
+| `gingr/`, `en/gingr/` | die Produktseite der App GingR, deutsch und englisch, mit eigenem Blatt `gingr.css` und ohne JavaScript. Zeigt GingR als Produkt der UG (Herausgeber, Impressum, Datenschutz der App). Die Bildschirme sind die Store-Bilder aus GymApp `assets/store/screenshots-de-2026-10` und `-en-2026-10` (Beispieldaten), als `assets/img/gingr-*-300/600.webp`; das Symbol ist `assets/icon/icon.png` als `gingr-symbol-96/192.webp`. **Die Läden stehen noch ohne Link** (`data-laden` im HTML, der Kommentar darüber nennt beide Adressen): zum Start durch Links mit den offiziellen Abzeichen ersetzen, auf beiden Seiten |
 | `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex`. Die englischen Fassungen für `/en/` liegen unter `en/example-dentist/` und `en/example-cafe/`, mit demselben CSS; wer eine Fassung ändert, ändert die andere mit und nimmt die Bilder neu auf |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
@@ -73,7 +74,7 @@ GitHub Pages schickt jede Datei mit `Cache-Control: max-age=600`. Wer die Seite 
 einem Update besucht hat, bekommt danach das neue HTML, aber sein Browser nimmt `styles.css` ungefragt
 aus dem Cache. Am 14.09.2026 stand die neue Startseite deshalb bei Leon ohne Gestaltung da (neues
 HTML, altes Stylesheet). Darum hängt an jedem Verweis auf `styles.css`, `sim.css`, `rezept.css`, `buehne.js`, `sim.js`,
-`script.js`, `assets/vendor/lenis.min.js` und `legal.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien
+`script.js`, `assets/vendor/lenis.min.js`, `legal.css` und `gingr.css` ein `?v=JJJJMMTT`. **Wer eine dieser Dateien
 ändert, setzt das Datum in allen HTML-Dateien neu**, sonst kommt derselbe Fehler wieder. Zwei
 Änderungen am selben Tag: `-2`, `-3` anhängen (`?v=20260926-2`).
 
