@@ -263,6 +263,91 @@ body {
     font-size: 0.95rem;
 }
 
+/* Zweisprachige Seiten (gingr/*, impressum.html): Deutsch oben, Englisch ab #en.
+   Die GingR-Rechtstexte kamen am 15.10.2026 von leonbrodersen.github.io/gingr-web
+   hierher; Store-Einträge und ältere App-Versionen springen gezielt auf #en. */
+.legal-lang {
+    font-size: 0.95rem;
+}
+
+.legal-meta {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    margin-bottom: 2rem !important;
+}
+
+.legal-en {
+    margin-top: 5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+}
+
+.legal h1[id],
+.legal h3 {
+    scroll-margin-top: 1rem;
+}
+
+.legal h3 {
+    margin: 2rem 0 0.5rem;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.legal b {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.legal code {
+    font-size: 0.9em;
+    padding: 0.1em 0.35em;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow-wrap: anywhere;
+}
+
+.legal-box {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.legal-box p:last-child {
+    margin-bottom: 0;
+}
+
+/* Lizenzen: Lizenztexte umbrechen, die Pakettabelle darf schmal werden,
+   ohne die Seite seitwärts zu schieben. */
+.legal pre {
+    margin: 0 0 1.5rem;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 0.8rem;
+    line-height: 1.55;
+}
+
+.legal-table {
+    overflow-x: auto;
+    margin: 0 0 1.5rem;
+}
+
+.legal-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    line-height: 1.45;
+}
+
+.legal-table td {
+    padding: 0.3rem 0.5rem 0.3rem 0;
+    vertical-align: top;
+    border-bottom: 1px solid var(--border);
+    overflow-wrap: anywhere;
+}
+
 /* Fußzeile */
 .legal-footer {
     border-top: 1px solid var(--border);
