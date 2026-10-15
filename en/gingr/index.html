@@ -54,13 +54,9 @@
     <h1 id="title">GingR</h1>
     <p class="held-satz">The workout log that knows your gear.</p>
     <p class="held-info">For iPhone and Android. Free, no ads, no account needed.</p>
-    <!-- At launch, replace both spans with links carrying the official badges:
-         App Store  https://apps.apple.com/app/id6799707730
-         Google Play https://play.google.com/store/apps/details?id=com.lywebstudio.ginger
-         Add "offers" to the JSON-LD below, and do the same on /gingr/. -->
-    <ul class="laeden" aria-label="Coming soon">
-      <li><span class="laden" data-laden="app-store">App Store <small>soon</small></span></li>
-      <li><span class="laden" data-laden="google-play">Google Play <small>soon</small></span></li>
+    <ul class="laeden" aria-label="Download">
+      <li><a class="laden" href="https://apps.apple.com/app/gingr-gym-workout-tracker/id6799707730">App Store</a></li>
+      <li><a class="laden" href="https://play.google.com/store/apps/details?id=com.lywebstudio.ginger">Google Play</a></li>
     </ul>
     <p class="held-von">An app by <a href="/en/">ly&#8209;webstudio UG (haftungsbeschränkt)</a></p>
   </section>
@@ -146,7 +142,9 @@
       "inLanguage": ["en", "de"],
       "image": "https://www.ly-webstudio.de/assets/img/gingr-en-loggen-600.webp",
       "author": { "@id": "https://www.ly-webstudio.de/#organisation" },
-      "publisher": { "@id": "https://www.ly-webstudio.de/#organisation" }
+      "publisher": { "@id": "https://www.ly-webstudio.de/#organisation" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+      "sameAs": ["https://apps.apple.com/app/gingr-gym-workout-tracker/id6799707730", "https://play.google.com/store/apps/details?id=com.lywebstudio.ginger"]
     },
     {
       "@type": "Organization",
