@@ -348,6 +348,43 @@ body {
     overflow-wrap: anywhere;
 }
 
+/* Version und Lizenz sind kurz und dürfen nicht mitten im Wort brechen. */
+.legal-table td:nth-child(2) {
+    white-space: nowrap;
+}
+
+.legal-table td:nth-child(3) {
+    overflow-wrap: normal;
+}
+
+/* Auf dem Handy wird jede Zeile ein Block: Paket, Version, Lizenz oben,
+   Copyright darunter. Vier Spalten auf 327 px brachen die Paketnamen
+   nach jeweils vier Zeichen um. */
+@media (max-width: 40rem) {
+    .legal-table table,
+    .legal-table tbody {
+        display: block;
+    }
+
+    .legal-table tr {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        column-gap: 0.75rem;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .legal-table td {
+        padding: 0;
+        border-bottom: 0;
+    }
+
+    .legal-table td:nth-child(4) {
+        grid-column: 1 / -1;
+        color: var(--text-light);
+    }
+}
+
 /* Fußzeile */
 .legal-footer {
     border-top: 1px solid var(--border);
