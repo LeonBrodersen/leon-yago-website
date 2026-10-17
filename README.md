@@ -34,6 +34,7 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |
 | `og-vorlage.html` | Quelle des Teilen-Bildes `og-image.jpg`, `noindex`, nirgends verlinkt |
+| `gingr/og-vorlage.html` | Quelle der Teilen-Bilder der GingR-Seite: `assets/img/gingr-teilen.jpg` (so) und `gingr-en-teilen.jpg` (mit `?lang=en`), 1200 × 630 in den Farben des LinkedIn-Starts, `noindex`, nirgends verlinkt |
 | `fonts/` | Inter als woff2, selbst ausgeliefert, dazu Inter Display 700 (der Schnitt für große Größen) für alle Titel, dazu Geist und Newsreader für das Rezeptbuch (aus dessen Build, auf Latein und die benutzten Gewichte gekürzt, je 13 KB). **Keine Schriften von fremden Servern** |
 | `assets/img/` | `gingr-*.svg` (die Körperfiguren der GingR-Telefone, siehe unten), dazu Porträt und Bildschirmfotos als webp: `pille-*` für das Fenster in der Überschrift (Computer 1320 × 400, Handy 1040 × 650), `beispiel-*-lang-1344/2688` für die Website-Bühne (einfache und doppelte Pixeldichte), `beispiel-*-handy-lang` fürs Handy; die Bilder mit `-en-` im Namen zeigen die englischen Beispielseiten und stehen nur in `en/index.html` |
 | `favicon/` | Symbole und `site.webmanifest` |
@@ -141,6 +142,11 @@ JavaScript, mit „Bewegung reduzieren“ und in der ruhigen Fassung stehen alle
 
 * **Teilen-Bild:** `og-vorlage.html` bei 1200 × 630 px mit doppelter Pixeldichte aufnehmen, auf
   1200 × 630 herunterrechnen, als JPEG speichern, nach `og-image.jpg`.
+* **Teilen-Bilder der GingR-Seite:** genauso mit `gingr/og-vorlage.html`, einmal so (deutsch, nach
+  `assets/img/gingr-teilen.jpg`) und einmal mit `?lang=en` (nach `gingr-en-teilen.jpg`). Die Vorlage lädt
+  Schriften und Bilder über absolute Pfade, also aus dem Repo-Wurzelordner ausliefern
+  (`python3 -m http.server`), nicht als Datei öffnen. Jedes Bild unter 300 KB halten, sonst zeigt
+  WhatsApp keine Vorschau (heute rund 85 KB bei JPEG-Qualität 82).
 * **Symbole:** `favicon/favicon.svg` ist die Quelle. Daraus entstehen `favicon-96x96.png` und
   `apple-touch-icon.png`; die beiden `web-app-manifest-*.png` kommen aus einer randlosen Fassung ohne
   abgerundete Ecken, weil sie im Manifest als `maskable` eingetragen sind.

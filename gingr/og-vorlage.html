@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<title>Vorlage für die Teilen-Bilder der GingR-Seite</title>
+<!-- Quelle von assets/img/gingr-teilen.jpg (diese Seite) und gingr-en-teilen.jpg
+     (dieselbe Seite mit ?lang=en). In den Farben des LinkedIn-Starts: Papier,
+     Tinte, Flamme. Neu erzeugen: bei 1200 x 630 px mit doppelter Pixeldichte
+     aufnehmen und auf 1200 x 630 herunterrechnen, als JPEG speichern (unter
+     300 KB, sonst zeigt WhatsApp kein Bild). Absichtlich nicht verlinkt, noindex. -->
+<style>
+  @font-face { font-family: "Inter"; src: url("/fonts/inter-v20-latin-600.woff2") format("woff2"); font-weight: 600; font-display: block; }
+  @font-face { font-family: "Inter Display"; src: url("/fonts/inter-display-latin-700.woff2") format("woff2"); font-weight: 700; font-display: block; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    position: relative;
+    background: #FAF6F0; color: #1C1815;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Text links, senkrecht in der Mitte. Wichtiges bleibt in 1200 x 600, weil X
+     auf 2:1 beschneidet. */
+  .text { position: absolute; left: 88px; top: 0; bottom: 0; width: 620px; display: flex; flex-direction: column; justify-content: center; }
+  .symbol { width: 96px; height: 96px; border-radius: 22.4%; background: #fff; box-shadow: inset 0 0 0 1px rgba(28, 24, 21, 0.08); overflow: hidden; }
+  .symbol img { width: 100%; height: 100%; display: block; }
+  h1 {
+    margin-top: 22px;
+    font-family: "Inter Display", "Inter", system-ui, sans-serif;
+    font-size: 184px; font-weight: 700; line-height: 0.86; letter-spacing: -0.05em;
+    margin-left: -0.04em;
+  }
+  .satz {
+    margin-top: 30px;
+    font-size: 46px; font-weight: 600; line-height: 1.12; letter-spacing: -0.03em;
+  }
+  /* Ein Telefon rechts, unten angeschnitten, wie im Banner. */
+  .phone {
+    position: absolute; left: 790px; top: 58px; width: 340px;
+    border-radius: 54px; background: #1C1815; padding: 9px;
+    box-shadow: 0 24px 60px rgba(28, 24, 21, 0.20);
+  }
+  .phone img { display: block; width: 100%; height: auto; border-radius: 45px; }
+</style>
+</head>
+<body>
+  <div class="text">
+    <div class="symbol"><img src="/assets/img/gingr-symbol-192.webp" alt=""></div>
+    <h1>GingR</h1>
+    <p class="satz" id="satz">Der Trainings&#8209;Tracker,<br>der deine Geräte kennt</p>
+  </div>
+  <div class="phone"><img id="bild" src="/assets/img/gingr-loggen-600.webp" alt=""></div>
+<script>
+  if (new URLSearchParams(location.search).get('lang') === 'en') {
+    document.documentElement.lang = 'en';
+    document.getElementById('satz').innerHTML = 'The workout tracker<br>that knows your equipment';
+    document.getElementById('bild').src = '/assets/img/gingr-en-loggen-600.webp';
+  }
+</script>
+</body>
+</html>
