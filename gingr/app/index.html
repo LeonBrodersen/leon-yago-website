@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<!--
+  Ziel des QR-Codes auf den GingR-Plakaten (seit November 2026).
+  DIESE ADRESSE STEHT AUF PAPIER: /gingr/app/ nie umbenennen, nie löschen, nie hinter eine Weiterleitung legen,
+  die den Pfad ändert. Wohin sie führt, darf sich jederzeit ändern, die Adresse selbst nicht.
+
+  Was die Seite tut: iPhone und iPad gehen sofort in den App Store, Android-Telefone zu Google Play.
+  Das Skript läuft synchron im <head> und nimmt location.replace(), denn Chrome auf Android öffnet die
+  Play-Store-App nur bei einer sofortigen Weiterleitung, nicht nach einem Timer oder über „Zurück“.
+  Alles andere (Computer, unbekannte Geräte, ausgeschaltetes JavaScript) sieht die zwei Links unten.
+
+  ?s=<name> setzt die Quelle für Google Play (utm_source im referrer, Play Console: Store-Eintrag,
+  Akquisition, „Anzeigen und Verweise“). Ohne ?s= heißt die Quelle „poster“. Für den App Store bräuchte
+  das einen Kampagnen-Link mit pt-Token aus App Store Connect, den es noch nicht gibt.
+-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+    (function () {
+      var u = navigator.userAgent || '';
+      var m = /[?&]s=([a-z0-9-]{1,30})(&|$)/.exec(location.search);
+      var quelle = m ? m[1] : 'poster';
+      var ios = /iPhone|iPad|iPod/.test(u) || (/Macintosh/.test(u) && navigator.maxTouchPoints > 1);
+      if (ios) {
+        location.replace('https://apps.apple.com/app/id6799707730');
+      } else if (/Android/i.test(u)) {
+        location.replace('https://play.google.com/store/apps/details?id=com.lywebstudio.ginger&referrer=' +
+          encodeURIComponent('utm_source=' + quelle + '&utm_campaign=gingr-app'));
+      }
+    })();
+    </script>
+    <title>GingR for iPhone and Android</title>
+    <meta name="description" content="GingR, a free gym log for iPhone and Android.">
+    <meta name="robots" content="noindex, follow">
+    <meta name="apple-itunes-app" content="app-id=6799707730">
+    <meta name="theme-color" content="#131311">
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <style>
+      :root { --grund: #131311; --text: #F2F0EB; --grau: #A29D92; --akzent: #F0942E; --rand: #5F5A51 }
+      * { box-sizing: border-box }
+      html { background: var(--grund); color: var(--text); color-scheme: dark;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+      body { margin: 0; min-height: 100vh; display: flex; align-items: center; padding: 1.5rem 1rem }
+      main { width: 100%; max-width: 26rem; margin: 0 auto }
+      img { display: block; width: 72px; height: 72px; border-radius: 16px }
+      h1 { margin: 1.25rem 0 .25rem; font-size: 2.25rem; line-height: 1; letter-spacing: -.02em }
+      p { margin: 0; color: var(--grau); font-size: 1.0625rem; line-height: 1.45 }
+      ul { list-style: none; margin: 1.75rem 0 0; padding: 0; display: grid; gap: .75rem }
+      a.laden { display: flex; align-items: center; min-height: 3.25rem; padding: 0 1.125rem; border-radius: 12px;
+        border: 1px solid var(--rand); color: var(--text); text-decoration: none; font-weight: 600; font-size: 1.0625rem }
+      a.laden:hover, a.laden:focus-visible { border-color: var(--akzent) }
+      a:focus-visible { outline: 2px solid var(--akzent); outline-offset: 3px }
+      .mehr { margin-top: 1.5rem; font-size: .9375rem }
+      .mehr a { color: var(--akzent) }
+    </style>
+</head>
+
+<body>
+<main>
+  <img src="/assets/img/gingr-symbol-192.webp" width="72" height="72" alt="">
+  <h1>GingR</h1>
+  <p>Free gym log for iPhone and Android.</p>
+  <ul>
+    <li><a class="laden" href="https://apps.apple.com/app/id6799707730">Download on the App Store</a></li>
+    <li><a class="laden" href="https://play.google.com/store/apps/details?id=com.lywebstudio.ginger&amp;referrer=utm_source%3Dposter%26utm_campaign%3Dgingr-app">Get it on Google Play</a></li>
+  </ul>
+  <p class="mehr"><a href="/en/gingr/">More about GingR</a></p>
+</main>
+</body>
+</html>
