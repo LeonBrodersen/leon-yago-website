@@ -16,6 +16,11 @@ GitHub Pages liefert den Inhalt von `main` aus (klassischer Pages-Build, kein Ac
 Domain steht in `CNAME`. **Ein Push auf `main` ist nach etwa 30 Sekunden live**, es gibt keine CI und
 keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 
+Der Pages-Build ist Jekyll, und Jekyll lässt alles weg, dessen Name mit einem Punkt beginnt. Deshalb
+gibt es `_config.yml` mit einer einzigen Einstellung, `include: [.well-known]`; sonst bleibt alles bei
+den Vorgaben von GitHub Pages. Keine Seite hat Front Matter, also kommt jede Datei so an, wie sie im
+Repo steht.
+
 ## Was wo liegt
 
 | Datei / Ordner | Inhalt |
@@ -31,6 +36,8 @@ keinen Schutz davor. Deshalb: arbeiten auf einem Zweig, per Pull Request mergen.
 | `rezept.css` | das Rezeptbuch (ourkitchenbook.com) im Browserfenster auf Stein, Inhalt in App-Pixeln gebaut und auf die Fensterbreite skaliert, „Kamera“ je Schritt |
 | `gingr/`, `en/gingr/` | die Produktseite der App GingR, deutsch und englisch, mit eigenem Blatt `gingr.css` und ohne JavaScript. Zeigt GingR als Produkt der UG (Herausgeber, Impressum, Datenschutz der App). Die Bildschirme sind die Store-Bilder aus GymApp `assets/store/screenshots-de-2026-10` und `-en-2026-10` (Beispieldaten), als `assets/img/gingr-*-300/600.webp`; das Symbol ist `assets/icon/icon.png` als `gingr-symbol-96/192.webp`. **Die Läden stehen noch ohne Link** (`data-laden` im HTML, der Kommentar darüber nennt beide Adressen): zum Start durch Links mit den offiziellen Abzeichen ersetzen, auf beiden Seiten |
 | `gingr/app/` | **Ziel des QR-Codes auf den GingR-Plakaten, die Adresse steht auf Papier und darf nie umziehen.** Schickt iPhone und iPad sofort in den App Store, Android zu Google Play (Skript synchron im `<head>`, `location.replace`), alle anderen sehen zwei Links. `?s=<name>` setzt die Quelle für Google Play (`utm_source` im `referrer`), ohne `?s=` heißt sie `poster`. `noindex`, nicht in der Sitemap |
+| `gingr/invite/` | die Seite, die ein Freundes-Link von GingR öffnet: `/gingr/invite/#ABCD-EFGH-JKMN`, der Code im Fragment. Mit einem GingR-Build, der die Adresse beansprucht, öffnet ein Tipp auf den Link gleich die App und die Seite erscheint nicht; sonst zeigt sie den Code, „In GingR öffnen“ (`ginger://invite/<code>`) und die zwei Läden. Vorlage: `invite.html` aus dem Repo gingr-web, das Aussehen von `gingr/app/`. **Sobald die App diese Adresse teilt, steht sie in Chats und darf nie umziehen.** `noindex`, nicht in der Sitemap |
+| `.well-known/` | die Erlaubnis für GingR (`com.lywebstudio.ginger`), Links unter `/gingr/invite` selbst zu öffnen: `apple-app-site-association` (ohne Endung, iOS Universal Links, mit der Team-ID von Apple) und `assetlinks.json` (Android App Links, mit den SHA-256-Fingerabdrücken der Signaturschlüssel). Ändert sich ein Schlüssel, ändert sich die Datei. Nur ausgeliefert, weil `_config.yml` den Ordner einschließt |
 | `beispiel-zahnarzt/`, `beispiel-cafe/` | erfundene Beispiel-Websites, in sich geschlossen, `noindex`. Die englischen Fassungen für `/en/` liegen unter `en/example-dentist/` und `en/example-cafe/`, mit demselben CSS; wer eine Fassung ändert, ändert die andere mit und nimmt die Bilder neu auf |
 | `impressum.html`, `datenschutz.html`, `agb.html`, `widerruf.html` | Rechtstexte, eigenes Blatt `legal.css`, ohne JavaScript |
 | `404.html` | Fehlerseite, benutzt ebenfalls `legal.css` |

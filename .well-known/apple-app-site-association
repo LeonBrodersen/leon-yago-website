@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAMID.com.lywebstudio.ginger"],
+        "components": [
+          {
+            "/": "/gingr/invite*",
+            "comment": "Der Freundes-Link von GingR, /gingr/invite/#CODE. Nichts sonst auf dieser Domain öffnet die App."
+          }
+        ]
+      }
+    ]
+  }
+}
