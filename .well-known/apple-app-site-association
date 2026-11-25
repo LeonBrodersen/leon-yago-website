@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["TEAMID.com.lywebstudio.ginger"],
+        "appIDs": ["V2DWCMJVXP.com.lywebstudio.ginger"],
         "components": [
           {
             "/": "/gingr/invite*",
