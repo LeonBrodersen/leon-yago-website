@@ -26,7 +26,7 @@
 <p class="legal-lang"><a href="#de">Deutsch</a> · <a href="#en">English</a></p>
 
 <h1 id="de">Datenschutz</h1>
-<p class="legal-meta">GingR · Stand: 29. Oktober 2026</p>
+<p class="legal-meta">GingR · Stand: 27. November 2026</p>
 
 <p>GingR ist ein Trainingstagebuch der ly-webstudio UG (haftungsbeschränkt). Hier steht, welche
 Daten die App verarbeitet, wer sie sieht und wie du sie wieder löschst.</p>
@@ -48,9 +48,15 @@ die IP-Adresse und die technische Kennung der App.</p>
 Routinen und ihre Ordner, Gyms und ihr Equipment, Körpereinträge mit Gewicht, Körpermaßen,
 Körperfett und Notiz, Ziele, Importe und dein Profil (etwa Anzeigename, Profilbild, Größe und
 Geschlecht, wenn du sie angibst).</p>
-<p><strong>Auf dem Gerät bleiben:</strong> Fotos zu Körpereinträgen (synchronisiert wird nur ihr
-Speicherort auf dem Telefon, nie das Bild) und Geräteeinstellungen. Rekorde und Trophäen rechnet
+<p><strong>Auf dem Gerät bleiben:</strong> Fotos zu Körpereinträgen, solange die Fotosicherung aus
+ist (synchronisiert wird dann nur ihr Dateiname, nie das Bild), und Geräteeinstellungen. Rekorde und Trophäen rechnet
 jedes Gerät selbst; was Freunde davon sehen, steht unter „Freunde“.</p>
+<p><strong>Fotosicherung:</strong> aus, bis du in den Einstellungen „Körperfotos sichern“
+einschaltest, und dann nur auf diesem Gerät. Sie kopiert deine Körperfotos in einen privaten
+Speicher deines Kontos bei Supabase. Öffnen kannst nur du sie, Freunde sehen sie nie, und ein
+Handy, auf dem du dich anmeldest, bekommt sie zurück. Löschst du einen Eintrag, werden seine Kopien
+gelöscht, löschst du dein Konto, alle. Schaltest du die Sicherung aus, fragt die App, ob die Kopien
+mitgehen.</p>
 <p><strong>Anmeldung:</strong> Mit E-Mail und Passwort, mit Apple oder mit Google. Von Apple
 bekommt GingR eine Kennung, eine E-Mail-Adresse (auf Wunsch eine anonyme Weiterleitungsadresse)
 und beim ersten Mal deinen Namen, den die App nur als Vorschlag für deinen Anzeigenamen nutzt. Von
@@ -144,6 +150,19 @@ Absturzberichten, und darüber hinaus geben wir sie nicht weiter.</p>
 <p>Löschst du einen Eintrag in GingR, bleibt die Kopie in Health. Die entfernst du in der
 Health-App.</p>
 
+<h2>Health Connect (Android)</h2>
+<p>Die Verbindung ist <strong>standardmäßig aus</strong>. Erst wenn du sie in der App einschaltest,
+fragt Android um Erlaubnis.</p>
+<p><strong>GingR schreibt nach Health Connect:</strong> abgeschlossene Workouts (Beginn, Ende,
+Dauer), eine geschätzte verbrauchte Energie, wenn dein Körpergewicht bekannt ist, und
+Körpergewichts-Einträge aus GingR.</p>
+<p><strong>GingR liest aus Health Connect:</strong> nur dein Körpergewicht. GingR speichert es als
+Körpereintrag. Mit Konto wird es wie jeder Körpereintrag synchronisiert, und solange Teilen an ist,
+geht es in die relative Stärke ein, die deine Freunde sehen.</p>
+<p>Daten aus Health Connect nutzen wir nie für Werbung, Marketing oder Data-Mining, sie landen nicht
+in Absturzberichten, und darüber hinaus geben wir sie nicht weiter.</p>
+<p>Löschst du einen Eintrag in GingR, bleibt die Kopie in Health Connect. Die entfernst du dort.</p>
+
 <h2>Absturzberichte</h2>
 <p>Veröffentlichte Versionen melden an Sentry (Server in Frankfurt): Abstürze und Fehler mit der
 Fehlermeldung und dem Weg dorthin (Bildschirme, Sync-Schritte, Adressen von Serveranfragen) sowie
@@ -169,8 +188,9 @@ Einstellungen.</p>
 
 <h2>Wer die Daten erhält</h2>
 <ul>
-  <li><strong>Supabase:</strong> Konto, Synchronisierung, Freunde, Meldungen, Push-Kennungen und
-    der Zähler für Übungsvorschläge. Server in Irland.</li>
+  <li><strong>Supabase:</strong> Konto, Synchronisierung, Freunde, Meldungen, Push-Kennungen, der
+    Zähler für Übungsvorschläge und, wenn du sie einschaltest, die gesicherten Körperfotos. Server in
+    Irland.</li>
   <li><strong>Sentry:</strong> Absturz- und Sitzungsberichte. Server in Frankfurt.</li>
   <li><strong>Expo:</strong> App-Updates und Zustellung von Benachrichtigungen.</li>
   <li><strong>Apple</strong> und <strong>Google:</strong> Anmeldung, wenn du sie nutzt, und
@@ -196,7 +216,7 @@ Expo), Art. 45 und 46 DSGVO.</p>
     Erklärung gibst.</li>
   <li><strong>Einwilligung</strong> (Art. 6 Abs. 1 lit. a und Art. 9 Abs. 2 lit. a DSGVO): Teilen
     mit Freunden (mit dem Verschicken oder Einlösen eines Einladungscodes), Apple Health,
-    Übungsvorschläge und Push-Benachrichtigungen (jeweils beim Einschalten bzw. Erlauben). Du kannst
+    Health Connect, die Fotosicherung (widerrufen auch mit „Kopien löschen“), Übungsvorschläge und Push-Benachrichtigungen (jeweils beim Einschalten bzw. Erlauben). Du kannst
     sie jederzeit widerrufen, indem du die Funktion ausschaltest oder dein Konto löschst. Das wirkt
     für die Zukunft.</li>
   <li><strong>Berechtigtes Interesse</strong> (Art. 6 Abs. 1 lit. f DSGVO): Absturz- und
@@ -211,7 +231,9 @@ Expo), Art. 45 und 46 DSGVO.</p>
 <p>Kontodaten und das Protokoll gesendeter Benachrichtigungen bleiben, solange das Konto besteht.
 Sentry löscht Berichte spätestens nach 90 Tagen, Google Anfragen an die KI spätestens nach 55 Tagen.
 Meldungen bewahren wir auf, solange wir sie für die Moderation brauchen, höchstens zwei Jahre; nach
-einer Kontolöschung bleiben sie bis dahin ohne Bezug zu deiner Person.</p>
+einer Kontolöschung bleiben sie bis dahin ohne Bezug zu deiner Person. Gesicherte Körperfotos
+bleiben, bis du den Eintrag löschst, die Sicherung mit „Kopien löschen“ ausschaltest oder dein
+Konto löschst.</p>
 <ul>
   <li><strong>Alles exportieren:</strong> Mehr → Import &amp; Export (CSV und JSON)</li>
   <li><strong>Konto und Serverdaten löschen:</strong> Mehr → Konto → Konto löschen, siehe
@@ -244,7 +266,7 @@ Buchfinkweg 50, 12351 Berlin. E-Mail:
 
 <div class="legal-en" lang="en">
 <h1 id="en">Privacy</h1>
-<p class="legal-meta">GingR · Last updated: 29 October 2026</p>
+<p class="legal-meta">GingR · Last updated: 27 November 2026</p>
 
 <p>GingR is a training log made by ly-webstudio UG (haftungsbeschränkt). This page explains what
 data the app handles, who can see it and how to delete it.</p>
@@ -265,9 +287,14 @@ identifier with each sign-in.</p>
 their folders, gyms and their equipment, body entries with weight, body measurements, body fat and
 note, goals, imports and your profile (such as display name, profile picture, height and sex if you
 enter them).</p>
-<p><strong>Stays on the device:</strong> photos attached to body entries (only their location on
-the phone is synced, never the image) and device settings. Records and trophies are computed by
+<p><strong>Stays on the device:</strong> photos attached to body entries while photo backup is off
+(only their file name is synced then, never the image) and device settings. Records and trophies are computed by
 every device itself; what friends see of them is under "Friends".</p>
+<p><strong>Photo backup:</strong> off until you switch on “Back up body photos” in Settings, and
+then only on that device. It copies your body photos into private storage of your account at
+Supabase. Only you can open them, friends never see them, and a phone you sign in on gets them
+back. Deleting an entry deletes its copies, deleting your account deletes all of them, and turning
+the backup off asks whether the copies go too.</p>
 <p><strong>Sign-in:</strong> with email and password, with Apple or with Google. From Apple, GingR
 receives an identifier, an email address (a private relay address if you choose) and, the first
 time only, your name, which the app only uses to suggest your display name. From Google, GingR
@@ -351,6 +378,18 @@ strength your friends see.</p>
 reports, and is not passed on in any other way.</p>
 <p>Deleting an entry in GingR leaves the copy in Health. Remove it in the Health app.</p>
 
+<h2>Health Connect (Android)</h2>
+<p>The connection is <strong>off by default</strong>. Android asks for permission only once you
+switch it on in the app.</p>
+<p><strong>GingR writes to Health Connect:</strong> finished workouts (start, end, duration), an
+estimate of energy burned when your body weight is known, and body weight entries made in GingR.</p>
+<p><strong>GingR reads from Health Connect:</strong> your body weight only. GingR saves it as a body
+entry. With an account it is synced like any body entry, and while sharing is on it goes into the
+relative strength your friends see.</p>
+<p>Data from Health Connect is never used for advertising, marketing or data mining, never appears
+in crash reports, and is not passed on in any other way.</p>
+<p>Deleting an entry in GingR leaves the copy in Health Connect. Remove it there.</p>
+
 <h2>Crash reports</h2>
 <p>Released versions report to Sentry (servers in Frankfurt): crashes and errors with the error
 message and what led to it (screens, sync steps, server request addresses), and sessions (start,
@@ -373,8 +412,8 @@ until you delete your account. You can switch suggestions off in settings.</p>
 
 <h2>Who receives data</h2>
 <ul>
-  <li><strong>Supabase:</strong> account, sync, friends, reports, push tokens and the suggestion
-    counter. Servers in Ireland.</li>
+  <li><strong>Supabase:</strong> account, sync, friends, reports, push tokens, the suggestion
+    counter and, if you switch it on, the backed-up body photos. Servers in Ireland.</li>
   <li><strong>Sentry:</strong> crash and session reports. Servers in Frankfurt.</li>
   <li><strong>Expo:</strong> app updates and delivery of notifications.</li>
   <li><strong>Apple</strong> and <strong>Google:</strong> sign-in if you use them, and delivery of
@@ -398,7 +437,8 @@ is stored in the EU, access from the USA is possible. The basis is the EU-US Dat
     which are health data, also your consent (Art. 9(2)(a) GDPR), which you give when you create the
     account by agreeing to this policy.</li>
   <li><strong>Consent</strong> (Art. 6(1)(a) and Art. 9(2)(a) GDPR): sharing with friends (by
-    sending or redeeming an invite code), Apple Health, exercise suggestions and push notifications
+    sending or redeeming an invite code), Apple Health, Health Connect, photo backup (also withdrawn
+    with “Delete copies”), exercise suggestions and push notifications
     (each when you switch it on or allow it). You can withdraw it at any time by switching the
     feature off or deleting your account. This applies going forward.</li>
   <li><strong>Legitimate interest</strong> (Art. 6(1)(f) GDPR): crash and session reports, the check
@@ -413,7 +453,8 @@ is stored in the EU, access from the USA is possible. The basis is the EU-US Dat
 <p>Account data and the log of notifications sent are kept as long as the account exists. Sentry
 deletes reports after 90 days at most, Google deletes AI requests after 55 days at most. We keep
 reports as long as we need them for moderation, two years at most; after an account is deleted they
-are kept until then with nothing that links them to you.</p>
+are kept until then with nothing that links them to you. Backed-up body photos are kept until you
+delete the entry, turn the backup off with “Delete copies” or delete your account.</p>
 <ul>
   <li><strong>Export everything:</strong> More → Import &amp; export (CSV and JSON)</li>
   <li><strong>Delete account and server data:</strong> More → Account → Delete account, see

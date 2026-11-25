@@ -1,0 +1,9 @@
+# GitHub Pages baut diese Seite mit Jekyll (klassischer Build, siehe README), und Jekyll
+# lässt jede Datei und jeden Ordner aus, deren Name mit einem Punkt beginnt. Ohne diese
+# Zeile fehlte /.well-known/ auf der Seite und damit die zwei Dateien, mit denen Apple und
+# Google prüfen, dass GingR die Freundes-Links dieser Domain öffnen darf.
+#
+# Sonst steht hier nichts: alles andere bleibt bei den Vorgaben von GitHub Pages, wie vor
+# dieser Datei. Keine Seite hat Front Matter, also liefert Jekyll alles unverändert aus.
+include:
+  - .well-known
